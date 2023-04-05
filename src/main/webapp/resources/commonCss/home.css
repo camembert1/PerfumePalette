@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'MapoFlowerIsland';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff')
+		format('woff'); 
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ghana';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	overflow-x: hidden;
+	font-family: 'MapoFlowerIsland';
+}
+
+main {
+	width: 100vw;
+	min-height: 100vh;
+}
+
+main>div:nth-child(1) {
+	/* 헤더 공간 비워두기 위함 */ 
+	--height: 190px;
+	/* 
+    헤더가 차지하는 170px보다 더 띄우고 싶은 만큼 
+    margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */ 
+    --margin-bottom: 100px;
+}
+
+main [id*=section] {
+	width: 100vw;
+	height: 100vh;
+}
+
+main #section-2 {
+	background-color: #34443e7c;
+}
+
+main #section-1>#background-img {
+	width: inherit;
+	height: inherit;
+	background-image: url(../img/common/forest.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	/* 창 크기가 어떻든 이미지의 가운데를 보여주도록 */
+	background-position: center center;
+}
+
+main #section-1>#background-img>#black {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	/* 이미지 안의 요소들 가운데 정렬 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* mbti 글씨 관련 */
+	color: rgba(0, 0, 0, 0.8);
+	font-size: 80pt;
+	font-family: 'ghana';
+}
+
+main #section-1>#background-img>#black>div {
+	cursor: pointer;
+}

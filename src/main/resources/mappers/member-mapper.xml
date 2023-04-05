@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<resultMap type="Member" id="memberResultMap">
+		<id property="memberNo" column="MEMBER_NO"></id>
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="memberDate" column="MEMBER_DATE" />
+		<result property="memberEndDate" column="MEMBER_END_DATE" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberType" column="MEMBER_TYPE" />
+	</resultMap>
+
+	<insert id="insertMember">
+		INSERT INTO MEMBER_TBL(MEMBER_NO, MEMBER_ID,
+		MEMBER_NICKNAME, MEMBER_PW, MEMBER_NAME, MEMBER_EMAIL, MEMBER_PHONE,
+		MEMBER_ADDR, MEMBER_DATE, MEMBER_STATUS, MEMBER_TYPE)
+		VALUES(SEQ_MEMBERNO.NEXTVAL, #{memberId}, #{memberNickname},
+		#{memberPw}, #{memberName}, #{memberEmail}, #{memberPhone},
+		#{memberAddr}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+
+	<select id="login" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
+	</select>
+
+	<select id="selectMemberById" resultMap="memberResultMap">
+		SELECT *
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+
+	<select id="checkId" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+
+	<select id="checkNickname" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		MEMBER_TBL
+		WHERE MEMBER_NICKNAME = #{memberNickname}
+	</select>
+
+	<select id="checkEmail" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		MEMBER_TBL
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+
+</mapper>

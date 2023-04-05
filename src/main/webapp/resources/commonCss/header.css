@@ -1,0 +1,176 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'MapoFlowerIsland';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    --font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ghana';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 헤더 시작! */
+header {
+    --background-color: red;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    
+    width: 100vw;
+    
+    /* display: flex;
+    justify-content: center;
+    flex-direction: column; */
+}
+
+#logo-area {
+    --background-color: blue;
+    width: inherit;
+
+    /* 로고 영역 높이 */
+    height: 120px;
+
+    /* 로고 영역에서 로고 세로 가운데 정렬 */
+    display: flex;
+    align-items: center;
+
+    /* 로고 영역 상단 여백 */
+    margin-top: 20px;
+
+} #logo-area img {
+
+        /* 로고 높이 (로고 크기 조절) */
+        height: 100px;
+
+        /* 로고 좌측 여백 */
+        margin-left: 60px;
+
+        /* 로고 클릭시 홈화면 이동하므로 커서 */
+        cursor: pointer;
+
+    }
+
+#navBar-area {
+    --background-color: green;
+    width: inherit;
+
+    /* 내비게이션바 영역 높이 */
+    height: 50px;
+
+    /* 좌, 우 내비 가로정렬 */
+    display: flex;
+    flex-direction: row;
+
+} #navBar-area>[id*=nav] {
+        --background-color: red;
+
+        /* 좌우 영역 서로 반반씩 차지 */
+        width: 50%;
+
+        /* 높이는 내비 영역 높이와 동일 */
+        height: inherit;
+
+        /* nav바 txt들 가로정렬 */
+        display: flex;
+        flex-direction: row;
+
+        /* nav바 폰트 색상 및 크기 */
+        color: white;
+        font-size: 15pt;
+
+        /* 텍스트 요소 커서 I이걸로 안 바뀌게 하기 위함 */
+        cursor: default;
+
+    }
+    #navBar-area>#nav-right {
+
+        /* 우측 nav바 우측 정렬 */
+        justify-content: end;
+    
+    }
+
+        #navBar-area>#nav-left>.nav-left-title {
+
+            /* Perfume과 Community 간격 조절 */
+            margin-right: 150px;
+            
+        }
+        #navBar-area>#nav-right>div {
+            
+            /* Join, Login, Cart, Wish 간격 조절 */
+            margin-left: 60px;
+
+            /* Join, Login, Cart, Wish 페이지 이동 요소이므로 커서 변경 */
+            cursor: pointer;
+
+        }
+
+        #navBar-area>#nav-left>.nav-left-title:first-child {
+            --background-color: red;
+            
+            /* Perfume 옆 좌측 여백 */
+            margin-left: 110px;
+
+        }
+        #navBar-area>#nav-right>div:last-child {
+
+            /* Wish 옆 우측 여백 */
+            margin-right: 110px;
+
+        }
+    
+    .nav-left-bar {
+
+        /* Perfume, Community 아래 직선 크기 및 색상 */
+        width: 170px;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.5);
+
+        /* Perfume, Community랑 직선 사이 여백 */
+        margin-block: 20px;
+
+        /* 직선 길이가 다른 요소 위치에 영향을 미치게 하지 않기 위함 */
+        position: absolute;
+
+    }
+    .nav-left-detail {
+        position: absolute;
+    }
+    .nav-left-detail div {
+        --background-color: red;
+
+        /* Perfume, Community hover시 나오는 메뉴들 font color */
+        color: rgba(255, 255, 255, 0.5);
+        
+    }
+    .nav-left-detail div:first-child {
+
+        /* 직선이랑 hover메뉴 사이 간격 */
+        margin-top: 40px;
+
+    }
+    .nav-left-detail div:last-child {
+
+        /* 메뉴들 상하 간격 */
+        margin-top: 10px;
+
+    }
+
+#nav-left {
+}
+.nav-left-hidden {
+    display: none;
+}
+#nav-left:hover .nav-left-hidden {
+    display: block;
+}
+
+
+
+    
+    
+    
+
+/* 헤더 끝 */

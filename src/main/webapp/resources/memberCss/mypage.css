@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'MapoFlowerIsland';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    --font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ghana';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    margin: 0;
+    font-family: 'MapoFlowerIsland';
+}
+
+#outter {
+	padding-top: 20vh;	/* 헤더 공간 */
+	height: 80vh;
+	width: 50vw;
+	margin: 0 auto;
+}
+
+#inner {
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	margin: 10px 0;
+}
+
+label {
+	font-size: large;
+}
+
+h1 {
+	text-align: center;
+}
+
+/* #required {
+	text-align: end;
+} */
+
+#inputForm {
+	margin: auto;
+}
+
+.input-box {
+	height: 45px;
+	width: 100%;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.content {
+	display: flex;
+	margin: 10px 0;
+}
+
+.content-name {
+	width: 25%;
+	display: flex;
+	align-items: center;
+}
+
+.content-text {
+	width: 50%;
+}
+
+.content-btn {
+	width: 25%;
+	text-align: center;
+}
+
+.content-btn button {
+	width: 90%;
+	height: 100%;
+	background-color : #e5e5cb;
+	border: none;
+}
+
+.star {
+	color: red;
+}
+
+#enroll-box {
+	text-align: center;
+}
+
+#enroll-btn {
+	height: 45px;
+	width: 40%;
+	background-color: #e5e5cb;
+	border: none;
+}

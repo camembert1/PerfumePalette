@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PerfumeMapper">
+	<resultMap type="Perfume" id="perfumeResultMap">
+		<id property="perfumeNo" column="PERFUME_NO"></id>
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeVolume" column="PERFUME_VOLUME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" column="P_FILENAME" />
+		<result property="pFilerename" column="P_FILERENAME" />
+		<result property="pFilepath" column="P_FILEPATH" />
+		<result property="perfumeDate" column="PERFUME_DATE" />
+		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	</resultMap>
+
+</mapper>

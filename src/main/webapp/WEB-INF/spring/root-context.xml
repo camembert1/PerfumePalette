@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<!-- 학원 공용 DB -->
+		<property name="url" value="jdbc:oracle:thin:@sonof.iptime.org:8510:xe"></property>
+		<!-- 서버 폭발을 대비한 개인용 DB -->
+		<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
+		<property name="username" value="NAMMAE"></property>
+		<property name="password" value="NAMMAE"></property>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- MemberServiceImpl의 session 객체를 주입 받을 수 있게 도와줌 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+	
+	<!-- MultipartFile을 사용하기 위해 -->
+	<!-- 첨부파일 첨부할때 필요했음 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 1억 -> 100MB -> .1GB -->
+		<property name="maxUploadSize" value="100000000"></property>
+		<property name="maxInMemorySize" value="100000000"></property>
+	</bean>
+		
+</beans>
