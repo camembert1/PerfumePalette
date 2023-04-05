@@ -153,9 +153,6 @@ public class MemberController {
 	public ModelAndView login(@RequestParam("returnUrl") String returnUrl, HttpServletRequest request,
 			@ModelAttribute Member member, ModelAndView mv) {
 		try {
-			System.out.println(returnUrl);
-			System.out.println(member);
-			
 			int result = mService.login(member);
 			if (result > 0) {
 				HttpSession session = request.getSession();
@@ -164,7 +161,7 @@ public class MemberController {
 				session.setAttribute("nickname", member.getMemberNickname());
 				
 				if (returnUrl != null && !returnUrl.equals("")) {
-					mv.setViewName("redirect:/member/mbtiResult");
+					mv.setViewName("redirect:" + returnUrl);
 				} else {
 					mv.setViewName("redirect:/");
 				}
