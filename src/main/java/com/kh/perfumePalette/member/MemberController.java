@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -75,7 +75,7 @@ public class MemberController {
 		return mv;
 	}
 
-	// 아이디 중복 체크
+	// 아이디 유효성 체크
 	@PostMapping(value = "/idChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int idCheck(String memberId) {
@@ -90,22 +90,41 @@ public class MemberController {
 		return result;
 	}
 
-	// 닉네임 중복 체크
+	// 닉네임 유효성 체크
 	@PostMapping(value = "/nicknameChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int nickname(String memberNickname) {
 		int result = mService.checkNickname(memberNickname);
-		Pattern pattern = Pattern.compile("^[a-zA-Z0-9가-힣]{4,20}$");
+		Pattern pattern = Pattern.compile("^[a-zA-Z0-9가-힣]{2,20}$");
 		Matcher matcher = pattern.matcher(memberNickname);
 
-		if ((memberNickname.length() < 4 || memberNickname.length() > 20) || !matcher.matches()) {
+		if ((memberNickname.length() < 2 || memberNickname.length() > 20) || !matcher.matches()) {
 			return -2;
 		}
 
 		return result;
 	}
 
-	// 이메일 중복 체크
+	// 비밀번호 유효성 체크
+	@PostMapping(value = "/pwChk", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public int password(String memberPw, String reMemberPw) {
+		int result = 0;
+		if (!memberPw.equals(reMemberPw)) {
+			result = 1;
+		}
+
+		Pattern pattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$");
+		Matcher matcher = pattern.matcher(String.valueOf(memberPw));
+
+		if (memberPw.length() < 8 || reMemberPw.length() > 20 || !matcher.matches()) {
+			return -2;
+		}
+
+		return result;
+	}
+
+	// 이메일 유효성 체크
 	@PostMapping(value = "/emailChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int emailCheck(String memberEmail) {
@@ -131,20 +150,30 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
+	public ModelAndView login(@RequestParam("returnUrl") String returnUrl, HttpServletRequest request,
+			@ModelAttribute Member member, ModelAndView mv) {
 		try {
+			System.out.println(returnUrl);
+			System.out.println(member);
+			
 			int result = mService.login(member);
 			if (result > 0) {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", member.getMemberId());
 				member = mService.selectMemberById(member.getMemberId());
 				session.setAttribute("nickname", member.getMemberNickname());
-				mv.setViewName("redirect:/");
+				
+				if (returnUrl != null && !returnUrl.equals("")) {
+					mv.setViewName("redirect:/member/mbtiResult");
+				} else {
+					mv.setViewName("redirect:/");
+				}
 			} else {
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
