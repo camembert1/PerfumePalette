@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -196,15 +195,16 @@ public class MemberController {
 	}
 
 	// 마이페이지
-	@GetMapping("/myPage/{memberId}")
-	public ModelAndView myPage(@PathVariable String memberId, HttpServletRequest request, ModelAndView mv) {
+	@GetMapping("/myPage")
+	public ModelAndView myPage(HttpSession session, HttpServletRequest request, ModelAndView mv) {
 		try {
-			Member member = mService.selectMemberById(memberId);
+			String id = (String) session.getAttribute("member");
+			Member member = mService.selectMemberById(id);
 			if (member != null) {
 				mv.addObject("memerOne", member);
 				mv.setViewName("member/myPage");
 			} else {
-				Alert alert = new Alert("/", "일치하는 회원 정보가 존재하지 않습니다");
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			}
@@ -216,16 +216,17 @@ public class MemberController {
 	}
 
 	@PostMapping("/myPage")
-	public ModelAndView myPage(@RequestParam("memberDetailAddr") String memberDetailAddr, HttpServletRequest request, ModelAndView mv, @ModelAttribute Member member) {
+	public ModelAndView myPage(ModelAndView mv, @ModelAttribute Member member,
+			@RequestParam("memberDetailAddr") String memberDetailAddr) {
 		try {
 			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
 			int result = mService.modifyMember(member);
 			if (result > 0) {
-				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 성공했습니다");
+				Alert alert = new Alert("/member/myPage", "정보변경 성공했습니다");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			} else {
-				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 실패했습니다");
+				Alert alert = new Alert("/member/myPage", "정보변경 실패했습니다");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			}

@@ -27,14 +27,23 @@
 <body>
 	<div id="hrefList">
 		<div id="hrefName">${memerOne.memberName }님</div>
-		<span><a href="#">주문내역조회</a></span>
-		<span><a href="#">작성후기</a></span>
-		<span><a href="#">작성문의</a></span>
-		<span><a href="#">작성댓글</a></span>
-		<span><a href="#">좋아요목록</a></span>
-		<span><a href="#">찜목록</a></span>
-		<span><a href="#">장바구니목록</a></span>
-		<span><a href="#">회원탈퇴</a></span>
+		<c:if test="${memerOne.memberId eq 'admin'}">
+			<span><a href="#">판매상품관리</a></span>
+			<span><a href="#">주문내역관리</a></span>
+			<span><a href="#">회원관리</a></span>
+			<span><a href="#">문의관리</a></span>
+			<span><a href="#">후기관리</a></span>
+		</c:if>
+		<c:if test="${memerOne.memberId ne 'admin'}">
+			<span><a href="#">주문내역조회</a></span>
+			<span><a href="#">작성후기</a></span>
+			<span><a href="#">작성문의</a></span>
+			<span><a href="#">작성댓글</a></span>
+			<span><a href="#">좋아요목록</a></span>
+			<span><a href="#">찜목록</a></span>
+			<span><a href="#">장바구니목록</a></span>
+			<span><a href="#">회원탈퇴</a></span>
+		</c:if>
 	</div>
 	<form action="/member/myPage" method="post"
 		onsubmit="return totalChk();">
@@ -144,9 +153,8 @@
 						</div>
 						<div class="content-text">
 							<input id="address" class="input-box box" type="text"
-								name="memberAddr"> <input
-								id="detailAddress" class="input-box" type="text"
-								name="memberDetailAddr">
+								name="memberAddr"> <input id="detailAddress"
+								class="input-box" type="text" name="memberDetailAddr">
 						</div>
 						<div class="content-btn">
 							<button type="button" onclick="sample4_execDaumPostcode()">주소찾기</button>
