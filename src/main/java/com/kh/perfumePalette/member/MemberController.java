@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,10 +55,10 @@ public class MemberController {
 	}
 
 	@PostMapping("/enroll")
-	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member) {
+	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member,
+			@RequestParam("memberDetailAddr") String memberDetailAddr) {
 		try {
-			// memberAddress가 2개 들어오는데 이때 ','로 구분되어 ', '로 변경
-			member.setMemberAddr(member.getMemberAddr().replace(",", ", "));
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
 			int result = mService.insertMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/login", "회원가입에 성공했습니다");
@@ -185,6 +187,47 @@ public class MemberController {
 				mv.setViewName("redirect:/");
 			} else {
 				mv.setViewName("redirect:/");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 마이페이지
+	@GetMapping("/myPage/{memberId}")
+	public ModelAndView myPage(@PathVariable String memberId, HttpServletRequest request, ModelAndView mv) {
+		try {
+			Member member = mService.selectMemberById(memberId);
+			if (member != null) {
+				mv.addObject("memerOne", member);
+				mv.setViewName("member/myPage");
+			} else {
+				Alert alert = new Alert("/", "일치하는 회원 정보가 존재하지 않습니다");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+
+	@PostMapping("/myPage")
+	public ModelAndView myPage(@RequestParam("memberDetailAddr") String memberDetailAddr, HttpServletRequest request, ModelAndView mv, @ModelAttribute Member member) {
+		try {
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			int result = mService.modifyMember(member);
+			if (result > 0) {
+				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 성공했습니다");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 실패했습니다");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

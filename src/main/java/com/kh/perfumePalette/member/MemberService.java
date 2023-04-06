@@ -14,5 +14,7 @@ public interface MemberService {
 
 	int checkNickname(String memberNickname);
 
+	int modifyMember(Member member);
+
 
 }

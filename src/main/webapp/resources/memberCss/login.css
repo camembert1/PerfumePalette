@@ -13,9 +13,12 @@
     font-style: normal;
 }
 
+*{
+	font-family: 'MapoFlowerIsland';
+}
+
 body {
 	margin: 0;
-	font-family: 'MapoFlowerIsland';
 }
 
 #outter {
@@ -46,6 +49,7 @@ a:link {
 	height: 45px;
 	width: 100%;
 	box-sizing: border-box;
+	padding-left: 10px;
 }
 
 .input-box:nth-child(1) {
