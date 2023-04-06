@@ -13,12 +13,6 @@
 <body>
 	<form action="/member/login" method="post">
 		<div id="outter">
-			<c:if test="${sessionScope.mbtiResult ne null }">
-				<input type="hidden" name="returnUrl" value="/member/mbtiResult">
-			</c:if>
-			<c:if test="${sessionScope.mbtiResult eq null }">
-				<input type="hidden" name="returnUrl" value="">
-			</c:if>
 			<div id="inner">
 				<h2>로그인</h2>
 				<div id="input-main">

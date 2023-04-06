@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -150,8 +149,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ModelAndView login(@RequestParam("returnUrl") String returnUrl, HttpServletRequest request,
-			@ModelAttribute Member member, ModelAndView mv) {
+	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
 		try {
 			int result = mService.login(member);
 			if (result > 0) {
@@ -159,11 +157,10 @@ public class MemberController {
 				session.setAttribute("member", member.getMemberId());
 				member = mService.selectMemberById(member.getMemberId());
 				session.setAttribute("nickname", member.getMemberNickname());
-				
-				if (returnUrl != null && !returnUrl.equals("")) {
-					mv.setViewName("redirect:" + returnUrl);
-				} else {
+				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");
+				} else {
+					mv.setViewName("redirect:/member/mbtiResult");
 				}
 			} else {
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
