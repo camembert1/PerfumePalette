@@ -4,19 +4,19 @@ import java.sql.Timestamp;
 
 public class Perfume {
 	
-	private int perfumeNo;
-	private String perfumeName;
-	private String perfumeBrand;
-	private int perfumeVolume;
-	private int perfumePrice;
-	private int perfumeQuantity;
-	private String pScentCategory;
-	private String pImageCategory;
-	private String pFilename;
-	private String pFilerename;
-	private String pFilepath;
-	private Timestamp perfumeDate;
-	private int perfumeStatus;
+	private int perfumeNo;			// 품번
+	private String perfumeName;		// 품명
+	private String perfumeBrand;	// 브랜드
+	private int perfumeVolume;		// 용량
+	private int perfumePrice;		// 가격
+	private int perfumeQuantity;	// 수량
+	private String pScentCategory;	// 향 분류
+	private String pImageCategory;	// 이미지 분류
+	private String pFilename;		// 파일 네임
+	private String pFilerename;		// 파일 리네임
+	private String pFilepath;		// 파일 경로
+	private Timestamp perfumeDate;	// 등록일
+	private int perfumeStatus;		// 노출 여부
 	
 	public Perfume() {
 		super();

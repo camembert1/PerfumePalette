@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.main_img {
+    width: 300px;
+    height: 300px;
+    float: left;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
