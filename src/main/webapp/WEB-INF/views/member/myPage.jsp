@@ -6,8 +6,8 @@
 
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
-<link rel="stylesheet" href="../../../resources/memberCss/enroll.css">
+<title>마이페이지</title>
+<link rel="stylesheet" href="../../../resources/memberCss/mypage.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
@@ -25,30 +25,45 @@
 </head>
 
 <body>
-	<form action="/member/enroll" method="post" autocomplete="off"
+	<div id="hrefList">
+		<div id="hrefName">${memerOne.memberName }님</div>
+		<c:if test="${memerOne.memberId eq 'admin'}">
+			<span><a href="#">판매상품관리</a></span>
+			<span><a href="#">주문내역관리</a></span>
+			<span><a href="#">회원관리</a></span>
+			<span><a href="#">문의관리</a></span>
+			<span><a href="#">후기관리</a></span>
+		</c:if>
+		<c:if test="${memerOne.memberId ne 'admin'}">
+			<span><a href="#">주문내역조회</a></span>
+			<span><a href="#">작성후기</a></span>
+			<span><a href="#">작성문의</a></span>
+			<span><a href="#">작성댓글</a></span>
+			<span><a href="#">좋아요목록</a></span>
+			<span><a href="#">찜목록</a></span>
+			<span><a href="#">장바구니목록</a></span>
+			<span><a href="#">회원탈퇴</a></span>
+		</c:if>
+	</div>
+	<form action="/member/myPage" method="post"
 		onsubmit="return totalChk();">
 		<div id="outter">
-			<h1>회원가입</h1>
+			<h1>마이페이지</h1>
 			<div id="required">
-				<span class="star">*</span> 필수입력사항
+				<span class="star">*</span> 수정가능사항
 			</div>
 			<div id="inner">
 				<div id="inputForm">
 					<div class="content">
 						<div class="content-name">
-							<label>아이디<span class="star">*</span></label>
+							<label>아이디</label>
 						</div>
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="text" name="memberId"
-									placeholder="아이디를 입력해주세요" autofocus onchange="chkId()">
+									value="${memerOne.memberId }" readonly>
 							</div>
 						</div>
-					</div>
-					<div class="chkMessge">
-						<span id="id_ok">사용 가능한 아이디입니다.</span> <span id="id_not_ok2">영문
-							대소문자, 숫자만 사용 가능하며 최소 길이 4, 최대 길이 20입니다.</span> <span id="id_not_ok3">중복된
-							아이디입니다. 새로운 아이디를 입력하세요.</span>
 					</div>
 					<div class="content">
 						<div class="content-name">
@@ -57,7 +72,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="text" name="memberNickname"
-									placeholder="닉네임을 입력해주세요" onchange="chkNickname()">
+									value="${memerOne.memberNickname }" onchange="chkNickname()">
 							</div>
 						</div>
 					</div>
@@ -74,7 +89,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="password" name="memberPw"
-									placeholder="비밀번호를 입력해주세요">
+									value="${memerOne.memberPw }">
 							</div>
 						</div>
 					</div>
@@ -85,7 +100,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="password" name="reMemberPw"
-									placeholder="비밀번호를 한번 더 입력해주세요" onchange="chkPw()">
+									value="${memerOne.memberPw }" onchange="chkPw()">
 							</div>
 						</div>
 					</div>
@@ -101,7 +116,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="text" name="memberName"
-									placeholder="이름을 입력해 주세요">
+									value="${memerOne.memberName }" required>
 							</div>
 						</div>
 					</div>
@@ -112,7 +127,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="text" name="memberEmail"
-									placeholder="6nammae@gmail.com" onchange="chkEmail()">
+									value="${memerOne.memberEmail }" onchange="chkEmail()">
 							</div>
 						</div>
 					</div>
@@ -128,7 +143,7 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="tel" name="memberPhone"
-									placeholder="숫자만 입력해주세요.">
+									value="${memerOne.memberPhone }">
 							</div>
 						</div>
 					</div>
@@ -138,9 +153,8 @@
 						</div>
 						<div class="content-text">
 							<input id="address" class="input-box box" type="text"
-								name="memberAddr" placeholder="주소를 검색해주세요"> <input
-								id="detailAddress" class="input-box" type="text"
-								name="memberDetailAddr" placeholder="상세주소를 입력해주세요">
+								name="memberAddr"> <input id="detailAddress"
+								class="input-box" type="text" name="memberDetailAddr">
 						</div>
 						<div class="content-btn">
 							<button type="button" onclick="sample4_execDaumPostcode()">주소찾기</button>
@@ -150,52 +164,21 @@
 			</div>
 			<div id="enroll-box">
 				<button id="enroll-btn">
-					<span>가입하기</span>
+					<span>수정하기</span>
 				</button>
 			</div>
 		</div>
+		<script>
+			const addr = "${memerOne.memberAddr }";
+			const splitAddr = addr.split("/ ");
+			$("[id=address]").attr("value", splitAddr[0]);
+			$("[id=detailAddress]").attr("value", splitAddr[1]);
+		</script>
 	</form>
 
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">
-		var idChkNum = -100;
-		/* 아이디 중복 확인 */
-		function chkId() {
-			var memberId = $('input[name=memberId]').val();
-			$.ajax({
-				url : '/member/idChk',
-				type : 'post',
-				data : {
-					memberId : memberId
-				},
-				success : function(data) { // 컨트롤러에서 넘어온 result값을 받는다 
-					if (data == 0) { // result가 1이 아니면(0일 경우) -> 사용 가능한 아이디 
-						/* $('#id_ok').css("display", "inline-block"); */
-						$('#id_not_ok2').css("display", "none");
-						$('#id_not_ok3').css("display", "none");
-						idChkNum = data;
-					} else if (data == -2) {
-						$('#id_ok').css("display", "none");
-						$('#id_not_ok2').css("display", "inline-block");
-						$('#id_not_ok3').css("display", "none");
-						idChkNum = data;
-					} else if (data > 0) { // result가 1일 경우 -> 이미 존재하는 아이디
-						$('#id_ok').css("display", "none");
-						$('#id_not_ok2').css("display", "none");
-						$('#id_not_ok3').css("display", "inline-block");
-						$('input[name=memberId]').val('');
-						idChkNum = data;
-					}
-
-				},
-				error : function() {
-					alert("에러발생");
-				}
-			});
-		};
-
-		var nicknameChkNum = -100;
 		/* 닉네임 중복 확인 */
 		function chkNickname() {
 			var memberNickname = $('input[name=memberNickname]').val();
@@ -210,18 +193,15 @@
 						/* $('#nickName_ok').css("display", "inline-block"); */
 						$('#nickName_not_ok2').css("display", "none");
 						$('#nickName_not_ok3').css("display", "none");
-						nicknameChkNum = data;
 					} else if (data == -2) {
 						$('#nickName_ok').css("display", "none");
 						$('#nickName_not_ok2').css("display", "inline-block");
 						$('#nickName_not_ok3').css("display", "none");
-						nicknameChkNum = data;
 					} else if (data > 0) {
 						$('#nickName_ok').css("display", "none");
 						$('#nickName_not_ok2').css("display", "none");
 						$('#nickName_not_ok3').css("display", "inline-block");
 						$('input[name=memberNickname]').val('');
-						nicknameChkNum = data;
 					}
 
 				},
@@ -231,7 +211,6 @@
 			});
 		};
 
-		var pwChkNum = -100;
 		/* 비밀번호 확인 */
 		function chkPw() {
 			var memberPw = $('input[name=memberPw]').val();
@@ -248,17 +227,14 @@
 						/* $('#pw_ok').css("display", "inline-block"); */
 						$('#pw_not_ok2').css("display", "none");
 						$('#pw_not_ok3').css("display", "none");
-						pwChkNum = data;
 					} else if (data == -2) {
 						$('#pw_not_ok2').css("display", "none");
 						$('#pw_not_ok3').css("display", "inline-block");
 						$('input[name=memberPw]').focus();
-						pwChkNum = data;
 					} else if (data > 0) {
 						$('#pw_not_ok2').css("display", "inline-block");
 						$('#pw_not_ok3').css("display", "none");
 						$('input[name=reMemberPw]').focus();
-						pwChkNum = data;
 					}
 				},
 				error : function() {
@@ -267,7 +243,6 @@
 			});
 		};
 
-		var emailChkNum = -100;
 		/* 이메일 중복 확인 */
 		function chkEmail() {
 			var memberEmail = $('input[name=memberEmail]').val();
@@ -378,13 +353,6 @@
 			var memberPhone = $("input[name=memberPhone]");
 			var memberAddress = $("#address");
 			var memberDetailAddress = $("#detailAddress")
-
-			// 아이디 유효성은 ajax로 처리
-			if (memberId.val() == '') {
-				alert("아이디를 입력하세요.");
-				memberId.focus();
-				return false;
-			}
 
 			// 닉네임 유효성은 ajax로 처리
 			if (memberNickname.val() == '') {

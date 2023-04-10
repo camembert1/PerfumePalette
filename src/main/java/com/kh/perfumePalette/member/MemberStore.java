@@ -14,6 +14,8 @@ public interface MemberStore {
 	
 	int checkEmail(String memberEmail);
 
+	int modifyMember(Member member);
+
 	
 
 }
