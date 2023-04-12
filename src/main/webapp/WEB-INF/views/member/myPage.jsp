@@ -28,7 +28,7 @@
 	<div id="hrefList">
 		<div id="hrefName">${memerOne.memberName }님</div>
 		<c:if test="${memerOne.memberId eq 'admin'}">
-			<span><a href="#">판매상품관리</a></span>
+			<span><a href="/perfume/mList">판매상품관리</a></span>
 			<span><a href="#">주문내역관리</a></span>
 			<span><a href="#">회원관리</a></span>
 			<span><a href="#">문의관리</a></span>

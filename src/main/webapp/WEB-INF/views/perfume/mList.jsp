@@ -9,7 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	</head>
 	<body>
-		<h1>상품 관리</h1>
+		<h1>상품 관리</h1> <a href="/perfume/write">상품 등록</a>
 		<table>
 			<thead>
 				<tr>
