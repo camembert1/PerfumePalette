@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,10 +54,10 @@ public class MemberController {
 	}
 
 	@PostMapping("/enroll")
-	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member,
-			@RequestParam("memberDetailAddr") String memberDetailAddr) {
+	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member) {
 		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			// memberAddress가 2개 들어오는데 이때 ','로 구분되어 ', '로 변경
+			member.setMemberAddr(member.getMemberAddr().replace(",", ", "));
 			int result = mService.insertMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/login", "회원가입에 성공했습니다");
@@ -76,7 +75,7 @@ public class MemberController {
 		return mv;
 	}
 
-	// 아이디 유효성 체크
+	// 아이디 중복 체크
 	@PostMapping(value = "/idChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int idCheck(String memberId) {
@@ -91,41 +90,22 @@ public class MemberController {
 		return result;
 	}
 
-	// 닉네임 유효성 체크
+	// 닉네임 중복 체크
 	@PostMapping(value = "/nicknameChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int nickname(String memberNickname) {
 		int result = mService.checkNickname(memberNickname);
-		Pattern pattern = Pattern.compile("^[a-zA-Z0-9가-힣]{2,20}$");
+		Pattern pattern = Pattern.compile("^[a-zA-Z0-9가-힣]{4,20}$");
 		Matcher matcher = pattern.matcher(memberNickname);
 
-		if ((memberNickname.length() < 2 || memberNickname.length() > 20) || !matcher.matches()) {
+		if ((memberNickname.length() < 4 || memberNickname.length() > 20) || !matcher.matches()) {
 			return -2;
 		}
 
 		return result;
 	}
 
-	// 비밀번호 유효성 체크
-	@PostMapping(value = "/pwChk", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public int password(String memberPw, String reMemberPw) {
-		int result = 0;
-		if (!memberPw.equals(reMemberPw)) {
-			result = 1;
-		}
-
-		Pattern pattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$");
-		Matcher matcher = pattern.matcher(String.valueOf(memberPw));
-
-		if (memberPw.length() < 8 || reMemberPw.length() > 20 || !matcher.matches()) {
-			return -2;
-		}
-
-		return result;
-	}
-
-	// 이메일 유효성 체크
+	// 이메일 중복 체크
 	@PostMapping(value = "/emailChk", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int emailCheck(String memberEmail) {
@@ -159,17 +139,12 @@ public class MemberController {
 				session.setAttribute("member", member.getMemberId());
 				member = mService.selectMemberById(member.getMemberId());
 				session.setAttribute("nickname", member.getMemberNickname());
-				if (session.getAttribute("mbtiResult") == null) {
-					mv.setViewName("redirect:/");
-				} else {
-					mv.setViewName("redirect:/member/mbtiResult");
-				}
+				mv.setViewName("redirect:/");
 			} else {
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
@@ -187,47 +162,6 @@ public class MemberController {
 				mv.setViewName("redirect:/");
 			} else {
 				mv.setViewName("redirect:/");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-		}
-		return mv;
-	}
-
-	// 마이페이지
-	@GetMapping("/myPage/{memberId}")
-	public ModelAndView myPage(@PathVariable String memberId, HttpServletRequest request, ModelAndView mv) {
-		try {
-			Member member = mService.selectMemberById(memberId);
-			if (member != null) {
-				mv.addObject("memerOne", member);
-				mv.setViewName("member/myPage");
-			} else {
-				Alert alert = new Alert("/", "일치하는 회원 정보가 존재하지 않습니다");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-		}
-		return mv;
-	}
-
-	@PostMapping("/myPage")
-	public ModelAndView myPage(@RequestParam("memberDetailAddr") String memberDetailAddr, HttpServletRequest request, ModelAndView mv, @ModelAttribute Member member) {
-		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
-			int result = mService.modifyMember(member);
-			if (result > 0) {
-				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 성공했습니다");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
-			} else {
-				Alert alert = new Alert("/member/myPage/" + member.getMemberId(), "정보변경 실패했습니다");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
