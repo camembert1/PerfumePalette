@@ -14,6 +14,14 @@ public interface MemberStore {
 	
 	int checkEmail(String memberEmail);
 
+	int modifyMember(Member member);
+
+	Member findId(Member member);
+
+	Member findPw(Member member);
+
+	int updatePw(Member member);
+
 	
 
 }

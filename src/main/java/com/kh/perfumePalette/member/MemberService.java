@@ -14,5 +14,13 @@ public interface MemberService {
 
 	int checkNickname(String memberNickname);
 
+	int modifyMember(Member member);
+
+	Member findId(Member member);
+
+	Member findPw(Member member);
+
+	int updatePw(Member member);
+
 
 }
