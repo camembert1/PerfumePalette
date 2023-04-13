@@ -5,58 +5,66 @@
 	<link rel="stylesheet" href="../../../resources/commonCss/footer.css">
 </head>
 <footer>
-	<div id="content-6">
 
-		<div id="footer-up">
-			<div id="footer-up-list">
-				<ul>
-					<li>
-						<a href="/">이용약관</a>
-					</li>
-					<li>
-						<div>|</div>
-					</li>
-					<li>
-						<a href="/">개인정보취급방침</a>
-					</li>
-				</ul>
+	<div id="footer-left">
+
+		<div id="footer-left-up">
+			<img id="footer-logo" src="../../../resources/img/common/footer-logo-white.png" alt="">
+			<div id="footer-txt">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+				Maecenas blandit tincidunt odio, vitae gravida lorem porta vitae. <br>
+				Vivamus maximus, erat non dictum viverra. <br>
+				Nunc rhoncus magna diam. <br>
+				Aenean quis ex et ligula congue tincidunt faucibus a est. <br>
+				In pretium nulla nunc, consequat consectetur nisl cursus at. <br>
+				Proin efficitur tempus quam et laoreet. <br>
+				Duis nisi nisi, aliquam a quam egestas, semper consectetur ex.
 			</div>
 		</div>
 
-		<div id="footer-down">
+		<div id="footer-left-down">
+			<img id="footer-icon" src="../../../resources/img/common/footer-icon.png" alt="">
+		</div>
 
+	</div>
+
+	<div id="footer-right">
+
+		<div id="footer-right-up">
+			<div id="footer-menu">
+				<div>SHOP <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<div>RECOMMEND <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<div>REVIEW <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<div>Q&A <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+			</div>
+			<div id="footer-sns">
+				<div>
+					<img src="../../../resources/img/common/facebook.png" alt="">
+					<img src="../../../resources/img/common/twitter.png" alt="">
+					<img src="../../../resources/img/common/instagram.png" alt="">
+					<img src="../../../resources/img/common/youtube.png" alt="">
+				</div>
+			</div>
+		</div>
+		<div id="footer-right-down">
+			<div id="footer-info">
+				<div class="footer-title"> Information. </div>
+
+				<div><span>대표전화: </span>031-957-1615 <span>팩스: </span>031-878-7104</div>
+				<div><span>주소: </span>서울특별시 중구 남대문로 120 그레이츠청계 3층 6NAMMAE</div>
+			</div>
 			
+			<div id="footer-policy">
+				<div class="footer-title"> 개인정보처리방침 </div>
 
-			<div id="footer-text">
+				<div>Copyright&copy;2023 6NAMMAE Group Co., Ltd. All Rights Reserved.</div>
+			</div>
+		
 
-				<div id="footer-logo">
-						<div>PerfumePalette</div>
-						<div></div>
-				</div>
-
-				<div id="footer-text-line1">
-						<span>주식회사 PerfumePalette</span>
-						<span> | </span>
-						<span>대표자 : 이유정ㅋ</span>
-						<span> | </span>
-						<span>개인정보책임관리자 : 이유정ㅋ</span>
-					</div>
-					<div id="footer-text-line2">
-						<span>본사대표번호 : 02-321-0618</span>
-						<span> | </span>
-						<span>FAX : 02-325-0618</span>
-					</div>
-					<div id="footer-text-line3">
-						<span>사업자등록번호 : 105-99-00618</span>
-						<span> | </span>
-						<span>사업장 주소 : 서울특별시 중구 남대문로 120 대일빌딩2층 (주)PerfumePalette</span>
-					</div>
-					<div id="footer-text-line4">
-						<span>COPYRIGHT <span style="font-family: 고딕체;">&copy;</span> 2023 ALL RIGHTS RESERVED BY PerfumePalette's.</span>
-					</div>
-				</div>
 
 		</div>
+
 	</div>
+	
 </footer>
 
