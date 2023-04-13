@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -52,11 +53,11 @@
 <!--                             <input type="text" class="" name="pImageCategory" > -->
 							<select id="mySelect" onchange="showCheckboxes()">
                                 <option id="All">전체</option>
-                                <option id="Woody">Woody</option>
-                                <option id="Floral">Floral</option>
-                                <option id="Fruity">Fruity</option>
-                                <option id="Spicy">Spicy</option>
-                                <option id="Citrus">Citrus</option>
+                                <option value="Woody"  <c:if test="${perfume.pScentCategory eq 'Woody'}">selected</c:if>>Woody</option>
+							     <option value="Floral" <c:if test="${perfume.pScentCategory eq 'Floral'}">selected</c:if>>Floral</option>
+							     <option value="Fruity" <c:if test="${perfume.pScentCategory eq 'Fruity'}">selected</c:if>>Fruity</option>
+							     <option value="Spicy"  <c:if test="${perfume.pScentCategory eq 'Spicy'}">selected</c:if>>Spicy</option>
+							     <option value="Citrus" <c:if test="${perfume.pScentCategory eq 'Citrus'}">selected</c:if>>Citrus</option>
                             </select>
                             <div id="checkboxes">
 	                            <div id="Woody" >
@@ -95,12 +96,13 @@
                         <div>
                             <label>향수 종류</label>
                             <select class="category1" name="pScentCategory">
-                                <option value="Woody">Woody</option>
-                                <option value="Floral">Floral</option>
-                                <option value="Fruity">Fruity</option>
-                                <option value="Spicy">Spicy</option>
-                                <option value="Citrus">Citrus</option>
-                            </select>
+							     <option value="Woody"  <c:if test="${perfume.pScentCategory eq 'Woody'}">selected</c:if>>Woody</option>
+							     <option value="Floral" <c:if test="${perfume.pScentCategory eq 'Floral'}">selected</c:if>>Floral</option>
+							     <option value="Fruity" <c:if test="${perfume.pScentCategory eq 'Fruity'}">selected</c:if>>Fruity</option>
+							     <option value="Spicy"  <c:if test="${perfume.pScentCategory eq 'Spicy'}">selected</c:if>>Spicy</option>
+							     <option value="Citrus" <c:if test="${perfume.pScentCategory eq 'Citrus'}">selected</c:if>>Citrus</option>
+							</select>
+
                         </div>
                         <div>
                             <label>리스트 노출 여부 </label>
