@@ -43,6 +43,7 @@ public class PerfumeController {
 				mv.setViewName("perfume/write");
 			}
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
@@ -51,25 +52,37 @@ public class PerfumeController {
 
 	// 상품 등록
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public ModelAndView perfumeRegister(ModelAndView mv,
-			@RequestParam(value = "uploadFile", required = false) MultipartFile multi, HttpServletRequest request,
-			@ModelAttribute Perfume perfume) {
+	public ModelAndView perfumeRegister(
+			ModelAndView mv
+			, @RequestParam(value = "uploadFile", required=false) MultipartFile multi
+			, HttpServletRequest request
+			, @ModelAttribute Perfume perfume) {
 		Map<String, String> fileInfo = null;
 		try {
-			fileInfo = pFileUtil.saveFile(multi, request);
-			perfume.setpFilename(fileInfo.get("original"));
-			perfume.setpFilerename(fileInfo.get("rename"));
-			perfume.setpFilepath(fileInfo.get("renameFilePath"));
-			int result = pService.insertPerfume(perfume);
-			if (result > 0) {
-				Alert alert = new Alert("/perfume/mList", "상품 등록 성공");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
+			HttpSession session = request.getSession();
+			if (session.getAttribute("member").equals("admin")) {
+				fileInfo = pFileUtil.saveFile(multi, request);
+				perfume.setpFilename(fileInfo.get("original"));
+				perfume.setpFilerename(fileInfo.get("rename"));
+				perfume.setpFilepath(fileInfo.get("renameFilePath"));
+				int result = pService.insertPerfume(perfume);
+				if(result > 0) {
+					Alert alert = new Alert("/perfume/mList", "상품등록이 완료되었습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}else {
+					Alert alert = new Alert("/perfume/write", "상품등록이 실패하였습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
+				
 			} else {
-				Alert alert = new Alert("/perfume/write", "상품 등록 실패");
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
@@ -94,66 +107,83 @@ public class PerfumeController {
 
 	// 상품 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public ModelAndView perfumeModify(ModelAndView mv,
-			@RequestParam(value = "uploadFile", required = false) MultipartFile multi, HttpServletRequest request,
-			@ModelAttribute Perfume perfume) {
+	public ModelAndView perfumeModify(ModelAndView mv
+			, @RequestParam(value = "reloadFile", required = false) MultipartFile multi
+			, HttpServletRequest request
+			, @ModelAttribute Perfume perfume) {
 		Map<String, String> fileInfo = null;
 		try {
+			// 수정할 때, 새로 업로드된 파일이 있는 경우
 			if (multi != null && !multi.isEmpty()) {
-				if (perfume.getpFilerename() != null) {
+				// 기존 업로드된 파일체크 후
+				if (perfume.getpFilename() != null) {
+					// 기존 파일 삭제
 					this.deleteFile(perfume.getpFilerename(), request);
 				}
-			}
-			if (multi != null && !multi.isEmpty()) {
 				fileInfo = pFileUtil.saveFile(multi, request);
 				perfume.setpFilename(fileInfo.get("original"));
 				perfume.setpFilerename(fileInfo.get("rename"));
 				perfume.setpFilepath(fileInfo.get("renameFilePath"));
 			}
+			
 			int result = pService.updatePerfume(perfume);
 			if (result > 0) {
-				mv.setViewName("redirect:/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo());
-				return mv;
+//				Alert alert = new Alert("/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되었습니다.");
+				Alert alert = new Alert("/perfume/mList", "상품 수정이 완료되었습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+//				mv.setViewName("redirect:/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo());
 			} else {
-				mv.addObject("msg", "상품 수정이 완료되지 않았습니다.");
-				return mv;
+				Alert alert = new Alert("/perfume/modify?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되지 않았습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-			return mv;
 		}
+		return mv;
 	}
 
+	// 상품 삭제
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public ModelAndView perfumeRemove(@RequestParam("perfumeNo") int perfumeNo
+			, @ModelAttribute Perfume perfume
+			, HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			Perfume perfumeOne = pService.selectOneByNo(perfumeNo);
+			if (perfumeOne.getpFilename() != null) {
+				// 기존 파일 삭제
+				this.deleteFile(perfumeOne.getpFilerename(), request);
+			}
+			int result = pService.deletePerfume(perfumeNo);
+			if (result > 0) {
+				Alert alert = new Alert("/perfume/mList", "상품 삭제가 완료되었습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "삭제가 완료되지 않았습니다.");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+		
 	// 수정시 기존 파일 삭제
-	private void deleteFile(String getpFilerename, HttpServletRequest request) throws Exception {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String delPath = root + "\\perfumeFileUploads";
-		String delFilePath = delPath + "\\" + getpFilerename;
+	private void deleteFile(String getpFilename, HttpServletRequest request) throws Exception {
+		String root = request.getSession().getServletContext().getRealPath("resources/img");
+		String delPath = root + "\\" + "perfumeFileUploads";
+		String delFilePath = delPath + "\\" + getpFilename;
 		File delFile = new File(delFilePath);
 		if (delFile.exists()) {
 			delFile.delete();
 		}
 
-	}
-
-	// 상품 삭제
-	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public String perfumeRemove(@RequestParam("perfumeNo") int perfumeNo, Model model) {
-		try {
-			int result = pService.deletePerfume(perfumeNo);
-			if (result > 0) {
-				return "redirect:/perfume/mList";
-			} else {
-				model.addAttribute("msg", "삭제가 완료되지 않았습니다.");
-				return "common/error";
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			model.addAttribute("msg", e.getMessage());
-			return "common/error";
-		}
 	}
 
 	// 상품 리스트 관리자 뷰

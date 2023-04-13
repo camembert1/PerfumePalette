@@ -29,11 +29,11 @@
 		, PERFUME_VOLUME = #{perfumeVolume}, PERFUME_PRICE = #{perfumePrice}, PERFUME_QUANTITY = #{perfumeQuantity}
 		, P_SCENT_CATEGORY = #{pScentCategory}, P_IMAGE_CATEGORY = #{pImageCategory}, P_FILENAME = #{pFilename}
 		, P_FILERENAME = #{pFilerename}, P_FILEPATH = #{pFilepath}, PERFUME_STATUS = #{perfumeStatus}
-		WHERE PERFUME_NO = #{perfumeNo }
+		WHERE PERFUME_NO = #{perfumeNo}
 	</update>
 	
 	<delete id="deletePerfume">
-		DELETE FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo }
+		DELETE FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
 	</delete>
 	
 	<select id="selectOneByNo" resultMap="perfumeResultMap">

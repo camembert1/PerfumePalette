@@ -38,7 +38,13 @@
 	                    </div>
                         <div>
                             <label>향수 용량 </label>
-                            <input type="text" name="perfumeVolume">
+<!--                             <input type="text" name="perfumeVolume"> -->
+                            <select class="category2" name="perfumeVolume">
+                                <option value=30>30</option>
+                                <option value=50>50</option>
+                                <option value=75>75</option>
+                                <option value=100>100</option>
+                            </select>
                         </div>
                         <div>
                             <label>상품가격</label>

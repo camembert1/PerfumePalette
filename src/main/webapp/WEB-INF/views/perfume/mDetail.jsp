@@ -10,13 +10,14 @@
 	<body>
 		<div class="container">
 			<div>
-				${perfume.pFilename }
+				<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="상품 이미지">
+				
 			</div>
 			<div>
-				브랜드 : ${perfume.perfumeBrand }
-				제품명 : ${perfume.perfumeName }
-				가격 : ${perfume.perfumePrice }
-				용량 : ${perfume.perfumeVolume }
+				브랜드 : ${perfume.perfumeBrand } <br>
+				제품명 : ${perfume.perfumeName } <br>
+				가격 : ${perfume.perfumePrice } <br>
+				용량 : ${perfume.perfumeVolume } <br>
 				
 			</div>
 			<div>
