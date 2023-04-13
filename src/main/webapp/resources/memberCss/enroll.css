@@ -13,12 +13,9 @@
     font-style: normal;
 }
 
-*{
-	font-family: 'MapoFlowerIsland';
-}
-
 body {
 	margin: 0;
+	font-family: 'MapoFlowerIsland';
 }
 
 #outter {
@@ -55,6 +52,7 @@ h1 {
 	width: 100%;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'MapoFlowerIsland';
 	padding-left: 10px;
 }
 
@@ -88,7 +86,7 @@ button {
 
 .content-btn button {
 	width: 90%;
-	height: 45px;
+	height: 100%;
 	background-color : #e5e5cb;
 	border: none;
 }

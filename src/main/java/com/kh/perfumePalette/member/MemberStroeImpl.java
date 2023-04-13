@@ -46,10 +46,4 @@ public class MemberStroeImpl implements MemberStore {
 		return result;
 	}
 
-	@Override
-	public int modifyMember(Member member) {
-		int result = session.update("memberMapper.modifyMember", member);
-		return result;
-	}
-
 }
