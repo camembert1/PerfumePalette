@@ -128,7 +128,8 @@ public class PerfumeController {
 			
 			int result = pService.updatePerfume(perfume);
 			if (result > 0) {
-				Alert alert = new Alert("/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되었습니다.");
+//				Alert alert = new Alert("/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되었습니다.");
+				Alert alert = new Alert("/perfume/mList", "상품 수정이 완료되었습니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 //				mv.setViewName("redirect:/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo());

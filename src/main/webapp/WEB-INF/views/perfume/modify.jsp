@@ -48,6 +48,7 @@
 <!--                                 <option value=100>100</option> -->
                                 <option value=30  <c:if test="${perfume.perfumeVolume eq 30}">selected</c:if>>30</option>
 							    <option value=50 <c:if test="${perfume.perfumeVolume eq 50}">selected</c:if>>50</option>
+							    <option value=75 <c:if test="${perfume.perfumeVolume eq 75}">selected</c:if>>75</option>
 							    <option value=100 <c:if test="${perfume.perfumeVolume eq 100}">selected</c:if>>100</option>
                             </select>
                         </div>
