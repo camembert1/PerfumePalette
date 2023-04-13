@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @font-face {
-    font-family: 'MapoFlowerIsland';
+    font-family: '마포꽃섬';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
     --font-weight: normal;
     font-style: normal;
@@ -13,164 +13,229 @@
 }
 /* 헤더 시작! */
 header {
-    --background-color: red;
+    background-color: #34443E;
     position: fixed;
     top: 0;
     z-index: 10;
     
     width: 100vw;
-    
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column; */
+
+    /* 헤더의 폰트 색상 및 크기 */
+    color: white;
+    font-size: 15pt;
+
+    /* 헤더 아래 그림자 */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 #logo-area {
-    --background-color: blue;
+    --background-color: gold;
     width: inherit;
 
-    /* 로고 영역 높이 */
-    height: 120px;
+    /* logo 있는 공간 높이 */
+    height: 150px;
 
-    /* 로고 영역에서 로고 세로 가운데 정렬 */
-    display: flex;
-    align-items: center;
+    /* 그림자로 navBar Area랑 분리하기 위함 */
+    box-shadow:
+            inset 0px -10px 10px rgba(0, 0, 0, 0.2)
+            , inset 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+header #logo-img {
 
-    /* 로고 영역 상단 여백 */
-    margin-top: 20px;
+    background-image: url(../img/common/logo_white.png);
+    background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
 
-} #logo-area img {
+    /* 로고 크기 */
+    width: 340px;
+    height: 100%;
 
-        /* 로고 높이 (로고 크기 조절) */
-        height: 100px;
+    --background-color: red;
+    
+    /* 로고 왼쪽 여백 */
+    margin-left: 60px;
+}
 
-        /* 로고 좌측 여백 */
-        margin-left: 60px;
 
-        /* 로고 클릭시 홈화면 이동하므로 커서 */
-        cursor: pointer;
 
-    }
 
 #navBar-area {
-    --background-color: green;
-    width: inherit;
+    --background-color: orange;
+    
+}
 
-    /* 내비게이션바 영역 높이 */
-    height: 50px;
+#navBar-area
+, #navBar-area>div {
 
-    /* 좌, 우 내비 가로정렬 */
+    /* nav바 좌우, 좌우 안의 글자들 가로정렬 위함 */
     display: flex;
-    flex-direction: row;
 
-} #navBar-area>[id*=nav] {
-        --background-color: red;
 
-        /* 좌우 영역 서로 반반씩 차지 */
-        width: 50%;
+}
 
-        /* 높이는 내비 영역 높이와 동일 */
-        height: inherit;
+#navBar-area>div>div {
 
-        /* nav바 txt들 가로정렬 */
-        display: flex;
-        flex-direction: row;
+    /* nav바 높이 50px중에 안에 글자들 상단에서 얼마나 띄울지 */
+    padding-top: 10px;
+    --background-color: red;
+}
 
-        /* nav바 폰트 색상 및 크기 */
-        color: white;
-        font-size: 15pt;
-
-        /* 텍스트 요소 커서 I이걸로 안 바뀌게 하기 위함 */
-        cursor: default;
-
-    }
-    #navBar-area>#nav-right {
-
-        /* 우측 nav바 우측 정렬 */
-        justify-content: end;
-    
-    }
-
-        #navBar-area>#nav-left>.nav-left-title {
-
-            /* Perfume과 Community 간격 조절 */
-            margin-right: 150px;
-            
-        }
-        #navBar-area>#nav-right>div {
-            
-            /* Join, Login, Cart, Wish 간격 조절 */
-            margin-left: 60px;
-
-            /* Join, Login, Cart, Wish 페이지 이동 요소이므로 커서 변경 */
-            cursor: pointer;
-
-        }
-
-        #navBar-area>#nav-left>.nav-left-title:first-child {
-            --background-color: red;
-            
-            /* Perfume 옆 좌측 여백 */
-            margin-left: 110px;
-
-        }
-        #navBar-area>#nav-right>div:last-child {
-
-            /* Wish 옆 우측 여백 */
-            margin-right: 110px;
-
-        }
-    
-    .nav-left-bar {
-
-        /* Perfume, Community 아래 직선 크기 및 색상 */
-        width: 170px;
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.5);
-
-        /* Perfume, Community랑 직선 사이 여백 */
-        margin-block: 20px;
-
-        /* 직선 길이가 다른 요소 위치에 영향을 미치게 하지 않기 위함 */
-        position: absolute;
-
-    }
-    .nav-left-detail {
-        position: absolute;
-    }
-    .nav-left-detail div {
-        --background-color: red;
-
-        /* Perfume, Community hover시 나오는 메뉴들 font color */
-        color: rgba(255, 255, 255, 0.5);
-        
-    }
-    .nav-left-detail div:first-child {
-
-        /* 직선이랑 hover메뉴 사이 간격 */
-        margin-top: 40px;
-
-    }
-    .nav-left-detail div:last-child {
-
-        /* 메뉴들 상하 간격 */
-        margin-top: 10px;
-
-    }
 
 #nav-left {
+
+    /* nav바 있는 공간 높이 */
+    height: 50px;
+
+    /* nav바 왼쪽 너비 */
+    width: 30vw;
+
+    /* Perfume, Community 왼쪽 여백 */
+    padding-left: 100px;
+
+    --background-color: gold;
 }
+
+/* Perfume이랑 Community 사이 간격 조절 위함*/
+/* .nav-left-title:nth-child(1) {
+    position: absolute;
+}
+.nav-left-title:nth-child(2) {
+    position: relative;
+    left: 200px;
+} */
+
+.nav-left-title {
+
+    /* Perfume, Community 너비 고정 위함*/
+    width: 130px;
+
+    /* Perfume, Community  간격 */
+    margin-right: 100px;
+
+
+}
+
+.nav-left-detail>div {
+    /* shop, recommend, review, qna */
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+}
+
+.nav-left-detail>div:nth-child(1) {
+    /* 숨겨져있던 메뉴 shop, recommend 사이 간격 */
+    margin-bottom: 15px;
+}
+
+
+
+
+
+#nav-right {
+
+    /* nav바 오른쪽 너비 */
+    width: 70vw;
+
+    /* 우측 정렬 위함 */
+    display: flex;
+    justify-content: end;
+
+    /* MyPage 오른쪽 여백 */
+    padding-right: 100px;
+    
+    --background-color: green;
+}
+
+#nav-right>div {
+    /* Cart wish logout login등등 사이 간격 */
+    margin-left: 50px;
+
+    /* Cart wish 등등 커서 */
+    cursor: pointer;
+}
+#nav-right>div>img {
+
+    /* 카트 위시 등 아이콘들 */
+    width: 15pt;
+    opacity: 0.7;
+
+
+    /* text랑 img 여백 달라서 수직 가운데 정렬 안맞아서 */
+    /* 이미지만 다시 가운데로 정렬하기 위함 */
+    position: relative;
+    top: 5px;
+}
+
+#alert-hover-area {
+    --background-color: red;
+}
+#alert-hover-area #alert {
+
+    /* 알림창 위치 */
+    position: absolute;
+    right: 90px;
+    top: 200px;
+
+    /* 알림창 크기 및 색상 */
+    width: 240px;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* 알림창 border */
+    border-radius: 20px;
+
+    /* 알림창 폰트 크기 */
+    font-size: 20pt;
+
+    /* 알림창 숨김 */
+    height: 0px;
+    opacity: 0;
+
+    /* 알림창스크롤 */
+    /* overflow-y: scroll; */
+}
+#alert-hover-area:hover #alert{
+    transition-duration: 0.4s;
+    height: 260px;
+    opacity: 1;
+}
+
+
+
 .nav-left-hidden {
-    display: none;
+    --display: none;
+    opacity: 0;
+}
+.nav-left-bar {
+    height: 1px;
+    width: 0px;
+
+    /* Perfume, Community 아래 바 색상 */
+    background-color: rgba(255, 255, 255, 0.5);
+
+    /* Perfume, Community 아래 바 위아래 여백 */
+    margin-block: 20px;
+
+
 }
 #nav-left:hover .nav-left-hidden {
-    display: block;
+    transition-duration: 0.2s;
+    --display: block;
+    opacity: 1;
+}
+#nav-left:hover .nav-left-bar {
+    transition-duration: 0.4s;
+    width: 150px;
+}
+#nav-left:hover {
+    transition-duration: 0.4s;
+    height: 155px;
+}
+.nav-left-detail>div:hover {
+
+    /* hop, recommend, review, qna */
+    transition-duration: 0.5s;
+    color: white;
 }
 
-
-
-    
-    
-    
 
 /* 헤더 끝 */

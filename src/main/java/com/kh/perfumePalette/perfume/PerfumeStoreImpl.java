@@ -42,6 +42,15 @@ public class PerfumeStoreImpl implements PerfumeStore{
 		return perfume;
 	}
 
+	// 유정
+	/**
+	 * 쇼핑몰 - 향수 목록 출력 StoreLogic
+	 */
+	@Override
+	public List<Perfume> selectAvailablePerfumes(String scentCategory) {
+		List<Perfume> pList = session.selectList("PerfumeMapper.selectAvailablePerfumes", scentCategory);
+;		return pList;
+	}
 
 
 }

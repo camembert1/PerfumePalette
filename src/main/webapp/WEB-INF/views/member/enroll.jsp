@@ -25,6 +25,13 @@
 </head>
 
 <body>
+<jsp:include page="../common/header.jsp" />
+<main>
+            <!-- 헤더 부분 피하기 위한 div -->
+   <div id="forHeader"></div>
+            <!-- 본문 내용 가운데 정렬 위한 div -->
+   <div id="forCenter">
+      <!-- 여기부터 내용 입력하시면 됩니다! -->
 	<form action="/member/enroll" method="post" autocomplete="off"
 		onsubmit="return totalChk();">
 		<div id="outter">
@@ -151,6 +158,9 @@
 			</div>
 		</div>
 	</form>
+   </div>
+</main>
+<jsp:include page="../common/footer.jsp" />
 
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

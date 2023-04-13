@@ -1,0 +1,101 @@
+@font-face {
+    font-family: '마포꽃섬';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    --font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ghana';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+   font-family: '마포꽃섬';
+}
+body {
+    overflow-x: hidden;
+}
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+main>div[id=forHeader] {
+
+    /* 헤더 공간 비워두기 위함  */
+    height: 190px;
+
+    /* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+    margin-bottom: 100px;
+
+}
+main>div[id=forCenter] {
+
+   /* 본문 내용 가운데 정렬 위함 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+}
+
+.table {
+    width: 1200px;
+    border-top: 1px solid darkgray;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.line {
+    border-top: 1px solid gray;
+    padding-top: 30px;
+    font-size: larger;
+}
+
+
+th {
+    padding-bottom: 15px;
+}
+
+td {
+    padding-bottom: 65px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+a {
+    text-decoration: none;
+}
+.page {
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+    box-sizing: content-box;
+    width: 3px;
+    height: 3px;
+}
+
+.number:hover {
+    background-color: rgba(200, 194, 194, 0.901);
+    padding: 7px 17px;
+    border-radius: 100%;
+}
+
+.number:not(.number:hover){
+    margin: 7px 17px;
+}
+
+/* .now {
+    background-color: rgba(200, 194, 194, 0.901);
+    padding: 7px 17px;
+    border-radius: 100%;
+} */

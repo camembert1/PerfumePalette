@@ -39,6 +39,11 @@ public interface PerfumeService {
 	 * @return perfume
 	 */
 	Perfume selectOneByNo(int perfumeNo);
+	
+	
+	// 유정
+	// 쇼핑몰 - 향수 목록 출력 Service
+	List<Perfume> selectAvailablePerfumes(String scentCategory);
 
 
 

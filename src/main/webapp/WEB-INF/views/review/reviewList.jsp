@@ -171,9 +171,18 @@
         </tbody>
         <tfoot>
 	        <tr>
-	        	<td colspan="5">페이징이 들어갈자리??..아니면 테이블 하나 더 생성?</td>
-	        </tr>
-        </tfoot>
+		        <td colspan="6" class="line">
+			        <a href="" class="page">&lt;&lt;</a> 
+			        <a href="" class="page"> &lt;</a> 
+			        <a href="" class="number page">1</a> 
+			        <a href="" class="number page">2</a> 
+			        <a href="" class="number page">3</a> 
+			        <a href="" class="number page">4</a>
+					<a href="" class="number page">5</a> <a href="" class="page">&gt;</a>
+					<a href="" class="page">&gt;&gt;</a>
+				</td>
+			</tr>
+		</tfoot>
     </table>
 	</div>
 	</main>
