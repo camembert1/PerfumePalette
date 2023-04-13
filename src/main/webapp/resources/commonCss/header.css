@@ -13,7 +13,7 @@
 }
 /* 헤더 시작! */
 header {
-    background-color: #34443E;
+    --background-color: red;
     position: fixed;
     top: 0;
     z-index: 10;
@@ -77,7 +77,7 @@ header {
         flex-direction: row;
 
         /* nav바 폰트 색상 및 크기 */
-        color: black;
+        color: white;
         font-size: 15pt;
 
         /* 텍스트 요소 커서 I이걸로 안 바뀌게 하기 위함 */
@@ -126,7 +126,7 @@ header {
         /* Perfume, Community 아래 직선 크기 및 색상 */
         width: 170px;
         height: 1px;
-        background-color: #34443E;
+        background-color: rgba(255, 255, 255, 0.5);
 
         /* Perfume, Community랑 직선 사이 여백 */
         margin-block: 20px;
@@ -142,7 +142,7 @@ header {
         --background-color: red;
 
         /* Perfume, Community hover시 나오는 메뉴들 font color */
-        color: #34443E;
+        color: rgba(255, 255, 255, 0.5);
         
     }
     .nav-left-detail div:first-child {

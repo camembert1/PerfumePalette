@@ -1,0 +1,190 @@
+@charset "UTF-8";
+@font-face {
+    font-family: '마포꽃섬';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    --font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ghana';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+   font-family: '마포꽃섬';
+}
+body {
+    overflow-x: hidden;
+}
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+main>div[id=forHeader] {
+
+    /* 헤더 공간 비워두기 위함  */
+    height: 190px;
+
+    /* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+    margin-bottom: 100px;
+
+}
+main>div[id=forCenter] {
+
+   /* 본문 내용 가운데 정렬 위함 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+main #subject {
+   font-size: 50px;
+   font-weight: bold;
+   margin-bottom: 20px;
+}
+
+main .productInfoContainer {
+		/* width: 1000px;
+        height: 200px; */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+   .productSubject {
+        /* flex: 1; */
+        font-weight: bold;
+        margin-right: 90px;
+        font-size: 50px;
+    }
+    
+
+    .productInfo {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .productImg{
+    	width: 200px;
+    	height: 200px;
+    	border-radius: 10px;
+    	background-color: #c0c0c0;
+    }
+    
+    .productDetails{
+	    flex: 1;
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: space-between;
+	     margin: 33px 0 33px 35px; 
+    }
+    .productTitle {
+        
+    }
+
+    .productPrice {
+       
+        
+    }
+
+main #writer {
+	display: flex;
+    height: 100px;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+	.left {
+	width: 200px;
+	   float: left;
+	   box-sizing: border-box;
+	   font-size: 50px;
+	   font-weight: bold;
+	}
+	.right {
+	   float: right;
+	   box-sizing: border-box;
+	}
+
+main #starScore {
+	display: flex;
+	width:1000px;
+	height: 100px;
+	margin-bottom: 20px;
+	/* background-color: aqua; */
+}
+	
+main fieldset{
+	display: inline-block;
+	direction: rtl;
+	border:0;
+}	
+	main fieldset legend {
+		text-align: right;
+	}
+
+	main input[type=radio] {
+		display: none;
+	}
+	
+	main label {
+		font-size: 3em;
+		color: transparent;
+		text-shadow: 0 0 0 #f0f0f0;
+	}
+	
+	main label:hover {
+		text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+	
+	main label:hover ~ label {
+		text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+	
+	main input[type=radio]:checked ~ label {
+		text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+
+main #productContent {
+	display: flex;
+	margin-bottom: 20px;
+}
+	.api{
+	   float: right;
+	   box-sizing: border-box;
+	}
+
+/* main .filbox{
+	width:1000px;
+	height: 30px; 
+	margin-bottom: 10px;
+} */
+
+
+main .input-btn {
+   display: flex; /* 수정: flex 컨테이너로 설정 */
+   justify-content: space-between; /* 수정: 컨테이너 내부 요소들 간의 간격을 최대로 늘림 */
+   margin-bottom: 10px;
+}
+
+.input-btn button {
+   padding: 0;
+   height: 45px;
+   width: 49%; /* 수정: 버튼 폭을 49%로 설정하여 가로로 나란히 배치하고 간격을 둠 */
+   color: white;
+}
+
+button {
+   background-color: #222222;
+   border: none;
+}

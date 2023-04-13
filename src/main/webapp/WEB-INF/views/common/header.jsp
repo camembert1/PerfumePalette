@@ -51,16 +51,15 @@
 			<!-- 로그인 상태 -->
 			<c:if test="${sessionScope.member ne null }">
 				<div onclick="location.href='/member/logout'">Logout</div>
-				<!-- <div onclick="location.href='#'">Alert</div> -->
 				
 				<!-- 관리자가 아니라면 마이페이지 -->
 				<c:if test="${sessionScope.member ne 'admin' }">
-					<div onclick="location.href='/member/myPage'">${sessionScope.nickname }'s MyPage</div>
+					<div onclick="location.href='#'">${sessionScope.nickname }'s MyPage</div>
 				</c:if>
 				
 				<!-- 관리자가 맞다면 관리자페이지 -->
 				<c:if test="${sessionScope.member eq 'admin' }">
-					
+					<div onclick="location.href='#'">Manager Page</div>
 				</c:if>
 
 			</c:if>
@@ -70,4 +69,3 @@
 	</div>
 	
 </header>
-

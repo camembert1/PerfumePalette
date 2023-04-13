@@ -45,12 +45,6 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
-	@Override
-	public int modifyMember(Member member) {
-		int result = mStore.modifyMember(member);
-		return result;
-	}
-
 	
 
 	
