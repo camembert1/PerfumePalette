@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wishMapper">
+	<resultMap type="Wish" id="wishResultMap">
+		<id property="wishNo" column="WISH_NO"></id>
+		<result property="wishDate" column="WISH_DATE" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="perfumeNo" column="PERFUME_NO" />
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeVolume" column="PERFUME_VOLUME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" column="P_FILENAME" />
+		<result property="pFilerename" column="P_FILERENAME" />
+		<result property="pFilepath" column="P_FILEPATH" />
+		<result property="perfumeDate" column="PERFUME_DATE" />
+		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="wishResultMap">
+		SELECT *
+		FROM WISH_TBL
+		WHERE
+		MEMBER_ID = #{memberId}
+	</select>
+
+	<select id="selectPerfumeList" resultMap="wishResultMap">
+		SELECT P.*, W.WISH_NO,
+		W.WISH_DATE, W.MEMBER_ID
+		FROM PERFUME_TBL P
+		LEFT OUTER JOIN WISH_TBL W
+		ON P.PERFUME_NO = W.PERFUME_NO
+	</select>
+
+	<insert id="addWish">
+		INSERT INTO WISH_TBL
+		VALUES(SEQ_WISHNO.NEXTVAL,
+		DEFAULT, #{memberId}, #{perfumeNo})
+	</insert>
+
+	<delete id="removeWish">
+		DELETE FROM WISH_TBL WHERE MEMBER_ID = #{memberId}
+		AND PERFUME_NO = #{perfumeNo}
+	</delete>
+
+</mapper>
