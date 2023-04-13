@@ -8,19 +8,15 @@
 <title>mbti결과</title>
 </head>
 <body>
-	<%-- <h1>${sessionScope.nickname }</h1> --%>
-	<%-- <h1>${sessionScope.member }</h1> --%>
+	<h1>${sessionScope.nickname }</h1>
+	<h1>${sessionScope.member }</h1>
     <!-- 비로그인상태라면 -->
-    <c:if test="${sessionScope.member eq null }">
-    	<a href="/">홈으로</a>
-    </c:if>
+    <c:if test="${sessionScope.member eq null }"></c:if>
 
     <!-- 로그인상태라면 -->
     <c:if test="${sessionScope.member ne null }">
         <h1>${sessionScope.nickname }님의 MBTI는 ${mbtiResult }입니다.!</h1>
         <a href="/member/mbti">다시검사하기</a>
-        <br>
-        <a href="/">홈으로</a>
     </c:if>
 
     <script>
@@ -28,7 +24,7 @@
         	alert("결과 확인을 위해선 로그인이 필요합니다");
             location.href = "/member/login";
         } else {
-            // alert("예비 결과입니다.")
+            alert("예비 결과입니다.")
             // questions[currentQuestion].classList.remove("current");
             // $("#result h1").append("${loginUser.memberName }님의 MBTI는 " + mbtiResult + "입니다.");
         }

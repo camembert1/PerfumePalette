@@ -52,4 +52,22 @@ public class MemberStroeImpl implements MemberStore {
 		return result;
 	}
 
+	@Override
+	public Member findId(Member member) {
+		Member getUser = session.selectOne("memberMapper.findId", member);
+		return getUser;
+	}
+
+	@Override
+	public Member findPw(Member member) {
+		Member getUser = session.selectOne("memberMapper.findPw", member);
+		return getUser;
+	}
+
+	@Override
+	public int updatePw(Member member) {
+		int result = session.update("memberMapper.updatePw", member);
+		return result;
+	}
+
 }

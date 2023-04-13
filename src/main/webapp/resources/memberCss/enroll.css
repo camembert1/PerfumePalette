@@ -1,56 +1,87 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: 'MapoFlowerIsland';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
-    --font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'ghana';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+   font-family: '마포꽃섬';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+   --font-weight: normal;
+   font-style: normal;
 }
 
-*{
-	font-family: 'MapoFlowerIsland';
+@font-face {
+   font-family: 'ghana';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   font-family: '마포꽃섬';
 }
 
 body {
-	margin: 0;
+   overflow-x: hidden;
 }
 
-#outter {
-	padding-top: 15vh;
+main {
+   width: 100vw;
+   min-height: 100vh;
+}
+
+main>div[id=forHeader] {
+
+   /* 헤더 공간 비워두기 위함  */
+   height: 190px;
+
+   /* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+   margin-bottom: 100px;
+
+}
+
+main>div[id=forCenter] {
+
+   /* 본문 내용 가운데 정렬 위함 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+/* 고정 끝 */
+
+main #outter {
+/* 	padding-top: 15vh; */
 	height: 85vh;
 	width: 50vw;
 	margin: 0 auto;
 }
 
-#inner {
+main #inner {
 	border-bottom: 1px solid black;
 	border-top: 1px solid black;
 	margin: 10px 0;
 }
 
-label {
+main label {
 	font-size: large;
 }
 
-h1 {
+main h1 {
 	text-align: center;
 }
 
-#required {
+main #required {
 	text-align: end;
 }
 
-#inputForm {
+main #inputForm {
 	margin: auto;
 }
 
-.input-box {
+main .input-box {
 	height: 45px;
 	width: 100%;
 	padding: 0;
@@ -58,70 +89,96 @@ h1 {
 	padding-left: 10px;
 }
 
-.content {
+main .content {
 	display: flex;
 	margin: 10px 0;
 }
 
-.content-name {
+main .content-name {
 	width: 25%;
 	display: flex;
 	align-items: center;
 }
 
-.content-text {
+main .content-text {
 	width: 60%;
 }
 
-.content-btn {
+main .content-btn {
 	width: 15%;
 	text-align: center;
 }
 
-button {
+main button {
 	cursor: pointer;
 }
 
-.chkMessge {
+main .chkMessge {
 	margin-left: 25%;
 }
 
-.content-btn button {
+main .content-btn button {
 	width: 90%;
 	height: 45px;
-	background-color : #e5e5cb;
-	border: none;
+	
+	 /* 버튼 색 */
+  background-color: #222222;
+
+  /* 버튼 글 씨 색 */
+  color: white;
+
+  /* 버튼 테두리 없애기 */
+  border: none;
+
+  /* 버튼 곡률 */
+  border-radius: 5px;
+
+  /* 버튼 그림자 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
-.content-btn input{
+main .content-btn input{
 	width: 90%;
 	height: 45%;
 	background-color : #e5e5cb;
 	border: none;
 }
-.box {
+main .box {
 	margin-bottom: 9px;
 }
 
-.star {
+main .star {
 	color: red;
 }
 
-#enroll-box {
+main #enroll-box {
 	text-align: center;
 }
 
-#enroll-btn {
+main #enroll-btn {
 	height: 45px;
 	width: 40%;
-	background-color: #e5e5cb;
-	border: none;
+	
+  /* 버튼 색 */
+  background-color: #222222;
+
+  /* 버튼 글 씨 색 */
+  color: white;
+
+  /* 버튼 테두리 없애기 */
+  border: none;
+
+  /* 버튼 곡률 */
+  border-radius: 5px;
+
+  /* 버튼 그림자 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-button {
+main button {
 	background-color: #E5E5CB;
 	border: none;
 }
 
-input:focus {
+main input:focus {
 	outline: 1px solid #695D58;
 }

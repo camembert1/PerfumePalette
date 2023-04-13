@@ -12,69 +12,210 @@
     font-style: normal;
 }
 
-/* 마이페이지 사이드바때문에 추가해달라고한거 */
+
 footer {
 
+    /* 푸터 상단 그림자 */
+    box-shadow: inset 0vw 1vh 3vh #222222;
+
+    /* 푸터 배경 색상 */
+    background-color: #34443E;
+
+    /* 푸터 크기 */
+    width: 100vw;
+    height: 100vh;
+
+    /* 푸터 txt 색상 */
+    color: rgba(255, 255, 255, 0.7);
 }
 
-#content-6 {
-    /* height: 45vh; */
-    height: 270px;
-    background-color: grey;
-    font-family: 'MapoFlowerIsland';
-    font-weight: 100;
-    font-size: 10pt;
+footer>div{
+
+    /* 푸터 좌우 분리를 위함 */
+    width: 50%;
+    height: 100%;
+    float: left;
 }
-    #footer-up {
-        height: 15%;
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px -10px 15px 0px rgba(0, 0, 0, 0.2);
-    }
-        #footer-up-list {
-            width: 660px;
-        }  
-            #footer-up-list ul {
-                display: flex;
-            }
-                #footer-up-list li {
-                        float: left;
-                        list-style-type: none;
-                        font-weight: 900;
 
-                        /* 이용약관, 개인정보취급방침 간격 */
-                        padding-right: 15px;
-                    }
-                        #footer-up-list a {
-                            color: #1C1C1B;
-                            text-decoration: none;
-                        }
-            
-    #footer-down {
-        height: 85%;
-        background-color: #34443E;
-        box-shadow: inset 0px -10px 20px #141d1a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #ffffff60;
+#footer-right>div, #footer-left>div{
 
-    }
-        #footer-text {
-            height: 75%;
-        }
-        [id^=footer-text-line] {
-            padding-block: 5px;
-        }
-            #footer-logo div:nth-child(1){
-                font-family: 'MapoFlowerIsland';
-                font-size: 30pt;
-            }
-            #footer-logo div:nth-child(2){
-                width: 660px;
-                height: 1px;
-                background-color: #ffffff60;
-                margin-block: 10px;
-            }
+    /* up, down 섹션 나누기 위함 */
+    width: 100%;
+    height: 50%;
+}
+
+
+#footer-left-up #footer-logo {
+
+    /* 로고 크기 */
+    height: 40vh;
+
+    /* 로고 위, 왼쪽 여백 */
+    margin-top: 2.5vh;
+    margin-left: 2.5vh;
+
+    /* 로고가 아이콘 위로 위치하도록 하기 위함 */
+    position: relative;
+    z-index: 1;
+    
+}
+#footer-left-up #footer-txt {
+
+    /* 로고 아래 텍스트 크기 */
+    font-size: 2vh;
+    
+    /* 로고 아래 텍스트 왼쪽 여백, 우측 여백 값과 같아야 함 */
+    margin-left: 10vh;
+
+    /* 로고랑 텍스트 사이 간격 */
+    /* margin-top: 2%; */
+
+    /* 로고 아래 텍스트 줄간격 */
+    line-height: 3.5vh;
+}
+
+#footer-left-down #footer-icon {
+
+    /* 로고 아이콘 크기 */
+    height: 150vh;
+
+    /* 로고 아이콘 위치 이동시키기 위함 */
+    margin-left: -40vh;
+    margin-top: -65vh;
+}
+
+
+
+
+/* 오른쪽 부분 우측정렬하기 위함  시작! */
+#footer-menu>div
+, #footer-sns>div {
+    display: flex;
+    justify-content: flex-end;
+}
+#footer-right-down>div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+/* 오른쪽 부분 우측정렬하기 위함  끝! */
+
+
+
+#footer-right>div {
+    /* right-up, down 각각 세로가운데정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* right 부분 폰트 사이즈 */
+    font-size: 16pt;
+
+
+}
+
+#footer-right>div>div {
+    /* 우측 여백, 로고 아래 텍스트 좌측 여백과 같아야 함 */
+    margin-right: 10vh;
+}
+
+
+
+
+
+#footer-menu>div {
+    /* 화살표 세로가운데정렬 위함 */
+    display: flex;
+    align-items: center;
+
+    /* 바로가기 메뉴들 줄간격 */
+    margin-bottom: 1.5vh;
+
+    /* hover시 움직이지 않도록 하기 위해 높이 고정 */
+    height: 17pt;
+}
+
+#footer-menu img{
+    /* 바로가기 화살표 크기 */
+    height: 1.5vh;
+
+    /* 글자랑 바로가기 화살표 사이 여백 */
+    margin-left: 2vh;
+}
+
+#footer-sns img{
+    /* sns 아이콘 크기 */
+    width: 50px;
+    
+    /* sns 아이콘 투명도 */
+    opacity: 0.3;
+
+    /* sns 아이콘 사이 간격 */
+    margin-left: 4vh;
+
+    /* sns 아이콘이랑 바로가게 메뉴들 사이 간격 */
+    margin-top: 8vh;
+
+    /* sns 아이콘에 그림자 넣기 위함 */
+    border-radius: 12px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);
+}
+
+
+.footer-title {
+
+    /* information, 개인정보처리방침 txt 관련 */
+    font-weight: 900;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding-inline: 10px;
+    
+}
+
+.footer-title~div {
+
+    /* information, 개인정보처리방침 제목이랑 내용 줄간격 */
+    margin-top: 2.5vh;
+
+    --color: rgba(255, 255, 255, 0.3);
+}
+
+#footer-policy {
+
+    /* information, 개인정보처리방침 section 간격 */
+    margin-top: 10vh;
+}
+
+#footer-info span {
+
+    /* 대표전화, 팩스, 주소 txt */
+    font-weight: 900;
+
+    /* 대표전화 팩스 사이 간격 */
+    margin-left: 50px;
+
+}
+
+/* hover */
+#footer-sns img:hover {
+
+    transition-duration: 0.3s;
+    cursor: pointer;
+
+    opacity: 0.7;
+}
+#footer-menu>div:hover {
+    transition-duration: 0.3s;
+    cursor: pointer;
+
+    color: white;
+    font-size: 17pt;
+    font-weight: 900;
+}
+
+
+#footer-right-up {
+    --background-color: red;
+}
+#footer-right-down {
+    --background-color: blue;
+}

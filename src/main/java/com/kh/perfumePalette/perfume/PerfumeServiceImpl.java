@@ -43,6 +43,16 @@ public class PerfumeServiceImpl implements PerfumeService{
 		Perfume perfume = pStore.selectOneByNo(session, perfumeNo);
 		return perfume;
 	}
+	
+	//유정
+	/**
+	 * 쇼핑몰 - 향수 목록 출력 ServiceImpl
+	 */
+	@Override
+	public List<Perfume> selectAvailablePerfumes(String scentCategory) {
+		List<Perfume> pList = pStore.selectAvailablePerfumes(scentCategory);
+		return pList;
+	}
 
 	
 }
