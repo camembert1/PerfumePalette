@@ -16,6 +16,12 @@ public interface MemberStore {
 
 	int modifyMember(Member member);
 
+	Member findId(Member member);
+
+	Member findPw(Member member);
+
+	int updatePw(Member member);
+
 	
 
 }

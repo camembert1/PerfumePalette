@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -215,6 +217,7 @@ public class MemberController {
 		return mv;
 	}
 
+	// 마이페이지 정보수정
 	@PostMapping("/myPage")
 	public ModelAndView myPage(@RequestParam("memberDetailAddr") String memberDetailAddr, HttpServletRequest request, ModelAndView mv, @ModelAttribute Member member) {
 		try {
@@ -235,5 +238,109 @@ public class MemberController {
 		}
 		return mv;
 	}
+	
+	// 아이디 찾기
+	@GetMapping("findId")
+	public ModelAndView findId(ModelAndView mv) {
+	    mv.setViewName("member/findId");
+	    return mv;
+	}
 
+	@PostMapping("/findId")
+	public ModelAndView findId(
+	        @ModelAttribute Member member
+	        , ModelAndView mv) {
+	    try {
+	        Member getUser = mService.findId(member);
+	        if(getUser != null) {
+	            mv.addObject("member", getUser);
+	            mv.setViewName("member/showId");
+	        } else {
+	            Alert alert = new Alert("/member/findId", "일치하는 정보가 존재하지 않습니다");
+	            mv.addObject("alert", alert);
+	            mv.setViewName("common/alert");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        mv.addObject("msg", e.getMessage());
+	        mv.setViewName("common/error");
+	    }
+	    return mv;
+	}
+	
+	
+	// 비밀번호 찾기 
+	@GetMapping("findPw")
+	public ModelAndView findPw(ModelAndView mv) {
+	    mv.setViewName("member/findPw");
+	    return mv;
+	}
+	
+	@PostMapping("/findPw")
+	public ModelAndView findPw(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			Member getUser = mService.findPw(member);
+			if(getUser != null) {
+				mv.addObject("member", getUser);
+				mv.setViewName("member/changePw");
+			} else {
+				Alert alert = new Alert("/member/findPw", "일치하는 회원 정보가 존재하지 않습니다");
+	            mv.addObject("alert", alert);
+	            mv.setViewName("common/alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+	        mv.addObject("msg", e.getMessage());
+	        mv.setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	
+	// 비밀번호 변경 
+	@PostMapping("/changePw")
+	public ModelAndView changePw(
+	        @ModelAttribute Member member,
+	        String newPw,
+	        String confirmPw,
+	        ModelAndView mv) {
+	    try {
+	        // 비밀번호 유효성 체크
+	        String pwPattern = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$";
+	        
+	        boolean isValidPw = newPw.matches(pwPattern);
+	        
+	        if(!newPw.equals(confirmPw)) {
+	            Alert alert = new Alert("/member/findPw", "새로운 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
+	            mv.addObject("alert", alert);
+	            mv.setViewName("common/alert");
+	        } else if (!isValidPw) {
+	            Alert alert = new Alert("/member/findPw", "비밀번호는 8자 이상, 영문, 숫자 조합으로 이루어져야 합니다.");
+	            mv.addObject("alert", alert);
+	            mv.setViewName("common/alert");
+	        } else {
+	            member.setMemberPw(newPw);
+	            int result = mService.updatePw(member);
+	            if(result > 0) {
+	                Alert alert = new Alert("/member/login", "비밀번호 변경에 성공하였습니다.");
+		            mv.addObject("alert", alert);
+		            mv.setViewName("common/alert");
+	            } else {
+	                Alert alert = new Alert("/member/findPw", "비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+	                mv.addObject("alert", alert);
+	                mv.setViewName("common/alert");
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        mv.addObject("msg", e.getMessage());
+	        mv.setViewName("common/error");
+	    }
+	    return mv;
+	}
+
+	
+	
 }

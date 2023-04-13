@@ -56,6 +56,32 @@
 		MEMBER_TBL
 		WHERE MEMBER_EMAIL = #{memberEmail}
 	</select>
+	
+	<select id="findId" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME = #{memberName}
+		<if test="memberEmail != null and memberEmail != '' ">
+			AND MEMBER_EMAIL = #{memberEmail}
+		</if>
+		<if test="memberPhone != null and memberPhone != ''">
+			AND MEMBER_PHONE = #{memberPhone}
+		</if>
+	</select>
+	
+	<select id="findPw" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_NAME = #{memberName}
+		<if test="memberEmail != null and memberEmail != '' ">
+			AND MEMBER_EMAIL = #{memberEmail}
+		</if>
+		<if test="memberPhone != null and memberPhone != ''">
+			AND MEMBER_PHONE = #{memberPhone}
+		</if>
+	</select>
+	
+	<update id="updatePw">
+		UPDATE MEMBER_TBL 
+		SET MEMBER_PW = #{memberPw} 
+		WHERE MEMBER_ID = #{memberId}
+	</update>
 
 	<update id="modifyMember">
 		UPDATE MEMBER_TBL SET MEMBER_NICKNAME =

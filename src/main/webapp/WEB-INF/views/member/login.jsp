@@ -28,7 +28,7 @@
 					<input type="hidden" name="returnUrl" value="">
 				</c:if>
 		
-				<h2>로그인</h2>
+				<h1>로그인</h1>
 	
 				<div id="input-main">
 					<div class="input-box">
@@ -50,8 +50,13 @@
 						<span>로그인</span>
 					</button>
 				</div>
+				<div class="input-btn">
+					<button type="submit" onclick="location.href='/member/enroll'">
+						<span>회원가입</span>
+					</button>
+				</div>
 	
-				<br>
+				<br><br>
 	
 				<h2>SNS 로그인</h2>
 	

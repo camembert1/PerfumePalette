@@ -51,6 +51,24 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public Member findId(Member member) {
+		Member getUser = mStore.findId(member);
+		return getUser;
+	}
+
+	@Override
+	public Member findPw(Member member) {
+		Member getUser = mStore.findPw(member);
+		return getUser;
+	}
+
+	@Override
+	public int updatePw(Member member) {
+		int result = mStore.updatePw(member);
+		return result;
+	}
+
 	
 
 	
