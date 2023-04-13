@@ -90,3 +90,20 @@ main fieldset{
 		text-shadow: 0 0 0 #f0f0f0;
 	}
 	
+main .page {
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+    box-sizing: content-box;
+    width: 3px;
+    height: 3px;
+}
+	.number:hover {
+	    background-color: rgba(200, 194, 194, 0.901);
+	    padding: 7px 17px;
+	    border-radius: 100%;
+	}
+	.number:not(.number:hover){
+	    margin: 7px 17px;
+	}
+	

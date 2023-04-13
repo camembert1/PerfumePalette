@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ReviewController {
-
-	@RequestMapping(value="/review/reviewWrite", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/review/reviewWriteView", method = RequestMethod.GET)
 	public String reviewWriteView(Model model) {
 		
 		return "review/reviewWrite";
 	}
 	
-	@RequestMapping(value="/review/reviewList", method = RequestMethod.GET)
+	@RequestMapping(value="/review/reviewListView", method = RequestMethod.GET)
 	public String reviewListView(Model model) {
 		
 		return "review/reviewList";
 	}
 	
-	@RequestMapping(value="/review/reviewDetail", method = RequestMethod.GET)
+	@RequestMapping(value="/review/reviewDetailView", method = RequestMethod.GET)
 	public String reviewDetailView(Model model) {
 		
 		return "review/reviewDetail";
