@@ -35,4 +35,10 @@ public class WishServiceImpl implements WishService{
 		return list;
 	}
 
+	@Override
+	public List<Wish> selectPerfumeListLogin(String id) {
+		List<Wish> list = wStore.selectPerfumeList(id);
+		return list;
+	}
+
 }

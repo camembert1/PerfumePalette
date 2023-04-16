@@ -61,10 +61,10 @@
                <!-- 관리자가 아니라면 마이페이지 -->
                <c:if test="${sessionScope.member ne 'admin' }">
                   <div id="alert-hover-area">
-                     <img onclick="location.href='/member/myPage/${sessionScope.member}'" src="../../resources/img/common/user.png" alt="">
+                     <img onclick="location.href='/member/myPage'" src="../../resources/img/common/user.png" alt="">
 
                      <div id="alert">
-                        <div onclick="location.href='/member/myPage/${sessionScope.member}'">${sessionScope.nickname }님 마이페이지</div>
+                        <div onclick="location.href='/member/myPage'">${sessionScope.nickname }님 마이페이지</div>
 
                      </div>
 
@@ -73,7 +73,7 @@
 
                <!-- 관리자가 맞다면 관리자페이지 -->
                <c:if test="${sessionScope.member eq 'admin' }">
-                  <div onclick="location.href='#'">Manager Page</div>
+                  <div onclick="location.href='/member/myPage'">Manager Page</div>
                </c:if>
 
                <div onclick="location.href='/member/logout'"><img src="../../resources/img/common/logout.png" alt=""></div>
@@ -121,7 +121,7 @@
    </main>
 
    <script>
-
+	
       $(function(){
 
          // 새로고침할 경우 맨 위로 이동
