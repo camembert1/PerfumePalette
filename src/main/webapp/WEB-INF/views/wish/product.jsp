@@ -215,12 +215,12 @@
 							</td>
 							<td id="reload${perfume.perfumeNo }">
 								<c:if test="${perfume.wishDate ne null}">
-									<img id="add${perfume.perfumeNo }" src="../../../resources/img/wish/wish_yes.png"
+									<img src="../../../resources/img/wish/wish_yes.png"
 										alt="wish_yes"
 										onclick="removeWish(${perfume.perfumeNo}, '${sessionScope.member }')">
 								</c:if>
 								<c:if test="${perfume.wishDate eq null}">
-									<img id="remove${perfume.perfumeNo }" src="../../../resources/img/wish/wish_no.png"
+									<img src="../../../resources/img/wish/wish_no.png"
 										alt="wish_no"
 										onclick="addWish(${perfume.perfumeNo}, '${sessionScope.member }')">
 								</c:if>
@@ -347,8 +347,6 @@
 						},
 						success: function (result) {
 							if (result === "success") {
-								$("#add" + perfumeNo).hide();
-								$("#remove" + perfumeNo).show();
 								/* alert("찜 추가 성공!!"); */
 								/* location.reload(); // 페이지 새로고침 */
 								/* 특정부분만 새로고침 */
@@ -375,8 +373,6 @@
 						},
 						success: function (result) {
 							if (result === "success") {
-								$("#add" + perfumeNo).show();
-								$("#remove" + perfumeNo).hide();
 								/* alert("찜 삭제 성공!!"); */
 								/* location.reload(); // 페이지 새로고침 */
 								/* 특정부분만 새로고침 */
