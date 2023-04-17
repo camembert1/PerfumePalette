@@ -39,7 +39,7 @@
                             <!-- 썸머노트 api -->
                             <textarea id="summernote" name=qnaContents></textarea>
                             <br>
-                            <input id="uploadFile"  class="file" type="file" name="qFilename"> <br><br>
+                            <input type="file" name="uploadFile" onchange="loadImg(this);">
                             비밀번호 <input class="radius" type="password" name="qnaPassword" id="" placeholder="비밀번호를 입력해주세요">
                             <br>
                             <input class="submit-btn" type="submit" value="등록">
@@ -49,6 +49,19 @@
             </main>
             <%-- <jsp:include page="../common/footer.jsp" /> --%>
             <script>
+            function loadImg(obj) {
+				if(obj.files.length != 0 && obj.files[0] != 0) {
+					let reader = new FileReader();
+					reader.readAsDataURL(obj.files[0]);
+					reader.onload = function(e) {
+						document.querySelector("#img-view").setAttribute("src", e.target.result);
+					}
+				}else{
+// 					$("#img-view").attr("src", "");
+					document.querySelector("#img-view").setAttribute("src", "");
+				}
+			}
+            
                 const fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'MapoFlowerIsland', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'];
                 $(document).ready(function () {
                     const fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'MapoFlowerIsland', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'];

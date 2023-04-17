@@ -10,7 +10,7 @@
 		<typeAlias type="com.kh.perfumePalette.perfume.Perfume" alias="Perfume" />
 		<typeAlias type="com.kh.perfumePalette.wish.Wish" alias="Wish" />
 		<typeAlias type="com.kh.perfumePalette.cart.Cart" alias="Cart" />
-		<typeAlias type="com.kh.perfumePalette.qnaboard.QnaBoard" alias="QnaBoard" />
+		<typeAlias type="com.kh.perfumePalette.qnaBoard.QnaBoard" alias="QnaBoard" />
 	</typeAliases>
 	
 	<mappers>
