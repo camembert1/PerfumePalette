@@ -131,20 +131,24 @@
 					}
 				}
 				console.log(del);
-				$.ajax({
-					url:'/perfume/remove',
-					type : 'post',
-					dataType : 'json',
-					traditional : 'true',
-					data : {'arr':del},
-					success : function(data){
-						console.log(data)
-						
-					},
-					error : function(data) {
-						console.log(data)
-					}
-				});
+				if(confirm("삭제 진짜 할거임?")) {
+					$.ajax({
+						url:'/perfume/remove',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':del},
+						success : function(data){
+							if(data == 1) {
+								alert("삭제되었습니다!");
+								location.href = "/perfume/mList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					});
+				}
 			});
 		</script>
 	</body>
