@@ -54,5 +54,11 @@ public class PerfumeServiceImpl implements PerfumeService{
 		return pList;
 	}
 
+	@Override
+	public Perfume selectOneByPerfumeNo(Integer perfumeNo) {
+		Perfume perfume = pStore.selectOneByPerfumeNo(perfumeNo);
+		return perfume;
+	}
+
 	
 }

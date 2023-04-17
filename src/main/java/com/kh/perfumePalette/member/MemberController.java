@@ -28,27 +28,6 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 
-	// MBTI테스트 화면 출력
-	@GetMapping("/mbti")
-	public ModelAndView mbtiTestView(ModelAndView mv) {
-		mv.setViewName("common/mbti");
-		return mv;
-	}
-
-	// MBTI테스트 결과 세션저장
-	@ResponseBody
-	@PostMapping("/mbtiResult")
-	public void mbtiResultSave(String mbtiResult, HttpSession session) {
-		session.setAttribute("mbtiResult", mbtiResult);
-	}
-
-	// MBTI테스트 결과 출력
-	@GetMapping("/mbtiResult")
-	public ModelAndView mbtiResultView(ModelAndView mv) {
-		mv.setViewName("common/mbtiResult");
-		return mv;
-	}
-
 	// 회원가입
 	@GetMapping("/enroll")
 	public ModelAndView enroll(ModelAndView mv) {
@@ -164,7 +143,7 @@ public class MemberController {
 				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");
 				} else {
-					mv.setViewName("redirect:/member/mbtiResult");
+					mv.setViewName("redirect:/mbti/mbtiResult");
 				}
 			} else {
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
