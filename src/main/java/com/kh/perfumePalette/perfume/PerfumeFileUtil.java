@@ -26,7 +26,7 @@ public class PerfumeFileUtil {
 			// 경로를 가져와서 폴더의 경로 지정
 			String originalFileName = multipartFile.getOriginalFilename();
 			String wasRoot = req.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "perfumeFileUploads";
+			String savePath = wasRoot + "\\" + "qnaFileUploads";
 
 			// 저장할 폴더가 안만들어져 있다면 만들어줘야함
 			File folder = new File(savePath);

@@ -12,4 +12,6 @@ public interface WishService {
 
 	List<Wish> selectPerfumeList();
 
+	List<Wish> selectPerfumeListLogin(String id);
+
 }

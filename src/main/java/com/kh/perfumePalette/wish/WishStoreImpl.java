@@ -36,4 +36,10 @@ public class WishStoreImpl implements WishStore{
 		return list;
 	}
 
+	@Override
+	public List<Wish> selectPerfumeList(String id) {
+		List<Wish> list = session.selectList("wishMapper.selectPerfumeListLogin", id);
+		return list;
+	}
+
 }

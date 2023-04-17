@@ -12,4 +12,6 @@ public interface WishStore {
 
 	List<Wish> selectPerfumeList();
 
+	List<Wish> selectPerfumeList(String id);
+
 }
