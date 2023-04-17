@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewMapper">
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="perfumeNo" column="PERFUME_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="reviewContents" column="REVIEW_CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="rFilename" column="R_FILENAME"/>
+		
+		<result property="fFilerename" column="R_FILERENAME"/>
+		<result property="rFilepath" column="R_FILEPATH"/>
+		<result property="rViewcount" column="R_VIEW_COUNT"/>
+		
+		<result property="rViewscore" column="REVIEW_SCORE"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="perfumeBrand" column="PERFUME_BRAND"/>
+		
+		<result property="perfumeName" column="PERFUME_NAME"/>
+		<result property="perfumePrice" column="PERFUME_PRICE"/>
+		<result property="pFilerename" column="P_FILERENAME"/>
+	</resultMap>
+	
+	<resultMap type="Perfume" id="perfumeResultMap">
+		<id property="perfumeNo" column="PERFUME_NO"></id>
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeVolume" column="PERFUME_VOLUME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" column="P_FILENAME" />
+		<result property="pFilerename" column="P_FILERENAME" />
+		<result property="pFilepath" column="P_FILEPATH" />
+		<result property="perfumeDate" column="PERFUME_DATE" />
+		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	</resultMap>
+	
+	<select id="selectOneByPerfumeNo" resultMap="perfumeResultMap">
+		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
+	</select>
+	
+	<!-- 후기 게시판 등록 -->
+	<insert id="insertReview">
+		INSERT INTO REVIEW_TBL
+		VALUES (SEQ_REVIEWNO.NEXTVAL, #{reviewContents}, DEFAULT, #{memberNo}, #{rFilename}, #{fFilerename}, #{rFilepath}, 0, #{rViewscore},#{perfumeNo})
+	</insert>
+	
+	<!-- 후기 게시판 리스트 -->
+	<select id="selectAllReview" resultMap="reviewResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		ORDER BY REVIEW_DATE DESC
+	</select>
+</mapper>
