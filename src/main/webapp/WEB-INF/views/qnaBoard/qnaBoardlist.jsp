@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +15,7 @@
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="./qnaBoardlist.css">
+        <link rel="stylesheet" href="../../../../resources/qnaCss/qnaBoardlist.css">
 
     </head>
 
@@ -36,14 +37,16 @@
                         <th width="120px">작성자</thw>
                         <th width="120px">상태</th>
                     </tr>
+                    <c:forEach items="${qbList }" var="qnaboard" varStatus="i">
                     <tr>
-                        <td>1</td>
-                        <td>[ 배송 ]</td>
-                        <td>아앙아ㅏ아ㅏ아ㅏ아ㅏ아ㅏ아ㅏ아ㅏㅇ</td>
-                        <td>2023-04-13</td>
-                        <td>서민우</td>
-                        <td>답변완료</td>
+                        <td>${i.count }</td>
+                        <td>${qnaboard.qnaType }</td>
+                        <td>${qnaboard.qnaSubject }</td>
+                        <td>${qnaboard.qnaDate }</td>
+                        <td>${qnaboard.memberNickname }]</td>
+                        <td>${qnaboard.qQnaNo }</td>
                     </tr>
+                    </c:forEach>
                     <tr>
                         <td>1</td>
                         <td>[ 배송 ]</td>
