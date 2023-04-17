@@ -11,218 +11,201 @@
    <!-- favicon : 탭에 보이는 아이콘 -->
    <link rel="icon" href="../../resources/img/common/favicon.png" />
    <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
+
+   <!-- Swiper 슬라이더 사용 위함 -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+   
+
 </head>
 
 <body>
 
-   <header>
-      <div id="logo-area">
-         <div id="logo-img" onclick="location.href='/'"></div>
-      </div>
+   <jsp:include page="./common/header.jsp" />
 
-      <div id="navBar-area">
+   <!-- home에서만 다른 헤더 css속성 시작! -->
+   <style>
+      header {
+         /* 헤더 배경 */
+         background-color: rgba(0, 0, 0, 0);
 
-         <div id="nav-left">
-            <div class="nav-left-title">
-               <div>Perfume</div>
-               <div class="nav-left-hidden">
-                  <div class="nav-left-bar"></div>
-                  <div class="nav-left-detail">
-                     <div>Shop</div>
-                     <div>Recommend</div>
-                  </div>
-               </div>
-            </div>
+         /* 헤더 아래 그림자 */
+         box-shadow: 0 10px 10px rgba(0, 0, 0, 0);
+      }
 
-            <div class="nav-left-title">
-               <div>Community</div>
-               <div class="nav-left-hidden">
-                  <div class="nav-left-bar"></div>
-                  <div class="nav-left-detail">
-                     <div>Review</div>
-                     <div>Q&A</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-
-         <div id="nav-right">
-            
-
-            <!-- 비로그인 상태 -->
-            <c:if test="${sessionScope.member eq null }">
-               <div onclick="location.href='/member/enroll'"><img src="../../resources/img/common/user.png" alt=""></div>
-               <div onclick="location.href='/member/login'"><img src="../../resources/img/common/login.png" alt=""></div>
-            </c:if>
-
-            <!-- 로그인 상태 -->
-            <c:if test="${sessionScope.member ne null }">
-
-               <!-- 관리자가 아니라면 마이페이지 -->
-               <c:if test="${sessionScope.member ne 'admin' }">
-                  <div id="alert-hover-area">
-                     <img onclick="location.href='/member/myPage/${sessionScope.member}'" src="../../resources/img/common/user.png" alt="">
-
-                     <div id="alert">
-                        <div onclick="location.href='/member/myPage/${sessionScope.member}'">${sessionScope.nickname }님 마이페이지</div>
-
-                     </div>
-
-                  </div>
-               </c:if>
-
-               <!-- 관리자가 맞다면 관리자페이지 -->
-               <c:if test="${sessionScope.member eq 'admin' }">
-                  <div onclick="location.href='#'">Manager Page</div>
-               </c:if>
-
-               <div onclick="location.href='/member/logout'"><img src="../../resources/img/common/logout.png" alt=""></div>
-
-            </c:if>
-
-
-            <div><img src="../../resources/img/common/cart.png" alt=""></div>
-            <div><img src="../../resources/img/common/wish.png" alt=""></div>
-
-         </div>
-
-      </div>
-   </header>
+      #logo-area {
+         /* 그림자로 navBar Area랑 분리하기 위함 */
+         box-shadow:
+                  inset 0px -10px 10px rgba(0, 0, 0, 0);
+                  /* , inset 0px 10px 10px rgba(0, 0, 0, 0.2); */
+      }
+   </style>
+   <!-- home에서만 다른 헤더 css속성 끝! -->
 
    <main>
       <!-- 헤더 부분 피하기 위한 div -->
       <div></div>
-      <!-- 
-      여기부터 내용 입력하시면 됩니다.
-   -->
+
       <!-- 여기부터 본문 시작! -->
+      <div class="swiper mySwiper">
+         <div class="swiper-wrapper">
 
-      <section id="section-1">
-         <div id="background-img">
-            <div id="black">
-               <c:if test="${sessionScope.mbtiResult eq null }">
-                  <div onclick="location.href='/member/mbti'">MBTI</div>
-               </c:if>
-               <c:if test="${sessionScope.mbtiResult ne null }">
-                  <div onclick="location.href='/member/mbtiResult'">MBTI</div>
-               </c:if>
+            <!-- section1 -->
+            <div class="swiper-slide">
+               <section id="section-1">
+                  <div id="background-img">
+                     <div id="black">
+                        <c:if test="${sessionScope.mbtiResult eq null }">
+                           <div onclick="location.href='/mbti/mbti'">
+                              <div style="font-size: 15pt; color: rgba(255, 255, 255, 0.5);">버튼수정예정</div>
+                              <div style="font-size: 40pt;">MBTI</div>
+                              <div style="font-size: 45pt;">퍼스널 향기</div>
+                              <div style="font-size: 45pt;">테스트</div>
+                              <div style="font-size: 20pt;">나의 퍼스널 향기 알아보기 > </div>
+                           </div>
+                        </c:if>
+                        <c:if test="${sessionScope.mbtiResult ne null }">
+                           <div onclick="location.href='/mbti/mbtiResult'">MBTI</div>
+                        </c:if>
+                     </div>
+                  </div>
+               </section>
             </div>
+
+            <!-- section2 -->
+            <div class="swiper-slide">
+               <section id="section-2">
+
+                  <div id="section2-content">
+         
+                     <div class="wave-img-area">
+                        <img src="../../resources/img/common/main-wave.png" alt="">
+                     </div>
+                     
+                     <div id="section2-img-area">
+                        
+                        <div class="section2-img" onclick="perfumeList(this)"><div>Woody</div></div>
+                        <div class="section2-img" onclick="perfumeList(this)"><div>Floral</div></div>
+                        <div class="section2-img" onclick="perfumeList(this)"><div>Fruity</div></div>
+                        <div class="section2-img" onclick="perfumeList(this)"><div>Spicy</div></div>
+                        <div class="section2-img" onclick="perfumeList(this)"><div>Citrus</div></div>
+                     </div>
+                     
+                     <div class="wave-img-area">
+                        <img src="../../resources/img/common/main-wave.png" alt="">
+                        <div id="insta-id">FOLLOW PERFUME PALETTE INSTAGRAM | @PERFUME_PALETTE</div>
+                     </div>
+         
+                  </div>
+               </section>
+            </div>
+
+            <!-- section3 footer -->
+            <div class="swiper-slide">
+               <section id="section-3">
+                  <jsp:include page="./common/footer.jsp" />
+               </section>
+            </div>
+
          </div>
-      </section>
-
-      <section id="section-2">
-         <h1 style="text-align: center">향수 사진 5개 딱!?</h1>
-      </section>
-
-      <section id="section-3">
-         <jsp:include page="./common/footer.jsp" />
-      </section>
-
+         <div class="swiper-pagination"></div>
+      </div>
    </main>
 
    <script>
 
       $(function(){
 
-         // 새로고침할 경우 맨 위로 이동
-         $(window).scrollTop(0);
-
-         // section 요소들 저장하는 변수 선언
-         const sections = $('section');
-
-         // 현재 보여지고 있는 section 요소의 인덱스를 저장하는 변수
-         let currentSectionIndex = 0;
-
-         // 스크롤 이벤트를 throttle하기 위한 변수
-         let isThrottled = false;
-
-         // 스크롤 이벤트를 throttle하기 위한 함수
-         function throttle(callback, time) {
-            // 이전에 실행된 콜백 함수가 아직 실행 중인 경우 함수 실행을 중지함
-            if (isThrottled) return;
-
-            // 함수 실행이 가능하도록 isThrottled 값을 true로 변경함
-            isThrottled = true;
-
-            // 일정 시간이 지난 후에 callback 함수를 실행하고 isThrottled 값을 false로 변경함
-            setTimeout(() => {
-               callback();
-               isThrottled = false;
-            }, time);
+         // section2 향 분류별 list 이동
+         perfumeList = function(tag) {
+            let pScentCategory = tag.firstChild.textContent;
+            location.href="/perfume/list?pScentCategory=" + pScentCategory;
          }
 
-         // section별 header 속성 변경
-         function changeColor() {
-            switch(currentSectionIndex) {
+
+         // 페이지 넘김 효과
+         let swiper = new Swiper(".mySwiper", {
+            on: {
+               init: function() {    
+                  // swiper 초기화 될때 실행
+               },
+
+               slideChangeTransitionStart: function() {
+                  // 페이지 넘어갈 때마다 실행 - 헤더 변경
+                  chageHeader(this.realIndex + 1)
+               }
+            },
+            direction: "vertical", // 슬라이드 방향
+            speed: 650,
+            //slidesPerView: 1, // 한 슬라이드에 보여줄 개수
+            effect: 'cube', // 페이지 넘어가는 효과
+            spaceBetween: 30, // 슬라이드 사이 여백 
+            mousewheel: true,
+            // pagination: {
+            //    el: ".swiper-pagination", // 버튼을 담을 태그
+            //    clickable: true, // 버튼 클리기 여부
+            // },
+            loop: 'auto', // 슬라이드 반복 여부
+            //loopAdditionalSlides: 1, // 슬라이드 반복 시 마지막 슬라이드에서 다음 슬라이드 보이지 않는 현상 수정
+            autoHeight: false, // 현재 활성 슬라이드에 맞게 높이 조정
+            resistance: true, // 슬라이드 터치 저항 여부
+            allowTouchMove: false, // 스와이핑X 버튼으로만 슬라이드 조작 가능
+         });
+
+         // 현재 페이지 index별 header 속성 변경 함수
+         function chageHeader(index) {
+            switch(index) {
 
                // section1일 때
-               case 0:
-                  $('header').fadeIn(500);
+               case 1:
                   $('header').css({
-                     "transition-duration": "0.5s",
-                     "background-color": "#34443E00",
-                     "box-shadow": "0 0px 0px rgba(0, 0, 0, 0)"
+                        "display": "none",
+                        "background-color": "rgba(0, 0, 0, 0)",
+                        "box-shadow": "0 0px 0px rgba(0, 0, 0, 0)"
                   });
-                  $('#logo-area').css({
-                     "box-shadow": "inset 0px -10px 10px rgba(0, 0, 0, 0), inset 0px 10px 10px rgba(0, 0, 0, 0)"
-                  });
+                  $('#logo-area').fadeIn(500);
+                  $('header').fadeIn(500);
                break;
 
                // section2일 때
-               // timeout함수 낼 다시 활용해보자ㅜ
-               // 로고가 보이는 상태라면 안 보이게
-               // 안보이는 상태라면 보이게 로 바꿀 예정
-               case 1:
-                  // $('#logo-area').fadeOut(500);
+               case 2:
+                  $('#logo-area').fadeOut(0);
+                  $('header').css({
+                     "display": "none",
+                     "background-color": "#28302d",
+                     "box-shadow": "0 10px 10px rgba(0, 0, 0, 0.2)"
+                  }); 
                   setTimeout(function() {
-                     $('header').fadeIn(500);
-                     $('header').css({
-                        "transition-duration": "0.5s",
-                        "background-color": "#34443E",
-                        "box-shadow": "0 10px 10px rgba(0, 0, 0, 0.2)"
-                     });
-                     $('#logo-area').css({
-                        "box-shadow": "inset 0px -10px 10px rgba(0, 0, 0, 0.2), inset 0px 10px 10px rgba(0, 0, 0, 0.2)"
-                     });   
+                     $('header').fadeIn(500);                    
+                  }, 100);
+               break;
 
-                  }, 0);
-                              
+                // section2일 때
+               case 2:
+                  $('#logo-area').fadeOut(0);
+                  $('header').css({
+                     "display": "none",
+                     "background-color": "#28302d",
+                     "box-shadow": "0 10px 10px rgba(0, 0, 0, 0.2)"
+                  }); 
+                  setTimeout(function() {
+                     $('header').fadeIn(500);                    
+                  }, 100);
                break;
 
                // section3 = footer일 때
-               case 2:
-                  $('header').fadeOut(500);
+               case 3:
+                  setTimeout(function() {
+                     $('header').fadeOut(500);
+                  }, 100);
                break;
 
                default:
                break;
             }
          }
-
-         // wheel 작동 시
-         $(document).on('wheel', function(event) {
-            // 스크롤 방향을 확인하는 변수
-            const direction = event.originalEvent.deltaY > 0 ? 1 : -1;
-
-            // 스크롤 방향에 따라 currentSectionIndex 값을 변경함
-            if (direction === 1 && currentSectionIndex < sections.length - 1) {
-               currentSectionIndex++;
-            } else if (direction === -1 && currentSectionIndex > 0) {
-               currentSectionIndex--;
-            }
-
-            // 이부분을 헤더 관련 요소로 바꾸면 대겟다
-            // fixed-element 요소의 배경색을 변경함
-            changeColor();
-
-            // 스크롤 이벤트를 throttle하여 일정 시간(0으로 설정해서 바로) 지난 후에 스크롤이 이동하도록 함
-            throttle(() => {
-               $('html, body').animate({
-               scrollTop: sections.eq(currentSectionIndex).offset().top
-               },650);
-            }, 0);
-         });
-   });
+      });
 
    </script>
    

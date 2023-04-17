@@ -16,13 +16,19 @@
 		<result property="perfumeDate" column="PERFUME_DATE" />
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
 	</resultMap>
-	
+
 	<!-- 유정 시작 -->
 	<select id="selectAvailablePerfumes" resultMap="perfumeResultMap">
 		SELECT * FROM PERFUME_TBL WHERE PERFUME_STATUS = 1
 		<if test="scentCategory != null and scentCategory != ''">
-			 AND P_SCENT_CATEGORY = #{scentCategory}
+			<if test="animalSpecies !=  'All'">
+			      AND P_SCENT_CATEGORY = #{scentCategory }
+	    	</if>
 		</if>
+	</select>
+	
+	<select id="selectOneByPerfumeNo" resultMap="perfumeResultMap">
+		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo }
 	</select>
 	<!-- 유정 끝 -->
 	

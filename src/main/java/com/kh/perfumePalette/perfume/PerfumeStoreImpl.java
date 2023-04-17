@@ -52,5 +52,11 @@ public class PerfumeStoreImpl implements PerfumeStore{
 ;		return pList;
 	}
 
+	@Override
+	public Perfume selectOneByPerfumeNo(Integer perfumeNo) {
+		Perfume perfume = session.selectOne("PerfumeMapper.selectOneByPerfumeNo", perfumeNo);
+		return perfume;
+	}
+
 
 }
