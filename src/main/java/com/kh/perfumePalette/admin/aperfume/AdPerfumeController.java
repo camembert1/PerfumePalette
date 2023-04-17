@@ -181,34 +181,37 @@ public class AdPerfumeController {
 	// 상품 다중 삭제
 	@PostMapping("/remove")
 	@ResponseBody
-	public ModelAndView perfumeRemove(int []arr 
-			, @RequestParam("perfumeNo") int perfumeNo
-			, @ModelAttribute Perfume perfume
+	public String perfumeRemove(int [] arr 
+//			, @RequestParam("perfumeNo") int perfumeNo
+//			, @ModelAttribute Perfume perfume
 			, HttpServletRequest request
 			, ModelAndView mv) {
+		int result = 0;
+		try {
 			for(int i = 0; i < arr.length; i++) {
 				System.out.println(arr[i]);
+				Perfume perfumeOne = pService.selectOneByNo(arr[i]);
+				if (perfumeOne.getpFilename() != null) {
+					// 기존 파일 삭제
+					this.deleteFile(perfumeOne.getpFilerename(), request);
+				}
+				result = pService.deletePerfume(arr[i]);
 			}
-		try {
-			Perfume perfumeOne = pService.selectOneByNo(perfumeNo);
-			if (perfumeOne.getpFilename() != null) {
-				// 기존 파일 삭제
-				this.deleteFile(perfumeOne.getpFilerename(), request);
-			}
-			int result = pService.deletePerfume(perfumeNo);
 			if (result > 0) {
-				Alert alert = new Alert("/perfume/mList", "상품 삭제가 완료되었습니다.");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
+				return "1";
+//				Alert alert = new Alert("/perfume/mList", "상품 삭제가 완료되었습니다.");
+//				mv.addObject("alert", alert);
+//				mv.setViewName("common/alert");
 			} else {
-				mv.addObject("msg", "삭제가 완료되지 않았습니다.");
+//				mv.addObject("msg", "삭제가 완료되지 않았습니다.");
+				return "0";
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+			return e.getMessage();
+//			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
-		return mv;
 	}
 	
 		
