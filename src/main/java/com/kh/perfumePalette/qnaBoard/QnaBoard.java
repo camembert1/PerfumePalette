@@ -16,14 +16,14 @@ public class QnaBoard {
 	private String qFilename; // 파일 이름
 	private String qFilerename; // 파일 리네임
 	private String qFilepath; // 파일 경로
-	private int qnaPassword; // 게시글 비밀번호
+	private Integer qnaPassword; // 게시글 비밀번호
 	private String qQnaNo; // NULL이면 질문, 값이 있으먄 답변
 	private String memberNickname; // 작성자(닉네임)
 	
 	public QnaBoard() {}
 
 	public QnaBoard(int qnaNo, int perfumeNo, String qnaType, String qnaSubject, String qnaContents, Timestamp qnaDate,
-			int memberNo, String qFilename, String qFilerename, String qFilepath, int qnaPassword, String qQnaNo,
+			int memberNo, String qFilename, String qFilerename, String qFilepath, Integer qnaPassword, String qQnaNo,
 			String memberNickname) {
 		super();
 		this.qnaNo = qnaNo;
@@ -121,11 +121,11 @@ public class QnaBoard {
 		this.qFilepath = qFilepath;
 	}
 
-	public int getQnaPassword() {
+	public Integer getQnaPassword() {
 		return qnaPassword;
 	}
 
-	public void setQnaPassword(int qnaPassword) {
+	public void setQnaPassword(Integer qnaPassword) {
 		this.qnaPassword = qnaPassword;
 	}
 

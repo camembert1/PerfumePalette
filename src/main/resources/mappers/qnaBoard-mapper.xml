@@ -22,19 +22,17 @@
 	<!-- 문의 게시판 글쓰기 -->
 	<insert id="writeQnaBoard">
 		INSERT INTO QNA_TBL VALUES(SEQ_QNA_NO.NEXTVAL, #{perfumeNo}, #{qnaType}, #{qnaSubject}, #{qnaContents}
-		,DEFAULT, #{memberNo}, #{qFilename}, #{qFilerename}, #{qFilepath}, #{qnaPassword}, #{qQnaNo}, #{memberNickname})
+		,DEFAULT, #{memberNo}, #{qFilename}, #{qFilerename}, #{qFilepath}, #{qnaPassword}, #{qQnaNo})
 	</insert>
 
 
 	<!-- 문의 게시판 목록 조회 -->
 	<select id="selectAllQnaBoard" resultMap="qnaBoardResultMap">
-		SELECT Q.*,
-		M.MEMBER_NICKNAME
-		FROM QNA_TBL Q
-		INNER JOIN MEMBER_TBL M
-		ON Q.MEMBER_NO =
-		M.MEMBER_NO
-		ORDER BY Q.QNA_NO ASC
+		SELECT Q.*, M.MEMBER_NICKNAME
+      FROM QNA_TBL Q
+      LEFT OUTER JOIN MEMBER_TBL M
+      ON Q.MEMBER_NO = M.MEMBER_NO
+      ORDER BY Q.QNA_NO ASC
 	</select>
 
 

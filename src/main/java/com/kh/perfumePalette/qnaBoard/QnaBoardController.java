@@ -52,14 +52,15 @@ public class QnaBoardController {
 			, @ModelAttribute QnaBoard qnaboard) {
 		Map<String, String> fileInfo = null;
 		try {
-			System.out.println(qnaboard);
-			fileInfo = qnafileUtil.saveFile(multi, request);
-			qnaboard.setqFilename(fileInfo.get("original"));
-			qnaboard.setqFilerename(fileInfo.get("rename"));
-			qnaboard.setqFilepath(fileInfo.get("renameFilepath"));
+			if(multi.getSize() != 0 && !multi.getOriginalFilename().equals("")) {
+				fileInfo = qnafileUtil.saveFile(multi, request);
+				qnaboard.setqFilename(fileInfo.get("original"));
+				qnaboard.setqFilerename(fileInfo.get("rename"));
+				qnaboard.setqFilepath(fileInfo.get("renameFilepath"));
+			}
 			int result = qbService.writeQnaBoard(qnaboard);
 			if(result > 0) {
-				 mv.setViewName("redirect:/qnaBoard/list");
+				 mv.setViewName("qnaBoard/qnaBoardlist");
 			}
 			else {
 	            mv.addObject("msg", "글 등록에 실패하였습니다.").setViewName("common/error");

@@ -28,12 +28,12 @@
                 <!-- 본문 내용 가운데 정렬 위한 div -->
                 <div id="forCenter">
                     <div class="container">
-                        <form action="/qnaboard/write" method="post">
+                        <form action="/qnaboard/write" method="post" enctype="multipart/form-data">
                             <select name="qnaType" id="qnaType" onchange="changeFn()" class="select">
-                                <option name="qnaType" value="상품문의">상품문의</option>
-                                <option name="qnaType" value="배송문의">배송문의</option>
-                                <option name="qnaType" value="교환/환불">교환/환불</option>
-                                <option name="qnaType" value="기타문의">기타문의</option>
+                                <option name="qnaType" value="1">상품문의</option>
+                                <option name="qnaType" value="2">배송문의</option>
+                                <option name="qnaType" value="3">교환/환불</option>
+                                <option name="qnaType" value="4">기타문의</option>
                             </select>
                             <input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요">
                             <!-- 썸머노트 api -->
