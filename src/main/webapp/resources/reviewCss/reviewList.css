@@ -52,6 +52,8 @@ main #subject {
 main #search{
 	margin-bottom: 20px;
 }
+
+
 main table{
 	text-align: center;
 	border-collapse: collapse;
@@ -67,29 +69,21 @@ main a{
 	text-decoration: none;
 }
 
+/*별점*/
+    .fa-star {
+        color: #FFD700; /* 선택된 별의 색깔을 #FFD700으로 설정 */
+    }
 
+    .fa-star-o:before {
+        content: "\f006"; /* 별의 테두리가 검정색일 때의 아이콘 설정 */
+        color: black; /* 별의 테두리가 검정색일 때의 아이콘 색상 설정 */
+    }
+    
+main img{
+	width: 200px;
+	height: 200px;
+}
 
-
-/* 나중에 디자인 지울 것*/
-main fieldset{
-	display: inline-block;
-	direction: rtl;
-	border:0;
-}	
-	main fieldset legend {
-		text-align: right;
-	}
-
-	main input[type=radio] {
-		display: none;
-	}
-	
-	main label {
-		font-size: 3em;
-		/* color: transparent; */
-		text-shadow: 0 0 0 #f0f0f0;
-	}
-	
 main .page {
     text-decoration: none;
     color: black;

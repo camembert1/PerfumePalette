@@ -19,7 +19,13 @@
 		<div id="forHeader"></div>
 		<!-- 본문 내용 가운데 정렬 위한 div -->
 		<div id="forCenter">
-			<h1>상세페이지 입니다.</h1>
+			<h1>REVIEW</h1>
+			<div id="writer">
+			
+			</div>
+			<div >
+				
+			</div>
 		</div>
 	</main>
 

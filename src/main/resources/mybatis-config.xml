@@ -9,10 +9,12 @@
 		<typeAlias type="com.kh.perfumePalette.member.Member" alias="Member" />
 		<typeAlias type="com.kh.perfumePalette.perfume.Perfume" alias="Perfume" />
 		<typeAlias type="com.kh.perfumePalette.wish.Wish" alias="Wish" />
+		<typeAlias type="com.kh.perfumePalette.review.Review" alias="Review"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/perfume-mapper.xml" />
 		<mapper resource="mappers/wish-mapper.xml" />
+		<mapper resource ="mappers/review-mapper.xml"/>
 	</mappers>
 </configuration>

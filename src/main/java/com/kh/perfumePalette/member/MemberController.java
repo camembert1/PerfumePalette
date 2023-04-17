@@ -158,9 +158,17 @@ public class MemberController {
 			int result = mService.login(member);
 			if (result > 0) {
 				HttpSession session = request.getSession();
-				session.setAttribute("member", member.getMemberId());
-				member = mService.selectMemberById(member.getMemberId());
-				session.setAttribute("nickname", member.getMemberNickname());
+				// 기존
+                // session.setAttribute("member", member.getMemberId());
+                // member = mService.selectMemberById(member.getMemberId());
+                // session.setAttribute("nickname", member.getMemberNickname());
+
+                // 수정
+                member = mService.selectMemberById(member.getMemberId());
+                session.setAttribute("member", member.getMemberId());
+                session.setAttribute("nickname", member.getMemberNickname());
+                session.setAttribute("memberNo", member.getMemberNo());
+                
 				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");
 				} else {

@@ -43,3 +43,9 @@ main>div[id=forCenter] {
    flex-direction: column;
    align-items: center;
 }
+
+main #writer{
+	background-color: red;
+	width: 500px;
+	height: 20px;
+}
