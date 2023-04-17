@@ -6,11 +6,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.perfume.Perfume;
+
 @Service
-public class PerfumeServiceImpl implements PerfumeService{
+public class AdPerfumeServiceImpl implements AdPerfumeService{
 	
 	@Autowired
-	private PerfumeStore pStore;
+	private AdPerfumeStore pStore;
 	@Autowired
 	private SqlSession session;
 

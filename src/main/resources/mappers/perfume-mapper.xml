@@ -26,37 +26,5 @@
 	</select>
 	<!-- 유정 끝 -->
 	
-	<!-- 기진 시작 -->
-	<insert id="insertPerfume">
-		INSERT INTO PERFUME_TBL
-		VALUES(SEQ_PERFUME_NO.NEXTVAL, #{perfumeName}, #{perfumeBrand}, #{perfumeVolume}, #{perfumePrice}
-		, #{perfumeQuantity}, #{pScentCategory}, #{pImageCategory}, #{pFilename}, #{pFilerename}, #{pFilepath}
-		, DEFAULT, #{perfumeStatus})
-	</insert>
-	
-	<update id="updatePerfume">
-		UPDATE PERFUME_TBL SET PERFUME_NAME = #{perfumeName}, PERFUME_BRAND = #{perfumeBrand}
-		, PERFUME_VOLUME = #{perfumeVolume}, PERFUME_PRICE = #{perfumePrice}, PERFUME_QUANTITY = #{perfumeQuantity}
-		, P_SCENT_CATEGORY = #{pScentCategory}, P_IMAGE_CATEGORY = #{pImageCategory}, P_FILENAME = #{pFilename}
-		, P_FILERENAME = #{pFilerename}, P_FILEPATH = #{pFilepath}, PERFUME_STATUS = #{perfumeStatus}
-		WHERE PERFUME_NO = #{perfumeNo}
-	</update>
-	
-	<delete id="deletePerfume">
-		DELETE FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
-	</delete>
-	
-	<select id="selectOneByNo" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
-	</select>
-	
-	<select id="selectPerfumeList" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
-	</select>
-	
-	<!-- 기진 끝 -->
-	
-	
-	
 
 </mapper>

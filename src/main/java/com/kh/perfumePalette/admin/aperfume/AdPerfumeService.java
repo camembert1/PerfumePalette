@@ -2,9 +2,10 @@ package com.kh.perfumePalette.admin.aperfume;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import com.kh.perfumePalette.perfume.Perfume;
 
-public interface PerfumeService {
+
+public interface AdPerfumeService {
 
 	/**
 	 * 상품 등록 Service
@@ -39,9 +40,8 @@ public interface PerfumeService {
 	 * @return perfume
 	 */
 	Perfume selectOneByNo(int perfumeNo);
-
-
-
+	
+	
 
 
 }

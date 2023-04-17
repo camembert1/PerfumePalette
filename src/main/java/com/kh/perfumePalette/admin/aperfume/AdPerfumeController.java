@@ -5,31 +5,36 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.perfume.Perfume;
 
 @Controller
 @RequestMapping("/perfume")
-public class PerfumeController {
+public class AdPerfumeController {
 
 	@Autowired
-	private PerfumeService pService;
+	private AdPerfumeService pService;
 
 	@Autowired
-	@Qualifier("pFileUtil")
-	private PerfumeFileUtil pFileUtil;
+	@Qualifier("adpFileUtil")
+	private AdPerfumeFileUtil pFileUtil;
 
 	// 상품 등록화면
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -147,11 +152,43 @@ public class PerfumeController {
 	}
 
 	// 상품 삭제
-	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public ModelAndView perfumeRemove(@RequestParam("perfumeNo") int perfumeNo
+//	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+//	public ModelAndView perfumeRemove(@RequestParam("perfumeNo") int perfumeNo
+//			, @ModelAttribute Perfume perfume
+//			, HttpServletRequest request
+//			, ModelAndView mv) {
+//		try {
+//			Perfume perfumeOne = pService.selectOneByNo(perfumeNo);
+//			if (perfumeOne.getpFilename() != null) {
+//				// 기존 파일 삭제
+//				this.deleteFile(perfumeOne.getpFilerename(), request);
+//			}
+//			int result = pService.deletePerfume(perfumeNo);
+//			if (result > 0) {
+//				Alert alert = new Alert("/perfume/mList", "상품 삭제가 완료되었습니다.");
+//				mv.addObject("alert", alert);
+//				mv.setViewName("common/alert");
+//			} else {
+//				mv.addObject("msg", "삭제가 완료되지 않았습니다.");
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+//		}
+//		return mv;
+//	}
+	// 상품 다중 삭제
+	@PostMapping("/remove")
+	@ResponseBody
+	public ModelAndView perfumeRemove(int []arr 
+			, @RequestParam("perfumeNo") int perfumeNo
 			, @ModelAttribute Perfume perfume
 			, HttpServletRequest request
 			, ModelAndView mv) {
+			for(int i = 0; i < arr.length; i++) {
+				System.out.println(arr[i]);
+			}
 		try {
 			Perfume perfumeOne = pService.selectOneByNo(perfumeNo);
 			if (perfumeOne.getpFilename() != null) {
@@ -173,8 +210,9 @@ public class PerfumeController {
 		}
 		return mv;
 	}
+	
 		
-	// 수정시 기존 파일 삭제
+	// 수정, 삭제시 기존 파일 삭제
 	private void deleteFile(String getpFilename, HttpServletRequest request) throws Exception {
 		String root = request.getSession().getServletContext().getRealPath("resources/img");
 		String delPath = root + "\\" + "perfumeFileUploads";
@@ -209,5 +247,5 @@ public class PerfumeController {
 			return "common/error";
 		}
 	}
-
+	
 }

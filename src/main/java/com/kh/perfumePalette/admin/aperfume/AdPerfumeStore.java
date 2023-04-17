@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-public interface PerfumeStore {
+import com.kh.perfumePalette.perfume.Perfume;
+
+public interface AdPerfumeStore {
 
 	int insertPerfume(SqlSession session, Perfume perfume);
 	
@@ -15,6 +17,7 @@ public interface PerfumeStore {
 	List<Perfume> selectPerfumeList(SqlSession session);
 	
 	Perfume selectOneByNo(SqlSession session, int perfumeNo);
+
 
 
 

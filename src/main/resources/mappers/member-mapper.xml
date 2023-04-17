@@ -82,5 +82,7 @@
 		SET MEMBER_PW = #{memberPw} 
 		WHERE MEMBER_ID = #{memberId}
 	</update>
+	
+	
 
 </mapper>

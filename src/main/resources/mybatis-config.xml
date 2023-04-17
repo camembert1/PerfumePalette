@@ -14,5 +14,6 @@
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/perfume-mapper.xml" />
 		<mapper resource="mappers/wish-mapper.xml" />
+		<mapper resource="mappers/admin-mapper.xml" />
 	</mappers>
 </configuration>

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component("pFileUtil")
-public class PerfumeFileUtil {
+@Component("adpFileUtil")
+public class AdPerfumeFileUtil {
 
 	public Map<String, String> saveFile(MultipartFile multipartFile, HttpServletRequest req) throws Exception {
 		Map<String, String> result = null;
