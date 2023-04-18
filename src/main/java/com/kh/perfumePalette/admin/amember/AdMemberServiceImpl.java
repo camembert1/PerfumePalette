@@ -33,6 +33,11 @@ public class AdMemberServiceImpl implements AdMemberService {
 		return amStore.selectOneByNo(session, memberNo);
 	}
 
+	@Override
+	public int deleteAdMember(int memberNo) {
+		return amStore.deleteAdMember(session, memberNo);
+	}
+
 
 	
 }

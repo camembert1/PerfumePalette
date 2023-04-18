@@ -72,14 +72,14 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-			<tbody>
+			<tfoot>
 				<tr>
-					<td><button>선택 노출</button></td>
-					<td><button>선택 비노출</button></td>
+					<td><button type="button" class="show">선택 노출</button></td>
+					<td><button type="button" class="noShow">선택 비노출</button></td>
 					<td><button type="button" class="del">삭제하기</button></td>
 					<td><button type="button" onclick="location.href='/perfume/write'">상품 등록</button></td>
 				</tr>
-			</tbody>
+			</tfoot>
 		</table>
 		<script>
 		// 전체 선택 박스
@@ -92,20 +92,20 @@
 // 	            }
 // 	        });
 // 	    });
-		// 전체 선택 박스
-		var allCheck = document.querySelector(".allCheck");
-		var list = document.querySelectorAll(".check");
-		allCheck.onclick = () => {
-			if(allCheck.checked) {
-				for(var i = 0; i < list.length; i++) {
-					list[i].checked = true;
-				}
-			} else {
-				for(var i = 0; i < list.length; i++) {
-					list[i].checked = false;
+			// 전체 선택 박스
+			var allCheck = document.querySelector(".allCheck");
+			var list = document.querySelectorAll(".check");
+			allCheck.onclick = () => {
+				if(allCheck.checked) {
+					for(var i = 0; i < list.length; i++) {
+						list[i].checked = true;
+					}
+				} else {
+					for(var i = 0; i < list.length; i++) {
+						list[i].checked = false;
+					}
 				}
 			}
-		}
 		
 		
 		// 선택 삭제
@@ -122,6 +122,7 @@
 // 		        }
 // 		    }
 // 		}
+			// 선택 삭제
 			document.querySelector(".del").addEventListener('click', function() {
 				var del = new Array();
 				var list = document.querySelectorAll(".check");
@@ -131,7 +132,7 @@
 					}
 				}
 				console.log(del);
-				if(confirm("삭제 진짜 할거임?")) {
+				if(confirm("정말 삭제 하시겠습니까?")) {
 					$.ajax({
 						url:'/perfume/remove',
 						type : 'post',
@@ -148,6 +149,66 @@
 							console.log(data)
 						}
 					});
+				}
+			});
+			
+			// 선택 공개
+			document.querySelector(".show").addEventListener('click', function() {
+				var show = new Array();
+				var list = document.querySelectorAll(".check");
+				for(var i = 0; i < list.length; i++) {
+					if(list[i].checked) {
+						show.push(list[i].value);
+					}
+				}
+				console.log(show);
+				if(confirm("정말 변경 하시겠습니까?")) {
+					$.ajax({
+						url:'/perfume/show',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':show},
+						success : function(data) {
+							if(data == 1) {
+								alert("노출로 변경되었습니다.");
+								location.href = "/perfume/mList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					})
+				}
+			});
+			
+			// 선택 비공개
+			document.querySelector(".noShow").addEventListener('click', function() {
+				var noShow = new Array();
+				var list = document.querySelectorAll(".check");
+				for(var i = 0; i < list.length; i++) {
+					if(list[i].checked) {
+						noShow.push(list[i].value);
+					}
+				}
+				console.log(noShow);
+				if(confirm("정말 변경 하시겠습니까?")) {
+					$.ajax({
+						url:'/perfume/noShow',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':noShow},
+						success : function(data) {
+							if(data == 1) {
+								alert("비노출로 변경되었습니다.");
+								location.href = "/perfume/mList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					})
 				}
 			});
 		</script>

@@ -26,5 +26,12 @@ public interface AdMemberService {
 	 */
 	Member selectOneByNo(int memberNo);
 
+	/**
+	 * 회원 다중 삭제
+	 * @param memberNo
+	 * @return int
+	 */
+	int deleteAdMember(int memberNo);
+
 
 }

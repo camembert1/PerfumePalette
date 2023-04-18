@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원 관리</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 		<style>
 /* 			모달 css */
 			.modal {
@@ -66,7 +67,7 @@
 			<tbody>
 				<c:forEach items="${amList }" var="member" varStatus="i">
 					<tr>
-						<td class="td"><input type="checkbox" class="check"></td>
+						<td class="td"><input type="checkbox" class="check" value="${member.memberNo }"></td>
 						<td class="td">${i.count }</td>
 						<td class="td">${member.memberName }</td>
 						<td class="td">${member.memberId }</td>
@@ -76,10 +77,10 @@
 						<td class="td">${member.memberPhone }</td>
 						<td class="td">${member.memberAddr }</td>
 						<td class="td">${member.memberDate }</td>
-						<td class="td"><button class="modal_btn" data-target="#modal${i.index }">수정하기</button></td>
+						<td class="td"><button class="modal_btn" data-target="#modal${i.index }">상세</button></td>
 					</tr>
 					<!-- 		여기서부터 모달 -->
-					<form action="/member/amList" method="post">
+					<form action="/admin/member/amList" method="post">
 					<input type="hidden" class="" name="memberNo" value="${member.memberNo }"/>
 					<div class="modal" id="modal${i.index }">
 			      		<div class="modal_body">
@@ -124,6 +125,11 @@
 <!--    	 	모달 끝~ -->
 				</c:forEach>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td><button type="button" class="del">삭제하기</button></td>
+				</tr>
+			</tfoot>
 		</table>
 		<script>
 		// 전체 선택 박스
@@ -140,6 +146,39 @@
 				}
 			}
 		}
+		
+		// 선택 삭제 
+		document.querySelector(".del").addEventListener('click', function() {
+			var del = new Array();
+			var list = document.querySelectorAll(".check");
+			for(var i = 0; i < list.length; i++) {
+				if(list[i].checked) {
+					del.push(list[i].value);
+				}
+			}
+			console.log(del);
+			if(confirm("정말 삭제 하시겠습니까?")) {
+				$.ajax({
+					url:'/admin/member/amRemove',
+					type : 'post',
+					dataType : 'json',
+					traditional : 'true',
+					data : {'arr':del},
+					success : function(data){
+						if(data == 1) {
+							alert("삭제되었습니다!");
+							location.href = "/admin/member/amList";
+						}
+					},
+					error : function(data) {
+						console.log(data)
+					}
+				});
+			}
+		});
+		
+		
+		// 여기부터 모달!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		// modal, modal_btn, modal_close의 요소를 가져옴
 		const modals = document.querySelectorAll('.modal');

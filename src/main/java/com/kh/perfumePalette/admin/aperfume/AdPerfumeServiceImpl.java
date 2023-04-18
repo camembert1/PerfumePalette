@@ -46,5 +46,15 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 		return perfume;
 	}
 
+	@Override
+	public int updateOkPerfume(int i) {
+		return pStore.updateOkPerfume(session, i);
+	}
+
+	@Override
+	public int updateNoPerfume(int i) {
+		return pStore.updateNoPerfume(session, i);
+	}
+
 	
 }

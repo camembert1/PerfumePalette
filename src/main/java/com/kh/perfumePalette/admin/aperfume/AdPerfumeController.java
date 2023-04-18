@@ -114,8 +114,8 @@ public class AdPerfumeController {
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ModelAndView perfumeModify(ModelAndView mv
 			, @RequestParam(value = "reloadFile", required = false) MultipartFile multi
-			, HttpServletRequest request
-			, @ModelAttribute Perfume perfume) {
+			, @ModelAttribute Perfume perfume
+			, HttpServletRequest request) {
 		Map<String, String> fileInfo = null;
 		try {
 			// 수정할 때, 새로 업로드된 파일이 있는 경우
@@ -133,11 +133,9 @@ public class AdPerfumeController {
 			
 			int result = pService.updatePerfume(perfume);
 			if (result > 0) {
-//				Alert alert = new Alert("/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되었습니다.");
 				Alert alert = new Alert("/perfume/mList", "상품 수정이 완료되었습니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
-//				mv.setViewName("redirect:/perfume/mDetail?perfumeNo=" + perfume.getPerfumeNo());
 			} else {
 				Alert alert = new Alert("/perfume/modify?perfumeNo=" + perfume.getPerfumeNo(), "상품 수정이 완료되지 않았습니다.");
 				mv.addObject("alert", alert);
@@ -150,6 +148,49 @@ public class AdPerfumeController {
 		}
 		return mv;
 	}
+	// 내가 해보는 다중 수정(노출로 변경)
+	@PostMapping("/show")
+	@ResponseBody
+	public String perfumeUpdate(int [] arr
+			, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for(int i = 0; i < arr.length; i++) {
+				System.out.println(arr[i]);
+				result = pService.updateOkPerfume(arr[i]);
+			}
+			if(result > 0) {
+				return "1";
+			}else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	// 다중 수정(비노출로 변경)
+	@PostMapping("/noShow")
+	@ResponseBody
+	public String perfumeNoShow(int [] arr, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for(int i = 0; i < arr.length; i++) {
+				System.out.println(arr[i]);
+				result = pService.updateNoPerfume(arr[i]);
+			}
+			if(result > 0) {
+				return "1";
+			}else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+		
+	}
+	
 
 	// 상품 삭제
 //	@RequestMapping(value = "/remove", method = RequestMethod.GET)

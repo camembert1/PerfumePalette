@@ -40,6 +40,20 @@ public interface AdPerfumeService {
 	 * @return perfume
 	 */
 	Perfume selectOneByNo(int perfumeNo);
+
+	/**
+	 * 상품 체크 노출 Service
+	 * @param i
+	 * @return int
+	 */
+	int updateOkPerfume(int i);
+
+	/**
+	 * 상품 체크 비노출 Service
+	 * @param i
+	 * @return int
+	 */
+	int updateNoPerfume(int i);
 	
 	
 

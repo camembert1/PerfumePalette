@@ -28,5 +28,10 @@ public class AdMemberStoreLogic implements AdMemberStore {
 		return session.selectOne("AdminMapper.selectAdMemberDetail", memberNo);
 	}
 
+	@Override
+	public int deleteAdMember(SqlSession session, int memberNo) {
+		return session.delete("AdminMapper.deleteMember", memberNo);
+	}
+
 
 }

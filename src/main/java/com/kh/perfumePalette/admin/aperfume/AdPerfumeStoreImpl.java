@@ -44,6 +44,16 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 		return perfume;
 	}
 
+	@Override
+	public int updateOkPerfume(SqlSession session, int i) {
+		return session.update("AdminMapper.updateShow", i);
+	}
+
+	@Override
+	public int updateNoPerfume(SqlSession session, int i) {
+		return session.update("AdminMapper.updateNoShow", i);
+	}
+
 
 
 }

@@ -14,5 +14,7 @@ public interface AdMemberStore {
 
 	Member selectOneByNo(SqlSession session, int memberNo);
 
+	int deleteAdMember(SqlSession session, int memberNo);
+
 
 }

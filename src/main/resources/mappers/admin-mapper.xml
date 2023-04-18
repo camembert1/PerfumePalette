@@ -41,6 +41,9 @@
 		, MEMBER_NAME=#{memberName}, MEMBER_EMAIL=#{memberEmail}, MEMBER_PHONE=#{memberPhone}
 		, MEMBER_ADDR=#{memberAddr} WHERE MEMBER_NO = #{memberNo}
 	</update>
+	<delete id="deleteMember">
+		DELETE FROM MEMBER_TBL WHERE MEMBER_NO = #{memberNo}
+	</delete>
 	
 	<select id="selectAdMemberList" resultMap="memberResultMap">
 		SELECT * FROM MEMBER_TBL WHERE MEMBER_TYPE = 1 ORDER BY MEMBER_DATE DESC
@@ -65,6 +68,12 @@
 		, P_SCENT_CATEGORY = #{pScentCategory}, P_IMAGE_CATEGORY = #{pImageCategory}, P_FILENAME = #{pFilename}
 		, P_FILERENAME = #{pFilerename}, P_FILEPATH = #{pFilepath}, PERFUME_STATUS = #{perfumeStatus}
 		WHERE PERFUME_NO = #{perfumeNo}
+	</update>
+	<update id="updateShow">
+		UPDATE PERFUME_TBL SET PERFUME_STATUS = 1 WHERE PERFUME_NO = #{perfumeNo}
+	</update>
+	<update id="updateNoShow">
+		UPDATE PERFUME_TBL SET PERFUME_STATUS = 0 WHERE PERFUME_NO = #{perfumeNo}
 	</update>
 	
 	<delete id="deletePerfume">

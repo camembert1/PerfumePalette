@@ -18,6 +18,10 @@ public interface AdPerfumeStore {
 	
 	Perfume selectOneByNo(SqlSession session, int perfumeNo);
 
+	int updateOkPerfume(SqlSession session, int i);
+
+	int updateNoPerfume(SqlSession session, int i);
+
 
 
 
