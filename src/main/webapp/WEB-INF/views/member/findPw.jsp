@@ -39,7 +39,7 @@
           </div>
 
           <br />
-          <div class="contetnBox">
+          <div class="contentBox">
           
           	<div class="input-box">
           		<label for="memberId" class="contentLabel">아이디</label>

@@ -26,19 +26,27 @@
 		VALUES(SEQ_CARTNO.NEXTVAL,
 		#{cartQuantity}, DEFAULT ,#{memberId}, #{perfumeNo})
 	</insert>
-
-	<select id="selectPerfumeList" resultMap="cartResultMap">
-		SELECT P.*, C.CART_NO,
-		C.CART_QUANTITY,
-		C.CART_DATE, C.MEMBER_ID
-		FROM PERFUME_TBL P
-		LEFT OUTER
-		JOIN CART_TBL C
-		ON P.PERFUME_NO = C.PERFUME_NO
-	</select>
-
+	
 	<delete id="removeCart">
 		DELETE FROM CART_TBL WHERE CART_NO = #{cartNo}
 	</delete>
+	
+	<update id="updateCart">
+		UPDATE CART_TBL SET CART_QUANTITY = #{cartQuantity} WHERE CART_NO = #{cartNo} 
+	</update>
+	
+	<select id="selectCartList" resultMap="cartResultMap">
+		SELECT P.*,
+		C.CART_NO,
+		C.CART_QUANTITY, C.CART_DATE
+		FROM PERFUME_TBL P
+		LEFT
+		OUTER JOIN CART_TBL
+		C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE C.MEMBER_ID
+		= #{memberId}
+		ORDER BY
+		P.PERFUME_NO DESC
+	</select>
 
 </mapper>

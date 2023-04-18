@@ -76,11 +76,15 @@ main .product-info{
 	justify-content: space-between;
 }
 main .productImg{
-	width: 200px;
-	height: 200px;
+	width: 250px;
+	height: 250px;
 	border-radius: 10px;
-	background-color: #c0c0c0;
+	/* background-color: #c0c0c0; */
 }
+	main img{
+		width: 250px;
+		height: 250px;
+	}
 
 main .productDetails{
 	display: flex;

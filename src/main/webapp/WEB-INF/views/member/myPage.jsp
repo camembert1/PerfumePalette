@@ -36,13 +36,13 @@
       <!-- 사이드바 -->
       <div id="hrefList">
          <div id="hrefName">${memerOne.memberName }님</div>
-         <span><a href="#">주문내역조회</a></span>
+         <span><a href="/member/orderList">주문내역조회</a></span>
          <span><a href="#">작성후기</a></span>
          <span><a href="#">작성문의</a></span>
          <span><a href="#">작성댓글</a></span>
          <span><a href="#">좋아요목록</a></span>
-         <span><a href="#">찜목록</a></span>
-         <span><a href="#">장바구니목록</a></span>
+         <span><a href="/wish/list">찜목록</a></span>
+         <span><a href="/cart/list">장바구니목록</a></span>
          <span><a href="#">회원탈퇴</a></span>
       </div>
 

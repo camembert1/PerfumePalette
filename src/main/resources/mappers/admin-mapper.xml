@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdminMapper">
+<!-- 	Member-Mapper -->
+	<resultMap type="Member" id="memberResultMap">
+		<id property="memberNo" column="MEMBER_NO"></id>
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="memberDate" column="MEMBER_DATE" />
+		<result property="memberEndDate" column="MEMBER_END_DATE" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberType" column="MEMBER_TYPE" />
+	</resultMap>
+
+<!-- 	Perfume-Mapper -->
+	<resultMap type="Perfume" id="perfumeResultMap">
+		<id property="perfumeNo" column="PERFUME_NO"></id>
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeVolume" column="PERFUME_VOLUME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" column="P_FILENAME" />
+		<result property="pFilerename" column="P_FILERENAME" />
+		<result property="pFilepath" column="P_FILEPATH" />
+		<result property="perfumeDate" column="PERFUME_DATE" />
+		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	</resultMap>
+	
+	<!-- 	멤버 시작 -->
+	<update id="updateAdMemberModify">
+		UPDATE MEMBER_TBL
+		SET MEMBER_ID=#{memberId}, MEMBER_NICKNAME=#{memberNickname}, MEMBER_PW=#{memberPw}
+		, MEMBER_NAME=#{memberName}, MEMBER_EMAIL=#{memberEmail}, MEMBER_PHONE=#{memberPhone}
+		, MEMBER_ADDR=#{memberAddr} WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="selectAdMemberList" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_TYPE = 1 ORDER BY MEMBER_DATE DESC
+	</select>
+	
+	<select id="selectAdMemberDetail" resultMap="memberResultMap">
+		SELECT * FROM MEMER_TBL WHERE MEMBER_NO = #{memberNo }
+	</select>
+	<!-- 	멤버 끝 -->
+	
+<!-- 	향수 시작 -->
+	<insert id="insertPerfume">
+		INSERT INTO PERFUME_TBL
+		VALUES(SEQ_PERFUME_NO.NEXTVAL, #{perfumeName}, #{perfumeBrand}, #{perfumeVolume}, #{perfumePrice}
+		, #{perfumeQuantity}, #{pScentCategory}, #{pImageCategory}, #{pFilename}, #{pFilerename}, #{pFilepath}
+		, DEFAULT, #{perfumeStatus})
+	</insert>
+	
+	<update id="updatePerfume">
+		UPDATE PERFUME_TBL SET PERFUME_NAME = #{perfumeName}, PERFUME_BRAND = #{perfumeBrand}
+		, PERFUME_VOLUME = #{perfumeVolume}, PERFUME_PRICE = #{perfumePrice}, PERFUME_QUANTITY = #{perfumeQuantity}
+		, P_SCENT_CATEGORY = #{pScentCategory}, P_IMAGE_CATEGORY = #{pImageCategory}, P_FILENAME = #{pFilename}
+		, P_FILERENAME = #{pFilerename}, P_FILEPATH = #{pFilepath}, PERFUME_STATUS = #{perfumeStatus}
+		WHERE PERFUME_NO = #{perfumeNo}
+	</update>
+	
+	<delete id="deletePerfume">
+		DELETE FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
+	</delete>
+	
+	<select id="selectOneByNo" resultMap="perfumeResultMap">
+		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
+	</select>
+	
+	<select id="selectPerfumeList" resultMap="perfumeResultMap">
+		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
+	</select>
+	<!-- 	향수 끝 -->
+</mapper>

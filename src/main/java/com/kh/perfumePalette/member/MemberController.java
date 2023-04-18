@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,27 +26,6 @@ public class MemberController {
 
 	@Autowired
 	private MemberService mService;
-
-	// MBTI테스트 화면 출력
-	@GetMapping("/mbti")
-	public ModelAndView mbtiTestView(ModelAndView mv) {
-		mv.setViewName("common/mbti");
-		return mv;
-	}
-
-	// MBTI테스트 결과 세션저장
-	@ResponseBody
-	@PostMapping("/mbtiResult")
-	public void mbtiResultSave(String mbtiResult, HttpSession session) {
-		session.setAttribute("mbtiResult", mbtiResult);
-	}
-
-	// MBTI테스트 결과 출력
-	@GetMapping("/mbtiResult")
-	public ModelAndView mbtiResultView(ModelAndView mv) {
-		mv.setViewName("common/mbtiResult");
-		return mv;
-	}
 
 	// 회원가입
 	@GetMapping("/enroll")
@@ -158,14 +136,21 @@ public class MemberController {
 			int result = mService.login(member);
 			if (result > 0) {
 				HttpSession session = request.getSession();
-				session.setAttribute("member", member.getMemberId());
-				member = mService.selectMemberById(member.getMemberId());
-				session.setAttribute("nickname", member.getMemberNickname());
-				session.setAttribute("memberNo", member.getMemberNo());
+				// 기존
+                // session.setAttribute("member", member.getMemberId());
+                // member = mService.selectMemberById(member.getMemberId());
+                // session.setAttribute("nickname", member.getMemberNickname());
+
+                // 수정
+                member = mService.selectMemberById(member.getMemberId());
+                session.setAttribute("member", member.getMemberId());
+                session.setAttribute("nickname", member.getMemberNickname());
+                session.setAttribute("memberNo", member.getMemberNo());
+                
 				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");
 				} else {
-					mv.setViewName("redirect:/member/mbtiResult");
+					mv.setViewName("redirect:/mbti/mbtiResult");
 				}
 			} else {
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
@@ -342,7 +327,13 @@ public class MemberController {
 	    }
 	    return mv;
 	}
-
+	
+	// 주문내역조회 
+	@GetMapping("/orderList")
+	public ModelAndView orderList(ModelAndView mv) {
+	    mv.setViewName("member/orderList");
+	    return mv;
+	}
 	
 	
 }

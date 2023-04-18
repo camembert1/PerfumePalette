@@ -35,7 +35,7 @@
 					<th><input type="text" placeholder="상품명 검색"><button>검색</button></th>
 				</tr>
 				<tr>
-					<th><input type="checkbox" class="checkBox-"></th>
+					<th><input type="checkbox" class="allCheck"></th>
 					<th>번 호</th>
 					<th>이미지</th>
 					<th>브랜드</th>
@@ -46,12 +46,13 @@
 					<th>향 분류</th>
 					<th>이미지 분류</th>
 					<th>노출 여부</th>
+					<th>수 정</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${pList }" var="perfume" varStatus="i">
 					<tr>
-						<td class="td"><input type="checkbox" class="checkBox_"></td>
+						<td class="td"><input type="checkbox" class="check" value="${perfume.perfumeNo }"></td>
 						<td class="td">${i.count }</td>
 						<td class="td"><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="상품 이미지"></td>
 						<td class="td">${perfume.perfumeBrand }</td>
@@ -75,21 +76,80 @@
 				<tr>
 					<td><button>선택 노출</button></td>
 					<td><button>선택 비노출</button></td>
-					<td><button>선택 삭제하기</button></td>
+					<td><button type="button" class="del">삭제하기</button></td>
 					<td><button type="button" onclick="location.href='/perfume/write'">상품 등록</button></td>
 				</tr>
 			</tbody>
 		</table>
 		<script>
-		$(document).ready(function() {
-	        $('.checkBox-').change(function() {
-	            if ($(this).is(":checked")) {
-	                $('.checkBox_').prop('checked', true);
-	            } else {
-	                $('.checkBox_').prop('checked', false);
-	            }
-	        });
-	    });
+		// 전체 선택 박스
+// 		$(document).ready(function() {
+// 	        $('.allCheck').change(function() {
+// 	            if ($(this).is(":checked")) {
+// 	                $('.check').prop('checked', true);
+// 	            } else {
+// 	                $('.check').prop('checked', false);
+// 	            }
+// 	        });
+// 	    });
+		// 전체 선택 박스
+		var allCheck = document.querySelector(".allCheck");
+		var list = document.querySelectorAll(".check");
+		allCheck.onclick = () => {
+			if(allCheck.checked) {
+				for(var i = 0; i < list.length; i++) {
+					list[i].checked = true;
+				}
+			} else {
+				for(var i = 0; i < list.length; i++) {
+					list[i].checked = false;
+				}
+			}
+		}
+		
+		
+		// 선택 삭제
+// 		var del = document.querySelector(".del");
+		
+// 		del.onclick = () => {
+// 		    for(var i = 0; i < list.length; i++) {
+// 		        if(list[i].checked) {
+// 		            // list[i].parentElement.parentElement.remove();
+// 		            console.log(list[i]);
+// 		            let perfumeNo = list[i].value;
+// 		            console.log(perfumeNo);
+// 		            location.href='/perfume/remove?perfumeNo='+ perfumeNo;
+// 		        }
+// 		    }
+// 		}
+			document.querySelector(".del").addEventListener('click', function() {
+				var del = new Array();
+				var list = document.querySelectorAll(".check");
+				for(var i = 0; i < list.length; i++){
+					if(list[i].checked){
+						del.push(list[i].value);
+					}
+				}
+				console.log(del);
+				if(confirm("삭제 진짜 할거임?")) {
+					$.ajax({
+						url:'/perfume/remove',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':del},
+						success : function(data){
+							if(data == 1) {
+								alert("삭제되었습니다!");
+								location.href = "/perfume/mList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					});
+				}
+			});
 		</script>
 	</body>
 </html>
