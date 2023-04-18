@@ -78,11 +78,11 @@
 			</c:if>
 
 			<div>
-				<img src="../../resources/img/common/cart.png" alt="">
+				<img src="../../resources/img/common/cart.png" alt="" onclick="location.href = '/cart/list'">
 				<div class="menu-info">장바구니</div>
 			</div>
 			<div>
-				<img src="../../resources/img/common/wish.png" alt="">
+				<img src="../../resources/img/common/wish.png" alt="" onclick="location.href = '/wish/list'">
 				<div class="menu-info">찜</div>
 			</div>
 

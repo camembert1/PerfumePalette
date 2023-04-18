@@ -198,10 +198,8 @@
 						<th>향수명</th>
 						<th>브랜드</th>
 						<th>이미지</th>
-						<c:if test="${sessionScope.member ne null }">
-							<th>찜</th>
-							<th>장바구니</th>
-						</c:if>
+						<th>찜</th>
+						<th>장바구니</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -217,7 +215,7 @@
 								<c:if test="${perfume.wishDate ne null}">
 									<img src="../../../resources/img/wish/wish_yes.png"
 										alt="wish_yes"
-										onclick="removeWish(${perfume.perfumeNo}, '${sessionScope.member }')">
+										onclick="removeWish(${perfume.wishNo}, ${perfume.perfumeNo })">
 								</c:if>
 								<c:if test="${perfume.wishDate eq null}">
 									<img src="../../../resources/img/wish/wish_no.png"
@@ -363,13 +361,12 @@
 					});
 				}
 
-				function removeWish(perfumeNo, id) {
+				function removeWish(wishNo, perfumeNo) {
 					$.ajax({
 						url: "/wish/remove",
 						type: "POST",
 						data: {
-							perfumeNo: perfumeNo,
-							memberId: id
+							wishNo: wishNo
 						},
 						success: function (result) {
 							if (result === "success") {
