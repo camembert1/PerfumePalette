@@ -8,5 +8,7 @@ public interface QnaBoardService {
 
 	int writeQnaBoard(QnaBoard qnaboard);
 
+	QnaBoard QnaBoardDetail(Integer memberNo);
+
 
 }

@@ -34,6 +34,10 @@
       ON Q.MEMBER_NO = M.MEMBER_NO
       ORDER BY Q.QNA_DATE DESC
 	</select>
+	
+	<!-- <select id="QnaBoardDetail" resultMap="qnaBoardResultMap">
+		
+	</select> -->
 
 
 

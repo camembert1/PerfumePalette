@@ -26,6 +26,12 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return result;
 	}
 
+	@Override
+	public QnaBoard QnaBoardDetail(Integer memberNo) {
+		QnaBoard qnaboard = qbStore.QnaBoardDetail(session, memberNo);
+		return qnaboard;
+	}
+
 	
 
 }
