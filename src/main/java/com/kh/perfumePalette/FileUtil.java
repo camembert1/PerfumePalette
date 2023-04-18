@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
+@Component("FileUtil")
 public class FileUtil {
 
 	public Map<String, String> saveFile(MultipartFile multipartFile, HttpServletRequest req) throws Exception {
