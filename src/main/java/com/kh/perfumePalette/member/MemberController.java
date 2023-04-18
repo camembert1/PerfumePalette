@@ -137,12 +137,6 @@ public class MemberController {
 			Member loginUser = mService.login(member); 
 			if (loginUser != null) {
 				HttpSession session = request.getSession();
-
-                // 수정
-                // member = mService.selectMemberById(member.getMemberId());
-                // session.setAttribute("member", member.getMemberId());
-                // session.setAttribute("nickname", member.getMemberNickname());
-                // session.setAttribute("memberNo", member.getMemberNo());
 				
 				// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
                 session.setAttribute("member", loginUser);
@@ -187,8 +181,7 @@ public class MemberController {
 	@GetMapping("/myPage")
 	public ModelAndView myPage(HttpSession session, HttpServletRequest request, ModelAndView mv) {
 		try {
-			String id = (String) session.getAttribute("member");
-			Member member = mService.selectMemberById(id);
+			Member member = mService.selectMemberById(((Member)session.getAttribute("member")).getMemberId());
 			if (member != null) {
 				mv.addObject("memerOne", member);
 				mv.setViewName("member/myPage");
