@@ -62,6 +62,8 @@
 						</tbody>
 					</table>
 					<button class="del">선택삭제</button>
+					<p>상품 갯수 : </p>
+					<p>합계 금액 : </p>
 				</div>
 			</main>
 			<jsp:include page="../common/footer.jsp" />
