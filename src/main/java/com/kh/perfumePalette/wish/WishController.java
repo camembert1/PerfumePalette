@@ -10,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.perfumePalette.Alert;
 
 @Controller
 @RequestMapping("/wish")
@@ -24,22 +25,60 @@ public class WishController {
 	@GetMapping("/temp")
 	public ModelAndView goProduct(HttpSession session, ModelAndView mv, HttpServletRequest req) {
 		String id = (String) session.getAttribute("member");
-//		System.out.println(id);
 		List<Wish> perfumeList = null;
-//		if (id != null) {
-//			perfumeList = wService.selectPerfumeList();
-//		} else {
-			perfumeList = wService.selectPerfumeListLogin(id);
-//		}
-//		System.out.println(perfumeList);
+		perfumeList = wService.selectPerfumeListLogin(id);
 		mv.addObject("perfumeList", perfumeList);
 		mv.setViewName("wish/product");
 		return mv;
 	}
 
+	@GetMapping("/list")
+	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
+		String id = (String) session.getAttribute("member");
+		if (id != null) {
+			List<Wish> perfumeList = null;
+			perfumeList = wService.selectWishList(id);
+			if (perfumeList.size() != 0) {
+				mv.addObject("perfumeList", perfumeList);
+				mv.setViewName("wish/list");
+			} else {
+				Alert alert = new Alert("/", "찜 내역이 존재하지 않습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			}
+		} else {
+			Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
+			mv.addObject("alert", alert);
+			mv.setViewName("common/alert");
+		}
+
+		return mv;
+	}
+
+	// 찜 다중 삭제
+	@PostMapping("/removeWish")
+	@ResponseBody
+	public String wishRemove(int[] arr) {
+		int result = 0;
+		try {
+			for (int i = 0; i < arr.length; i++) {
+				System.out.println(arr[i]);
+				result = wService.removeWish(arr[i]);
+			}
+			if (result > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+
 	@PostMapping("/add")
 	@ResponseBody
-	public String addWish(@RequestParam String memberId, @RequestParam int perfumeNo) {
+	public String addWish(String memberId, int perfumeNo) {
 		try {
 			Wish wish = new Wish();
 			wish.setMemberId(memberId);
@@ -58,12 +97,9 @@ public class WishController {
 
 	@PostMapping("/remove")
 	@ResponseBody
-	public String removeWish(@RequestParam String memberId, @RequestParam int perfumeNo) {
+	public String removeWish(int wishNo) {
 		try {
-			Wish wish = new Wish();
-			wish.setMemberId(memberId);
-			wish.setPerfumeNo(perfumeNo);
-			int result = wService.removeWish(wish);
+			int result = wService.removeWish(wishNo);
 			if (result > 0) {
 				return "success"; // 찜 삭제 성공
 			} else {

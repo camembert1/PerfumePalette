@@ -6,12 +6,11 @@ public interface WishStore {
 
 	int addWish(Wish wish);
 
-	List<Wish> selectAll(String id);
-
-	int removeWish(Wish wish);
-
-	List<Wish> selectPerfumeList();
-
+	int removeWish(int perfumeNo);
+	
 	List<Wish> selectPerfumeList(String id);
+
+	List<Wish> selectWishList(String id);
+
 
 }

@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class WishStoreImpl implements WishStore{
-	
+public class WishStoreImpl implements WishStore {
+
 	@Autowired
 	private SqlSession session;
 
@@ -19,20 +19,14 @@ public class WishStoreImpl implements WishStore{
 	}
 
 	@Override
-	public List<Wish> selectAll(String id) {
-		List<Wish> list = session.selectList("wishMapper.selectAll", id);
-		return list;
-	}
-
-	@Override
-	public int removeWish(Wish wish) {
-		int result = session.delete("wishMapper.removeWish", wish);
+	public int removeWish(int perfumeNo) {
+		int result = session.delete("wishMapper.removeWish", perfumeNo);
 		return result;
 	}
 
 	@Override
-	public List<Wish> selectPerfumeList() {
-		List<Wish> list = session.selectList("wishMapper.selectPerfumeList");
+	public List<Wish> selectWishList(String id) {
+		List<Wish> list = session.selectList("wishMapper.selectWishList", id);
 		return list;
 	}
 
