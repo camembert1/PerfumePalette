@@ -35,16 +35,23 @@
 
       <!-- 사이드바 -->
       <div id="hrefList">
-         <div id="hrefName">${memerOne.memberName }님</div>
-         <span><a href="/member/orderList">주문내역조회</a></span>
-         <span><a href="#">작성후기</a></span>
-         <span><a href="#">작성문의</a></span>
-         <span><a href="#">작성댓글</a></span>
-         <span><a href="#">좋아요목록</a></span>
-         <span><a href="/wish/list">찜목록</a></span>
-         <span><a href="/cart/list">장바구니목록</a></span>
-         <span><a href="#">회원탈퇴</a></span>
-      </div>
+		<div id="hrefName">${memerOne.memberName }님</div>
+		<c:if test="${memerOne.memberId eq 'admin'}">
+			<span><a href="/perfume/mList">판매상품관리</a></span>
+			<span><a href="#">주문내역관리</a></span>
+			<span><a href="/admin/member/amList">회원관리</a></span>
+			<span><a href="#">문의관리</a></span>
+			<span><a href="#">후기관리</a></span>
+		</c:if>
+		<c:if test="${memerOne.memberId ne 'admin'}">
+			<span><a href="#">주문내역조회</a></span>
+			<span><a href="#">작성후기</a></span>
+			<span><a href="#">작성문의</a></span>
+			<span><a href="#">작성댓글</a></span>
+			<span><a href="#">장바구니목록</a></span>
+			<span><a href="#">회원탈퇴</a></span>
+		</c:if>
+	</div>
 
        <!-- 여기부터 내용 입력하시면 됩니다! -->
       <form action="/member/myPage" method="post"

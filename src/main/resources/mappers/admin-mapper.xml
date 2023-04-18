@@ -34,6 +34,31 @@
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
 	</resultMap>
 	
+<!-- 	Review-Mapper -->
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="perfumeNo" column="PERFUME_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="reviewContents" column="REVIEW_CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="rFilename" column="R_FILENAME"/>
+		
+		<result property="fFilerename" column="R_FILERENAME"/>
+		<result property="rFilepath" column="R_FILEPATH"/>
+		<result property="rViewcount" column="R_VIEW_COUNT"/>
+		
+		<result property="rViewscore" column="REVIEW_SCORE"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="perfumeBrand" column="PERFUME_BRAND"/>
+		
+		<result property="perfumeName" column="PERFUME_NAME"/>
+		<result property="perfumePrice" column="PERFUME_PRICE"/>
+		<result property="pFilerename" column="P_FILERENAME"/>
+	</resultMap>
+	
+	
+	
 	<!-- 	멤버 시작 -->
 	<update id="updateAdMemberModify">
 		UPDATE MEMBER_TBL
@@ -88,4 +113,10 @@
 		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
 	</select>
 	<!-- 	향수 끝 -->
+	
+<!-- 	리뷰시작 -->
+	<select id="selectAdReview">
+		SELECT * FROM REVIEW_TBL ORDER BY REVIEW_DATE DESC
+	</select>
+<!-- 리뷰 끝 -->
 </mapper>

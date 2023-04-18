@@ -1,137 +1,170 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>회원 관리</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-		<style>
-/* 			모달 css */
-			.modal {
-		        position: absolute;
-		        top: 0;
-		        left: 0;
-				
-		        width: 100%;
-		        height: 100%;
-		
-		        display: none;
-		
-		        background-color: rgba(0, 0, 0, 0.4);
-		    }
-		    .modal.show {
-			  display: block;
-			}
-			
-			.modal_body {
-			  position: absolute;
-			  top: 50%;
-			  left: 50%;
-			
-			  width: 500px;
-			  height: 600px;
-			
-			  padding: 40px;
-			
-			  text-align: center;
-			
-			  background-color: rgb(255, 255, 255);
-			  border-radius: 10px;
-			  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-			
-			  transform: translateX(-50%) translateY(-50%);
-			}
-		</style>
-	</head>
-	<body>
-		<h1>회원 관리</h1>
+<head>
+<meta charset="UTF-8">
+<title>회원 관리</title>
+<link rel="stylesheet"
+	href="../../../../resources/adminCss/adMemberCss/amList.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<style>
+/* 		고정 */
+#id_ok, #pw_ok, #nickName_ok, #email_ok {
+	color: #008000;
+	display: none;
+}
 
-		<table>
-			<thead>
-				<tr>
-					<th><input type="checkbox" class="allCheck"></th>
-					<th>번 호</th>
-					<th>이 름</th>
-					<th>아이디</th>
-					<th>비밀번호</th>
-					<th>닉네임</th>
-					<th>이메일</th>
-					<th>전화번호</th>
-					<th>주소</th>
-					<th>등록일</th>
-					<th>수 정</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${amList }" var="member" varStatus="i">
+#id_not_ok2, #id_not_ok3, #pw_not_ok2, #pw_not_ok3, #nickName_not_ok2,
+	#nickName_not_ok3, #email_not_ok2, #email_not_ok3, #email_not_ok4 {
+	color: #6A82FB;
+	display: none;
+}
+
+/* 			모달 css */
+.modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal.show {
+	display: block;
+}
+
+.modal_body {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 600px;
+	padding: 40px;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	transform: translateX(-50%) translateY(-50%);
+}
+</style>
+</head>
+<body>
+	<jsp:include page="../../common/header.jsp" />
+	<main>
+		<!-- 헤더 부분 피하기 위한 div -->
+		<div id="forHeader"></div>
+
+		<!-- 본문 내용 가운데 정렬 위한 div -->
+		<div id="forCenter">
+
+			<!-- 사이드바 -->
+			<div id="hrefList">
+				<div id="hrefName">${memerOne.memberName }님</div>
+					<span><a href="/perfume/mList">판매상품관리</a></span>
+					<span><a href="#">주문내역관리</a></span>
+					<span><a href="/admin/member/amList">회원관리</a></span>
+					<span><a href="#">문의관리</a></span>
+					<span><a href="/admin/review/list">후기관리</a></span>
+			</div>
+
+			<!-- 여기부터 내용 입력하시면 됩니다! -->
+			<h1>회원 관리</h1>
+
+			<table>
+				<thead>
 					<tr>
-						<td class="td"><input type="checkbox" class="check" value="${member.memberNo }"></td>
-						<td class="td">${i.count }</td>
-						<td class="td">${member.memberName }</td>
-						<td class="td">${member.memberId }</td>
-						<td class="td">${member.memberPw }</td>
-						<td class="td">${member.memberNickname }</td>
-						<td class="td">${member.memberEmail }</td>
-						<td class="td">${member.memberPhone }</td>
-						<td class="td">${member.memberAddr }</td>
-						<td class="td">${member.memberDate }</td>
-						<td class="td"><button class="modal_btn" data-target="#modal${i.index }">상세</button></td>
+						<th><input type="checkbox" class="allCheck"></th>
+						<th>번 호</th>
+						<th>이 름</th>
+						<th>아이디</th>
+						<th>비밀번호</th>
+						<th>닉네임</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th>등록일</th>
+						<th>수 정</th>
 					</tr>
-					<!-- 		여기서부터 모달 -->
-					<form action="/admin/member/amList" method="post">
-					<input type="hidden" class="" name="memberNo" value="${member.memberNo }"/>
-					<div class="modal" id="modal${i.index }">
-			      		<div class="modal_body">
-			      			<h1>${member.memberNickname } 님의 상세정보입니다.</h1>
-			      			<div class="Detail_box">
-				                <div>
-				                    <label>아이디</label>
-				                    <input type="text" class="" name="memberId" value="${member.memberId }"/>
-				                </div>
-				                <div>
-				                	<label>비밀번호</label>
-				                	<input type="password" class="" name="memberPw" value="${member.memberPw }">
-				                </div>
-				      			<div>
-				                    <label>이름</label>
-				                    <input type="text" class="" name="memberName" value="${member.memberName }"/>
-				                </div>
-				      			<div>
-				                    <label>닉네임</label>
-				                    <input type="text" class="" name="memberNickname" value="${member.memberNickname }"/>
-				                </div>
-				      			<div>
-				                    <label>이메일</label>
-				                    <input type="text" class="" name="memberEmail" value="${member.memberEmail }"/>
-				                </div>
-				      			<div>
-				                    <label>전화번호</label>
-				                    <input type="text" class="" name="memberPhone" value="${member.memberPhone }"/>
-				                </div>
-				      			<div>
-				                    <label>주소</label>
-				                    <input type="text" class="" name="memberAddr" value="${member.memberAddr }" readonly/>
-				                </div>
-			      			</div>
-			      			<div>
-				      			<button class="modal_modify">수정하기</button>
-				      			<button type="button" class="modal_close">닫기</button>
-			      			</div>
-			      		</div> <br>
-			   	 	</div>
-			   	 	</form>
-<!--    	 	모달 끝~ -->
-				</c:forEach>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td><button type="button" class="del">삭제하기</button></td>
-				</tr>
-			</tfoot>
-		</table>
-		<script>
+				</thead>
+				<tbody>
+					<c:forEach items="${amList }" var="member" varStatus="i">
+						<tr>
+							<td class="td"><input type="checkbox" class="check"
+								value="${member.memberNo }"></td>
+							<td class="td">${i.count }</td>
+							<td class="td">${member.memberName }</td>
+							<td class="td">${member.memberId }</td>
+							<td class="td">${member.memberPw }</td>
+							<td class="td">${member.memberNickname }</td>
+							<td class="td">${member.memberEmail }</td>
+							<td class="td">${member.memberPhone }</td>
+							<td class="td">${member.memberAddr }</td>
+							<td class="td">${member.memberDate }</td>
+							<td class="td"><button class="modal_btn"
+									data-target="#modal${i.index }">상세</button></td>
+						</tr>
+						<!-- 		여기서부터 모달 -->
+						<form action="/admin/member/amList" method="post">
+							<input type="hidden" class="" name="memberNo"
+								value="${member.memberNo }" />
+							<div class="modal" id="modal${i.index }">
+								<div class="modal_body">
+									<h1>${member.memberNickname }님의 상세정보입니다.</h1>
+									<div class="Detail_box">
+										<div>
+											<label>아이디</label> <input type="text" class=""
+												name="memberId" value="${member.memberId }" />
+										</div>
+										<div>
+											<label>비밀번호</label> <input type="password" class=""
+												name="memberPw" value="${member.memberPw }">
+										</div>
+										<div>
+											<label>이름</label> <input type="text" class=""
+												name="memberName" value="${member.memberName }" />
+										</div>
+										<div>
+											<label>닉네임</label> <input type="text" class=""
+												name="memberNickname" value="${member.memberNickname }" />
+										</div>
+										<div>
+											<label>이메일</label> <input type="text" class=""
+												name="memberEmail" value="${member.memberEmail }" />
+										</div>
+										<div>
+											<label>전화번호</label> <input type="text" class=""
+												name="memberPhone" value="${member.memberPhone }" />
+										</div>
+										<div>
+											<label>주소</label> <input type="text" class=""
+												name="memberAddr" value="${member.memberAddr }" readonly />
+										</div>
+									</div>
+									<div>
+										<button class="modal_modify">수정하기</button>
+										<button type="button" class="modal_close">닫기</button>
+									</div>
+								</div>
+								<br>
+							</div>
+						</form>
+						<!--    	 	모달 끝~ -->
+					</c:forEach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td><button type="button" class="del">삭제하기</button></td>
+					</tr>
+				</tfoot>
+			</table>
+	</main>
+	<jsp:include page="../../common/footer.jsp" />
+	<script>
 		// 전체 선택 박스
 		var allCheck = document.querySelector(".allCheck");
 		var list = document.querySelectorAll(".check");
@@ -204,5 +237,5 @@
 			});
 		});
 		</script>
-	</body>
+</body>
 </html>
