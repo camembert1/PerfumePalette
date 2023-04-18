@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.PageInfo;
 
 @Controller
 @RequestMapping("/qnaboard")
@@ -49,9 +50,12 @@ public class QnaBoardController {
 			ModelAndView mv
 			, @RequestParam(name="uploadFile", required = false) MultipartFile multi
 			, HttpServletRequest request
-			, @ModelAttribute QnaBoard qnaboard) {
+			, @ModelAttribute QnaBoard qnaboard
+			, HttpSession session) {
 		Map<String, String> fileInfo = null;
-		try {
+		try {	
+			Integer UserNo=(Integer)session.getAttribute("memberNo");
+			qnaboard.setMemberNo(UserNo);
 			if(multi.getSize() != 0 && !multi.getOriginalFilename().equals("")) {
 				fileInfo = qnafileUtil.saveFile(multi, request);
 				qnaboard.setqFilename(fileInfo.get("original"));
@@ -60,7 +64,7 @@ public class QnaBoardController {
 			}
 			int result = qbService.writeQnaBoard(qnaboard);
 			if(result > 0) {
-				 mv.setViewName("qnaBoard/qnaBoardlist");
+				 mv.setViewName("redirect:/qnaboard/list");
 			}
 			else {
 	            mv.addObject("msg", "글 등록에 실패하였습니다.").setViewName("common/error");
@@ -73,18 +77,30 @@ public class QnaBoardController {
 	}
 	
 	// 문의 게시판 목록
-	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ModelAndView viewQnaBoardList(HttpServletRequest request, ModelAndView mv) {
-	    HttpSession session = request.getSession();
-	    String memberId = (String) session.getAttribute("member");
+//	@RequestMapping(value="/list", method = RequestMethod.GET)
+//	public ModelAndView viewQnaBoardList(HttpServletRequest request, ModelAndView mv) {
+//	    HttpSession session = request.getSession();
+//	    String memberId = (String) session.getAttribute("member");
+//	    try {
+//	    if (memberId == null) {
+//	        Alert alert = new Alert("/member/login", "로그인이 필요합니다.");
+//	        mv.addObject("alert", alert);
+//	        mv.setViewName("common/alert");
+//	        return mv;
+//	    }
+//	    
+//	        List<QnaBoard> qbList = qbService.selectAllQnaBoard();
+//	        mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist");
+//	    } catch (Exception e) {
+//	        mv.addObject("msg", e.getMessage()).setViewName("common/error");
+//	    }
+//	    return mv;
+//	}
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView viewQnaBoardList( ModelAndView mv, @RequestParam(value = "page", required = false, defaultValue = "1") String strCurrentPage) {
 	    try {
-	    if (memberId == null) {
-	        Alert alert = new Alert("/member/login", "로그인이 필요합니다.");
-	        mv.addObject("alert", alert);
-	        mv.setViewName("common/alert");
-	        return mv;
-	    }
-	    
+	    	int currentPage = Integer.parseInt(strCurrentPage);
+//	    	PageInfo pageInfo = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
 	        List<QnaBoard> qbList = qbService.selectAllQnaBoard();
 	        mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist");
 	    } catch (Exception e) {
@@ -92,8 +108,36 @@ public class QnaBoardController {
 	    }
 	    return mv;
 	}
-
 	
+	// 게시판 목록 네비게이터 시작, 끝값 설정
+			private PageInfo PageInfoWrite(int currentPage, int totalCount) {
+				PageInfo pi = null;
+				int boardLimit = 10; // 한 페이지 당 게시글 개수
+				int naviLimit = 5; // 한 페이지 당 pageNavi 수
+				int maxPage; 	 // 페이지의 마지막 번호
+				int startNavi; // pageNavi 시작값
+				int endNavi; // pageNavi 끝값
+
+				maxPage = (int)((double) totalCount/boardLimit+0.9);
+				startNavi = (((int)((double) currentPage/naviLimit+0.9))-1)*naviLimit+1;
+				endNavi = startNavi+naviLimit-1;
+				if (endNavi > maxPage) {
+					endNavi = maxPage;
+				}
+				pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
+				return pi;
+			}
+
+	// 문의 게시판 상세정보
+//	/*
+//	 * @RequestMapping(value = "/detail", method = RequestMethod.GET) public
+//	 * ModelAndView qnaDetailView(@RequestParam("memberNo") Integer memberNo,
+//	 * ModelAndView mv) { try { int result = qbService.QnaBoardDetail(memberNo);
+//	 * mv.setViewName("qnaboard/detail"); } catch (Exception e) {
+//	 * e.printStackTrace(); mv.addObject("msg", e.getMessage());
+//	 * mv.setViewName("common/error"); } return mv; }
+//	 */
 	
 	
 }
+

@@ -26,4 +26,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return result;
 	}
 
+	
+
 }

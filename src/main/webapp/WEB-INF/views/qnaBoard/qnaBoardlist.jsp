@@ -40,10 +40,15 @@
                     <c:forEach items="${qbList }" var="qnaboard" varStatus="i">
                     <tr>
                         <td>${i.count }</td>
-                        <td>${qnaboard.qnaType }</td>
+                        <td>
+                        <c:if test="${qnaboard.qnaType == 1 }">상품문의</c:if>
+                        <c:if test="${qnaboard.qnaType == 2 }">배송문의</c:if>
+                        <c:if test="${qnaboard.qnaType == 3 }">교환/환불</c:if>
+                        <c:if test="${qnaboard.qnaType == 4 }">기타문의</c:if>
+                        </td>
                         <td>${qnaboard.qnaSubject }</td>
                         <td>${qnaboard.qnaDate }</td>
-                        <td>${qnaboard.memberNickname }]</td>
+                        <td>${qnaboard.memberNickname }</td>
                         <td>${qnaboard.qQnaNo }</td>
                     </tr>
                     </c:forEach>

@@ -90,7 +90,6 @@
                 function changeFn() {
                     var qnaType = document.getElementById("qnaType");
                     var value = (qnaType.options[qnaType.selectedIndex].value);
-                    alert("value = " + value);
                 }
             </script>
         </body>

@@ -161,6 +161,7 @@ public class MemberController {
 				session.setAttribute("member", member.getMemberId());
 				member = mService.selectMemberById(member.getMemberId());
 				session.setAttribute("nickname", member.getMemberNickname());
+				session.setAttribute("memberNo", member.getMemberNo());
 				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");
 				} else {
