@@ -16,10 +16,15 @@ public class MemberStroeImpl implements MemberStore {
 		return result;
 	}
 
+//	@Override
+//	public int login(Member member) {
+//		int result = session.selectOne("memberMapper.login", member);
+//		return result;
+//	}
 	@Override
-	public int login(Member member) {
-		int result = session.selectOne("memberMapper.login", member);
-		return result;
+	public Member login(Member member) {
+		Member loginUser = session.selectOne("memberMapper.login", member);
+		return loginUser;
 	}
 
 	@Override

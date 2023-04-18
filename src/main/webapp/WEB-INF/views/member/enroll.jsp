@@ -11,15 +11,15 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
-#id_ok, #nickName_ok, #email_ok {
-	color: #008000;
-	display: none;
+#id_ok, #pw_ok, #nickName_ok, #email_ok {
+color: #008000;
+display: none;
 }
 
-#id_not_ok2, #id_not_ok3, #nickName_not_ok2, #nickName_not_ok3, #email_not_ok2, #email_not_ok3, #email_not_ok4
-	{
-	color: #6A82FB;
-	display: none;
+#id_not_ok2, #id_not_ok3, #pw_not_ok2, #pw_not_ok3, #nickName_not_ok2,
+#nickName_not_ok3, #email_not_ok2, #email_not_ok3, #email_not_ok4 {
+color: #6A82FB;
+display: none;
 }
 </style>
 </head>
@@ -53,7 +53,7 @@
 						</div>
 					</div>
 					<div class="chkMessge">
-						<span id="id_ok">사용 가능한 아이디입니다</span><span id="id_not_ok2">영문
+						<span id="id_ok">사용 가능한 아이디입니다</span> <span id="id_not_ok2">영문
 							대소문자, 숫자만 사용 가능하며 최소 길이 4, 최대 길이 20입니다.</span> <span id="id_not_ok3">중복된
 							아이디입니다. 새로운 아이디를 입력하세요.</span>
 					</div>
@@ -69,8 +69,8 @@
 						</div>
 					</div>
 					<div class="chkMessge">
-						<span id="nickName_ok">사용 가능한 닉네임입니다</span><span id="nickName_not_ok2">영문
-							대소문자, 숫자, 한글만 사용 가능하며 최소 길이 4, 최대 길이 20입니다.</span> <span id="nickName_not_ok3">중복된
+						<span id="nickName_ok">사용 가능한 닉네임입니다</span> <span id="nickName_not_ok2">영문
+							대소문자, 숫자, 한글만 사용 가능하며 최소 길이 2, 최대 길이 20입니다.</span> <span id="nickName_not_ok3">중복된
 							닉네임입니다. 새로운 닉네임을 입력하세요.</span>
 					</div>
 					<div class="content">
@@ -91,9 +91,14 @@
 						<div class="content-text">
 							<div>
 								<input class="input-box" type="password" name="reMemberPw"
-									placeholder="비밀번호를 한번 더 입력해주세요">
+									placeholder="비밀번호를 한번 더 입력해주세요" onchange="chkPw()">
 							</div>
 						</div>
+					</div>
+					<div class="chkMessge">
+						<span id="pw_ok">사용 가능한 비밀번호입니다.</span> <span id="pw_not_ok2">비밀번호가
+						일치하지 않습니다.</span> <span id="pw_not_ok3">비밀번호는 영문 대소문자, 숫자 조합으로
+						8~20자리 사용해야 합니다.</span>
 					</div>
 					<div class="content">
 						<div class="content-name">
@@ -139,14 +144,12 @@
 						</div>
 						<div class="content-text">
 							<input id="address" class="input-box box" type="text"
-								name="memberAddr" placeholder="주소를 검색해주세요"
-								style="margin-bottom: 5px;"> <input id="detailAddress"
-								class="input-box" type="text" name="memberAddr"
+								name="memberAddr" placeholder="주소를 검색해주세요"> <input id="detailAddress"
+								class="input-box" type="text" name="memberDetailAddr"
 								placeholder="상세주소를 입력해주세요">
 						</div>
 						<div class="content-btn">
-							<button type="button" onclick="sample4_execDaumPostcode()"
-								style="height: 50%;">주소찾기</button>
+							<button type="button" onclick="sample4_execDaumPostcode()">주소찾기</button>
 						</div>
 					</div>
 				</div>
@@ -177,7 +180,7 @@
 				},
 				success : function(data) { // 컨트롤러에서 넘어온 result값을 받는다 
 					if (data == 0) { // result가 1이 아니면(0일 경우) -> 사용 가능한 아이디 
-						$('#id_ok').css("display", "inline-block");
+						/* $('#id_ok').css("display", "inline-block"); */
 						$('#id_not_ok2').css("display", "none");
 						$('#id_not_ok3').css("display", "none");
 						idChkNum = data;
@@ -213,7 +216,7 @@
 				},
 				success : function(data) {  
 					if (data == 0) {  
-						$('#nickName_ok').css("display", "inline-block");
+						/* $('#nickName_ok').css("display", "inline-block"); */
 						$('#nickName_not_ok2').css("display", "none");
 						$('#nickName_not_ok3').css("display", "none");
 						nicknameChkNum = data;
@@ -236,6 +239,42 @@
 				}
 			});
 		};
+		
+		var pwChkNum = -100;
+		/* 비밀번호 확인 */
+		function chkPw() {
+			var memberPw = $('input[name=memberPw]').val();
+			var reMemberPw = $('input[name=reMemberPw]').val();
+			$.ajax({
+				url : '/member/pwChk',
+				type : 'post',
+				data : {
+					memberPw : memberPw,
+					reMemberPw : reMemberPw
+				},
+				success : function(data) {
+					if (data == 0) {
+						/* $('#pw_ok').css("display", "inline-block"); */
+						$('#pw_not_ok2').css("display", "none");
+						$('#pw_not_ok3').css("display", "none");
+						pwChkNum = data;
+					} else if (data == -2) {
+						$('#pw_not_ok2').css("display", "none");
+						$('#pw_not_ok3').css("display", "inline-block");
+						$('input[name=memberPw]').focus();
+						pwChkNum = data;
+					} else if (data > 0) {
+						$('#pw_not_ok2').css("display", "inline-block");
+						$('#pw_not_ok3').css("display", "none");
+						$('input[name=reMemberPw]').focus();
+						pwChkNum = data;
+					}
+				},
+				error : function() {
+				alert("에러발생");
+				}
+			});
+		};
 
 		var emailChkNum = -100;
 		/* 이메일 중복 확인 */
@@ -249,7 +288,7 @@
 				},
 				success : function(data) {
 					if (data == 0) {  
-						$('#email_ok').css("display", "inline-block");
+						/* $('#email_ok').css("display", "inline-block"); */
 						$('#email_not_ok2').css("display", "none");
 						$('#email_not_ok3').css("display", "none");
 						$('#email_not_ok4').css("display", "none");
@@ -368,17 +407,6 @@
 				memberPw.focus();
 				return false;
 			} 
-			else if (memberPw.val().length < 8 || memberPw.val().length > 20) {
-				alert("비밀번호는 영문 대소문자, 숫자 그리고 특수문자 조합으로 8~20자리 사용해야 합니다.");
-				memberPw.focus();
-				return false;
-			} 
-			else if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
-					.test(memberPw.val())) {
-				alert("비밀번호는 영문 대소문자, 숫자 그리고 특수문자 조합으로 8~20자리 사용해야 합니다.");
-				memberPw.focus();
-				return false;
-			}
 			
 			if (reMemberPw.val() == '') {
 				alert("비밀번호를 한번 더 입력하세요.");
@@ -447,6 +475,12 @@
 			if (emailChkNum != 0) {
 				alert("사용 불가능한 이메일입니다.");
 				memberEmail.focus();
+				return false;
+			}
+			
+			if (pwChkNum != 0) {
+				alert("비밀번호를 다시 확인하세요.");
+				memberPw.focus();
 				return false;
 			}
 			
