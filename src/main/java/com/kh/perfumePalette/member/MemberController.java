@@ -133,19 +133,19 @@ public class MemberController {
 	@PostMapping("/login")
 	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
 		try {
-			int result = mService.login(member);
-			if (result > 0) {
+			//int result = mService.login(member);
+			Member loginUser = mService.login(member); 
+			if (loginUser != null) {
 				HttpSession session = request.getSession();
-				// 기존
-                // session.setAttribute("member", member.getMemberId());
-                // member = mService.selectMemberById(member.getMemberId());
-                // session.setAttribute("nickname", member.getMemberNickname());
 
                 // 수정
-                member = mService.selectMemberById(member.getMemberId());
-                session.setAttribute("member", member.getMemberId());
-                session.setAttribute("nickname", member.getMemberNickname());
-                session.setAttribute("memberNo", member.getMemberNo());
+                // member = mService.selectMemberById(member.getMemberId());
+                // session.setAttribute("member", member.getMemberId());
+                // session.setAttribute("nickname", member.getMemberNickname());
+                // session.setAttribute("memberNo", member.getMemberNo());
+				
+				// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
+                session.setAttribute("member", loginUser);
                 
 				if (session.getAttribute("mbtiResult") == null) {
 					mv.setViewName("redirect:/");

@@ -4,7 +4,8 @@ public interface MemberStore {
 
 	int insertMember(Member member);
 
-	int login(Member member);
+//	int login(Member member);
+	Member login(Member member);
 
 	Member selectMemberById(String memberId);
 
