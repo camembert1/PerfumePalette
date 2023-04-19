@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.perfume.Perfume;
 
 public interface AdPerfumeStore {
@@ -21,6 +22,11 @@ public interface AdPerfumeStore {
 	int updateOkPerfume(SqlSession session, int i);
 
 	int updateNoPerfume(SqlSession session, int i);
+
+	int getListCount(SqlSession session, Search search);
+
+	List<Perfume> selectListByKeyword(SqlSession session, Search search);
+
 
 
 

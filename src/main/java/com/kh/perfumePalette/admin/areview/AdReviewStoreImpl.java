@@ -12,7 +12,12 @@ public class AdReviewStoreImpl implements AdReviewStore{
 
 	@Override
 	public List<Review> selectAllReview(SqlSession session) {
-		return session.selectList("AdminMapper.selectAdReview");
+		return session.selectList("AdminMapper.selectAdReviewList");
+	}
+
+	@Override
+	public int deleteAdReview(SqlSession session, int i) {
+		return session.delete("AdminMapper.deleteReview", i);
 	}
 
 	

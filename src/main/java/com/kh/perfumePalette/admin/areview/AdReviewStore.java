@@ -10,5 +10,7 @@ public interface AdReviewStore {
 
 	List<Review> selectAllReview(SqlSession session);
 
+	int deleteAdReview(SqlSession session, int i);
+
 	
 }

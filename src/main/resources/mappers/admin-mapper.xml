@@ -112,11 +112,47 @@
 	<select id="selectPerfumeList" resultMap="perfumeResultMap">
 		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
 	</select>
+	
+	<select id="selectListByKeyword" resultMap="perfumeResultMap">
+		SELECT * FROM PERFUME_TBL
+		<if test="searchCondition == 'All'">
+			WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			OR PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'Brand'">
+			WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'perfumeName'">
+			WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		ORDER BY PERFUME_DATE DESC
+	</select>
+	
+	<select id="getSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL
+		<choose>
+			
+			<when test="searchCondition == 'Brand'">
+				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'perfumeName'">
+				WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+		</choose> 
+	</select>
 	<!-- 	향수 끝 -->
 	
 <!-- 	리뷰시작 -->
-	<select id="selectAdReview">
-		SELECT * FROM REVIEW_TBL ORDER BY REVIEW_DATE DESC
+	<delete id="deleteReview">
+		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+
+	<select id="selectAdReviewList" resultMap="reviewResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		ORDER BY REVIEW_DATE DESC
 	</select>
 <!-- 리뷰 끝 -->
 </mapper>

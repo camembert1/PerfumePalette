@@ -67,7 +67,7 @@
 
 				<!-- 관리자가 맞다면 관리자페이지 -->
 				<c:if test="${member.memberId eq 'admin' }">
-				<div onclick="location.href='#'">Manager Page</div>
+				<div onclick="location.href='/member/myPage'">Manager Page</div>
 				</c:if>
 
 				<div onclick="location.href='/member/logout'">

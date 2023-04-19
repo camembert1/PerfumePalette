@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.perfume.Perfume;
 
 @Controller
@@ -40,7 +43,7 @@ public class AdPerfumeController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public ModelAndView writeView(ModelAndView mv, HttpSession session) {
 		try {
-			if (session.getAttribute("member") == null || !session.getAttribute("member").equals("admin")) {
+			if (session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
 				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
@@ -65,7 +68,7 @@ public class AdPerfumeController {
 		Map<String, String> fileInfo = null;
 		try {
 			HttpSession session = request.getSession();
-			if (session.getAttribute("member").equals("admin")) {
+			if (((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
 				fileInfo = pFileUtil.saveFile(multi, request);
 				perfume.setpFilename(fileInfo.get("original"));
 				perfume.setpFilerename(fileInfo.get("rename"));
@@ -292,4 +295,42 @@ public class AdPerfumeController {
 		}
 	}
 	
+	// 상품 검색
+	@GetMapping("/search")
+	public String perfumeSearchView(
+			@ModelAttribute Search search
+			, Model model) {
+		try {
+			int totalCount = pService.getListCount(search);
+			List<Perfume> searchList = pService.selectListByKeyword(search);
+			if(!searchList.isEmpty()) {
+				model.addAttribute("search", search);
+//				model.addattribute("pi", pi);
+				model.addAttribute("sList", searchList);
+				return "perfume/search";
+			}else {
+				model.addAttribute("msg", "조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			return "common/error";
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

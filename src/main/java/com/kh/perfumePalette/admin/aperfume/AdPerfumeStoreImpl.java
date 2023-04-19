@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.perfume.Perfume;
 
 @Repository
@@ -53,6 +54,17 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	public int updateNoPerfume(SqlSession session, int i) {
 		return session.update("AdminMapper.updateNoShow", i);
 	}
+
+	@Override
+	public int getListCount(SqlSession session, Search search) {
+		return session.selectOne("AdminMapper.getSearchListCount", search);
+	}
+
+	@Override
+	public List<Perfume> selectListByKeyword(SqlSession session, Search search) {
+		return session.selectList("AdminMapper.selectListByKeyword", search);
+	}
+
 
 
 

@@ -5,11 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 관리</title>
-<link rel="stylesheet"
-	href="../../../../resources/adminCss/adMemberCss/amList.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../../../../resources/adminCss/adMemberCss/amList.css">
+<!-- favicon : 탭에 보이는 아이콘 -->
+<link rel="icon" href="../../../resources/img/common/favicon.png" />
+<link rel="apple-touch-icon" href="../../../resources/img/common/favicon.png" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
 /* 		고정 */
 #id_ok, #pw_ok, #nickName_ok, #email_ok {
@@ -64,12 +66,12 @@
 
 			<!-- 사이드바 -->
 			<div id="hrefList">
-				<div id="hrefName">${memerOne.memberName }님</div>
-					<span><a href="/perfume/mList">판매상품관리</a></span>
-					<span><a href="#">주문내역관리</a></span>
-					<span><a href="/admin/member/amList">회원관리</a></span>
-					<span><a href="#">문의관리</a></span>
-					<span><a href="/admin/review/list">후기관리</a></span>
+				<div id="hrefName">${sessionScope.member.memberName }님</div>
+				<span><a href="/perfume/mList">판매상품관리</a></span>
+				<span><a href="#">주문내역관리</a></span>
+				<span><a href="/admin/member/amList">회원관리</a></span>
+				<span><a href="#">문의관리</a></span>
+				<span><a href="/admin/review/list">후기관리</a></span>
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->

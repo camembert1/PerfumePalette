@@ -21,6 +21,11 @@ public class AdReviewServiceImpl implements AdReviewService{
 	public List<Review> selectAllReview() {
 		return rStore.selectAllReview(session);
 	}
+
+	@Override
+	public int deleteAdReview(int i) {
+		return rStore.deleteAdReview(session, i);
+	}
 	
 	
 	

@@ -69,9 +69,9 @@
 							<div> 
 								<form action="/perfume/search" method="get">
 									<select name="searchCondition">
-										<option value="All">All</option>
-										<option value="Brand">Brand</option>
-										<option value="perfumeName">perfumeName</option>
+										<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>All</option>
+										<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
+										<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
 									</select> 
 									<input type="text" name="searchValue" placeholder="상품명 검색">
 									<button type="submit">검색</button>
@@ -95,7 +95,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${pList }" var="perfume" varStatus="i">
+					<c:forEach items="${sList }" var="perfume" varStatus="i">
 						<tr>
 							<td class="td"><input type="checkbox" class="check"
 								value="${perfume.perfumeNo }"></td>
@@ -130,6 +130,7 @@
 					</tr>
 				</tfoot>
 			</table>
+			
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />

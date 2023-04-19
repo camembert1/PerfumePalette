@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +23,7 @@ import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.review.Review;
 
 @Controller
+@RequestMapping("/admin/review")
 public class AdReviewController {
 	
 	@Autowired
@@ -28,10 +31,10 @@ public class AdReviewController {
 	
 	@Autowired
 	@Qualifier("arFileUtil")
-	private AdReviewFileUtil rFileUtil;
+	private AdReviewFileUtil arFileUtil;
 	
 	// 리뷰 리스트
-	@RequestMapping(value = "reviewList", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView viewAdminReviewList(ModelAndView mv) {
 		try {
 			List<Review> rList = rService.selectAllReview();
@@ -42,4 +45,24 @@ public class AdReviewController {
 		return mv;
 	}
 	
+	// 리뷰 다중 삭제
+	@PostMapping("/arRemove")
+	@ResponseBody
+	public String adReviewRemove(int [] arr
+			, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for(int i = 0; i < arr.length; i++) {
+				result = rService.deleteAdReview(arr[i]);
+			}
+			if(result > 0) {
+				return "1";
+			}else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
 }

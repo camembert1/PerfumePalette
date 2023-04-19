@@ -12,5 +12,12 @@ public interface AdReviewService {
 	 */
 	List<Review> selectAllReview();
 
+	/**
+	 * 관리자 리뷰 다중 삭제 Service
+	 * @param i
+	 * @return int
+	 */
+	int deleteAdReview(int i);
+
 	
 }
