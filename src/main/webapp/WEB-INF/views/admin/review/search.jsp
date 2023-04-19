@@ -53,10 +53,8 @@
 				    <option name ="" value="Spicy">Spicy</option>
 				    <option name ="" value="Citrus">Citrus</option>
 				</select>
-				<form action="/admin/review/search">
-					<input type="text" name="searchValue" placeholder="상품명 검색">
-					<button type="submit">검색</button>
-				</form>
+				<input type="text" name="searchValue" placeholder="상품명 검색">
+				<button type="submit">검색</button>
 			</div>
 			<table>
 				<thead>
@@ -72,7 +70,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${rList }" var="review" varStatus="i">
+					<c:forEach items="${sList }" var="review" varStatus="i">
 						<tr>
 							<td><input type="checkbox" class="check" value="${review.reviewNo }"></td>
 							<td>${i.count }</td>
