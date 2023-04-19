@@ -28,4 +28,10 @@ public class ReviewStoreImpl implements ReviewStore{
 		return rList;
 	}
 
+	@Override
+	public Review selectOneReview(SqlSession session, Integer reviewNo) {
+		Review review = session.selectOne("ReviewMapper.selectOneReview", reviewNo);
+		return review;
+	}
+
 }

@@ -70,7 +70,7 @@
                 </td>
                 <td>
                 	<div>
-                		<a href="">
+                		<a href="/review/reviewDetail/${review.reviewNo }">
 						<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 	                    <strong>[${review.perfumeBrand }] ${review.perfumeName }</strong>
 	                    </a>

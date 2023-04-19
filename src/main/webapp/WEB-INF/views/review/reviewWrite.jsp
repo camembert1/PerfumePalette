@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +11,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
  
 <link rel="stylesheet" href="../../../resources/reviewCss/reviewWrite.css">
@@ -80,54 +81,51 @@
 				</div>
 			</form>
 		</div>
-         
 	</main>
-	<script>
-		<!-- 별점 -->
-		 const stars = document.querySelectorAll('.star-rating span');
-	     
-	     stars.forEach(function (star) {
-	         star.addEventListener('click', function () {
-	             const rating = this.getAttribute('data-rating');
-	             const ratingInput = document.querySelector('.rating-value');
-	             ratingInput.value = rating;
-	             for (let i = 0; i < stars.length; i++) {
-	                 if (i < rating) {
-	                     stars[i].classList.add('checked');
-	                 } else {
-	                     stars[i].classList.remove('checked');
-	                 }
-	             }
-	         });
-	     });
-
 	
-		$(document).ready(function () {
-            const fontList =  ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'MapoFlowerIsland', '맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'];
-            $('#summernote').summernote({
-               placeholder: '내용을 작성하세요',
-               height: 500,
-               maxHeight: 400,
-			   lang: "ko-KR",
-               toolbar: [
-                  ['fontname', ['fontname']],
-                  ['fontsize', ['fontsize']],
-                  ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-                  ['color', ['forecolor','color']],
-                  ['table', ['table']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['height', ['height']],
-                  ['insert',['picture']],
-                  ['view', ['fullscreen', 'help']]
-               ],
-               fontNames: fontList,
-               fontNamesIgnoreCheck: fontList,
-               fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-            });
-         });
-		</script>
-		
-	<jsp:include page="../common/footer.jsp" />
+	<script>
+	<!-- 별점 -->
+	 const stars = document.querySelectorAll('.star-rating span');
+    
+    stars.forEach(function (star) {
+        star.addEventListener('click', function () {
+            const rating = this.getAttribute('data-rating');
+            const ratingInput = document.querySelector('.rating-value');
+            ratingInput.value = rating;
+            for (let i = 0; i < stars.length; i++) {
+                if (i < rating) {
+                    stars[i].classList.add('checked');
+                } else {
+                    stars[i].classList.remove('checked');
+                }
+            }
+        });
+    });
+        
+        const fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'MapoFlowerIsland', '맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'];
+        $('#summernote').summernote({
+        	placeholder: '내용을 작성하세요',
+        	height: 500,
+            maxHeight: 400,
+			lang: "ko-KR",
+			toolbar: [
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+                ['color', ['forecolor','color']],
+                ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert',['picture']],
+                ['view', ['fullscreen', 'help']]
+             ],
+             fontNames: fontList,
+             fontNamesIgnoreCheck: fontList,
+             fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+          });
+	</script>
+	
+<jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>
