@@ -38,4 +38,11 @@ public class ReviewServiceImpl implements ReviewService{
 		return rList;
 	}
 
+
+	@Override
+	public Review selectOneReview(Integer reviewNo) {
+		Review review = rStore.selectOneReview(session, reviewNo);
+		return review;
+	}
+
 }

@@ -46,6 +46,12 @@ main>div[id=forCenter] {
 
 main #writer{
 	background-color: red;
-	width: 500px;
+	width: 1000px;
 	height: 20px;
+}
+
+main #info{
+	background-color: blue;
+	width: 1000px;
+	height: 300px;
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,10 +84,21 @@ public class ReviewController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/review/reviewDetailView", method = RequestMethod.GET)
-	public String reviewDetailView(Model model) {
-		
-		
-		return "review/reviewDetail";
+//	@RequestMapping(value="/review/reviewDetailView", method = RequestMethod.GET)
+//	public String reviewDetailView(Model model) {
+//		
+//		
+//		return "review/reviewDetail";
+//	}
+	@RequestMapping(value="/review/reviewDetail/{reviewNo}", method = RequestMethod.GET)
+	public ModelAndView viewReviewDetail(ModelAndView mv, @PathVariable Integer reviewNo) {
+		try {
+			Review review = rService.selectOneReview(reviewNo);
+			mv.addObject("review", review).setViewName("review/reviewDetail");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
 	}
 }
