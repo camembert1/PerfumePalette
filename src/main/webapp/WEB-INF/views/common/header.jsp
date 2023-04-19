@@ -54,19 +54,19 @@
 			<c:if test="${sessionScope.member ne null }">
 
 				<!-- 관리자가 아니라면 마이페이지 -->
-				<c:if test="${sessionScope.member ne 'admin' }">
+				<c:if test="${member.memberId ne 'admin' }">
 				<div id="alert-hover-area">
 					<img src="../../resources/img/common/user.png" alt="">
 
 					<div id="alert">
-						<div onclick="location.href='/member/myPage'">${sessionScope.nickname }님 마이페이지</div>
+						<div onclick="location.href='/member/myPage'">${member.memberNickname }님 마이페이지</div>
 					</div>
 
 				</div>
 				</c:if>
 
 				<!-- 관리자가 맞다면 관리자페이지 -->
-				<c:if test="${sessionScope.member eq 'admin' }">
+				<c:if test="${member.memberId eq 'admin' }">
 				<div onclick="location.href='#'">Manager Page</div>
 				</c:if>
 
@@ -78,11 +78,11 @@
 			</c:if>
 
 			<div>
-				<img src="../../resources/img/common/cart.png" alt="">
+				<img src="../../resources/img/common/cart.png" alt="" onclick="location.href = '/cart/list'">
 				<div class="menu-info">장바구니</div>
 			</div>
 			<div>
-				<img src="../../resources/img/common/wish.png" alt="">
+				<img src="../../resources/img/common/wish.png" alt="" onclick="location.href = '/wish/list'">
 				<div class="menu-info">찜</div>
 			</div>
 

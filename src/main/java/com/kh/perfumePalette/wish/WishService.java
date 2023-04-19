@@ -6,11 +6,9 @@ public interface WishService {
 
 	int addWish(Wish wish);
 
-	List<Wish> selectAll(String id);
+	int removeWish(int perfumeNo);
 
-	int removeWish(Wish wish);
-
-	List<Wish> selectPerfumeList();
+	List<Wish> selectWishList(String id);
 
 	List<Wish> selectPerfumeListLogin(String id);
 

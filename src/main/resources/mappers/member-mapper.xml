@@ -25,8 +25,8 @@
 		#{memberAddr}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 
-	<select id="login" resultType="_int">
-		SELECT COUNT(*)
+	<select id="login" resultMap="memberResultMap">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME
 		FROM MEMBER_TBL
 		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
 	</select>
@@ -83,6 +83,12 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	
+	<update id="modifyMember">
+		UPDATE MEMBER_TBL SET MEMBER_NICKNAME =
+		#{memberNickname}, MEMBER_PW = #{memberPw}, MEMBER_NAME =
+		#{memberName}, MEMBER_EMAIL = #{memberEmail}, MEMBER_PHONE =
+		#{memberPhone}, MEMBER_ADDR = #{memberAddr}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
 
 </mapper>

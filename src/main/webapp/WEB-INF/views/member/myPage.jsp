@@ -41,8 +41,8 @@
          <span><a href="#">작성문의</a></span>
          <span><a href="#">작성댓글</a></span>
          <span><a href="#">좋아요목록</a></span>
-         <span><a href="#">찜목록</a></span>
-         <span><a href="#">장바구니목록</a></span>
+         <span><a href="/wish/list">찜목록</a></span>
+         <span><a href="/cart/list">장바구니목록</a></span>
          <span><a href="#">회원탈퇴</a></span>
       </div>
 
