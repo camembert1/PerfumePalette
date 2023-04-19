@@ -45,25 +45,29 @@ public class WishController {
 
 	@GetMapping("/list")
 	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		Member member = (Member) session.getAttribute("member");
-		String id = member.getMemberId();
-		if (id != null) {
+		try {
+			Member member = (Member) session.getAttribute("member");
 			List<Wish> perfumeList = null;
-			perfumeList = wService.selectWishList(id);
-			if (perfumeList.size() != 0) {
-				mv.addObject("perfumeList", perfumeList);
-				mv.setViewName("wish/list");
-			} else {
-				Alert alert = new Alert("/", "찜 내역이 존재하지 않습니다.");
+			if (member == null || member.getMemberId() == null) {
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
+			} else {
+				String id = member.getMemberId();
+				perfumeList = wService.selectWishList(id);
+				if (perfumeList.size() != 0) {
+					mv.addObject("perfumeList", perfumeList);
+					mv.setViewName("wish/list");
+				} else {
+					Alert alert = new Alert("/", "찜 내역이 존재하지 않습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
 			}
-		} else {
-			Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
-			mv.addObject("alert", alert);
-			mv.setViewName("common/alert");
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
-
 		return mv;
 	}
 

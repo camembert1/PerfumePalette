@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/972e551b53.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
 body {
 	margin: 0;
@@ -152,8 +150,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	text-align: end;
 }
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 </head>
 
@@ -177,13 +174,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						<td>${i.count }</td>
 						<td>${perfume.perfumeName }</td>
 						<td>${perfume.perfumeBrand }</td>
-						<td class="imgBox"><img
-							src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}"
-							alt="향수이미지"></td>
-						<td><img src="../../../resources/img/wish/wish_yes.png"
-							alt="wish_yes">${perfume.wishCount }</td>
-						<td><img src="../../../resources/img/cart/cart_yes.png"
-							alt="cart_yes">${perfume.cartCount }</td>
+						<td class="imgBox">
+							<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
+						</td>
+						<td onclick="goLogin()">
+							<img src="../../../resources/img/wish/wish_yes.png" alt="wish_yes">${perfume.wishCount }</td>
+						<td onclick="goLogin()">
+							<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes">${perfume.cartCount }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -203,10 +200,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						<span id="perfumePrice">[가격]</span>
 					</div>
 					<div id="updown">
-						<input type="number" id="perfumeQuantity" value="1" min="1"
-							max="100" size="1"> <span style="margin: 0 10px;"><i
-							class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i
-							class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
+						<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1">
+						<span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
 					</div>
 				</div>
 			</div>
@@ -242,27 +237,29 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						<td>${i.count }</td>
 						<td>${perfume.perfumeName }</td>
 						<td>${perfume.perfumeBrand }</td>
-						<td class="imgBox"><img
-							src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}"
-							alt="향수이미지"></td>
-						<td id="reload${perfume.perfumeNo }"><c:if
-								test="${perfume.wishDate ne null}">
-								<img src="../../../resources/img/wish/wish_yes.png"
-									alt="wish_yes"
-									onclick="removeWish(${perfume.wishNo}, ${perfume.perfumeNo })">
-							</c:if> <c:if test="${perfume.wishDate eq null}">
-								<img src="../../../resources/img/wish/wish_no.png" alt="wish_no"
-									onclick="addWish(${perfume.perfumeNo}, '${sessionScope.member.memberId }')">
-							</c:if></td>
-						<td id="reload2${perfume.perfumeNo }"><c:if
-								test="${perfume.cartDate ne null}">
-								<img src="../../../resources/img/cart/cart_yes.png"
-									alt="cart_yes"
-									onclick="removeCart('${perfume.perfumeNo }', '${perfume.cartNo }')">
-							</c:if> <c:if test="${perfume.cartDate eq null}">
-								<img src="../../../resources/img/cart/cart_no.png" alt="cart_no"
-									onclick="addCartView('${perfume.perfumeNo }', '${perfume.perfumeBrand}', '${perfume.perfumeName}', '${perfume.perfumePrice }')">
-							</c:if></td>
+						<td class="imgBox">
+							<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
+						</td>
+						<td>
+							<div id="reload${perfume.perfumeNo }">
+								<c:if test="${perfume.wishDate ne null}">
+									<img src="../../../resources/img/wish/wish_yes.png" alt="wish_yes" onclick="removeWish(${perfume.wishNo}, ${perfume.perfumeNo })">
+								</c:if>
+								<c:if test="${perfume.wishDate eq null}">
+									<img src="../../../resources/img/wish/wish_no.png" alt="wish_no" onclick="addWish(${perfume.perfumeNo}, '${sessionScope.member.memberId }')">
+								</c:if>
+							</div>
+						</td>
+						<td>
+							<div id="reload2${perfume.perfumeNo }">
+								<c:if test="${perfume.cartDate ne null}">
+									<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes" onclick="removeCart('${perfume.perfumeNo }', '${perfume.cartNo }')">
+								</c:if>
+								<c:if test="${perfume.cartDate eq null}">
+									<img src="../../../resources/img/cart/cart_no.png" alt="cart_no" onclick="addCartView('${perfume.perfumeNo }', '${perfume.perfumeBrand}', '${perfume.perfumeName}', '${perfume.perfumePrice }')">
+								</c:if>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -416,6 +413,12 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						}
 					});
 				};
+				
+				function goLogin() {
+					if (confirm("로그인이 필요한 서비스입니다.")) {
+						location.href="/member/login";
+				    }
+				}
 
 			</script>
 </body>

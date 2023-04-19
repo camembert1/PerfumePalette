@@ -51,6 +51,7 @@ main>div[id=forCenter] {
 main img {
 	width: 100px;
 	height: 100px;
+	margin: 0 auto;
 }
 
 main table, td, th, tr {
@@ -73,5 +74,35 @@ main button {
 	border: none;
 	border-radius: 5px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+}
+
+main input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+main .cnt {
+	border: none;
+	text-align: end;
+}
+
+main table {
+	width: 85%;
+}
+
+main th {
+	background-color:  #28302d;
+	color : white;
+}
+
+main input[type=number] {
+	font-size: 16px;
+}
+
+main .fas {
+	margin: 0 5px;
+	color:  #28302d;
 	font-size: 20px;
 }
