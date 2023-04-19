@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.member.Member;
 
 @Controller
 @RequestMapping("/wish")
@@ -24,17 +25,28 @@ public class WishController {
 
 	@GetMapping("/temp")
 	public ModelAndView goProduct(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		String id = (String) session.getAttribute("member");
-		List<Wish> perfumeList = null;
-		perfumeList = wService.selectPerfumeListLogin(id);
-		mv.addObject("perfumeList", perfumeList);
-		mv.setViewName("wish/product");
+		try {
+			Member member = (Member) session.getAttribute("member");
+			List<Wish> perfumeList = null;
+			if (member == null || member.getMemberId() == null) {
+				perfumeList = wService.selectPerfumeList();
+				mv.addObject("perfumeList2", perfumeList);
+			} else {
+				perfumeList = wService.selectPerfumeListLogin(member.getMemberId());
+				mv.addObject("perfumeList", perfumeList);
+			}
+			mv.setViewName("wish/product");
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
 
 	@GetMapping("/list")
 	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		String id = (String) session.getAttribute("member");
+		Member member = (Member) session.getAttribute("member");
+		String id = member.getMemberId();
 		if (id != null) {
 			List<Wish> perfumeList = null;
 			perfumeList = wService.selectWishList(id);

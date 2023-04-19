@@ -24,6 +24,9 @@ public class Wish {
 	private Timestamp perfumeDate;	// 등록일
 	private int perfumeStatus;		// 노출 여부
 	
+	private int wishCount;
+	private int cartCount;
+	
 	public Wish() {
 		super();
 	}
@@ -31,7 +34,7 @@ public class Wish {
 	public Wish(int wishNo, Timestamp wishDate, String memberId, int cartNo, int cartQuantity, Timestamp cartDate,
 			int perfumeNo, String perfumeName, String perfumeBrand, int perfumeVolume, int perfumePrice,
 			int perfumeQuantity, String pScentCategory, String pImageCategory, String pFilename, String pFilerename,
-			String pFilepath, Timestamp perfumeDate, int perfumeStatus) {
+			String pFilepath, Timestamp perfumeDate, int perfumeStatus, int wishCount, int cartCount) {
 		super();
 		this.wishNo = wishNo;
 		this.wishDate = wishDate;
@@ -52,7 +55,11 @@ public class Wish {
 		this.pFilepath = pFilepath;
 		this.perfumeDate = perfumeDate;
 		this.perfumeStatus = perfumeStatus;
+		this.wishCount = wishCount;
+		this.cartCount = cartCount;
 	}
+
+
 
 	public int getWishNo() {
 		return wishNo;
@@ -206,6 +213,22 @@ public class Wish {
 		this.perfumeStatus = perfumeStatus;
 	}
 
+	public int getWishCount() {
+		return wishCount;
+	}
+
+	public void setWishCount(int wishCount) {
+		this.wishCount = wishCount;
+	}
+
+	public int getCartCount() {
+		return cartCount;
+	}
+
+	public void setCartCount(int cartCount) {
+		this.cartCount = cartCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Wish [wishNo=" + wishNo + ", wishDate=" + wishDate + ", memberId=" + memberId + ", cartNo=" + cartNo
@@ -214,7 +237,7 @@ public class Wish {
 				+ ", perfumePrice=" + perfumePrice + ", perfumeQuantity=" + perfumeQuantity + ", pScentCategory="
 				+ pScentCategory + ", pImageCategory=" + pImageCategory + ", pFilename=" + pFilename + ", pFilerename="
 				+ pFilerename + ", pFilepath=" + pFilepath + ", perfumeDate=" + perfumeDate + ", perfumeStatus="
-				+ perfumeStatus + "]";
+				+ perfumeStatus + ", wishCount=" + wishCount + ", cartCount=" + cartCount + "]";
 	}
 
 }
