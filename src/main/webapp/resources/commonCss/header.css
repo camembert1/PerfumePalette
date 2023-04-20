@@ -238,8 +238,8 @@ header #logo-img {
 
 
 .nav-left-hidden {
-    --display: none;
-    opacity: 0;
+    display: none;
+
 }
 .nav-left-bar {
     height: 1px;
@@ -255,8 +255,7 @@ header #logo-img {
 }
 #nav-left:hover .nav-left-hidden {
     transition-duration: 0.2s;
-    --display: block;
-    opacity: 1;
+    display: block;
 }
 #nav-left:hover .nav-left-bar {
     transition-duration: 0.4s;
