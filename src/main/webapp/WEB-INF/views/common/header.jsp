@@ -16,22 +16,24 @@
 			<div class="nav-left-title">
 				<div>Perfume</div>
 				<div class="nav-left-hidden">
-				<div class="nav-left-bar"></div>
-				<div class="nav-left-detail">
-					<div onclick="location.href='/perfume/list'">Shop</div>
-					<div>Recommend</div>
-				</div>
+					<div class="nav-left-bar"></div>
+					<div style="width: 150px; background-color: rgba(255, 255, 255, 0);"></div>
+					<div class="nav-left-detail">
+						<div onclick="location.href='/perfume/list'">Shop</div>
+						<div>Recommend</div>
+					</div>
 				</div>
 			</div>
 
 			<div class="nav-left-title">
 				<div>Community</div>
 				<div class="nav-left-hidden">
-				<div class="nav-left-bar"></div>
-				<div class="nav-left-detail">
-					<div>Review</div>
-					<div>Q&A</div>
-				</div>
+					<div class="nav-left-bar"></div>
+					<div style="width: 150px; background-color: rgba(255, 255, 255, 0);"></div>
+					<div class="nav-left-detail">
+						<div>Review</div>
+						<div>Q&A</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -132,4 +134,33 @@
 		}
 	}
 
+
+	// $('.nav-left-title').find('div:eq(0)').hover(function() {
+
+	// 	$('.nav-left-hidden').fadeIn(200);
+
+	// 	$('.nav-left-bar').css({
+	// 		'transition-duration': '0.4s',
+	// 		'width': '150px'
+	// 	});
+
+	// 	$('#nav-left').css({
+	// 		'transition-duration': '0.4s',
+	// 		'height': '155px'
+	// 	});
+
+	// }, function() {
+
+	// 	$('.nav-left-hidden').fadeOut(200);
+
+	// 	$('.nav-left-bar').css({
+	// 		'transition-duration': '0.4s',
+	// 		'width': '0px'
+	// 	});
+
+	// 	$('#nav-left').css({
+	// 		'transition-duration': '0.4s',
+	// 		'height': '50px'
+	// 	});
+	// });
 </script>
