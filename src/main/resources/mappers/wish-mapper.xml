@@ -45,6 +45,7 @@
 		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
 		WHERE
 		W.MEMBER_ID = #{memberId}
+		AND P.PERFUME_STATUS = '1' 
 		ORDER BY P.PERFUME_NO DESC
 	</select>
 
@@ -60,6 +61,7 @@
 		JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO AND C.MEMBER_ID
 		=
 		#{memberId}
+		WHERE P.PERFUME_STATUS = '1'
 	</select>
 
 	<select id="selectPerfumeList" resultMap="wishResultMap">
@@ -77,6 +79,7 @@
 		) AS CART_COUNT
 		FROM
 		PERFUME_TBL P
+		WHERE P.PERFUME_STATUS = '1'
 	</select>
 
 </mapper>

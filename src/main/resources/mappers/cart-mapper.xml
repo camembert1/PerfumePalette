@@ -45,6 +45,7 @@
 		C ON P.PERFUME_NO = C.PERFUME_NO
 		WHERE C.MEMBER_ID
 		= #{memberId}
+		AND P.PERFUME_STATUS = '1'
 		ORDER BY
 		P.PERFUME_NO DESC
 	</select>

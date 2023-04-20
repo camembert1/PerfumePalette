@@ -40,32 +40,25 @@
 				<tbody>
 					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
 						<tr onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">
-							<td onclick="event.stopPropagation();">
-								<input type="checkbox" class="check" value="${perfume.cartNo }">
-							</td>
+							<td onclick="event.stopPropagation();"><input type="checkbox" class="check" value="${perfume.cartNo }"></td>
 							<td>${i.count }</td>
-							<td>
-								<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
-							</td>
+							<td><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
 							<td>${perfume.perfumeBrand }</td>
 							<td>${perfume.perfumeName }</td>
 							<td>${perfume.perfumeVolume }</td>
 							<td>${perfume.perfumePrice }</td>
-							<td onclick="event.stopPropagation();">
-								<input type="number" id="perfumeQuantity${perfume.cartNo}" id="reload${perfume.cartNo }" class="cnt" value="${perfume.cartQuantity}" min="0" max="${perfume.perfumeQuantity }" size="1">
-								<span>개 <i class="fas fa-arrow-alt-circle-up" id="up${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i>
-								</span> <span> <i class="fas fa-arrow-alt-circle-down" id="down${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i>
-								</span>
-							</td>
-							<td class="totalMoney" id="total${perfume.cartNo}">
-								<fmt:formatNumber value="${perfume.perfumePrice * perfume.cartQuantity}" pattern="#,###" />
-								원
-							</td>
+							<td onclick="event.stopPropagation();"><input type="number" id="perfumeQuantity${perfume.cartNo}" id="reload${perfume.cartNo }" class="cnt" value="${perfume.cartQuantity}" min="0" max="${perfume.perfumeQuantity }" size="1"> <span>개 <i class="fas fa-arrow-alt-circle-up" id="up${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i>
+							</span> <span> <i class="fas fa-arrow-alt-circle-down" id="down${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i>
+							</span></td>
+							<td class="totalMoney" id="total${perfume.cartNo}"><fmt:formatNumber value="${perfume.perfumePrice * perfume.cartQuantity}" pattern="#,###" /> 원</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<button class="del">선택삭제</button>
+			<div id="btnBox">
+				<button id="del">선택삭제</button>
+				<button id="buy">선택구매</button>
+			</div>
 			<p>
 				상품 갯수 : <span id="itemCount">0개</span>
 			</p>
@@ -111,7 +104,7 @@
 
 					// 선택 박스 삭제
 					var list = document.querySelectorAll(".check");
-					document.querySelector(".del").addEventListener('click', function () {
+					document.querySelector("#del").addEventListener('click', function () {
 						var del = new Array();
 						var list = document.querySelectorAll(".check");
 						for (var i = 0; i < list.length; i++) {
@@ -119,6 +112,11 @@
 								del.push(list[i].value);
 							}
 						}
+						
+						if (del.length === 0) {
+					        alert("선택된 상품이 없습니다.");
+					        return;
+					    }
 
 						if (confirm("정말로 삭제하시겠습니까?")) {
 							$.ajax({
