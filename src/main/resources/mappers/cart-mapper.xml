@@ -47,7 +47,7 @@
 		= #{memberId}
 		AND P.PERFUME_STATUS = '1'
 		ORDER BY
-		P.PERFUME_NO DESC
+		C.CART_DATE DESC
 	</select>
 
 </mapper>

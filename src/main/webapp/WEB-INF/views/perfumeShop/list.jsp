@@ -442,27 +442,68 @@
 			});
 
 			
-			// Wish 하트 클릭
-			wish = function(e, tag) {
-				e.stopPropagation(); // 하트 클릭할 경우 detail로 이동 방지
-				let perfumeNo = tag.querySelector('input').value;
-				let memberId = '${sessionScope.member.memberId }';
-    			$.ajax({
-					url:'/wish/add',
-					type: 'POST',
-					data:{
-						"perfumeNo": perfumeNo,
-						"memberId": memberId
-					},
-					success: function(result) {
-						alert(result)
-					},
-					error: function(result) {
-						alert(result)
-					}
+			 // Wish 하트 클릭
+	         wish = function(e, tag) {
+	            e.stopPropagation(); // 하트 클릭할 경우 detail로 이동 방지
+	            let perfumeNo = tag.querySelector('input').value;
+	            let memberId = '${sessionScope.member.memberId }';
+	            if (memberId == '') {
+	               alert('로그인부터 하시길!')
+	            } else {
+	               $.ajax({
+	                  url:'/wish/add',
+	                  type: 'POST',
+	                  data:{
+	                     "perfumeNo": perfumeNo,
+	                     "memberId": memberId
+	                  },
+	                  success: function(result) {
+	                     alert(result);
+	                     checkWish();
 
-				});
-			}
+	                  },
+	                  error: function(result) {
+	                     alert(result);
+	                  }
+	               });
+	            }
+	         }
+
+	         checkWish = function() {
+	            let memberId = '${sessionScope.member.memberId }';
+	            $('.wishImg').filter(function() {
+	               let perfumeNo = $(this).attr('id');
+	               
+	               if (memberId != '') {
+	                  let wishTag = $(this);
+	                  $.ajax({
+	                     url:'/perfume/checkWish',
+	                     type:'POST',
+	                     data: {
+	                        "perfumeNo": perfumeNo,
+	                        "memberId": memberId
+	                     },
+	                     success: function(result) {
+	                        if (result == 'success') {
+	                           console.log(wishTag);
+	                           $(wishTag).css({
+	                              'background-image': 'url(../../../resources/img/common/cart.png)' 
+	                           });
+	                        } else {
+	                           $(wishTag).css({
+	                              'background-image': 'url(../../../resources/img/common/wish.png)' 
+	                           });
+	                        }
+	                     },
+	                     error: function(result) {
+	                        alert(result)
+	                     }
+	                  });
+	               }
+	               
+	            });
+	         }
+	         checkWish();
 
 			
 

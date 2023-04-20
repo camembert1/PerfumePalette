@@ -90,11 +90,36 @@ main .cnt {
 
 main table {
 	width: 85%;
+	border: none;
+	/* 강제로 테이블 레이아웃 고정 */
+	/* 개별 설정 필요 X */
+	table-layout: fixed;
 }
 
 main th {
-	background-color:  #28302d;
-	color : white;
+	background-color: #28302d;
+	color: white;
+}
+
+main th, td, tr {
+	border: none;
+}
+
+main tr:not(:first-child, :last-child) {
+	border: 1px dotted black;
+	border-left: none;
+	border-right: none;
+}
+
+main tbody tr:last-child {
+	border: 1px dotted black;
+	border-bottom: 1px solid black;
+	border-left: none;
+	border-right: none;
+}
+
+main tr:first-child {
+	border: none;
 }
 
 main input[type=number] {
@@ -103,6 +128,61 @@ main input[type=number] {
 
 main .fas {
 	margin: 0 5px;
-	color:  #28302d;
+	color: #28302d;
 	font-size: 20px;
+}
+
+main #btnBox {
+	display: flex;
+	justify-content: flex-end;
+	width: 85%;
+	margin: 15px 0;
+}
+
+main #del {
+	margin-right: 10px;
+}
+
+main #totalBox {
+	width: 85%;
+	text-align: right;
+}
+
+main #totalBox p:nth-child(1) {
+	font-size: 25px;
+	font-weight: 600;
+	margin-bottom: 7.5px;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+main #totalBox p:nth-child(2) {
+	font-size: 30px;
+	font-weight: bold;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+main input[type='checkbox'] {
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	border: 1px solid #999;
+	appearance: none; /* 꼭 필요함 */
+	cursor: pointer;
+}
+
+main input[type="checkbox"]:checked {
+	background: url("../../resources/img/common/favicon.png") no-repeat;
+	background-size: contain;
+	border: none;
+}
+
+main #allCheck:checked {
+	background: url("../../resources/img/common/favicon.png") no-repeat;
+	background-size: contain;
+}
+
+div[id*="reload"] img{
+	width: 75px;
+	height: 75px;
+	cursor: pointer;
 }

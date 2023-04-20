@@ -46,7 +46,7 @@
 		WHERE
 		W.MEMBER_ID = #{memberId}
 		AND P.PERFUME_STATUS = '1' 
-		ORDER BY P.PERFUME_NO DESC
+		ORDER BY W.WISH_DATE DESC
 	</select>
 
 	<select id="selectPerfumeListLogin" resultMap="wishResultMap">

@@ -11,7 +11,7 @@
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<link rel="stylesheet" href="../../../resources/wishCss/list.css">
+<link rel="stylesheet" href="../../../resources/cartCss/list.css">
 </head>
 
 <body>
@@ -25,8 +25,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>번호</th>
+						<th><input type="checkbox" id="allCheck"></th>
 						<th>이미지</th>
 						<th>브랜드</th>
 						<th>품명</th>
@@ -38,20 +37,12 @@
 				<tbody>
 					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
 						<tr onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">
-							<td onclick="event.stopPropagation();">
-								<input type="checkbox" class="check" value="${perfume.wishNo }">
-							</td>
-							<td>${i.count }</td>
-							<td>
-								<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
-							</td>
+							<td onclick="event.stopPropagation();"><input type="checkbox" class="check" value="${perfume.wishNo }"></td>
+							<td><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
 							<td>${perfume.perfumeBrand }</td>
 							<td>${perfume.perfumeName }</td>
 							<td>${perfume.perfumeVolume }ml</td>
-							<td>
-								<fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" />
-								원
-							</td>
+							<td><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
 							<td onclick="event.stopPropagation();">
 								<div id="reload${perfume.perfumeNo }">
 									<c:if test="${perfume.cartDate ne null}">
@@ -66,14 +57,16 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<button class="del">선택삭제</button>
+			<div id="btnBox">
+				<button class="del">선택삭제</button>
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
 
 	<script>
 				// 전체 선택 박스
-				var allCheck = document.querySelector(".allCheck");
+				var allCheck = document.querySelector("#allCheck");
 				var list = document.querySelectorAll(".check");
 				allCheck.onclick = () => {
 					if (allCheck.checked) {
@@ -86,6 +79,24 @@
 						}
 					}
 				}
+				
+				// 선택 박스 클릭
+				for (var i = 0; i < list.length; i++) {
+				  list[i].addEventListener('click', function () {
+				    var isAllChecked = true;
+				    for (var j = 0; j < list.length; j++) {
+				      if (!list[j].checked) {
+				        isAllChecked = false;
+				        break;
+				      }
+				    }
+				    if (isAllChecked) {
+				      allCheck.checked = true;
+				    } else {
+				      allCheck.checked = false;
+				    }
+				  });
+				}
 
 				// 선택 박스 삭제
 				document.querySelector(".del").addEventListener('click', function () {
@@ -96,6 +107,11 @@
 							del.push(list[i].value);
 						}
 					}
+					
+					if (del.length === 0) {
+				        alert("선택된 상품이 없습니다.");
+				        return;
+				    }
 
 					if (confirm("정말로 삭제하시겠습니까?")) {
 						$.ajax({
