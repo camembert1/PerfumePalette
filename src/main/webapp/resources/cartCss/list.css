@@ -99,6 +99,7 @@ main table {
 main th {
 	background-color: #28302d;
 	color: white;
+	vertical-align: middle;
 }
 
 main th, td, tr {
@@ -162,27 +163,31 @@ main #totalBox p:nth-child(2) {
 }
 
 main input[type='checkbox'] {
-	width: 1.5rem;
-	height: 1.5rem;
-	border-radius: 50%;
+	width: 1.25rem;
+	height: 1.25rem;
+	/* border-radius: 50%; */
 	border: 1px solid #999;
 	appearance: none; /* 꼭 필요함 */
 	cursor: pointer;
+	vertical-align: middle;
 }
 
 main input[type="checkbox"]:checked {
-	background: url("../../resources/img/common/favicon.png") no-repeat;
+	background: url("../../resources/img/cart/check.png") no-repeat;
 	background-size: contain;
-	border: none;
 }
 
 main #allCheck:checked {
-	background: url("../../resources/img/common/favicon.png") no-repeat;
+	background: url("../../resources/img/cart/whiteCheck.png") no-repeat;
 	background-size: contain;
 }
 
-div[id*="reload"] img{
+main div[id*="reload"] img {
 	width: 75px;
 	height: 75px;
+	cursor: pointer;
+}
+
+main td[onclick] {
 	cursor: pointer;
 }

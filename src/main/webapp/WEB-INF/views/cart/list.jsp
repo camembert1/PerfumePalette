@@ -26,7 +26,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="allCheck"></th>
+						<th style="width: 50px"><input type="checkbox" id="allCheck"></th>
 						<th>이미지</th>
 						<th>브랜드</th>
 						<th>품명</th>
@@ -38,14 +38,14 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
-						<tr onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">
-							<td onclick="event.stopPropagation();"><input type="checkbox" class="check" value="${perfume.cartNo }"></td>
-							<td><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
-							<td>${perfume.perfumeBrand }</td>
-							<td>${perfume.perfumeName }</td>
+						<tr>
+							<td><input type="checkbox" class="check" value="${perfume.cartNo }"></td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'"><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeBrand }</td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeName }</td>
 							<td>${perfume.perfumeVolume }ml</td>
 							<td><fmt:formatNumber value="${perfume.perfumePrice}" pattern="#,###" />원</td>
-							<td onclick="event.stopPropagation();"><input type="number" id="perfumeQuantity${perfume.cartNo}" class="cnt" value="${perfume.cartQuantity}" min="0" max="${perfume.perfumeQuantity }">개<i class="fas fa-arrow-alt-circle-up" id="up${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i> <i class="fas fa-arrow-alt-circle-down" id="down${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i></td>
+							<td><input type="number" id="perfumeQuantity${perfume.cartNo}" class="cnt" value="${perfume.cartQuantity}" min="0" max="${perfume.perfumeQuantity }">개<i class="fas fa-arrow-alt-circle-up" id="up${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i> <i class="fas fa-arrow-alt-circle-down" id="down${perfume.cartNo}" onclick="changeQuantity(${perfume.cartNo}, ${perfume.perfumePrice })"></i></td>
 							<td class="totalMoney" id="total${perfume.cartNo}"><fmt:formatNumber value="${perfume.perfumePrice * perfume.cartQuantity}" pattern="#,###" />원</td>
 						</tr>
 					</c:forEach>

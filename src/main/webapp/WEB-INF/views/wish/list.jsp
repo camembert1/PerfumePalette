@@ -25,7 +25,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="allCheck"></th>
+						<th style="width: 50px"><input type="checkbox" id="allCheck"></th>
 						<th>이미지</th>
 						<th>브랜드</th>
 						<th>품명</th>
@@ -36,14 +36,14 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
-						<tr onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">
-							<td onclick="event.stopPropagation();"><input type="checkbox" class="check" value="${perfume.wishNo }"></td>
-							<td><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
-							<td>${perfume.perfumeBrand }</td>
-							<td>${perfume.perfumeName }</td>
+						<tr>
+							<td><input type="checkbox" class="check" value="${perfume.wishNo }"></td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'"><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeBrand }</td>
+							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeName }</td>
 							<td>${perfume.perfumeVolume }ml</td>
 							<td><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
-							<td onclick="event.stopPropagation();">
+							<td>
 								<div id="reload${perfume.perfumeNo }">
 									<c:if test="${perfume.cartDate ne null}">
 										<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes" onclick="removeCart('${perfume.perfumeNo }', '${perfume.cartNo }')">
