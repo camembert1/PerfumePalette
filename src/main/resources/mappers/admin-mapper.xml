@@ -224,12 +224,22 @@
 	<select id="getSearchListCount" resultType="_int">
 		SELECT COUNT(*) FROM PERFUME_TBL
 		<choose>
-			
+			<when test="searchCondition == 'All'">
+				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+				OR PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
 			<when test="searchCondition == 'Brand'">
 				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
 			</when>
 			<when test="searchCondition == 'perfumeName'">
 				WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchIncense == 'All'">
+				AND (P_SCENT_CATEGORY = 'Citrus'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				PR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Woody')
 			</when>
 			<when test="searchIncense == 'Citrus'">
 				AND P_SCENT_CATEGORY = 'Citrus'
