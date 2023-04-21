@@ -53,10 +53,12 @@ main form {
 
 main h1 {
   text-align: center;
+  margin-bottom : 10px;
 }
 
 main h2 {
   text-align: center;
+  margin-bottom : 10px;
 }
 
 main a:visited,

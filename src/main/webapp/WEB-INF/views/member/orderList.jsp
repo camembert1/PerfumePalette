@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주문내역조회 페이지</title>
+<title>주문내역조회</title>
 <link rel="stylesheet" href="../../../resources/memberCss/orderList.css">
 </head>
 <body>
@@ -17,21 +17,18 @@
    
    <!-- 사이드바 -->
       <div id="hrefList">
-         <div id="hrefName">${memerOne.memberName }님</div>
+         <div id="hrefName">${member.memberName }님</div> 
          <span><a href="/member/orderList">주문내역조회</a></span>
          <span><a href="#">작성후기</a></span>
          <span><a href="#">작성문의</a></span>
          <span><a href="#">작성댓글</a></span>
          <span><a href="#">좋아요목록</a></span>
-         <span><a href="#">찜목록</a></span>
-         <span><a href="#">장바구니목록</a></span>
          <span><a href="#">회원탈퇴</a></span>
       </div>
    
       <!-- 여기부터 내용 입력하시면 됩니다! -->
       
       <h1>주문조회</h1>
-      <div class="contentText">주문 상품 정보</div>
      
       <table border="1">
         <thead> 
@@ -54,7 +51,7 @@
                 <td>10,000,000원</td>
                 <td>배송 완</td> 
                 <td>
-                	<button>후기작성</button>
+                	<button onclick = "location.href = '/review/reviewWrite'">후기작성</button>
                 </td>
             </tr>
             
