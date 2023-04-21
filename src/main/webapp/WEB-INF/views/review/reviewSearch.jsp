@@ -24,19 +24,19 @@
 		<div class ="search">
 		<form action="/review/search" method="GET">
          	<select name="searchCondition" id="sortby-select">
-         		<option value="all">전체</option>
-			    <option value="latest">최신순</option>
-			    <option value="most-viewed">조회순</option>
-			    <option value="highest-rated">별점순</option>
+         		<option value="all" <c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
+			    <option value="latest" <c:if test="${search.searchCondition == 'latest' }">selected</c:if>>최신순</option>
+			    <option value="most-viewed" <c:if test="${search.searchCondition == 'most-viewed' }">selected</c:if>>조회순</option>
+			    <option value="highest-rated" <c:if test="${search.searchCondition == 'highest-rated' }">selected</c:if>>별점순</option>
 			</select>
-			<!-- <select name="searchPerfume" id="perfume-select">
+			<select name="searchPerfume" id="perfume-select">
 			    <option value="">향종류</option>
-			    <option value="Woody">Woody</option>
-			    <option value="Floral">Floral</option>
-			    <option value="Fruity">Fruity</option>
-			    <option value="Spicy">Spicy</option>
-			    <option value="Citrus">Citrus</option>
-			</select> -->
+			    <option value="Woody" <c:if test="${search.searchPerfume == 'Woody' }">selected</c:if>>Woody</option>
+			    <option value="Floral" <c:if test="${search.searchPerfume == 'Floral' }">selected</c:if>>Floral</option>
+			    <option value="Fruity" <c:if test="${search.searchPerfume == 'Fruity' }">selected</c:if>>Fruity</option>
+			    <option value="Spicy" <c:if test="${search.searchPerfume == 'Spicy' }">selected</c:if>>Spicy</option>
+			    <option value="Citrus" <c:if test="${search.searchPerfume == 'Citrus' }">selected</c:if>>Citrus</option>
+			</select>
 			<input type="search" name="searchValue" value="${search.searchValue }" placeholder="상품명을 검색해주세요" aria-label="Search">
 			<input type="submit" value="검색">
 		</form>
@@ -88,38 +88,14 @@
         <tfoot>
 	        <tr>
 		        <td colspan="6" class="line">
-			        <div id="paging">
-					<c:if test="${paging.totalCount ne null }">
-						<c:if test="${paging.currentPage != 1}">
-							<c:if test="${paging.startNavi != 1}">
-								<!-- 첫 페이지로 버튼 -->
-								<a href="/review/reviewList?page=1" class="move first">&lt;&lt;</a>
-							</c:if>	
-							<!-- 이전 페이지로 버튼 -->
-							<a href="/review/reviewList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
-						</c:if>
-						
-						<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
-							<c:choose>
-								<c:when test="${i == paging.currentPage}">
-									<span class="page current">${i}</span>
-								</c:when>
-								<c:otherwise>
-									<a href="/review/reviewList?page=${i}" class="page">${i}</a>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-		
-						<c:if test="${paging.currentPage != paging.lastPage}">
-							<!-- 다음 페이지로 버튼 -->
-							<a href="/review/reviewList?page=${paging.currentPage+1}" class="move next">&gt;</a>
-							<c:if test="${paging.endNavi != paging.lastPage}">
-								<!-- 맨 끝 페이지로 버튼 -->
-								<a href="/review/reviewList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
-							</c:if>
-						</c:if>
-					</c:if>
-				</div>
+			        <a href="" class="page">&lt;&lt;</a> 
+			        <a href="" class="page"> &lt;</a> 
+			        <a href="" class="number page">1</a> 
+			        <a href="" class="number page">2</a> 
+			        <a href="" class="number page">3</a> 
+			        <a href="" class="number page">4</a>
+					<a href="" class="number page">5</a> <a href="" class="page">&gt;</a>
+					<a href="" class="page">&gt;&gt;</a>
 				</td>
 			</tr>
 		</tfoot>
