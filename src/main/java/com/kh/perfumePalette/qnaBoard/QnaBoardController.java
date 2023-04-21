@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.member.Member;
 
 @Controller
 @RequestMapping("/qnaboard")
@@ -34,9 +35,8 @@ public class QnaBoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public ModelAndView qnaBoardWrite(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("member");
 		mv.setViewName("qnaBoard/qnaBoardWrite");
-		if (memberId == null) {
+		if ((Member) session.getAttribute("member") == null) {
 			Alert alert = new Alert("/member/login", "로그인이 필요합니다.");
 			mv.addObject("alert", alert);
 			mv.setViewName("common/alert");
@@ -51,13 +51,13 @@ public class QnaBoardController {
 			@ModelAttribute QnaBoard qnaboard, HttpSession session) {
 		Map<String, String> fileInfo = null;
 		try {
-			Integer UserNo = (Integer) session.getAttribute("memberNo");
+			Integer UserNo = ((Member) session.getAttribute("member")).getMemberNo();
 			qnaboard.setMemberNo(UserNo);
 			if (multi.getSize() != 0 && !multi.getOriginalFilename().equals("")) {
 				fileInfo = qnafileUtil.saveFile(multi, request);
 				qnaboard.setqFilename(fileInfo.get("original"));
 				qnaboard.setqFilerename(fileInfo.get("rename"));
-				qnaboard.setqFilepath(fileInfo.get("renameFilepath"));
+				qnaboard.setqFilepath(fileInfo.get("renameFilePath"));
 			}
 			int result = qbService.writeQnaBoard(qnaboard);
 			if (result > 0) {
@@ -92,73 +92,127 @@ public class QnaBoardController {
 //	    }
 //	    return mv;
 //	}
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView viewQnaBoardList(ModelAndView mv,
-			@RequestParam(value = "page", required = false, defaultValue = "1") String strCurrentPage) {
-		try {
-			int currentPage = Integer.parseInt(strCurrentPage);
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public ModelAndView viewQnaBoardList(ModelAndView mv,
+//			@RequestParam(value = "page", required = false, defaultValue = "1") String strCurrentPage) {
+//		try {
+//			int currentPage = Integer.parseInt(strCurrentPage);
 //	    	PageInfo pageInfo = new PageInfo(currentPage, boardLimit,totalCount);
-			List<QnaBoard> qbList = qbService.selectAllQnaBoard();
+//			List<QnaBoard> qbList = qbService.selectAllQnaBoard();
+//			mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist");
+//		} catch (Exception e) {
+//			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+//		}
+//		return mv;
+//	}
+
+
+	// 문의 게시판 목록
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView viewQnaBoardList(@RequestParam(value="page", required = false, defaultValue = "1") int currentPage, ModelAndView mv) {
+		try {
+			int totalCount = qbService.getqnaBoardCount(); // 전체 게시글 개수 조회
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10); // 한 페이지당 10개씩 표시
+			List<QnaBoard> qbList = qbService.selectAllQnaBoard(pi); // 해당 페이지의 게시글 목록 조회
+			mv.addObject("paging", pi);
 			mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
-		return mv;
+	    return mv;
 	}
-	// 페이징 처리 할 때 쓸 코드
-//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	public ModelAndView viewQnaBoardList(ModelAndView mv,
-//	        @RequestParam(value = "page", required = false, defaultValue = "1") String strCurrentPage) {
-//	    try {
-//	        int currentPage = Integer.parseInt(strCurrentPage);
-//	        int boardLimit = 10; // 한 페이지당 보여줄 게시글 수
-//	        int totalCount = qbService.selectQnaBoardCount(); // 총 게시글 수
-//
-//	        PageInfo pageInfo = new PageInfo(currentPage, totalCount, boardLimit);
-//	        List<QnaBoard> qbList = qbService.selectQnaBoardList(pageInfo.getStartIndex(), boardLimit);
-//
-//	        mv.addObject("qbList", qbList)
-//	                .addObject("pageInfo", pageInfo)
-//	                .setViewName("qnaBoard/qnaBoardlist");
-//	    } catch (Exception e) {
-//	        mv.addObject("msg", e.getMessage()).setViewName("common/error");
-//	    }
-//	    return mv;
-//	}
 
+	
 
-	// 게시판 목록 네비게이터 시작, 끝값 설정
-	private PageInfo PageInfoWrite(int currentPage, int totalCount) {
-		PageInfo pi = null;
-		int boardLimit = 10; // 한 페이지 당 게시글 개수
-		int naviLimit = 5; // 한 페이지 당 pageNavi 수
-		int maxPage; // 페이지의 마지막 번호
-		int startNavi; // pageNavi 시작값
-		int endNavi; // pageNavi 끝값
-
-		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
-		startNavi = (((int) ((double) currentPage / naviLimit + 0.9)) - 1) * naviLimit + 1;
-		endNavi = startNavi + naviLimit - 1;
-		if (endNavi > maxPage) {
-			endNavi = maxPage;
+	// 문의 게시판 Detail
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public ModelAndView qnaDetailView(@RequestParam(value = "qnaNo", required = false) Integer qnaNo, ModelAndView mv) {
+		try {
+			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
+			mv.addObject("qnaNo", qnaNo);
+			mv.addObject("qnaboard", qnaboard).setViewName("qnaBoard/qnaBoardDetail");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
 		}
-//		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
-		return pi;
-	}
-
-	// 문의 게시판 상세정보
-
-	@RequestMapping(value = "/detail", method = RequestMethod.GET) 
-	  public ModelAndView qnaDetailView(@RequestParam("memberNo") Integer memberNo,
-	  ModelAndView mv) { 
-		try { 
-		    QnaBoard qnaboard = qbService.QnaBoardDetail(memberNo);
-		    mv.addObject("qnaboard", qnaboard).setViewName("qnaboard/qnaBoardDetail");
-	}  catch(Exception e) {
-		e.printStackTrace();
-		mv.addObject("msg", e.getMessage());
-		mv.setViewName("common/error");
-	}
 		return mv;
 	}
+
+	// 문의 게시판 Detail 수정 View
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public ModelAndView boardModifyView(@RequestParam("qnaNo") Integer qnaNo, HttpSession session, ModelAndView mv) {
+		try {
+			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
+			if (qnaboard != null) {
+				mv.addObject("qnaNo", qnaNo);
+				mv.addObject("qnaboard", qnaboard);
+				mv.setViewName("qnaBoard/qnaBoardModify");
+			} else {
+				mv.addObject("msg", "데이터 조회에 실패하였습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 Detail 수정 Logic
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public ModelAndView boardModify(@ModelAttribute QnaBoard qnaboard,
+			@RequestParam(name = "uploadFile", required = false) MultipartFile multi, HttpServletRequest request,
+			ModelAndView mv) {
+		Map<String, String> fileInfo = null;
+		try {
+			if (multi.getSize() != 0 && !multi.getOriginalFilename().equals("")) {
+				fileInfo = qnafileUtil.saveFile(multi, request);
+				qnaboard.setqFilename(fileInfo.get("original"));
+				qnaboard.setqFilerename(fileInfo.get("rename"));
+				qnaboard.setqFilepath(fileInfo.get("renameFilePath"));
+			} else {
+				// 파일을 업로드하지 않았을 경우, 기존의 파일 정보를 그대로 사용한다.
+				QnaBoard qnaBoardDetail = qbService.QnaBoardDetail(qnaboard.getQnaNo());
+				qnaboard.setqFilename(qnaBoardDetail.getqFilename());
+				qnaboard.setqFilerename(qnaBoardDetail.getqFilerename());
+				qnaboard.setqFilepath(qnaBoardDetail.getqFilepath());
+			}
+			int result = qbService.updateqnaBoard(qnaboard);
+			if (result > 0) {
+				mv.addObject("qnaNo", qnaboard.getQnaNo());
+				mv.addObject("qnaboard", qnaboard);
+				mv.setViewName("redirect:/qnaboard/detail?qnaNo=" + qnaboard.getQnaNo());
+			} else {
+				mv.addObject("msg", "게시판 수정이 완료되었습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 삭제
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public ModelAndView qnaRemove(@RequestParam(value = "qnaNo", required = false) int qnaNo, ModelAndView mv) {
+		try {
+			int result = qbService.deleteQnaBoard(qnaNo);
+			if (result > 0) {
+				mv.setViewName("redirect:/qnaboard/list");
+			} else {
+				mv.addObject("msg", "질문이 삭제되지 않았습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", "질문이 삭제되지 않았습니다.");
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
 }

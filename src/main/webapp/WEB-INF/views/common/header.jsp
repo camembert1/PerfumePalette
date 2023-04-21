@@ -30,7 +30,7 @@
 				<div class="nav-left-bar"></div>
 				<div class="nav-left-detail">
 					<div>Review</div>
-					<div>Q&A</div>
+					<div onclick="location.href='/qnaboard/list'">Q&A</div>
 				</div>
 				</div>
 			</div>

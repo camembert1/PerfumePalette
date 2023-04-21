@@ -50,6 +50,7 @@ main>div[id=forCenter] {
     text-align: center;
     display: block;
     margin: 0 auto;
+    border-collapse: collapse;
 }
 
 .line {
@@ -57,14 +58,26 @@ main>div[id=forCenter] {
     padding-top: 30px;
     font-size: larger;
 }
-
+.submit-btn {
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 7px 25px;
+    /* margin-left: 382px; */
+    margin: 0px auto 20px auto;
+    float : right;
+}
 
 th {
-    padding-bottom: 15px;
+    padding: 30px;
+    border-bottom: 1px solid darkgray;
 }
 
 td {
-    padding-bottom: 65px;
+    padding: 25px;
+    border-bottom: 1px solid rgba(200, 200, 201, 0.705);
 }
 
 h1 {

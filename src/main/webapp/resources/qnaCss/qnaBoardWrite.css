@@ -49,21 +49,21 @@ main>div[id=forCenter] {
     /* background-color: aqua; */
 }
 
-.submit-btn {
+main .submit-btn {
     background-color: #222222;
     color: white;
     border: none;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     padding: 7px 25px;
-    /* margin-left: 382px; */
-    margin: 20px auto;
+    margin-left: 382px;
+    margin: 20px auto 20px auto;
     display: flex;
 	justify-content: center;
     text-align: center;
 }
 
-input[type=file]::file-selector-button {
+main input[type=file]::file-selector-button {
     background-color: #222222;
     color: white;
     border: none;
@@ -72,11 +72,11 @@ input[type=file]::file-selector-button {
     padding: 5px;
 }
 
-input[type=file]::file-span {
+main input[type=file]::file-span {
     color: aqua;
 }
 
-.select {
+main .select {
     width: 200px;
     appearance: none;
     background: url(../../../resources/img/common/Arrow.png) no-repeat right 3px center;
@@ -84,23 +84,24 @@ input[type=file]::file-span {
     height: 20px;
 }
 
-input.radius {
+main input.radius {
     border-radius: 5px;
     border: 1px solid gray;
     box-sizing: border-box;
+    margin-left: 40px;
 }
 
-.title {
+main .title {
     height: 20px;
     width: 500px;
-    margin-left: 44px;
     margin-bottom: 20px;
 }
 
-input:focus {
+main input:focus {
     outline: none;
 }
 
-form span[aria-hidden="true"] {
+main form span[aria-hidden="true"] {
     margin-left: 30px;
-}
+} 
+
