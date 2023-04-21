@@ -80,10 +80,10 @@
 			<div>
 				<form action="/admin/member/search" method="get">
 					<select name="searchCondition">
-						<option value="All">전체</option>
-						<option value="Name">이름</option>
-						<option value="ID">아이디</option>
-						<option value="Nickname">닉네임</option>
+						<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>전체</option>
+						<option value="Name" <c:if test="${search.searchCondition == 'Name' }">selected</c:if>>이름</option>
+						<option value="ID" <c:if test="${search.searchCondition == 'ID' }">selected</c:if>>아이디</option>
+						<option value="Nickname" <c:if test="${search.searchCondition == 'Nickname' }">selected</c:if>>닉네임</option>
 					</select>
 					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
 					<button type="submit">검 색</button>
@@ -106,7 +106,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${amList }" var="member" varStatus="i">
+					<c:forEach items="${sList }" var="member" varStatus="i">
 						<tr>
 							<td class="td"><input type="checkbox" class="check"
 								value="${member.memberNo }"></td>

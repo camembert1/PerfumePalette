@@ -33,7 +33,7 @@
 					<span><a href="/perfume/mList">판매상품관리</a></span>
 					<span><a href="#">주문내역관리</a></span>
 					<span><a href="/admin/member/amList">회원관리</a></span>
-					<span><a href="#">문의관리</a></span>
+					<span><a href="/admin/qna/list">문의관리</a></span>
 					<span><a href="/admin/review/list">후기관리</a></span>
 				</div>
 

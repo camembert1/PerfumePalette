@@ -2,11 +2,12 @@ package com.kh.perfumePalette.admin.aperfume;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
 
 @Repository
@@ -34,8 +35,12 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	}
 
 	@Override
-	public List<Perfume> selectPerfumeList(SqlSession session) {
-		List<Perfume> pList = session.selectList("AdminMapper.selectPerfumeList");
+	public List<Perfume> selectPerfumeList(SqlSession session, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Perfume> pList = session.selectList("AdminMapper.selectPerfumeList", null, rowBounds);
 		return pList;
 	}
 	
@@ -63,6 +68,11 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	@Override
 	public List<Perfume> selectListByKeyword(SqlSession session, Search search) {
 		return session.selectList("AdminMapper.selectListByKeyword", search);
+	}
+
+	@Override
+	public int getListCount(SqlSession session) {
+		return session.selectOne("AdminMapper.getListCount");
 	}
 
 

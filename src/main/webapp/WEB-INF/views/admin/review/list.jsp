@@ -15,6 +15,7 @@
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon"
 	href="../../resources/img/common/favicon.png" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<style>
 	
 	</style>
@@ -33,27 +34,27 @@
 					<span><a href="/perfume/mList">판매상품관리</a></span>
 					<span><a href="#">주문내역관리</a></span>
 					<span><a href="/admin/member/amList">회원관리</a></span>
-					<span><a href="#">문의관리</a></span>
+					<span><a href="/admin/qna/list">문의관리</a></span>
 					<span><a href="/admin/review/list">후기관리</a></span>
 				</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<div id="subject">REVIEW</div>
 			<div id="search">
-         		<select name="sortby" id="sortby-select">
-				    <option name="" value="latest">최신순</option>
-				    <option name="" value="most-viewed">조회순</option>
-				    <option name="" value="highest-rated">별점순</option>
-				</select>
-				<select name="perfume" id="perfume-select">
-				    <option name ="" value="">향종류</option>
-				    <option name ="" value="Woody">Woody</option>
-				    <option name ="" value="Floral">Floral</option>
-				    <option name ="" value="Fruity">Fruity</option>
-				    <option name ="" value="Spicy">Spicy</option>
-				    <option name ="" value="Citrus">Citrus</option>
-				</select>
 				<form action="/admin/review/search">
+	         		<select name="sortby" id="sortby-select">
+					    <option name="" value="latest">최신순</option>
+					    <option name="" value="most-viewed">조회순</option>
+					    <option name="" value="highest-rated">별점순</option>
+					</select>
+					<select name="perfume" id="perfume-select">
+					    <option name ="" value="">향종류</option>
+					    <option name ="" value="Woody">Woody</option>
+					    <option name ="" value="Floral">Floral</option>
+					    <option name ="" value="Fruity">Fruity</option>
+					    <option name ="" value="Spicy">Spicy</option>
+					    <option name ="" value="Citrus">Citrus</option>
+					</select>
 					<input type="text" name="searchValue" placeholder="상품명 검색">
 					<button type="submit">검색</button>
 				</form>
@@ -69,6 +70,7 @@
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회수</th>
+						<th>신고수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -159,7 +161,7 @@
 					success : function(data){
 						if(data == 1) {
 							alert("삭제되었습니다!");
-							location.href = "/admin/review/arRemove";
+							location.href = "/admin/review/list";
 						}
 					},
 					error : function(data) {

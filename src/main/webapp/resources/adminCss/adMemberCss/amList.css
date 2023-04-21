@@ -97,6 +97,8 @@ main .modal_btn {
    	border-radius: 5px;
 /*    버튼 그림자 */
    	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+   	padding: 4px 10px;
+   	cursor: pointer;
 }
 
 main .del {
@@ -110,14 +112,17 @@ main .del {
    	border-radius: 5px;
 /*    버튼 그림자 */
    	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+   	padding: 10px 10px;
+   	cursor: pointer;
 }
 
 main .td {
 	text-align: center;
+	padding: 5px 0px;
 }
 main img {
 	height:100px;
 }
-main table, tr, th, td {
-	border: 1px solid black;
-}
+/* main table, tr, th, td { */
+/* /* 	border: 1px solid black; */ */
+/* } */

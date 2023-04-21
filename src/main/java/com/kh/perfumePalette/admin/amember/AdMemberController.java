@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.review.Review;
 
 @Controller
 @RequestMapping("/admin/member")
 public class AdMemberController {
 
 	@Autowired
-	public AdMemberService amService;
+	private AdMemberService amService;
 
 	// 멤버 수정
 	@RequestMapping(value = "/amList", method = RequestMethod.POST)
@@ -55,6 +59,27 @@ public class AdMemberController {
 		mv.addObject("amList", amList);
 		mv.setViewName("admin/member/amList");
 		return mv;
+	}
+	
+	// 회원 검색
+	@GetMapping("/search")
+	public String memberSearchView(
+			@ModelAttribute Search search
+			, Model model) {
+		try {
+			int totalCount = amService.getListCount(search);
+			List<Member> searchList = amService.selectListByKeyword(search);
+			if(!searchList.isEmpty()) {
+				model.addAttribute("search", search);
+				model.addAttribute("sList", searchList);
+				return "admin/member/search";
+			} else {
+				model.addAttribute("msg", "조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			return "common/error";
+		}
 	}
 	
 	// 회원 상세 정보

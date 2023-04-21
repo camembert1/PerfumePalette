@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
 
 @Service
@@ -36,6 +37,16 @@ public class AdMemberServiceImpl implements AdMemberService {
 	@Override
 	public int deleteAdMember(int memberNo) {
 		return amStore.deleteAdMember(session, memberNo);
+	}
+
+	@Override
+	public int getListCount(Search search) {
+		return amStore.getListCount(session, search);
+	}
+
+	@Override
+	public List<Member> selectListByKeyword(Search search) {
+		return amStore.selectListByKeyword(session, search);
 	}
 
 

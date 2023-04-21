@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
 
 @Service
@@ -36,8 +36,8 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	}
 
 	@Override
-	public List<Perfume> selectPerfumeList() {
-		List<Perfume> pList = pStore.selectPerfumeList(session);
+	public List<Perfume> selectPerfumeList(PageInfo pi) {
+		List<Perfume> pList = pStore.selectPerfumeList(session, pi);
 		return pList;
 	}
 
@@ -65,6 +65,11 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	@Override
 	public List<Perfume> selectListByKeyword(Search search) {
 		return pStore.selectListByKeyword(session, search);
+	}
+
+	@Override
+	public int getListCount() {
+		return pStore.getListCount(session);
 	}
 
 

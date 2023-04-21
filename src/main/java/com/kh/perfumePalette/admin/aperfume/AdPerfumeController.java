@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.perfume.Perfume;
 
@@ -100,17 +100,24 @@ public class AdPerfumeController {
 
 	// 상품 수정 화면
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public ModelAndView perfumeModifyView(@RequestParam("perfumeNo") Integer perfumeNo, ModelAndView mv) {
+	public ModelAndView perfumeModifyView(
+			@RequestParam("perfumeNo") Integer perfumeNo
+			, ModelAndView mv
+			, HttpSession session) {
 		try {
-			Perfume perfume = pService.selectOneByNo(perfumeNo);
-			mv.addObject("perfume", perfume);
-			mv.setViewName("perfume/modify");
-			return mv;
+			if (session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				Perfume perfume = pService.selectOneByNo(perfumeNo);
+				mv.addObject("perfume", perfume);
+				mv.setViewName("perfume/modify");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-			return mv;
 		}
+		return mv;
 	}
 
 	// 상품 수정
@@ -273,10 +280,26 @@ public class AdPerfumeController {
 
 	// 상품 리스트 관리자 뷰
 	@RequestMapping(value = "/mList", method = RequestMethod.GET)
-	public ModelAndView viewPerfumeManagerList(ModelAndView mv) {
-		List<Perfume> pList = pService.selectPerfumeList();
-		mv.addObject("pList", pList);
-		mv.setViewName("perfume/mList");
+	public ModelAndView viewPerfumeManagerList(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		try {
+			if (session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				int totalCount = pService.getListCount();
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<Perfume> pList = pService.selectPerfumeList(pi);
+				mv.addObject("paging", pi);
+				mv.addObject("pList", pList);
+				mv.setViewName("perfume/mList");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
 
@@ -313,6 +336,8 @@ public class AdPerfumeController {
 				return "common/error";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
 	}

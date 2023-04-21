@@ -83,3 +83,11 @@ main #hrefName {
   margin-bottom: 10px;
 }
 /* 사이드바 끝 */
+
+main table, tr, th, td {
+	text-align: center;
+}
+
+main img {
+	height: 100px;
+}

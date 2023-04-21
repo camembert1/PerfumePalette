@@ -2,6 +2,7 @@ package com.kh.perfumePalette.admin.amember;
 
 import java.util.List;
 
+import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
 
 public interface AdMemberService {
@@ -32,6 +33,20 @@ public interface AdMemberService {
 	 * @return int
 	 */
 	int deleteAdMember(int memberNo);
+
+	/**
+	 * 리뷰 검색 갯수 Service
+	 * @param search
+	 * @return int
+	 */
+	int getListCount(Search search);
+
+	/**
+	 * 리뷰 검색 Service
+	 * @param search
+	 * @return List<Member>
+	 */
+	List<Member> selectListByKeyword(Search search);
 
 
 }

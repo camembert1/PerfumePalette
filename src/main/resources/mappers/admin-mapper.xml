@@ -57,6 +57,23 @@
 		<result property="pFilerename" column="P_FILERENAME"/>
 	</resultMap>
 	
+<!-- 	Qna-Mapper -->
+	<resultMap type="QnaBoard" id="qnaBoardResultMap">
+      <id property="qnaNo" column="QNA_NO"></id>
+      <result property="perfumeNo" column="PERFUME_NO" />
+      <result property="qnaType" column="QNA_TYPE" />
+      <result property="qnaSubject" column="QNA_SUBJECT" />
+      <result property="qnaContents" column="QNA_CONTENTS"
+         jdbcType="CLOB" javaType="java.lang.String" />
+      <result property="qnaDate" column="QNA_DATE" />
+      <result property="memberNo" column="MEMBER_NO" />
+      <result property="qFilename" column="Q_FILENAME" />
+      <result property="qFilerename" column="Q_FILERENAME" />
+      <result property="qFilepath" column="Q_FILEPATH" />
+      <result property="qnaPassword" column="QNA_PASSWORD" />
+      <result property="qQnaNo" column="Q_QNA_NO" />
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+   </resultMap>
 	
 	
 	<!-- 	멤버 시작 -->
@@ -76,6 +93,38 @@
 	
 	<select id="selectAdMemberDetail" resultMap="memberResultMap">
 		SELECT * FROM MEMER_TBL WHERE MEMBER_NO = #{memberNo }
+	</select>
+	<select id="getSearchMListCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+		<choose>
+			<when test="searchCondition == 'Name'">
+				WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'ID'">
+				WHERE MEMBER_ID LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'Nickname'">
+				WHERE MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+			</when>
+		</choose>
+	</select>
+	<select id="selectMListByKeyword" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL
+		<if test="searchCondition == 'All'">
+			WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			OR MEMBER_ID LIKE '%' || #{searchValue} || '%'
+			OR MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'Name'">
+			WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'ID'">
+			WHERE MEMBER_ID LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'Nickname'">
+			WHERE MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		ORDER BY MEMBER_DATE DESC
 	</select>
 	<!-- 	멤버 끝 -->
 	
@@ -113,19 +162,63 @@
 		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
 	</select>
 	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL
+	</select>
+	
 	<select id="selectListByKeyword" resultMap="perfumeResultMap">
 		SELECT * FROM PERFUME_TBL
+		<where>
 		<if test="searchCondition == 'All'">
-			WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
 			OR PERFUME_NAME LIKE '%' || #{searchValue} || '%'
 		</if>
 		<if test="searchCondition == 'Brand'">
-			WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
 		</if>
 		<if test="searchCondition == 'perfumeName'">
-			WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			PERFUME_NAME LIKE '%' || #{searchValue} || '%'
 		</if>
-		ORDER BY PERFUME_DATE DESC
+		<if test="searchIncense eq 'All'">
+			AND (P_SCENT_CATEGORY = 'Citrus'
+			OR P_SCENT_CATEGORY = 'Fruity'
+			OR P_SCENT_CATEGORY = 'Floral'
+			OR P_SCENT_CATEGORY = 'Spicy'
+			OR P_SCENT_CATEGORY = 'Woody')
+		</if>
+		<if test="searchIncense == 'Citrus'">
+			AND P_SCENT_CATEGORY = 'Citrus'
+		</if>
+		<if test="searchIncense == 'Fruity'">
+			AND P_SCENT_CATEGORY = 'Fruity'
+		</if>
+		<if test="searchIncense == 'Floral'">
+			AND P_SCENT_CATEGORY = 'Floral'
+		</if>
+		<if test="searchIncense == 'Spicy'">
+			AND P_SCENT_CATEGORY = 'Spicy'
+		</if>
+		<if test="searchIncense == 'Woody'">
+			AND P_SCENT_CATEGORY = 'Woody'
+		</if>
+		</where>
+		<choose>
+			<when test="searchOder == 'Date'">
+				ORDER BY PERFUME_DATE DESC
+			</when>
+<!-- 			<when test="searchOder == 'Popul'"> -->
+<!-- 				조인 후 구현 -->
+<!-- 			</when> -->
+<!-- 			<when test="searchOder == 'Star'"> -->
+<!-- 				조인 후 구현 -->
+<!-- 			</when> -->
+			<when test="searchOder == 'PriceH'">
+				ORDER BY PERFUME_PRICE DESC
+			</when>
+			<when test="searchOder == 'PriceR'">
+				ORDER BY PERFUME_PRICE ASC
+			</when>
+		</choose>
 	</select>
 	
 	<select id="getSearchListCount" resultType="_int">
@@ -137,6 +230,21 @@
 			</when>
 			<when test="searchCondition == 'perfumeName'">
 				WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</when>
+			<when test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</when>
+			<when test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</when>
+			<when test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</when>
+			<when test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
 			</when>
 		</choose> 
 	</select>
@@ -171,4 +279,48 @@
 		ORDER BY REVIEW_DATE DESC
 	</select>
 <!-- 리뷰 끝 -->
+
+<!-- 문의 시작 -->
+	<delete id="deleteQna">
+		DELETE FROM QNA_TBL WHERE QNA_NO = #{qnaNo}
+	</delete>
+	<select id="selectAdQnaList" resultMap="qnaBoardResultMap">
+		SELECT Q.*, M.MEMBER_NICKNAME
+      	FROM QNA_TBL Q
+      	LEFT OUTER JOIN MEMBER_TBL M
+      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	ORDER BY Q.QNA_DATE DESC
+	</select>
+	
+	<select id="getSearchQListCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA_TBL
+		JOIN MEMBER_TBL USING(MEMBER_NO)
+		<choose>
+			<when test="searchCondition == 'subject'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'contents'">
+				WHERE QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+			</when>
+		</choose>
+	</select>
+	<select id="selectQListByKeyword" resultMap="qnaBoardResultMap">
+		SELECT Q.*, M.MEMBER_NICKNAME
+      	FROM QNA_TBL Q
+      	LEFT OUTER JOIN MEMBER_TBL M
+      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	<choose>
+      		<when test="searchCondition == 'All'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+				OR QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+      		</when>
+      		<when test="searchCondition == 'subject'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+      		</when>
+      		<when test="searchCondition == 'contents'">
+      			WHERE QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+      		</when>
+      	</choose>
+	</select>
+<!-- 문의 끝 -->
 </mapper>

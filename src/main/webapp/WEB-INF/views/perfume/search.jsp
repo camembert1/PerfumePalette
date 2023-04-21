@@ -48,37 +48,34 @@
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<h1>상품 관리</h1>
 			<a href="/perfume/write">상품 등록</a>
+			<div class="top_category">
+				<form action="/perfume/search" method="get">
+					<select name="searchOder">
+						<option value="Date" class="New" <c:if test="${search.searchOder == 'All' }">selected</c:if>>최신순</option>
+						<option value="Popul" class="New" <c:if test="${search.searchOder == 'Popul' }">selected</c:if>>인기순</option>
+						<option value="Star" class="New" <c:if test="${search.searchOder == 'Star' }">selected</c:if>>별점순</option>
+						<option value="PriceH" class="New" <c:if test="${search.searchOder == 'PriceH' }">selected</c:if>>높은가격</option>
+						<option value="PriceR" class="New" <c:if test="${search.searchOder == 'PriceR' }">selected</c:if>>낮은가격</option>
+					</select>
+					<select name="searchIncense">
+						<option value="All" class="New" <c:if test="${search.searchIncense == 'All' }">selected</c:if>>향 분류</option>
+						<option value="Citrus" class="New" <c:if test="${search.searchIncense == 'Citrus' }">selected</c:if>>Citrus</option>
+						<option value="Fruity" class="New" <c:if test="${search.searchIncense == 'Fruity' }">selected</c:if>>Fruity</option>
+						<option value="Floral" class="New" <c:if test="${search.searchIncense == 'Floral' }">selected</c:if>>Floral</option>
+						<option value="Spicy" class="New" <c:if test="${search.searchIncense == 'Spicy' }">selected</c:if>>Spicy</option>
+						<option value="Woody" class="New" <c:if test="${search.searchIncense == 'Woody' }">selected</c:if>>Woody</option>
+					</select>
+					<select name="searchCondition">
+						<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>All</option>
+						<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
+						<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
+					</select> 
+					<input type="text" name="searchValue" placeholder="상품명 검색">
+					<button type="submit">검색</button>
+				</form>
+			</div>
 			<table>
 				<thead>
-					<tr>
-						<th><select>
-								<option id="New">최신순</option>
-								<option id="New">인기순</option>
-								<option id="New">별점순</option>
-						</select></th>
-						<th><select>
-								<!-- 						<option id="New">향종류</option> -->
-								<option id="New">All</option>
-								<option id="New">Citrus</option>
-								<option id="New">Fruity</option>
-								<option id="New">Floral</option>
-								<option id="New">Spicy</option>
-								<option id="New">Woody</option>
-						</select></th>
-						<th>
-							<div> 
-								<form action="/perfume/search" method="get">
-									<select name="searchCondition">
-										<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>All</option>
-										<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
-										<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
-									</select> 
-									<input type="text" name="searchValue" placeholder="상품명 검색">
-									<button type="submit">검색</button>
-								</form>
-							</div>
-						</th>
-					</tr>
 					<tr>
 						<th><input type="checkbox" class="allCheck"></th>
 						<th>번 호</th>

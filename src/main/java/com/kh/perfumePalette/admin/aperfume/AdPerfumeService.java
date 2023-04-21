@@ -2,7 +2,7 @@ package com.kh.perfumePalette.admin.aperfume;
 
 import java.util.List;
 
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
 
 
@@ -33,7 +33,7 @@ public interface AdPerfumeService {
 	 * 상품 리스트 Service
 	 * @return List<Perfume>
 	 */
-	List<Perfume> selectPerfumeList();
+	List<Perfume> selectPerfumeList(PageInfo pi);
 	
 	/**
 	 * 상품 상세 관리자 Service
@@ -69,6 +69,12 @@ public interface AdPerfumeService {
 	 * @return List<Perfume>
 	 */
 	List<Perfume> selectListByKeyword(Search search);
+
+	/**
+	 * 페이징 Service
+	 * @return int
+	 */
+	int getListCount();
 
 	
 	

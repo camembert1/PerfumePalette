@@ -47,39 +47,38 @@
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<h1>상품 관리</h1>
-			<a href="/perfume/write">상품 등록</a>
+			
+<!-- 			<a href="/perfume/write">상품 등록</a> -->
+			<div class="top_category">
+				<form action="/perfume/search" method="get">
+				<select name="searchOder">
+					<option value="Date" class="New">최신순</option>
+					<option value="Popul" class="New">인기순</option>
+					<option value="Star" class="New">별점순</option>
+					<option value="PriceH" class="New">높은가격</option>
+					<option value="PriceR" class="New">낮은가격</option>
+				</select>
+				<select name="searchIncense">
+					<option value="All" class="New">향 분류</option>
+					<option value="Citrus" class="New">Citrus</option>
+					<option value="Fruity" class="New">Fruity</option>
+					<option value="Floral" class="New">Floral</option>
+					<option value="Spicy" class="New">Spicy</option>
+					<option value="Woody" class="New">Woody</option>
+				</select>
+				
+				<select name="searchCondition">
+					<option value="All">All</option>
+					<option value="Brand">Brand</option>
+					<option value="perfumeName">perfumeName</option>
+				</select> 
+				<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
+				<button type="submit" class="small_btn">검 색</button>
+				</form>
+			</div>
 			<table>
 				<thead>
-					<tr>
-						<th><select>
-								<option id="New">최신순</option>
-								<option id="New">인기순</option>
-								<option id="New">별점순</option>
-						</select></th>
-						<th><select>
-								<!-- 						<option id="New">향종류</option> -->
-								<option id="New">All</option>
-								<option id="New">Citrus</option>
-								<option id="New">Fruity</option>
-								<option id="New">Floral</option>
-								<option id="New">Spicy</option>
-								<option id="New">Woody</option>
-						</select></th>
-						<th>
-							<div> 
-								<form action="/perfume/search" method="get">
-									<select name="searchCondition">
-										<option value="All">All</option>
-										<option value="Brand">Brand</option>
-										<option value="perfumeName">perfumeName</option>
-									</select> 
-									<input type="text" name="searchValue" placeholder="상품명 검색">
-									<button type="submit">검색</button>
-								</form>
-							</div>
-						</th>
-					</tr>
-					<tr>
+					<tr id="thead">
 						<th><input type="checkbox" class="allCheck"></th>
 						<th>번 호</th>
 						<th>이미지</th>
@@ -105,27 +104,66 @@
 								alt="상품 이미지"></td>
 							<td class="td">${perfume.perfumeBrand }</td>
 							<td class="td"><a
-								href="/perfume/mDetail?perfumeNo=${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
+								href="../perfume/detail?perfumeNo=${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
 							<td class="td">${perfume.perfumeVolume }ml</td>
 							<td class="td">${perfume.perfumePrice }원</td>
 							<td class="td">${perfume.perfumeQuantity }&nbsp;EA</td>
 							<td class="td">${perfume.pScentCategory }</td>
 							<td class="td">${perfume.pImageCategory }</td>
-							<td class="td"><c:choose>
+							<td class="td">
+								<c:choose>
 									<c:when test="${perfume.perfumeStatus eq 1}">O</c:when>
 									<c:when test="${perfume.perfumeStatus eq 0}">X</c:when>
-								</c:choose></td>
-							<td><button
-									onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수정</button></td>
+								</c:choose>
+							</td>
+							<td>
+								<button class="small_btn" onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수 정</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td><button type="button" class="show">선택 노출</button></td>
-						<td><button type="button" class="noShow">선택 비노출</button></td>
-						<td><button type="button" class="del">삭제하기</button></td>
-						<td><button type="button"
+						<td colspan="7" class="line">
+			        <div id="paging">
+					<c:if test="${paging.totalCount ne null }">
+						<c:if test="${paging.currentPage != 1}">
+							<c:if test="${paging.startNavi != 1}">
+								<!-- 첫 페이지로 버튼 -->
+								<a href="/perfume/mList?page=1" class="move first">&lt;&lt;</a>
+							</c:if>	
+							<!-- 이전 페이지로 버튼 -->
+							<a href="/perfume/mList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
+						</c:if>
+						
+						<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+							<c:choose>
+								<c:when test="${i == paging.currentPage}">
+									<span class="page current">${i}</span>
+								</c:when>
+								<c:otherwise>
+									<a href="/perfume/mList?page=${i}" class="page">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+		
+						<c:if test="${paging.currentPage != paging.lastPage}">
+							<!-- 다음 페이지로 버튼 -->
+							<a href="/perfume/mList?page=${paging.currentPage+1}" class="move next">&gt;</a>
+							<c:if test="${paging.endNavi != paging.lastPage}">
+								<!-- 맨 끝 페이지로 버튼 -->
+								<a href="/perfume/mList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+							</c:if>
+						</c:if>
+					</c:if>
+				</div>
+				</td>
+					</tr>
+					<tr>
+						<td><button type="button" class="bot_btn show">선택 노출</button></td>
+						<td><button type="button" class="bot_btn noShow">선택 비노출</button></td>
+						<td><button type="button" class="bot_btn del">삭제하기</button></td>
+						<td><button type="button" class="bot_btn" 
 								onclick="location.href='/perfume/write'">상품 등록</button></td>
 					</tr>
 				</tfoot>
