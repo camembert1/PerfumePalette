@@ -66,8 +66,12 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	}
 
 	@Override
-	public List<Perfume> selectListByKeyword(SqlSession session, Search search) {
-		return session.selectList("AdminMapper.selectListByKeyword", search);
+	public List<Perfume> selectListByKeyword(SqlSession session, PageInfo pi, Search search) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("AdminMapper.selectListByKeyword", search, rowBounds);
 	}
 
 	@Override

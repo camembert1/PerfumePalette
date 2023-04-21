@@ -25,7 +25,7 @@ public interface AdPerfumeStore {
 
 	int getListCount(SqlSession session, Search search);
 
-	List<Perfume> selectListByKeyword(SqlSession session, Search search);
+	List<Perfume> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
 
 	int getListCount(SqlSession session);
 

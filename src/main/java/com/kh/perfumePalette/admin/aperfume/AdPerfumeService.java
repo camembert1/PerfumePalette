@@ -68,7 +68,7 @@ public interface AdPerfumeService {
 	 * @param search
 	 * @return List<Perfume>
 	 */
-	List<Perfume> selectListByKeyword(Search search);
+	List<Perfume> selectListByKeyword(PageInfo pi, Search search);
 
 	/**
 	 * 페이징 Service

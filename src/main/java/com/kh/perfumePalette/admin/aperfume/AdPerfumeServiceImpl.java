@@ -63,8 +63,8 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	}
 
 	@Override
-	public List<Perfume> selectListByKeyword(Search search) {
-		return pStore.selectListByKeyword(session, search);
+	public List<Perfume> selectListByKeyword(PageInfo pi, Search search) {
+		return pStore.selectListByKeyword(session, pi, search);
 	}
 
 	@Override

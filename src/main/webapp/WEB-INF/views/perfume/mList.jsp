@@ -125,39 +125,39 @@
 				<tfoot>
 					<tr>
 						<td colspan="7" class="line">
-			        <div id="paging">
-					<c:if test="${paging.totalCount ne null }">
-						<c:if test="${paging.currentPage != 1}">
-							<c:if test="${paging.startNavi != 1}">
-								<!-- 첫 페이지로 버튼 -->
-								<a href="/perfume/mList?page=1" class="move first">&lt;&lt;</a>
-							</c:if>	
-							<!-- 이전 페이지로 버튼 -->
-							<a href="/perfume/mList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
-						</c:if>
-						
-						<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
-							<c:choose>
-								<c:when test="${i == paging.currentPage}">
-									<span class="page current">${i}</span>
-								</c:when>
-								<c:otherwise>
-									<a href="/perfume/mList?page=${i}" class="page">${i}</a>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-		
-						<c:if test="${paging.currentPage != paging.lastPage}">
-							<!-- 다음 페이지로 버튼 -->
-							<a href="/perfume/mList?page=${paging.currentPage+1}" class="move next">&gt;</a>
-							<c:if test="${paging.endNavi != paging.lastPage}">
-								<!-- 맨 끝 페이지로 버튼 -->
-								<a href="/perfume/mList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+					        <div id="paging">
+							<c:if test="${paging.totalCount ne null }">
+								<c:if test="${paging.currentPage != 1}">
+									<c:if test="${paging.startNavi != 1}">
+										<!-- 첫 페이지로 버튼 -->
+										<a href="/perfume/mList?page=1" class="move first">&lt;&lt;</a>
+									</c:if>	
+									<!-- 이전 페이지로 버튼 -->
+									<a href="/perfume/mList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
+								</c:if>
+								
+								<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+									<c:choose>
+										<c:when test="${i == paging.currentPage}">
+											<span class="page current">${i}</span>
+										</c:when>
+										<c:otherwise>
+											<a href="/perfume/mList?page=${i}" class="page">${i}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+				
+								<c:if test="${paging.currentPage != paging.lastPage}">
+									<!-- 다음 페이지로 버튼 -->
+									<a href="/perfume/mList?page=${paging.currentPage+1}" class="move next">&gt;</a>
+									<c:if test="${paging.endNavi != paging.lastPage}">
+										<!-- 맨 끝 페이지로 버튼 -->
+										<a href="/perfume/mList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+									</c:if>
+								</c:if>
 							</c:if>
-						</c:if>
-					</c:if>
-				</div>
-				</td>
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td><button type="button" class="bot_btn show">선택 노출</button></td>

@@ -322,13 +322,15 @@ public class AdPerfumeController {
 	@GetMapping("/search")
 	public String perfumeSearchView(
 			@ModelAttribute Search search
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
 			int totalCount = pService.getListCount(search);
-			List<Perfume> searchList = pService.selectListByKeyword(search);
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Perfume> searchList = pService.selectListByKeyword(pi, search);
 			if(!searchList.isEmpty()) {
+				model.addAttribute("paging", pi);
 				model.addAttribute("search", search);
-//				model.addattribute("pi", pi);
 				model.addAttribute("sList", searchList);
 				return "perfume/search";
 			}else {
