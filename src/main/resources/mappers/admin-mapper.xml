@@ -54,6 +54,7 @@
 		
 		<result property="perfumeName" column="PERFUME_NAME"/>
 		<result property="perfumePrice" column="PERFUME_PRICE"/>
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
 		<result property="pFilerename" column="P_FILERENAME"/>
 	</resultMap>
 	
@@ -94,6 +95,9 @@
 	<select id="selectAdMemberDetail" resultMap="memberResultMap">
 		SELECT * FROM MEMER_TBL WHERE MEMBER_NO = #{memberNo }
 	</select>
+	<select id="getMListCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL WHERE MEMBER_TYPE = 1
+	</select>
 	<select id="getSearchMListCount" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER_TBL
 		<choose>
@@ -110,19 +114,20 @@
 	</select>
 	<select id="selectMListByKeyword" resultMap="memberResultMap">
 		SELECT * FROM MEMBER_TBL
+		WHERE MEMBER_TYPE = 1
 		<if test="searchCondition == 'All'">
-			WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			AND (MEMBER_NAME LIKE '%' || #{searchValue} || '%'
 			OR MEMBER_ID LIKE '%' || #{searchValue} || '%'
-			OR MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+			OR MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%')
 		</if>
 		<if test="searchCondition == 'Name'">
-			WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			AND MEMBER_NAME LIKE '%' || #{searchValue} || '%'
 		</if>
 		<if test="searchCondition == 'ID'">
-			WHERE MEMBER_ID LIKE '%' || #{searchValue} || '%'
+			AND MEMBER_ID LIKE '%' || #{searchValue} || '%'
 		</if>
 		<if test="searchCondition == 'Nickname'">
-			WHERE MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+			AND MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
 		</if>
 		ORDER BY MEMBER_DATE DESC
 	</select>
@@ -272,21 +277,81 @@
 		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
 		ORDER BY REVIEW_DATE DESC
 	</select>
+	<select id="getRListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
+	</select>
 	
 	<select id="selectRListByKeyword" resultMap="reviewResultMap">
-		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME, C.P_SCENT_CATEGORY
 		FROM REVIEW_TBL A
 		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
 		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
-		WHERE C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
-		ORDER BY REVIEW_DATE DESC
+		<where>
+			C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			<if test="searchIncense eq 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</if>
+			<if test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</if>
+			<if test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</if>
+			<if test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</if>
+			<if test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</if>
+			<if test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</if>
+		</where>
+		<choose>
+			<when test="searchOder == 'Date'">
+				ORDER BY REVIEW_DATE DESC
+			</when>
+			<when test="searchOder == 'Popul'">
+				ORDER BY R_VIEW_COUNT DESC
+			</when>
+			<when test="searchOder == 'Star'">
+				ORDER BY REVIEW_SCORE DESC
+			</when>
+		</choose>
 	</select>
 	<select id="getSearchRListCount" resultType="_int">
 		SELECT COUNT(*) FROM REVIEW_TBL
 		JOIN MEMBER_TBL USING(MEMBER_NO)
 		JOIN PERFUME_TBL USING(PERFUME_NO)
 		WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
-		ORDER BY REVIEW_DATE DESC
+		<choose>
+			<when test="searchIncense == 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</when>
+			<when test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</when>
+			<when test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</when>
+			<when test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</when>
+			<when test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</when>
+			<when test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</when>
+		</choose>
 	</select>
 <!-- 리뷰 끝 -->
 
@@ -301,7 +366,9 @@
       	ON Q.MEMBER_NO = M.MEMBER_NO
       	ORDER BY Q.QNA_DATE DESC
 	</select>
-	
+	<select id="getQListCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA_TBL
+	</select>
 	<select id="getSearchQListCount" resultType="_int">
 		SELECT COUNT(*) FROM QNA_TBL
 		JOIN MEMBER_TBL USING(MEMBER_NO)

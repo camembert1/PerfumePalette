@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.review.Review;
 
 @Service
@@ -19,8 +19,8 @@ public class AdReviewServiceImpl implements AdReviewService{
 	private SqlSession session;
 
 	@Override
-	public List<Review> selectAllReview() {
-		return rStore.selectAllReview(session);
+	public List<Review> selectAllReview(PageInfo pi) {
+		return rStore.selectAllReview(session, pi);
 	}
 
 	@Override
@@ -34,8 +34,13 @@ public class AdReviewServiceImpl implements AdReviewService{
 	}
 
 	@Override
-	public List<Review> selectListByKeyword(Search search) {
-		return rStore.selectListByKeyword(session, search);
+	public List<Review> selectListByKeyword(PageInfo pi, Search search) {
+		return rStore.selectListByKeyword(session, pi, search);
+	}
+
+	@Override
+	public int getListCount() {
+		return rStore.getListCount(session);
 	}
 	
 	

@@ -27,36 +27,56 @@
 }
 
 /* 			모달 css */
-.modal {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+#modal-bg {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(2px);
 	display: none;
-	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+/* 	필수 */
+ 	height: 400px;
+	width: 650px;
+	border-radius: 25px;
+	position: fixed;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
+	background-color: white;
+	display: none;
+/*  	필수 끝 */
+	text-align: center;
+	padding: 20px;
 }
 
 .modal.show {
 	display: block;
 }
 
-.modal_body {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 500px;
-	height: 600px;
-	padding: 40px;
-	text-align: center;
-	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
-	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-	transform: translateX(-50%) translateY(-50%);
-}
+/* .modal_body { */
+/* 	position: absolute; */
+/* 	top: 50%; */
+/* 	left: 50%; */
+/* 	width: 500px; */
+/* 	height: 600px; */
+/* 	padding: 40px; */
+/* 	text-align: center; */
+/* 	background-color: rgb(255, 255, 255); */
+/* 	border-radius: 10px; */
+/* 	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); */
+/* 	transform: translateX(-50%) translateY(-50%); */
+/* } */
 </style>
 </head>
 <body>
+<!-- 	모달 이외 모자이크 -->
+	<div id="modal-bg"></div>
+	
 	<jsp:include page="../../common/header.jsp" />
 	<main>
 		<!-- 헤더 부분 피하기 위한 div -->
@@ -127,7 +147,7 @@
 							<input type="hidden" class="" name="memberNo"
 								value="${member.memberNo }" />
 							<div class="modal" id="modal${i.index }">
-								<div class="modal_body">
+<!-- 								<div class="modal_body"> -->
 									<h1>${member.memberNickname }님의 상세정보입니다.</h1>
 									<div class="Detail_box">
 										<div>
@@ -163,7 +183,7 @@
 										<button class="modal_modify">수정하기</button>
 										<button type="button" class="modal_close">닫기</button>
 									</div>
-								</div>
+<!-- 								</div> -->
 								<br>
 							</div>
 						</form>
@@ -174,6 +194,42 @@
 					<tr>
 						<td colspan="10"></td>
 						<td><button type="button" class="del">선택 삭제</button></td>
+					</tr>
+					<tr>
+						<td colspan="11" class="line">
+					        <div id="paging">
+							<c:if test="${paging.totalCount ne null }">
+								<c:if test="${paging.currentPage != 1}">
+									<c:if test="${paging.startNavi != 1}">
+										<!-- 첫 페이지로 버튼 -->
+										<a href="/admin/member/amList?page=1" class="move first">&lt;&lt;</a>
+									</c:if>	
+									<!-- 이전 페이지로 버튼 -->
+									<a href="/admin/member/amList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
+								</c:if>
+								
+								<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+									<c:choose>
+										<c:when test="${i == paging.currentPage}">
+											<span class="page current">${i}</span>
+										</c:when>
+										<c:otherwise>
+											<a href="/admin/member/amList?page=${i}" class="page">${i}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+				
+								<c:if test="${paging.currentPage != paging.lastPage}">
+									<!-- 다음 페이지로 버튼 -->
+									<a href="/admin/member/amList?page=${paging.currentPage+1}" class="move next">&gt;</a>
+									<c:if test="${paging.endNavi != paging.lastPage}">
+										<!-- 맨 끝 페이지로 버튼 -->
+										<a href="/admin/member/amList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+									</c:if>
+								</c:if>
+							</c:if>
+						</div>
+						</td>
 					</tr>
 				</tfoot>
 			</table>
@@ -240,8 +296,11 @@
     		btn.addEventListener('click', () => {
     			// data-target 속성의 값을 가져옴
     			const target = btn.dataset.target;
-    			// 해당 요소를 보옂기 위해 디스플레이 속성값 블럭으로 변경
-    			document.querySelector(target).style.display = 'block';
+    			// 해당 요소를 보였기 위해 디스플레이 속성값 블럭으로 변경
+//     			document.querySelector(target).style.display = 'block';
+    			$(target).css("display", "block");
+    			// 모달창 이외 모자이크
+    			$("#modal-bg").css("display", "block");
     		});
     	});
     	// 각각의 btnClosePopup요소에 대해 반복문 수행
@@ -250,6 +309,8 @@
 // 가장 가까운 modal 요소를 찾아서 display 속성 값을 none으로 변경하여 모달 닫기
 				const modal = btn.closest('.modal');
 				modal.style.display = 'none';
+				$("#modal-bg").css("display", "none");
+
 			});
 		});
 		</script>

@@ -172,8 +172,44 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="10"></td>
+						<td colspan="11"></td>
 						<td><button type="button" class="del">선택 삭제</button></td>
+					</tr>
+					<tr>
+						<td colspan="11" class="line">
+					        <div id="paging">
+							<c:if test="${paging.totalCount ne null }">
+								<c:if test="${paging.currentPage != 1}">
+									<c:if test="${paging.startNavi != 1}">
+										<!-- 첫 페이지로 버튼 -->
+										<a href="/admin/member/search?page=1&searchCondition=${search.searchCondition }&searchValue=${search.searchValue}" class="move first">&lt;&lt;</a>
+									</c:if>	
+									<!-- 이전 페이지로 버튼 -->
+									<a href="/admin/member/search?page=${paging.currentPage-1}&searchCondition=${search.searchCondition }&searchValue=${search.searchValue}" class="move prev">&lt;</a>
+								</c:if>
+								
+								<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+									<c:choose>
+										<c:when test="${i == paging.currentPage}">
+											<span class="page current">${i}</span>
+										</c:when>
+										<c:otherwise>
+											<a href="/admin/member/search?page=${i}&searchCondition=${search.searchCondition }&searchValue=${search.searchValue}" class="page">${i}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+				
+								<c:if test="${paging.currentPage != paging.lastPage}">
+									<!-- 다음 페이지로 버튼 -->
+									<a href="/admin/member/search?page=${paging.currentPage+1}&searchCondition=${search.searchCondition }&searchValue=${search.searchValue}" class="move next">&gt;</a>
+									<c:if test="${paging.endNavi != paging.lastPage}">
+										<!-- 맨 끝 페이지로 버튼 -->
+										<a href="/admin/member/search?page=${paging.lastPage}&searchCondition=${search.searchCondition }&searchValue=${search.searchValue}" class="move last">&gt;&gt;</a>
+									</c:if>
+								</c:if>
+							</c:if>
+						</div>
+						</td>
 					</tr>
 				</tfoot>
 			</table>

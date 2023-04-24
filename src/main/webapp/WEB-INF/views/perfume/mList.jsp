@@ -60,11 +60,11 @@
 				</select>
 				<select name="searchIncense">
 					<option value="All" class="New">향 분류</option>
-					<option value="Citrus" class="New">Citrus</option>
-					<option value="Fruity" class="New">Fruity</option>
-					<option value="Floral" class="New">Floral</option>
-					<option value="Spicy" class="New">Spicy</option>
 					<option value="Woody" class="New">Woody</option>
+					<option value="Floral" class="New">Floral</option>
+					<option value="Fruity" class="New">Fruity</option>
+					<option value="Spicy" class="New">Spicy</option>
+					<option value="Citrus" class="New">Citrus</option>
 				</select>
 				
 				<select name="searchCondition">

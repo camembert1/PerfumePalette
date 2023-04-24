@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
 
@@ -24,8 +25,8 @@ public class AdMemberServiceImpl implements AdMemberService {
 	}
 	
 	@Override
-	public List<Member> selectAdMemberList() {
-		List<Member> amList = amStore. selectAdMemberList(session);
+	public List<Member> selectAdMemberList(PageInfo pi) {
+		List<Member> amList = amStore. selectAdMemberList(session, pi);
 		return amList;
 	}
 
@@ -45,8 +46,13 @@ public class AdMemberServiceImpl implements AdMemberService {
 	}
 
 	@Override
-	public List<Member> selectListByKeyword(Search search) {
-		return amStore.selectListByKeyword(session, search);
+	public List<Member> selectListByKeyword(PageInfo pi, Search search) {
+		return amStore.selectListByKeyword(session, pi, search);
+	}
+
+	@Override
+	public int getListCount() {
+		return amStore.getListCount(session);
 	}
 
 

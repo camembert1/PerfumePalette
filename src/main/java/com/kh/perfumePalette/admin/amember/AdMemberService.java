@@ -2,6 +2,7 @@ package com.kh.perfumePalette.admin.amember;
 
 import java.util.List;
 
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
 
@@ -18,7 +19,7 @@ public interface AdMemberService {
 	 * 회원 리스트
 	 * @return List<Member> 
 	 */
-	List<Member> selectAdMemberList();
+	List<Member> selectAdMemberList(PageInfo pi);
 
 	/**
 	 * 회원 상세 정보
@@ -35,18 +36,24 @@ public interface AdMemberService {
 	int deleteAdMember(int memberNo);
 
 	/**
-	 * 리뷰 검색 갯수 Service
+	 * 회원 검색 갯수 Service
 	 * @param search
 	 * @return int
 	 */
 	int getListCount(Search search);
 
 	/**
-	 * 리뷰 검색 Service
+	 * 회원 검색 Service
 	 * @param search
 	 * @return List<Member>
 	 */
-	List<Member> selectListByKeyword(Search search);
+	List<Member> selectListByKeyword(PageInfo pi, Search search);
+
+	/**
+	 * 회원 페이징 Service
+	 * @return
+	 */
+	int getListCount();
 
 
 }

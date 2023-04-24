@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
 
@@ -53,10 +55,13 @@ public class AdQnaController {
 	
 	// 문의 리스트
 	@GetMapping("/list")
-	public ModelAndView viewAdminQnaList(ModelAndView mv) {
+	public ModelAndView viewAdminQnaList(ModelAndView mv
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
-			List<QnaBoard> qList = qService.selectAllQna();
-			mv.addObject("qList", qList).setViewName("admin/qna/list");
+			int totalCount = qService.getListCount();
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<QnaBoard> qList = qService.selectAllQna(pi);
+			mv.addObject("paging", pi).addObject("qList", qList).setViewName("admin/qna/list");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
@@ -67,11 +72,14 @@ public class AdQnaController {
 	@GetMapping("/search")
 	public String qnaSearchView(
 			@ModelAttribute Search search
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
 			int totalCount = qService.getListCount(search);
-			List<QnaBoard> searchList = qService.selectListByKeyword(search);
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<QnaBoard> searchList = qService.selectListByKeyword(pi, search);
 			if(!searchList.isEmpty()) {
+				model.addAttribute("paging", pi);
 				model.addAttribute("search", search);
 				model.addAttribute("sList", searchList);
 				return "admin/qna/search";

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.review.Review;
@@ -54,10 +55,18 @@ public class AdMemberController {
 	
 	// 회원 리스트
 	@RequestMapping(value = "/amList", method = RequestMethod.GET)
-	public ModelAndView viewAdminMemberList(ModelAndView mv) {
-		List<Member> amList = amService.selectAdMemberList();
-		mv.addObject("amList", amList);
-		mv.setViewName("admin/member/amList");
+	public ModelAndView viewAdminMemberList(ModelAndView mv
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		try {
+			int totalCount = amService.getListCount();
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Member> amList = amService.selectAdMemberList(pi);
+			mv.addObject("paging", pi);
+			mv.addObject("amList", amList);
+			mv.setViewName("admin/member/amList");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
 	
@@ -65,11 +74,14 @@ public class AdMemberController {
 	@GetMapping("/search")
 	public String memberSearchView(
 			@ModelAttribute Search search
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
 			int totalCount = amService.getListCount(search);
-			List<Member> searchList = amService.selectListByKeyword(search);
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Member> searchList = amService.selectListByKeyword(pi, search);
 			if(!searchList.isEmpty()) {
+				model.addAttribute("paging", pi);
 				model.addAttribute("search", search);
 				model.addAttribute("sList", searchList);
 				return "admin/member/search";

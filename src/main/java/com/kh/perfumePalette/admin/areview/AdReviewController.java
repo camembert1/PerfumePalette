@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.review.Review;
 
@@ -59,10 +59,13 @@ public class AdReviewController {
 	
 	// 리뷰 리스트
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView viewAdminReviewList(ModelAndView mv) {
+	public ModelAndView viewAdminReviewList(ModelAndView mv
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
-			List<Review> rList = rService.selectAllReview();
-			mv.addObject("rList", rList).setViewName("admin/review/list");
+			int totalCount = rService.getListCount();
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Review> rList = rService.selectAllReview(pi);
+			mv.addObject("paging", pi).addObject("rList", rList).setViewName("admin/review/list");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
@@ -73,11 +76,14 @@ public class AdReviewController {
 	@GetMapping("/search")
 	public String reviewSearchView(
 			@ModelAttribute Search search
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
 			int totalCount = rService.getListCount(search);
-			List<Review> searchList = rService.selectListByKeyword(search);
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Review> searchList = rService.selectListByKeyword(pi, search);
 			if(!searchList.isEmpty()) {
+				model.addAttribute("paging", pi);
 				model.addAttribute("search", search);
 				model.addAttribute("sList", searchList);
 				return "admin/review/search";
@@ -86,6 +92,8 @@ public class AdReviewController {
 				return "common/error";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
 		

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
 
@@ -19,8 +20,8 @@ public class AdQnaServiceImpl implements AdQnaService {
 	private SqlSession session;
 	
 	@Override
-	public List<QnaBoard> selectAllQna() {
-		return qStore.selectAllQna(session);
+	public List<QnaBoard> selectAllQna(PageInfo pi) {
+		return qStore.selectAllQna(session, pi);
 	}
 
 	@Override
@@ -34,8 +35,13 @@ public class AdQnaServiceImpl implements AdQnaService {
 	}
 
 	@Override
-	public List<QnaBoard> selectListByKeyword(Search search) {
-		return qStore.selectListByKeyword(session, search);
+	public List<QnaBoard> selectListByKeyword(PageInfo pi, Search search) {
+		return qStore.selectListByKeyword(session, pi, search);
+	}
+
+	@Override
+	public int getListCount() {
+		return qStore.getListCount(session);
 	}
 
 }

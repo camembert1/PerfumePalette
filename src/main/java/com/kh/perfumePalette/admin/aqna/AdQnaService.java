@@ -2,6 +2,7 @@ package com.kh.perfumePalette.admin.aqna;
 
 import java.util.List;
 
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
 
@@ -11,7 +12,7 @@ public interface AdQnaService {
 	 * 관리자 문의 리스트 Service
 	 * @return
 	 */
-	List<QnaBoard> selectAllQna();
+	List<QnaBoard> selectAllQna(PageInfo pi);
 
 	/**
 	 * 문의 선택 삭제 Service
@@ -32,6 +33,12 @@ public interface AdQnaService {
 	 * @param search
 	 * @return List<QnaBoard>
 	 */
-	List<QnaBoard> selectListByKeyword(Search search);
+	List<QnaBoard> selectListByKeyword(PageInfo pi, Search search);
+
+	/**
+	 * 문의 개수 Service
+	 * @returnint
+	 */
+	int getListCount();
 
 }

@@ -2,7 +2,7 @@ package com.kh.perfumePalette.admin.areview;
 
 import java.util.List;
 
-import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.review.Review;
 
 public interface AdReviewService {
@@ -11,7 +11,7 @@ public interface AdReviewService {
 	 * 관리자 리뷰 리스트 Service
 	 * @return List<Review> 
 	 */
-	List<Review> selectAllReview();
+	List<Review> selectAllReview(PageInfo pi);
 
 	/**
 	 * 관리자 리뷰 다중 삭제 Service
@@ -32,7 +32,13 @@ public interface AdReviewService {
 	 * @param search
 	 * @return List<Review>
 	 */
-	List<Review> selectListByKeyword(Search search);
+	List<Review> selectListByKeyword(PageInfo pi, Search search);
+
+	/**
+	 * 리뷰 페이징 Service
+	 * @return int
+	 */
+	int getListCount();
 
 
 	
