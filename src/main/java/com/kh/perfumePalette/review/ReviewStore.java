@@ -25,4 +25,12 @@ public interface ReviewStore {
 	 */
 	List<Review> selectAllReview(SqlSession session);
 
+	/**
+	 * 후기게시판 Detail 보여주기
+	 * @param session
+	 * @param reviewNo
+	 * @return Review
+	 */
+	Review selectOneReview(SqlSession session, Integer reviewNo);
+
 }

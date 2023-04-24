@@ -57,4 +57,9 @@
 		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
 		ORDER BY REVIEW_DATE DESC
 	</select>
+	
+	<!-- 후기 게시판 Detail -->
+	<select id="selectOneReview" resultMap="reviewResultMap">
+		SELECT * FROM REVIEW_TBL WHERE REVIEW_NO=#{reviewNo} 
+	</select>
 </mapper>

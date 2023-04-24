@@ -21,11 +21,12 @@
 		<div id="forCenter">
 			<h1>REVIEW</h1>
 			<div id="writer">
+			작성자, 닉네임, 날짜
+			</div>
+			<div id="info">
 			
 			</div>
-			<div >
-				
-			</div>
+			<div></div>
 		</div>
 	</main>
 

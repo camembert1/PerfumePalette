@@ -21,4 +21,11 @@ public interface ReviewService {
 	 */
 	List<Review> selectAllReview();
 
+	/**
+	 * 후기 게시판 Detail 페이지 보여주기
+	 * @param reviewNo
+	 * @return
+	 */
+	Review selectOneReview(Integer reviewNo);
+
 }
