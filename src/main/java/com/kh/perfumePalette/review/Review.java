@@ -14,7 +14,7 @@ public class Review {
 	private Timestamp reviewDate;  //후기 작성일
 	private String rFilename;      //파일 네임
 	
-	private String fFilerename;    //파일 리네임
+	private String rFilerename;    //파일 리네임
 	private String rFilepath;      //파일 경로
 	private int rViewcount;       //조회수
 	
@@ -25,13 +25,14 @@ public class Review {
 	private String perfumeName;   //향수 이름
 	private int perfumePrice;     //향수 가격
 	private String pFilerename;	 
+	private String pScentCategory;	// 향 분류
 	
 	public Review() {}
 
-
 	public Review(int reviewNo, int perfumeNo, int memberNo, String reviewContents, Timestamp reviewDate,
-			String rFilename, String fFilerename, String rFilepath, int rViewcount, int rViewscore,
-			String memberNickname, String perfumeBrand, String perfumeName, int perfumePrice, String pFilerename) {
+			String rFilename, String rFilerename, String rFilepath, int rViewcount, int rViewscore,
+			String memberNickname, String perfumeBrand, String perfumeName, int perfumePrice, String pFilerename,
+			String pScentCategory) {
 		super();
 		this.reviewNo = reviewNo;
 		this.perfumeNo = perfumeNo;
@@ -39,7 +40,7 @@ public class Review {
 		this.reviewContents = reviewContents;
 		this.reviewDate = reviewDate;
 		this.rFilename = rFilename;
-		this.fFilerename = fFilerename;
+		this.rFilerename = rFilerename;
 		this.rFilepath = rFilepath;
 		this.rViewcount = rViewcount;
 		this.rViewscore = rViewscore;
@@ -48,8 +49,8 @@ public class Review {
 		this.perfumeName = perfumeName;
 		this.perfumePrice = perfumePrice;
 		this.pFilerename = pFilerename;
+		this.pScentCategory = pScentCategory;
 	}
-
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -99,12 +100,12 @@ public class Review {
 		this.rFilename = rFilename;
 	}
 
-	public String getfFilerename() {
-		return fFilerename;
+	public String getrFilerename() {
+		return rFilerename;
 	}
 
-	public void setfFilerename(String fFilerename) {
-		this.fFilerename = fFilerename;
+	public void setrFilerename(String rFilerename) {
+		this.rFilerename = rFilerename;
 	}
 
 	public String getrFilepath() {
@@ -171,15 +172,23 @@ public class Review {
 		this.pFilerename = pFilerename;
 	}
 
+	public String getpScentCategory() {
+		return pScentCategory;
+	}
+
+	public void setpScentCategory(String pScentCategory) {
+		this.pScentCategory = pScentCategory;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", perfumeNo=" + perfumeNo + ", memberNo=" + memberNo
 				+ ", reviewContents=" + reviewContents + ", reviewDate=" + reviewDate + ", rFilename=" + rFilename
-				+ ", fFilerename=" + fFilerename + ", rFilepath=" + rFilepath + ", rViewcount=" + rViewcount
+				+ ", rFilerename=" + rFilerename + ", rFilepath=" + rFilepath + ", rViewcount=" + rViewcount
 				+ ", rViewscore=" + rViewscore + ", memberNickname=" + memberNickname + ", perfumeBrand=" + perfumeBrand
 				+ ", perfumeName=" + perfumeName + ", perfumePrice=" + perfumePrice + ", pFilerename=" + pFilerename
-				+ "]";
+				+ ", pScentCategory=" + pScentCategory + "]";
 	}
 
-	
+
 }

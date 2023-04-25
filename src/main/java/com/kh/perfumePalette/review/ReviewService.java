@@ -42,20 +42,27 @@ public interface ReviewService {
 	 * @param search
 	 * @return List<Review>
 	 */
-	List<Review> selectListByKeyword(Search search);
+	List<Review> selectListByKeyword(PageInfo pi,Search search);
 
-	/**
-	 * 후기게시판 게시물 전체 개수 Service
-	 * @return int
-	 */
-	public int getListCount();
-	
 	/**
 	 * 후기게시판 검색 게시물 전체 개수 Service
 	 * 오버로딩
 	 * @param search
 	 * @return int
 	 */
-//	public int getListCount(Search search);
+	public int getListCount(Search search);
+	
+	/**
+	 * 페이징
+	 * 후기게시판 게시물 전체 개수 Service
+	 * @return int
+	 */
+	public int getListCount();
 
+	/**
+	 * 후기 게시판 수정 Service
+	 * @param review
+	 * @return int
+	 */
+	int updateReview(Review review);
 }

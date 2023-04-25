@@ -15,6 +15,7 @@
 	href="../../resources/img/common/favicon.png" />
 </head>
 <body>
+	<div id="modal-bg"></div>
 	<jsp:include page="../common/header.jsp" />
 	<main>
 		<!-- 헤더 부분 피하기 위한 div -->
@@ -24,7 +25,7 @@
 			<div id="outter">
 				<h1>REVIEW</h1>
 				<div class="date">
-					<label><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></label>
+					<label><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd HH:mm" /></label>
 				</div>
 				
 				<div class="productInfo">
@@ -35,12 +36,12 @@
 				</div>
 				
 				<div class="productInfo">
-						<div class="product">
+						<!-- <div class="product">
 							<label>상품정보</label>
-						</div>
+						</div> -->
 						<div class="product-info">
 							<div class="productImg">
-								<img src="../../../resources/img/perfumeFileUploads/20230410014813.png" alt="">
+								<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 							</div>
 							<div class=productDetails>
 								<div class="star-rating">
@@ -56,16 +57,41 @@
 				            </div>
 						</div>
 					</div>
-					
-					<div id="productImgInfo">
-						<img alt="" src="../../../resources/img/reviewFileUploads/${review.fFilerename }">
+					<div class="productInfo">
+						<div id="good">
+							❤ 좋아요[10]
+						</div>
+						<div id="report">
+							<button onclick="report()">🚨신고</button>
+						</div>
+						<div id="modal">
+							<h1>신고하기</h1>
+							<form action="" method="post">
+								<select>
+									<option selected>신고사유</option>
+									<option>욕설</option>
+								</select>
+								<textarea rows="" cols=""></textarea>
+								<button onclick="">신고하기</button>
+							</form>
+								<button onclick="modalClose()">닫기</button>
+						</div>
 					</div>
 				    <div id="reviewContents">
 				    ${review.reviewContents }
 				    </div>
+				    
+				    <div id="productImgInfo">
+						<img alt="" src="../../../resources/img/reviewFileUploads/${review.rFilerename }">
+					</div>
 					<div class="input-btn">
-						<input type="submit" value="수정하기">
-				        <input type="reset" value="삭제하기">
+						<!-- <input type="submit" value="수정하기">
+				        <input type="reset" value="삭제하기"> -->
+				        <c:url var="rModify" value="/review/reviewModify">
+				        	<c:param name="reviewNo" value="${review.reviewNo }"></c:param>
+				        </c:url>
+				        <a href="${rModify }">수정하기</a>
+				        <a href="">삭제하기</a>
 					</div>
 					
 					<!-- 댓글 영역 -->
@@ -76,7 +102,19 @@
 			
 		</div> 
 	</main>
+	<script>
+		  function report() {
+		    $("#modal").css("display", "block");
+		    $("#modal-bg").css("display", "block");
+		    $("body").css("overflow", "hidden");
+		  }
 
+		  function modalClose() {
+		    $("#modal").css("display", "none");
+		    $("#modal-bg").css("display", "none");
+		    $("body").css("overflow", "visible");
+		  }
+	</script>
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

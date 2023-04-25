@@ -155,6 +155,32 @@ main input[type=submit], input[type=reset]{
     margin-left: 50px;
 }
 
+/* 모달 창 띄우기 디자인 */
+#modal-bg {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(2px);
+	display: none;
+}
+
+#modal {
+	height: 400px;
+	width: 650px;
+	border-radius: 25px;
+	position: fixed;
+	/* z-index: 1; */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
+	background-color: white;
+	display: none;
+}
+
+
+
 /* 댓글 영역 */
 main #reply{
 	background-color: gold;

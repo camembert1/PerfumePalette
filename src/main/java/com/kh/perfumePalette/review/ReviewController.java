@@ -1,5 +1,6 @@
 package com.kh.perfumePalette.review;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +22,8 @@ import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
 
-import oracle.net.aso.r;
-
 @Controller
+@RequestMapping("/review")
 public class ReviewController {
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class ReviewController {
 	private ReviewFileUtil rFileUtil;
 	
 	//후기 게시판 작성 페이지 보여주기
-	@RequestMapping(value="/review/reviewWrite", method = RequestMethod.GET)
+	@RequestMapping(value="/reviewWrite", method = RequestMethod.GET)
 	public ModelAndView showReviewWrite(ModelAndView mv, Integer perfumeNo) {
 		//하드코딩해둔 것
 		perfumeNo = 80;
@@ -46,7 +46,7 @@ public class ReviewController {
 	}
 	
 	//리스트페이지로 넘겨줄 것
-	@RequestMapping(value="review/reviewWrite", method = RequestMethod.POST)
+	@RequestMapping(value="/reviewWrite", method = RequestMethod.POST)
 	public ModelAndView reviewInsert(ModelAndView mv
 			, @RequestParam(value="uploadFile", required=false) MultipartFile multipartFile
 			, HttpServletRequest request
@@ -55,7 +55,7 @@ public class ReviewController {
 		try {
 			fileInfo = rFileUtil.saveFile(multipartFile, request);
 			review.setrFilename(fileInfo.get("original"));
-			review.setfFilerename(fileInfo.get("rename"));
+			review.setrFilerename(fileInfo.get("rename"));
 			review.setrFilepath(fileInfo.get("renameFilePath"));
 			int result = rService.insertReview(review);
 			if(result > 0) {
@@ -76,7 +76,7 @@ public class ReviewController {
 	}
 	
 	// 후기 게시판 리스트 보여주기
-	@RequestMapping(value="/review/reviewList", method = RequestMethod.GET)
+	@RequestMapping(value="/reviewList", method = RequestMethod.GET)
 	public ModelAndView viewReviewAllList(
 			ModelAndView mv
 			,@RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage) {
@@ -94,7 +94,7 @@ public class ReviewController {
 	
 
 	//후기 게시판 Detail 보여주기
-	@RequestMapping(value="/review/reviewDetail/{reviewNo}", method = RequestMethod.GET)
+	@RequestMapping(value="/reviewDetail/{reviewNo}", method = RequestMethod.GET)
 	public ModelAndView viewReviewDetail(ModelAndView mv, @PathVariable Integer reviewNo) {
 		try {
 			//조회수 증가
@@ -109,27 +109,101 @@ public class ReviewController {
 	}
 	
 	//후기 게시판 검색
-//	@RequestMapping(value="/review/search" , method = RequestMethod.GET)
-//	public String reviewSearchView(
-//			@ModelAttribute Search search
-//			,@RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage
-//			,Model model) {
-//		try {
-//			int totalCount = rService.getListCount(search);
-//			/* PageInfo pi = new PageInfo(currentPage, totalCount, 10); */
-//			List<Review> searchList = rService.selectListByKeyword(search);
-//			if(!searchList.isEmpty()) {
-//				model.addAttribute("search", search);
-//				/* model.addAttribute("pi", pi); */
-//				model.addAttribute("rList", searchList);
-//				return "review/search";
-//			} else {
-//				model.addAttribute("msg", "조회에 실패하였습니다.");
-//				return "";
-//			}
-//		} catch (Exception e) {
-//			model.addAttribute("msg", e.getMessage());
-//			return "";
-//		}
-//	}
+	@RequestMapping(value="/reviewSearch" , method = RequestMethod.GET)
+	public String reviewSearchView(
+			@ModelAttribute Search search
+			,@RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage
+			,Model model) {
+		try {
+			int totalCount = rService.getListCount(search);
+			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+			List<Review> searchList = rService.selectListByKeyword(pi, search);
+			if(!searchList.isEmpty()) {
+				model.addAttribute("search", search);
+				model.addAttribute("paging", pi);
+				model.addAttribute("rList", searchList);
+				return "review/reviewSearch";
+			} else {
+				model.addAttribute("msg", "조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	//후기 게시판 수정 화면
+	@RequestMapping(value = "/reviewModify", method = RequestMethod.GET)
+	public String showReviewModify(@RequestParam("reviewNo") Integer reviewNo, Model model) {
+		try {
+			Review review = rService.selectOneReview(reviewNo);
+			if(review != null) {
+				model.addAttribute("review", review);
+				return "review/reviewModify";
+			} else {
+				model.addAttribute("msg", "데이터 조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에서 사용
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	//후기 게시판 수정하기
+	@RequestMapping(value="/reviewModify", method = RequestMethod.POST)
+	public ModelAndView reviewModify(
+					ModelAndView mv
+					,@ModelAttribute Review review
+					,@RequestParam(value="reloadFile", required = false) MultipartFile reloadFile
+					,HttpServletRequest request
+					,Model model) {
+		Map<String, String> fileInfo = null;
+		try {
+			System.out.println(review);
+			//수정할 경우, 새로 업로드 된 파일이 있는 경우
+			if(reloadFile != null && !reloadFile.isEmpty()) {
+				// 기존 업로드 된 파일 체크 후
+				if(review.getrFilename() != null) {
+					// 기존 파일 삭제
+					this.deleteFile(review.getrFilename(), request);
+				}
+				fileInfo = rFileUtil.saveFile(reloadFile, request);
+				review.setrFilename(fileInfo.get("original"));
+				review.setrFilerename(fileInfo.get("rename"));
+				review.setrFilepath(fileInfo.get("renameFilePath"));
+			}
+			
+			int result = rService.updateReview(review);
+			if(result > 0) {
+				Alert alert = new Alert("/review/reviewDetail/" + review.getReviewNo(),"수정이 완료되었습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				Alert alert = new Alert("/review/reviewList", "상품 수정이 완료되지 않았습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	// 수정, 삭제시 기존 파일 삭제
+	private void deleteFile(String getrFilename, HttpServletRequest request) throws Exception {
+		String root = request.getSession().getServletContext().getRealPath("resources/img");
+		String delPath = root + "\\" + "reviewFileUploads";
+		String delFilePath = delPath + "\\" + getrFilename;
+		File delFile = new File(delFilePath);
+		if (delFile.exists()) {
+			delFile.delete();
+		}
+
+	}
+		
 }

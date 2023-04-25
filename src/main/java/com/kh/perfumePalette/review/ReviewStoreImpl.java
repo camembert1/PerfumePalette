@@ -46,25 +46,31 @@ public class ReviewStoreImpl implements ReviewStore{
 	}
 
 	@Override
-	public List<Review> selectListByKeyword(SqlSession session,Search search) {
-//		int limit = pi.getBoardLimit();
-//		int currentPage = pi.getCurrentPage();
-//		int offset = (currentPage - 1) * limit;
-//		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Review> searchList = session.selectList("ReviewMapper.selectListByKeyword", search);
+	public List<Review> selectListByKeyword(SqlSession session, PageInfo pi, Search search) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Review> searchList = session.selectList("ReviewMapper.selectListByKeyword", search, rowBounds);
 		return searchList;
 	}
 
 	@Override
-	public int getListCount(SqlSession session) {
-		int result = session.selectOne("ReviewMapper.getListCount");
+	public int getListCount(SqlSession session, Search search) {
+		int result = session.selectOne("ReviewMapper.getSearchListCount", search);
 		return result;
 	}
-//
-//	@Override
-//	public int getListCount(SqlSession session, Search search) {
-//		int result = session.selectOne("ReviewMapper.getSearchListCount", search);
-//		return result;
-//	}
+	
+	// 페이징
+	@Override
+		public int getListCount(SqlSession session) {
+			int result = session.selectOne("ReviewMapper.getListCount");
+			return result;
+		}
 
+	@Override
+	public int updateReview(SqlSession session, Review review) {
+		int result = session.update("ReviewMapper.updateReview", review);
+		return result;
+	}
 }

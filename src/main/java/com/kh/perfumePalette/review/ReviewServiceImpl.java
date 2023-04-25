@@ -54,12 +54,17 @@ public class ReviewServiceImpl implements ReviewService{
 
 
 	@Override
-	public List<Review> selectListByKeyword(Search search) {
-		List<Review> searchList = rStore.selectListByKeyword(session,search);
+	public List<Review> selectListByKeyword(PageInfo pi, Search search) {
+		List<Review> searchList = rStore.selectListByKeyword(session,pi,search);
 		return searchList;
 	}
 
-
+	@Override
+	public int getListCount(Search search) {
+		int totalCount = rStore.getListCount(session, search);
+		return totalCount;
+	}
+	
 	@Override
 	public int getListCount() {
 		int result = rStore.getListCount(session);
@@ -67,10 +72,10 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 
-//	@Override
-//	public int getListCount(Search search) {
-//		int totalCount = rStore.getListCount(session, search);
-//		return totalCount;
-//	}
+	@Override
+	public int updateReview(Review review) {
+		int result = rStore.updateReview(session, review);
+		return result;
+	}
 
 }
