@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.member.Member;
 
 @Controller
 @RequestMapping("/wish")
@@ -24,34 +25,49 @@ public class WishController {
 
 	@GetMapping("/temp")
 	public ModelAndView goProduct(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		String id = (String) session.getAttribute("member");
-		List<Wish> perfumeList = null;
-		perfumeList = wService.selectPerfumeListLogin(id);
-		mv.addObject("perfumeList", perfumeList);
-		mv.setViewName("wish/product");
+		try {
+			Member member = (Member) session.getAttribute("member");
+			List<Wish> perfumeList = null;
+			if (member == null || member.getMemberId() == null) {
+				perfumeList = wService.selectPerfumeList();
+				mv.addObject("perfumeList2", perfumeList);
+			} else {
+				perfumeList = wService.selectPerfumeListLogin(member.getMemberId());
+				mv.addObject("perfumeList", perfumeList);
+			}
+			mv.setViewName("wish/product");
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
 
 	@GetMapping("/list")
 	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		String id = (String) session.getAttribute("member");
-		if (id != null) {
+		try {
+			Member member = (Member) session.getAttribute("member");
 			List<Wish> perfumeList = null;
-			perfumeList = wService.selectWishList(id);
-			if (perfumeList.size() != 0) {
-				mv.addObject("perfumeList", perfumeList);
-				mv.setViewName("wish/list");
-			} else {
-				Alert alert = new Alert("/", "찜 내역이 존재하지 않습니다.");
+			if (member == null || member.getMemberId() == null) {
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
+			} else {
+				String id = member.getMemberId();
+				perfumeList = wService.selectWishList(id);
+				if (perfumeList.size() != 0) {
+					mv.addObject("perfumeList", perfumeList);
+					mv.setViewName("wish/list");
+				} else {
+					Alert alert = new Alert("/", "찜 내역이 존재하지 않습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
 			}
-		} else {
-			Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
-			mv.addObject("alert", alert);
-			mv.setViewName("common/alert");
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
-
 		return mv;
 	}
 

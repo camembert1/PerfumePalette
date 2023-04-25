@@ -24,14 +24,14 @@
             <!-- 본문 내용 가운데 정렬 위한 div -->
             <div id="forCenter">
                 <!-- 여기부터 내용 입력하시면 됩니다! -->
-                <h1>${sessionScope.nickname }</h1>
-                <h1>${sessionScope.member }</h1>
+                <h1>${sessionScope.member.memberNickname }</h1>
+                <h1>${sessionScope.member.memberId }</h1>
                 <!-- 비로그인상태라면 -->
                 <c:if test="${sessionScope.member eq null }"></c:if>
 
                 <!-- 로그인상태라면 -->
                 <c:if test="${sessionScope.member ne null }">
-                    <h1>${sessionScope.nickname }님의 MBTI는 ${mbtiResult }입니다.!</h1>
+                    <h1>${sessionScope.member.memberNickname }님의 MBTI는 ${mbtiResult }입니다.!</h1>
                     <a href="/mbti/mbti">다시검사하기</a>
                 </c:if>
 
@@ -42,7 +42,7 @@
         
 
         <script>
-            if("${sessionScope.nickname }" == "") {
+            if("${member.memberId }" == "") {
                 alert("결과 확인을 위해선 로그인이 필요합니다");
                 location.href = "/member/login";
             } else {

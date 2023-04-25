@@ -1,243 +1,271 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-		<!DOCTYPE html>
-		<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 
-		<head>
-			<meta charset="UTF-8">
-			<title>Insert title here</title>
-			<script src="https://kit.fontawesome.com/972e551b53.js"></script>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-			<style>
-				body {
-					margin: 0;
-					padding: 0;
-				}
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://kit.fontawesome.com/972e551b53.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+}
 
-				img {
-					width: 100px;
-					height: 100px;
-				}
+img {
+	width: 100px;
+	height: 100px;
+}
 
-				table,
-				td,
-				th,
-				tr {
-					border: 1px solid black;
-					padding: 10px;
-					border-collapse: collapse;
-					text-align: center;
-				}
+table, td, th, tr {
+	border: 1px solid black;
+	padding: 10px;
+	border-collapse: collapse;
+	text-align: center;
+}
 
-				td td {
-					border: none;
-					padding: 0;
-				}
+td td {
+	border: none;
+	padding: 0;
+}
 
-				#modal-bg {
-					position: fixed;
-					width: 100vw;
-					height: 100vh;
-					background-color: rgba(0, 0, 0, 0.2);
-					backdrop-filter: blur(3px);
-					display: none;
-				}
+#modal-bg {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(3px);
+	display: none;
+}
 
-				#modal {
-					height: 400px;
-					width: 650px;
-					border-radius: 25px;
-					position: fixed;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
-					border-radius: 20px;
-					background-color: white;
-					display: none;
-				}
+#modal {
+	height: 400px;
+	width: 650px;
+	border-radius: 25px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
+	background-color: white;
+	display: none;
+}
 
-				#explain {
-					height: 45%;
-					width: 100%;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-				}
+#explain {
+	height: 45%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 
-				#explain div {
-					height: 50%;
-					width: 100%;
-				}
+#explain div {
+	height: 50%;
+	width: 100%;
+}
 
-				#name {
-					text-align: center;
-					font-size: 30px;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
+#name {
+	text-align: center;
+	font-size: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-				#name>span:first-child {
-					margin-right: 5px;
-				}
+#name>span:first-child {
+	margin-right: 5px;
+}
 
-				#brand {
-					text-align: center;
-					font-size: 20px;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
+#brand {
+	text-align: center;
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-				#other-name {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					font-size: 25px;
-				}
+#other-name {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 25px;
+}
 
-				#other-name div {
-					height: 100%;
-					width: 100%;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
+#other-name div {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-				#money {
-					height: 25%;
-					width: 100%;
-					display: flex;
-					justify-content: space-around;
-					align-items: center;
-					font-size: 25px;
-				}
+#money {
+	height: 25%;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	font-size: 25px;
+}
 
-				#updown input {
-					font-size: 25px;
-				}
+#updown input {
+	font-size: 25px;
+}
 
-				#btn-box {
-					height: 30%;
-					width: 100%;
-					display: flex;
-					justify-content: space-around;
-					align-items: center;
-				}
+#btn-box {
+	height: 30%;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
 
-				#btn-box button {
-					height: 75%;
-					width: 40%;
-					background-color: #222222;
-					color: white;
-					border: none;
-					border-radius: 5px;
-					box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-					font-size: 20px;
-				}
+#btn-box button {
+	height: 75%;
+	width: 40%;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+}
 
-				#cnt {
-					border: none;
-					font-size: 20px;
-					text-align: center;
-				}
+#cnt {
+	border: none;
+	font-size: 20px;
+	text-align: center;
+}
 
-				input[type=number]::-webkit-inner-spin-button,
-				input[type=number]::-webkit-outer-spin-button {
-					-webkit-appearance: none;
-					margin: 0;
-				}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
 
-				#perfumeQuantity {
-					border: none;
-					text-align: end;
-				}
-			</style>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-		</head>
-		</head>
+#perfumeQuantity {
+	border: none;
+	text-align: end;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+</head>
 
-		<body>
-			<div id="modal-bg"></div>
-			<div id="modal">
-				<div id="explain">
-					<div id="name">
-						<span id="perfumeBrand">[브랜드명]</span> <span id="perfumeName">[상품명]</span>
-						<input type="hidden" id="perfumeNo">
-					</div>
-					<div id="other-name">
-						<div>
-							<span id="perfumePrice">[가격]</span>
-						</div>
-						<div id="updown">
-							<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1"> <span
-								style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span>
-							<span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
-						</div>
-					</div>
+<body>
+	<c:if test="${perfumeList2 ne null}">
+		<!-- 비회원의 경우 -->
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>향수명</th>
+					<th>브랜드</th>
+					<th>이미지</th>
+					<th>찜</th>
+					<th>장바구니</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${perfumeList2 }" var="perfume" varStatus="i">
+					<tr>
+						<td>${i.count }</td>
+						<td>${perfume.perfumeName }</td>
+						<td>${perfume.perfumeBrand }</td>
+						<td class="imgBox">
+							<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
+						</td>
+						<td onclick="goLogin()">
+							<img src="../../../resources/img/wish/wish_yes.png" alt="wish_yes">${perfume.wishCount }</td>
+						<td onclick="goLogin()">
+							<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes">${perfume.cartCount }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+	<c:if test="${perfumeList ne null}">
+		<!-- 회원의 경우 -->
+		<div id="modal-bg"></div>
+		<div id="modal">
+			<div id="explain">
+				<div id="name">
+					<span id="perfumeBrand">[브랜드명]</span> <span id="perfumeName">[상품명]</span>
+					<input type="hidden" id="perfumeNo">
 				</div>
-				<div id="money">
-					<p>합계</p>
+				<div id="other-name">
 					<div>
-						<span id="perfumeTotalPrice">[합계금액]</span>
+						<span id="perfumePrice">[가격]</span>
 					</div>
-				</div>
-				<div id="btn-box">
-					<button type="button" onclick="modalClose()">
-						<span>취소</span>
-					</button>
-					<button type="button" onclick="addCartAjax()">
-						<span>장바구니 담기</span>
-					</button>
+					<div id="updown">
+						<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1">
+						<span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
+					</div>
 				</div>
 			</div>
-			<table>
-				<thead>
+			<div id="money">
+				<p>합계</p>
+				<div>
+					<span id="perfumeTotalPrice">[합계금액]</span>
+				</div>
+			</div>
+			<div id="btn-box">
+				<button type="button" onclick="modalClose()">
+					<span>취소</span>
+				</button>
+				<button type="button" onclick="addCartAjax()">
+					<span>장바구니 담기</span>
+				</button>
+			</div>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>향수명</th>
+					<th>브랜드</th>
+					<th>이미지</th>
+					<th>찜</th>
+					<th>장바구니</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
 					<tr>
-						<th>번호</th>
-						<th>향수명</th>
-						<th>브랜드</th>
-						<th>이미지</th>
-						<th>찜</th>
-						<th>장바구니</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
-						<tr>
-							<td>${i.count }</td>
-							<td>${perfume.perfumeName }</td>
-							<td>${perfume.perfumeBrand }</td>
-							<td class="imgBox"><img
-									src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
-							</td>
-							<td id="reload${perfume.perfumeNo }">
+						<td>${i.count }</td>
+						<td>${perfume.perfumeName }</td>
+						<td>${perfume.perfumeBrand }</td>
+						<td class="imgBox">
+							<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지">
+						</td>
+						<td>
+							<div id="reload${perfume.perfumeNo }">
 								<c:if test="${perfume.wishDate ne null}">
-									<img src="../../../resources/img/wish/wish_yes.png"
-										alt="wish_yes"
-										onclick="removeWish(${perfume.wishNo}, ${perfume.perfumeNo })">
+									<img src="../../../resources/img/wish/wish_yes.png" alt="wish_yes" onclick="removeWish(${perfume.wishNo}, ${perfume.perfumeNo })">
 								</c:if>
 								<c:if test="${perfume.wishDate eq null}">
-									<img src="../../../resources/img/wish/wish_no.png"
-										alt="wish_no"
-										onclick="addWish(${perfume.perfumeNo}, '${sessionScope.member }')">
+									<img src="../../../resources/img/wish/wish_no.png" alt="wish_no" onclick="addWish(${perfume.perfumeNo}, '${sessionScope.member.memberId }')">
 								</c:if>
-							</td>
-							<td id="reload2${perfume.perfumeNo }">
+							</div>
+						</td>
+						<td>
+							<div id="reload2${perfume.perfumeNo }">
 								<c:if test="${perfume.cartDate ne null}">
-									<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes"
-										onclick="removeCart('${perfume.perfumeNo }', '${perfume.cartNo }')">
+									<img src="../../../resources/img/cart/cart_yes.png" alt="cart_yes" onclick="removeCart('${perfume.perfumeNo }', '${perfume.cartNo }')">
 								</c:if>
 								<c:if test="${perfume.cartDate eq null}">
-									<img src="../../../resources/img/cart/cart_no.png" alt="cart_no"
-										onclick="addCartView('${perfume.perfumeNo }', '${perfume.perfumeBrand}', '${perfume.perfumeName}', '${perfume.perfumePrice }')">
+									<img src="../../../resources/img/cart/cart_no.png" alt="cart_no" onclick="addCartView('${perfume.perfumeNo }', '${perfume.perfumeBrand}', '${perfume.perfumeName}', '${perfume.perfumePrice }')">
 								</c:if>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<script>
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+	<script>
 				function addCartView(perfumeNo, perfumeBrand, perfumeName, perfumePrice) {
 					$("#perfumeBrand").html('[' + perfumeBrand + ']');
 					$("#perfumeName").html(perfumeName);
@@ -291,7 +319,7 @@
 				});
 
 				function addCartAjax() {
-					const memberId = '${sessionScope.member}';
+					const memberId = '${sessionScope.member.memberId }';
 					const cartQuantity = $("#perfumeQuantity").val();
 					const perfumeNo = $("#perfumeNo").val();
 					$.ajax({
@@ -385,8 +413,14 @@
 						}
 					});
 				};
+				
+				function goLogin() {
+					if (confirm("로그인이 필요한 서비스입니다.")) {
+						location.href="/member/login";
+				    }
+				}
 
 			</script>
-		</body>
+</body>
 
-		</html>
+</html>

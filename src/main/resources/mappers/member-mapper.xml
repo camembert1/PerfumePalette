@@ -26,7 +26,7 @@
 	</insert>
 
 	<select id="login" resultMap="memberResultMap">
-		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE
 		FROM MEMBER_TBL
 		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
 	</select>
