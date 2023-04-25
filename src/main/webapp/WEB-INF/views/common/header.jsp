@@ -108,20 +108,80 @@
 					<p>️월요일 09:00부터 운영</p>
 				</div>
 				<div id="chat-real">
-					<form id="chatForm">
-						<div class="chat_main">
-							<div class="modal-header" style="padding: 5px 0">상담 CHAT</div>
-							<div class="modal-content" style="padding: 5px 0" id="chat"></div>
-							<div class="modal-footer">
-								<input type="text" id="message" class="form-control" placeholder="메세지를 입력하세요" />
-								<button id="sendBtn">Send</button>
-								<button id="closeBtn">연결 종료</button>
-							</div>
+					<table class="table table-hover" align="center">
+						<thead>
+							<tr>
+								<th>방번호</th>
+								<th>채팅방 제목(주제)</th>
+								<th>개설자</th>
+								<th>참여인수</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:choose>
+
+								<c:when test="${empty chatRoomList}">
+									<tr>
+										<td colspan="4" align="center">존재하는 채팅방이 없습니다.</td>
+									</tr>
+								</c:when>
+
+								<c:otherwise>
+									<c:forEach var="chatRoom" items="${chatRoomList }">
+										<tr>
+											<td>${chatRoom.chatRoomNo }</td>
+											<td>${chatRoom.title } <c:if test="${!empty loginUser }">
+													<button class="btn btn-primary" onclick="location.href='${contextPath}/chat/room/${chatRoom.chatRoomNo}'">입장</button>
+												</c:if>
+											</td>
+											<td>${chatRoom.userName }</td>
+											<td>${chatRoom.cnt }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</tbody>
+					</table>
+
+					<!-- 로그인이 되어있는 경우 -->
+					<c:if test="${!empty sessionScope.member }">
+						<div class="btn-area">
+							<button data-toggle="modal" data-target="#chatModal" class="btn btn-danger">채팅방 만들기</button>
 						</div>
-					</form>
+					</c:if>
+				</div>
+				<br>
+				<br>
+			</div>
+
+			<div class="modal fade" id="chatModal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<!-- 모달 해더 -->
+						<div class="modal-header">
+							<h4 class="modal-title">채팅방 만들기</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<form action="${contextPath}/chat/openChatRoom" method="post">
+							<!--  모달 바디 -->
+							<div class="modal-body">
+								<label for="title" class="mr-sm-2">제목</label> <input type="text" class="form-controll mb-2 mr-sm-2" placeholder="채팅방 제목" id="title" name="title">
+							</div>
+
+							<!-- 모달 푸터 -->
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">만들기</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
+
 		</div>
+	</div>
+	</div>
 	</div>
 </header>
 
