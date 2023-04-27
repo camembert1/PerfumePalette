@@ -31,7 +31,7 @@
 						<th>품명</th>
 						<th>용량</th>
 						<th>가격</th>
-						<th>장바구니</th>
+						<th style="width: 150px">장바구니</th>
 					</tr>
 				</thead>
 				<tbody>
