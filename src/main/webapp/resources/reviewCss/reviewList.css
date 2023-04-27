@@ -49,7 +49,7 @@ main #subject {
    margin-bottom: 20px;
 }
 
-main #search{
+main .search{
 	margin-bottom: 20px;
 }
 
@@ -84,6 +84,7 @@ main img{
 	height: 200px;
 }
 
+/* 페이징 CSS */
 main .page {
     text-decoration: none;
     color: black;

@@ -21,27 +21,33 @@
 		<result property="pFilepath" column="P_FILEPATH" />
 		<result property="perfumeDate" column="PERFUME_DATE" />
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
+		<result property="wishCount" column="WISH_COUNT" />
+		<result property="cartCount" column="CART_COUNT" />
 	</resultMap>
 
-	<select id="selectAll" resultMap="wishResultMap">
-		SELECT *
-		FROM WISH_TBL
-		WHERE
-		MEMBER_ID = #{memberId}
-	</select>
+	<insert id="addWish">
+		INSERT INTO WISH_TBL
+		VALUES(SEQ_WISHNO.NEXTVAL,
+		DEFAULT, #{memberId}, #{perfumeNo})
+	</insert>
 
-	<!-- <select id="selectPerfumeList" resultMap="wishResultMap">
-		SELECT P.*,
-		W.WISH_NO,
-		W.WISH_DATE, W.MEMBER_ID, C.CART_NO, C.CART_QUANTITY,
-		C.CART_DATE
+	<delete id="removeWish">
+		DELETE FROM WISH_TBL
+		WHERE WISH_NO = #{wishNo}
+	</delete>
+
+	<select id="selectWishList" resultMap="wishResultMap">
+		SELECT P.*, W.WISH_NO,
+		W.WISH_DATE, W.MEMBER_ID, C.CART_NO, C.CART_QUANTITY, C.CART_DATE
 		FROM
 		PERFUME_TBL P
-		LEFT OUTER JOIN WISH_TBL W ON
-		P.PERFUME_NO = W.PERFUME_NO
-		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO
-		= C.PERFUME_NO
-	</select> -->
+		LEFT OUTER JOIN WISH_TBL W ON P.PERFUME_NO = W.PERFUME_NO
+		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE
+		W.MEMBER_ID = #{memberId}
+		AND P.PERFUME_STATUS = '1' 
+		ORDER BY W.WISH_DATE DESC
+	</select>
 
 	<select id="selectPerfumeListLogin" resultMap="wishResultMap">
 		SELECT P.*,
@@ -53,19 +59,27 @@
 		= #{memberId}
 		LEFT OUTER
 		JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO AND C.MEMBER_ID
-		= #{memberId}
+		=
+		#{memberId}
+		WHERE P.PERFUME_STATUS = '1'
 	</select>
 
-
-	<insert id="addWish">
-		INSERT INTO WISH_TBL
-		VALUES(SEQ_WISHNO.NEXTVAL,
-		DEFAULT, #{memberId}, #{perfumeNo})
-	</insert>
-
-	<delete id="removeWish">
-		DELETE FROM WISH_TBL WHERE MEMBER_ID = #{memberId}
-		AND PERFUME_NO = #{perfumeNo}
-	</delete>
+	<select id="selectPerfumeList" resultMap="wishResultMap">
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM
+		PERFUME_TBL P
+		WHERE P.PERFUME_STATUS = '1'
+	</select>
 
 </mapper>

@@ -4,7 +4,8 @@ public interface MemberService {
 
 	int insertMember(Member member);
 
-	int login(Member member);
+	//int login(Member member);
+	Member login(Member member);
 
 	Member selectMemberById(String memberId);
 
@@ -22,5 +23,8 @@ public interface MemberService {
 
 	int updatePw(Member member);
 
+	Member checkPw(Member member);
+	
+	int bye(Member member);
 
 }

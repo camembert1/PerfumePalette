@@ -18,7 +18,7 @@
 	</resultMap>
 
 <!-- 	Perfume-Mapper -->
-	<resultMap type="Perfume" id="perfumeResultMap">
+	<resultMap type="AdPerfume" id="perfumeResultMap">
 		<id property="perfumeNo" column="PERFUME_NO"></id>
 		<result property="perfumeName" column="PERFUME_NAME" />
 		<result property="perfumeBrand" column="PERFUME_BRAND" />
@@ -32,7 +32,61 @@
 		<result property="pFilepath" column="P_FILEPATH" />
 		<result property="perfumeDate" column="PERFUME_DATE" />
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	
+		<result property="wishNo" column="WISH_NO"/>
+		<result property="wishDate" column="WISH_DATE" />
+		<result property="wishCount" column="WISH_COUNT" />
+		
+		<result property="cartNo" column="CART_NO" />
+		<result property="cartQuantity" column="CART_QUANTITY" />
+		<result property="cartDate" column="CART_DATE" />
+		<result property="cartCount" column="CART_COUNT" />
+		
+		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
+	
+<!-- 	Review-Mapper -->
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="perfumeNo" column="PERFUME_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="reviewContents" column="REVIEW_CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="rFilename" column="R_FILENAME"/>
+		
+		<result property="fFilerename" column="R_FILERENAME"/>
+		<result property="rFilepath" column="R_FILEPATH"/>
+		<result property="rViewcount" column="R_VIEW_COUNT"/>
+		
+		<result property="rViewscore" column="REVIEW_SCORE"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="perfumeBrand" column="PERFUME_BRAND"/>
+		
+		<result property="perfumeName" column="PERFUME_NAME"/>
+		<result property="perfumePrice" column="PERFUME_PRICE"/>
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pFilerename" column="P_FILERENAME"/>
+	</resultMap>
+	
+<!-- 	Qna-Mapper -->
+	<resultMap type="QnaBoard" id="qnaBoardResultMap">
+      <id property="qnaNo" column="QNA_NO"></id>
+      <result property="perfumeNo" column="PERFUME_NO" />
+      <result property="qnaType" column="QNA_TYPE" />
+      <result property="qnaSubject" column="QNA_SUBJECT" />
+      <result property="qnaContents" column="QNA_CONTENTS"
+         jdbcType="CLOB" javaType="java.lang.String" />
+      <result property="qnaDate" column="QNA_DATE" />
+      <result property="memberNo" column="MEMBER_NO" />
+      <result property="qFilename" column="Q_FILENAME" />
+      <result property="qFilerename" column="Q_FILERENAME" />
+      <result property="qFilepath" column="Q_FILEPATH" />
+      <result property="qnaPassword" column="QNA_PASSWORD" />
+      <result property="qQnaNo" column="Q_QNA_NO" />
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+   </resultMap>
+	
 	
 	<!-- 	멤버 시작 -->
 	<update id="updateAdMemberModify">
@@ -41,6 +95,16 @@
 		, MEMBER_NAME=#{memberName}, MEMBER_EMAIL=#{memberEmail}, MEMBER_PHONE=#{memberPhone}
 		, MEMBER_ADDR=#{memberAddr} WHERE MEMBER_NO = #{memberNo}
 	</update>
+	<update id="stopMember">
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	<update id="startMember">
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 1 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<delete id="deleteMember">
+		DELETE FROM MEMBER_TBL WHERE MEMBER_NO = #{memberNo}
+	</delete>
 	
 	<select id="selectAdMemberList" resultMap="memberResultMap">
 		SELECT * FROM MEMBER_TBL WHERE MEMBER_TYPE = 1 ORDER BY MEMBER_DATE DESC
@@ -49,11 +113,48 @@
 	<select id="selectAdMemberDetail" resultMap="memberResultMap">
 		SELECT * FROM MEMER_TBL WHERE MEMBER_NO = #{memberNo }
 	</select>
+	<select id="getMListCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL WHERE MEMBER_TYPE = 1
+	</select>
+	<select id="getSearchMListCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+		<choose>
+			<when test="searchCondition == 'Name'">
+				WHERE MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'ID'">
+				WHERE MEMBER_ID LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'Nickname'">
+				WHERE MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+			</when>
+		</choose>
+	</select>
+	<select id="selectMListByKeyword" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL
+		WHERE MEMBER_TYPE = 1
+		<if test="searchCondition == 'All'">
+			AND (MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+			OR MEMBER_ID LIKE '%' || #{searchValue} || '%'
+			OR MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%')
+		</if>
+		<if test="searchCondition == 'Name'">
+			AND MEMBER_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'ID'">
+			AND MEMBER_ID LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'Nickname'">
+			AND MEMBER_NICKNAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		ORDER BY MEMBER_DATE DESC
+	</select>
 	<!-- 	멤버 끝 -->
 	
 <!-- 	향수 시작 -->
 	<insert id="insertPerfume">
 		INSERT INTO PERFUME_TBL
+		
 		VALUES(SEQ_PERFUME_NO.NEXTVAL, #{perfumeName}, #{perfumeBrand}, #{perfumeVolume}, #{perfumePrice}
 		, #{perfumeQuantity}, #{pScentCategory}, #{pImageCategory}, #{pFilename}, #{pFilerename}, #{pFilepath}
 		, DEFAULT, #{perfumeStatus})
@@ -66,6 +167,12 @@
 		, P_FILERENAME = #{pFilerename}, P_FILEPATH = #{pFilepath}, PERFUME_STATUS = #{perfumeStatus}
 		WHERE PERFUME_NO = #{perfumeNo}
 	</update>
+	<update id="updateShow">
+		UPDATE PERFUME_TBL SET PERFUME_STATUS = 1 WHERE PERFUME_NO = #{perfumeNo}
+	</update>
+	<update id="updateNoShow">
+		UPDATE PERFUME_TBL SET PERFUME_STATUS = 0 WHERE PERFUME_NO = #{perfumeNo}
+	</update>
 	
 	<delete id="deletePerfume">
 		DELETE FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
@@ -76,7 +183,285 @@
 	</select>
 	
 	<select id="selectPerfumeList" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM PERFUME_TBL P
+		ORDER BY PERFUME_DATE DESC
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL
+	</select>
+	
+	<select id="selectListByKeyword" resultMap="perfumeResultMap">
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM PERFUME_TBL P
+		<where>
+		<if test="searchCondition == 'All'">
+			PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			OR PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'Brand'">
+			PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition == 'perfumeName'">
+			PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchIncense eq 'All'">
+			AND (P_SCENT_CATEGORY = 'Citrus'
+			OR P_SCENT_CATEGORY = 'Fruity'
+			OR P_SCENT_CATEGORY = 'Floral'
+			OR P_SCENT_CATEGORY = 'Spicy'
+			OR P_SCENT_CATEGORY = 'Woody')
+		</if>
+		<if test="searchIncense == 'Citrus'">
+			AND P_SCENT_CATEGORY = 'Citrus'
+		</if>
+		<if test="searchIncense == 'Fruity'">
+			AND P_SCENT_CATEGORY = 'Fruity'
+		</if>
+		<if test="searchIncense == 'Floral'">
+			AND P_SCENT_CATEGORY = 'Floral'
+		</if>
+		<if test="searchIncense == 'Spicy'">
+			AND P_SCENT_CATEGORY = 'Spicy'
+		</if>
+		<if test="searchIncense == 'Woody'">
+			AND P_SCENT_CATEGORY = 'Woody'
+		</if>
+		</where>
+		<choose>
+			<when test="searchOder == 'Date'">
+				ORDER BY PERFUME_DATE DESC
+			</when>
+			<when test="searchOder == 'PriceH'">
+				ORDER BY PERFUME_PRICE DESC
+			</when>
+			<when test="searchOder == 'PriceR'">
+				ORDER BY PERFUME_PRICE ASC
+			</when>
+		</choose>
+	</select>
+	
+	<select id="getSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL
+		<choose>
+			<when test="searchCondition == 'All'">
+				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+				OR PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'Brand'">
+				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'perfumeName'">
+				WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchIncense == 'All'">
+				AND (P_SCENT_CATEGORY = 'Citrus'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				PR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Woody')
+			</when>
+			<when test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</when>
+			<when test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</when>
+			<when test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</when>
+			<when test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</when>
+			<when test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</when>
+		</choose> 
+	</select>
+	<select id="selectWishList" resultMap="perfumeResultMap">
+		SELECT P.PERFUME_NO, P.PERFUME_NAME, P.PERFUME_BRAND,
+		W.*
+		FROM PERFUME_TBL P
+		LEFT OUTER JOIN WISH_TBL W ON P.PERFUME_NO = W.PERFUME_NO
+		WHERE W.PERFUME_NO = #{perfumeNo }
+		ORDER BY W.WISH_DATE DESC
+	</select>
+	<select id="getWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL P
+		LEFT OUTER JOIN WISH_TBL W ON P.PERFUME_NO = W.PERFUME_NO
+		WHERE W.PERFUME_NO = #{perfumeNo }
+	</select>
+	<select id="selectCartList" resultMap="perfumeResultMap">
+		SELECT P.PERFUME_NAME, P.PERFUME_BRAND,
+		C.*
+		FROM PERFUME_TBL P
+		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE C.PERFUME_NO = #{perfumeNo }
+		ORDER BY C.CART_DATE DESC
+	</select>
+	<select id="getCartListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL P
+		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE C.PERFUME_NO = #{perfumeNo }
 	</select>
 	<!-- 	향수 끝 -->
+	
+<!-- 	리뷰시작 -->
+	<delete id="deleteReview">
+		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+
+	<select id="selectAdReviewList" resultMap="reviewResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		ORDER BY REVIEW_DATE DESC
+	</select>
+	<select id="getRListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
+	</select>
+	
+	<select id="selectRListByKeyword" resultMap="reviewResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME, C.P_SCENT_CATEGORY
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		<where>
+			C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			<if test="searchIncense eq 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</if>
+			<if test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</if>
+			<if test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</if>
+			<if test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</if>
+			<if test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</if>
+			<if test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</if>
+		</where>
+		<choose>
+			<when test="searchOder == 'Date'">
+				ORDER BY REVIEW_DATE DESC
+			</when>
+			<when test="searchOder == 'Popul'">
+				ORDER BY R_VIEW_COUNT DESC
+			</when>
+			<when test="searchOder == 'Star'">
+				ORDER BY REVIEW_SCORE DESC
+			</when>
+		</choose>
+	</select>
+	<select id="getSearchRListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
+		JOIN MEMBER_TBL USING(MEMBER_NO)
+		JOIN PERFUME_TBL USING(PERFUME_NO)
+		WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		<choose>
+			<when test="searchIncense == 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</when>
+			<when test="searchIncense == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</when>
+			<when test="searchIncense == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</when>
+			<when test="searchIncense == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</when>
+			<when test="searchIncense == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</when>
+			<when test="searchIncense == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</when>
+		</choose>
+	</select>
+<!-- 리뷰 끝 -->
+
+<!-- 문의 시작 -->
+	<delete id="deleteQna">
+		DELETE FROM QNA_TBL WHERE QNA_NO = #{qnaNo}
+	</delete>
+	<select id="selectAdQnaList" resultMap="qnaBoardResultMap">
+		SELECT Q.*, M.MEMBER_NICKNAME
+      	FROM QNA_TBL Q
+      	LEFT OUTER JOIN MEMBER_TBL M
+      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	ORDER BY Q.QNA_DATE DESC
+	</select>
+	<select id="getQListCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA_TBL
+	</select>
+	<select id="getSearchQListCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA_TBL
+		JOIN MEMBER_TBL USING(MEMBER_NO)
+		<choose>
+			<when test="searchCondition == 'subject'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+			</when>
+			<when test="searchCondition == 'contents'">
+				WHERE QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+			</when>
+		</choose>
+	</select>
+	<select id="selectQListByKeyword" resultMap="qnaBoardResultMap">
+		SELECT Q.*, M.MEMBER_NICKNAME
+      	FROM QNA_TBL Q
+      	LEFT OUTER JOIN MEMBER_TBL M
+      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	<choose>
+      		<when test="searchCondition == 'All'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+				OR QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+      		</when>
+      		<when test="searchCondition == 'subject'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+      		</when>
+      		<when test="searchCondition == 'contents'">
+      			WHERE QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+      		</when>
+      	</choose>
+	</select>
+<!-- 문의 끝 -->
 </mapper>

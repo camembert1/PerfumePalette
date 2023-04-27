@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMapper">
+
+	<resultMap 	type="Order" 				id="orderResultMap">
+		<id 	property="orderNo" 			column="ORDER_NO"></id>
+		<result property="orderDate" 		column="ORDER_DATE" />
+		<result property="orderStatus" 		column="ORDER_STATUS" />
+		<result property="memberNo" 		column="MEMBER_NO" />
+		<result property="recipientName" 	column="RECIPIENT_NAME" />
+		<result property="recipientPhone" 	column="RECIPIENT_PHONE" />
+		<result property="deliveryAddr" 	column="DELIVERY_ADDR" />
+		<result property="deliveryMsg" 		column="DELIVERY_MSG" />
+	</resultMap>
+	
+	<resultMap 	type="OrderDetail" 			id="oDetailResultMap">
+		<id 	property="orderNo" 			column="ORDER_NO"></id>
+		<id 	property="perfumeNo" 		column="PERFUME_NO"></id>
+		<result property="orderQuantity" 	column="ORDER_QUANTITY" />
+		<result property="perfumePrice" 	column="PERFUME_PRICE" />
+	</resultMap>
+	
+	<resultMap	type="OrderPayment" 		id="oPaymentResultMap">
+		<id 	property="paymentNo" 		column="PAYMENT_NO"></id>
+		<result property="orderNo" 			column="ORDER_NO" />
+		<result property="paymentDate" 		column="PAYMENT_DATE" />
+		<result property="paymentMethod" 	column="PAYMENT_METHOD" />
+		<result property="paymentAmount" 	column="PAYMENT_AMOUNT" />
+	</resultMap>
+	
+	<insert id="insertOrder">
+		INSERT INTO ORDER_TBL VALUES (
+    		#{orderNo }
+   			, #{orderDate }
+    		, #{orderStatus }
+    		, #{memberNo }
+    		, #{recipientName }
+    		, #{recipientPhone }
+    		, #{deliveryAddr }
+    		, #{deliveryMsg }
+		) 
+	</insert>
+	
+	<insert id="insertOrderDetail">
+		INSERT INTO ORDER_DETAIL_TBL VALUES (
+    		#{orderNo }
+   			, #{perfumeNo }
+    		, #{orderQuantity }
+    		, #{perfumePrice }
+		) 
+	</insert>
+	
+	<insert id="insertOrderPayment">
+		INSERT INTO ORDER_PAYMENT_TBL VALUES (
+    		#{paymentNo }
+   			, #{orderNo }
+    		, #{paymentDate }
+    		, #{paymentMethod }
+    		, #{paymentAmount }
+		) 
+	</insert>
+	
+	
+	
+	
+
+</mapper>

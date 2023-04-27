@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.PageInfo;
 
 @Service
 public class AdPerfumeServiceImpl implements AdPerfumeService{
@@ -17,13 +17,13 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	private SqlSession session;
 
 	@Override
-	public int insertPerfume(Perfume perfume) {
+	public int insertPerfume(AdPerfume perfume) {
 		int result = pStore.insertPerfume(session, perfume);
 		return result;
 	}
 	
 	@Override
-	public int updatePerfume(Perfume perfume) {
+	public int updatePerfume(AdPerfume perfume) {
 		int result = pStore.updatePerfume(session, perfume);
 		return result;
 	}
@@ -35,16 +35,62 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	}
 
 	@Override
-	public List<Perfume> selectPerfumeList() {
-		List<Perfume> pList = pStore.selectPerfumeList(session);
+	public List<AdPerfume> selectPerfumeList(PageInfo pi) {
+		List<AdPerfume> pList = pStore.selectPerfumeList(session, pi);
 		return pList;
 	}
 
 	@Override
-	public Perfume selectOneByNo(int perfumeNo) {
-		Perfume perfume = pStore.selectOneByNo(session, perfumeNo);
+	public AdPerfume selectOneByNo(int perfumeNo) {
+		AdPerfume perfume = pStore.selectOneByNo(session, perfumeNo);
 		return perfume;
 	}
+
+	@Override
+	public int updateOkPerfume(int i) {
+		return pStore.updateOkPerfume(session, i);
+	}
+
+	@Override
+	public int updateNoPerfume(int i) {
+		return pStore.updateNoPerfume(session, i);
+	}
+
+	@Override
+	public int getListCount(Search search) {
+		return pStore.getListCount(session, search);
+	}
+
+	@Override
+	public List<AdPerfume> selectListByKeyword(PageInfo pi, Search search) {
+		return pStore.selectListByKeyword(session, pi, search);
+	}
+
+	@Override
+	public int getListCount() {
+		return pStore.getListCount(session);
+	}
+
+	@Override
+	public int getWishListCount() {
+		return pStore.getWishListCount(session);
+	}
+
+	@Override
+	public List<AdPerfume> selectWishList(int perfumeNo, PageInfo pi) {
+		return pStore.selectWishList(session, perfumeNo, pi);
+	}
+
+	@Override
+	public int getCartListCount() {
+		return pStore.getCartListCount(session);
+	}
+
+	@Override
+	public List<AdPerfume> selectCartList(int perfumeNo, PageInfo pi) {
+		return pStore.selectCartList(session, perfumeNo, pi);
+	}
+
 
 	
 }

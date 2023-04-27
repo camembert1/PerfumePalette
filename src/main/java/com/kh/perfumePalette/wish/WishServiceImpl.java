@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WishServiceImpl implements WishService{
-	
+public class WishServiceImpl implements WishService {
+
 	@Autowired
 	private WishStore wStore;
 
@@ -18,26 +18,26 @@ public class WishServiceImpl implements WishService{
 	}
 
 	@Override
-	public List<Wish> selectAll(String id) {
-		List<Wish> list = wStore.selectAll(id);
+	public int removeWish(int perfumeNo) {
+		int result = wStore.removeWish(perfumeNo);
+		return result;
+	}
+	
+	@Override
+	public List<Wish> selectWishList(String id) {
+		List<Wish> list = wStore.selectWishList(id);
 		return list;
 	}
-
+	
 	@Override
-	public int removeWish(Wish wish) {
-		int result = wStore.removeWish(wish);
-		return result;
+	public List<Wish> selectPerfumeListLogin(String id) {
+		List<Wish> list = wStore.selectPerfumeListLogin(id);
+		return list;
 	}
 
 	@Override
 	public List<Wish> selectPerfumeList() {
 		List<Wish> list = wStore.selectPerfumeList();
-		return list;
-	}
-
-	@Override
-	public List<Wish> selectPerfumeListLogin(String id) {
-		List<Wish> list = wStore.selectPerfumeList(id);
 		return list;
 	}
 
