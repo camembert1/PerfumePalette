@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.wish.Wish;
+
 public interface PerfumeService {
 
 	
@@ -16,6 +18,14 @@ public interface PerfumeService {
 
 	// 향수 총 개수 - 페이징 + 필터링 + STATUS1 Service
 	int selectTotalPerfumeCount(PageAndFilter pageAndFilter);
+
+	int checkWish(Wish wish);
+
+	int getWishNo(Wish wish);
+
+	int wishCnt(Wish wish);
+
+	int reviewCntByPerfumeNo(Integer perfumeNo);
 
 
 

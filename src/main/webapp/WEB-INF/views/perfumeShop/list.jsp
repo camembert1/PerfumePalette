@@ -34,7 +34,6 @@
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<div id="main-content">
 				
-				
 				<form id="filter-area" method="post">
 
 					<!-- 향 -->
@@ -87,31 +86,49 @@
 					<input type="hidden" name="endPerfumePrice" value="${filtering.endPerfumePrice }">
 					<input type="hidden" name="perfumeSearch" value="${filtering.perfumeSearch }">
 
-					<input type="text" name="" value="${compare.perfume1 }">
-					<input type="text" name="" value="${compare.perfume2 }">
-					<input type="text" name="" value="${compare.perfume3 }">
+					<input type="text" name="perfumeNo1" value="${filtering.perfumeNo1 }">
+					<input type="text" name="perfumeNo2" value="${filtering.perfumeNo2 }">
+					<input type="text" name="perfumeNo3" value="${filtering.perfumeNo3 }">
+					<input type="text" name="compareCnt" value="${filtering.compareCnt }" id="compare-cnt">
+
 				</form>
 
 				<div id="compare-area" onclick="compareModal()">
 					<div>비교함</div>
-					<div><span>0</span>개</div>
+					<div><span>${filtering.compareCnt }</span>개</div>
 				</div>
 
 				<div id="compare-modal-bg">
 					<div id="compare-modal">
 						<div id="compare-modal-close-btn" onclick="compareModal()">×</div>
 						<div id="compare-real">
-							<div id="compare-real-title">향수 비교하기 <span>비교는 최대 3개까지 가능합니다.</span><input type="text" id="compare-cnt" value="0"></div>
+							<div id="compare-real-title">향수 비교하기 <span>비교는 최대 3개까지 가능합니다.</span></div>
 							<div id="compare-real-info">
 								<table>
-									<tr id="compare-img">		<th>이미지</th><td></td><td></td><td></td></tr>
-									<tr id="compare-brand">		<th>브랜드</th><td></td><td></td><td></td></tr>
-									<tr id="compare-name">		<th>제품명</th><td></td><td></td><td></td></tr>
-									<tr id="compare-scent">		<th>향</th><td></td><td></td><td></td></tr>
-									<tr id="compare-volume">	<th>용량</th><td></td><td></td><td></td></tr>
-									<tr id="compare-price">		<th>가격</th><td></td><td></td><td></td></tr>
-									<tr id="compare-25price">	<th>25ml당 가격</th><td></td><td></td><td></td></tr>
-									<tr id="compare-detailBtn">	<th></th><td>상세보기</td><td>상세보기</td><td>상세보기</td></tr>
+									<tr id="compare-img">
+										<th>이미지</th> 		<td class="compare-1">안녕</td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-brand">
+										<th>브랜드</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-name">
+										<th>제품명</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-scent">
+										<th>향</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-volume">
+										<th>용량</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-price">
+										<th>가격</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-25price">
+										<th>25ml당 가격</th> 	<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-detailBtn">
+										<th>상세버튼</th>		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
 								</table>
 							</div>
 						</div>
@@ -121,6 +138,7 @@
 
 				<div style="height: 200px; width: 100%; background-color: rgba(0, 0, 255, 0);">
 					향수추천공간입니다
+					<input type="checkbox">
 				</div>
 
 				<div style="height: 100px; width: 100%; background-color: rgba(255, 217, 0, 0);">
@@ -136,14 +154,12 @@
 						</c:if>
 	
 						<td>
-							<div onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo }'">
+							<div onclick="location.href='/perfume/detail/${perfume.perfumeNo }'">
 								<div>
 									<!-- <img class="perfumeImg" src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="향수이미지"> -->
 									<div class="perfumeImg" style="background-image: url('../../../resources/img/perfumeFileUploads/${perfume.pFilerename }');">
 										<div id="addWish">
-											<div id="wishImg" onclick="wish(event, this)">
-												<input type="hidden" value="${perfume.perfumeNo }">
-											</div>
+											<div class="wishImg" id="${perfume.perfumeNo }" onclick="wish(event, this)" title="찜하기" data-status="0"></div>
 										</div>
 									</div>
 									
@@ -166,10 +182,18 @@
 
 							<!-- 비교함에 넣을 정보 -->
 							<div class="pCompareBtn" onclick="compare(this)">
-								비교함<span>추가</span>
-								<input type="hidden" 	class="compareStatus" 	value="0">
-								<input type="hidden" 	class="comparePerfume" 		value="${perfume }">
+									<c:choose>
+										<c:when test="${perfume.perfumeNo ne filtering.perfumeNo1 && perfume.perfumeNo ne filtering.perfumeNo2 && perfume.perfumeNo ne filtering.perfumeNo3}">
+											<span class="compareStatus" data-status="0">비교함추가</span>
+										</c:when>
+										<c:otherwise>
+											<span class="compareStatus" data-status="1">비교함삭제</span>
+										</c:otherwise>
+									</c:choose>
+								<input type="hidden" 	class="comparePerfumeNo" 	value="${perfume.perfumeNo }">
 							</div>
+
+							<input style="border: 0;" type="text" class="wishCnt" value="">
 						</td>
 	
 						<c:if test="${status.index % 4 == 3 || status.last}">
@@ -215,77 +239,139 @@
 		</div>
 		</main>
 		
-
-		
-
 		<script>
+
+			// 비교함 오류 - 디테일 들어갔다가 뒤로가기 하면 고장남
+
+			// perfumeNo를 입력받아 비교모달창 빈칸에 넣는 함수
+			addCompareModal = function(perfumeNo, modalIndex) {
+				$.ajax({
+					url: '/perfume/getPerfume',
+					type: 'POST',
+					data: {
+						'perfumeNo': perfumeNo
+					},
+					success: function(perfume) {
+
+						$('#compare-img .compare-' + modalIndex).html('<img width="100" height="100" src="../../../resources/img/perfumeFileUploads/' + perfume.pFilerename + '">');
+						$('#compare-img .compare-' + modalIndex).html($('#compare-img .compare-' + modalIndex).html() + '<input type="hidden" value="' + perfume.perfumeNo + '">');
+
+						$('#compare-brand .compare-' + modalIndex).html(perfume.perfumeBrand);
+						$('#compare-name .compare-' + modalIndex).html(perfume.perfumeName);
+						$('#compare-scent .compare-' + modalIndex).html(perfume.pScentCategory);
+						$('#compare-volume .compare-' + modalIndex).html(perfume.perfumeVolume);
+						$('#compare-price .compare-' + modalIndex).html(perfume.perfumePrice);
+						$('#compare-25price .compare-' + modalIndex).html('25ㅇㄴㄻㄹ');
+						$('#compare-detailBtn .compare-' + modalIndex).html('상세버튼');
+
+					},
+					error: function() {
+						console.log("아작스실패!");
+					}
+				});
+				
+			}
+
+			// 비교 모달창에서 지우는 함수
+			removeCompareModal = function(perfumeNo, modalIndex) {
+
+				$('#compare-img .compare-' + modalIndex).html('');
+
+				$('#compare-brand .compare-' + modalIndex).html('');
+				$('#compare-name .compare-' + modalIndex).html('');
+				$('#compare-scent .compare-' + modalIndex).html('');
+				$('#compare-volume .compare-' + modalIndex).html('');
+				$('#compare-price .compare-' + modalIndex).html('');
+				$('#compare-25price .compare-' + modalIndex).html('');
+				$('#compare-detailBtn .compare-' + modalIndex).html('');
+
+			}
+			
+			// 페이지가 열리면 (페이징, 필터링 등의 이유도!)
+			// perfumeNo1, 2, 3의 값이 각각 있는지 확인 후
+			// 있다면 번호에 해당하는! 비교모달칸에 넣어주기
+			$(function() {
+				$('[name^=perfumeNo]').each(function(index) {
+					if($(this).val() != 0) {
+						// addCompareModal($(this).val());
+						// 수정필요
+						addCompareModal($(this).val(), index+1)
+					}
+				});
+			});
 
 			// 비교함 추가 삭제
 			compare = function(tag) {
 				
-				// 비교함에 추가한 향수 객체
-				//
-
+				let perfumeNo = $(tag).find('.comparePerfumeNo').val();	
 
 				$(tag).filter(function() {
-					if ($(this).find('.compareStatus').val() == 0) {
 
-						// 비교함에 없다면
+					let modalIndex = 0;
+					if ($(tag).find('.compareStatus').data('status') == 0) {
 						
-						// 1. 비교함 추가됨=1로 상태 변경, 버튼은 삭제로 바꿔주기
-						$(this).find('.compareStatus').val(1);
-						$(this).find('span').html('삭제');
-
-						// 2. 해당 향수 비교함에 추가하기 
-						// - 클릭 시 hidden name태그에 넣기
-						// - name 태그에 있는 정보는 페이징 할 때 submit되므로 같이 가져옴? ㅇㅋㅇㅋ
-
 						switch ($('#compare-cnt').val()) {
-							case '0':
-								// $('[name=perfume1]').val(comparePerfume);
 
-								// $('#compare-name').find('td:eq(0)').html(pNameInfo);
-								// $('#compare-cnt').val(1);
-								// $('#compare-area').find('span').html(1);
-								// alert('비교함에 추가되었습니다!\n' + comparePerfume)
+							default:
+								// 추가하는 경우
+								// 1. hidden input태그 값 바꿔주기 - cnt는 현재값에서 +1, perfumeNo는 빈자리(0)찾아서 넣어주기
+								//  - filtering객체에 담아서 필터링, 페이징 시 비교함 정보 그대로 갖고오기 위함
+								//  - 이때 perfumeNo Index을 구해 번호에 맞는 모달칸에 넣어주도록 함
+								$('#compare-cnt').val(parseInt($('#compare-cnt').val()) + 1);
+								$('[name^=perfumeNo]').each(function(index) {
+									if($(this).val() == 0) {
+										$(this).val(perfumeNo);
+										modalIndex = index + 1;
+										return false;
+									}
+								});
+
+								// 2. 해당 향수 .compareStatus span태그의 data-status값 + innerHTML값 바꿔주기 
+								$(tag).find('.compareStatus').data('status', 1);
+								$(tag).find('.compareStatus').html('비교함삭제');
+
+								// 3. 비교함 모달창 내 perfumeNo1, 2, 3에 각각 향수 정보 입력해주기
+								addCompareModal(perfumeNo, modalIndex)
+
+								// 4. 비교함 N개 버튼 정보 업로드
+								$('#compare-area span').html(parseInt($('#compare-cnt').val()));
 								break;
-							case 1:
-								break;
-							case 2:
-								break;
-							case 3:
+
+							case '3':
+								alert("비교함이 꽉 찼습니다!")
 								break;
 						}
-						
-
-
 					} else {
-						// 비교함에 있다면 비교함에서 삭제 (버튼은 추가로 바꿔주기)
-						$(this).find('.compareStatus').val(0);
-						$(this).find('span').html('추가');
 
-						switch ($('#compare-cnt').val()) {
-							case '0':
-								$('#compare-name').find('td:eq(0)').html(pNameInfo);
-								$('#compare-cnt').val(1);
-								$('#compare-area').find('span').html(1);
-								
-								break;
-							case '1':
-								$('#compare-name').find('td:eq(0)').html('');
-								$('#compare-cnt').val(0);
-								$('#compare-area').find('span').html(0);
-								break;
-							case 2:
-								break;
-							case 3:
-								break;
-						}
+						// 삭제하는 경우
+						// 1. hidden input태그 값 바꿔주기 - cnt는 현재값에서 -1, perfumeNo는 같은 값 찾아서 지워주기
+						//  - 추가할 때와는 다르게 순서대로X
+						//  - filtering객체에 담아서 필터링, 페이징 시 비교함 정보 그대로 갖고오기 위함
+						$('#compare-cnt').val(parseInt($('#compare-cnt').val()) - 1);
+						$('[name^=perfumeNo]').each(function(index) {
+							if($(this).val() == perfumeNo) {
+								$(this).val(0);
+								modalIndex = index + 1;
+								return false;
+							}
+						});
 
+						// 2. 해당 향수 .compareStatus span태그의 data-status값 + innerHTML값 바꿔주기
+						$(tag).find('.compareStatus').data('status',0);
+						$(tag).find('.compareStatus').html('비교함추가');
+
+						// 3. 비교함 모달창 내 perfumeNo에 해당하는 향수 찾아서 지우기
+						removeCompareModal(perfumeNo, modalIndex)
+
+						// 4. 비교함 N개 버튼 정보 업로드
+						$('#compare-area span').html(parseInt($('#compare-cnt').val()));
 						
 					}
 				});
 			}
+
+			
+
 
 			// 비교함 버튼 눌렀을 때
 			compareModal = function() {
@@ -405,64 +491,133 @@
 							// 게시글 목록과 페이징 정보를 업데이트
 							$("#pList").html(pList);
 							$("#paging").html(paging);
+
+							// 위시 정보 업데이트
+							checkWish();
 						}
 					});
 				}
 			}
 
-
-			// 페이지 버튼 클릭 이벤트 처리
-			$(document).on("click", ".paging-btn", function() {
-				var page = $(this).data("page");
-				getPerfumeList(page);
-			});
-
-			// 처음으로 버튼 클릭 이벤트 처리
-			$(document).on("click", "#btn-first", function() {
-				var page = 1;
-				getPerfumeList(page);
-			});
-
-			// 이전 버튼 클릭 이벤트 처리
-			$(document).on("click", "#btn-prev", function() {
-				var page = $(this).data("prev");
-				getPerfumeList(page);
-			});
-
-			// 다음 버튼 클릭 이벤트 처리
-			$(document).on("click", "#btn-next", function() {
-				var page = $(this).data("next");
-				getPerfumeList(page);
-			});
-
-			// 마지막으로 버튼 클릭 이벤트 처리
-			$(document).on("click", "#btn-last", function() {
-				var page = $(this).data("last");
-				getPerfumeList(page);
-			});
-
 			
 			// Wish 하트 클릭
 			wish = function(e, tag) {
-				e.stopPropagation(); // 하트 클릭할 경우 detail로 이동 방지
-				let perfumeNo = tag.querySelector('input').value;
-				let memberId = '${sessionScope.member.memberId }';
-    			$.ajax({
-					url:'/wish/add',
-					type: 'POST',
-					data:{
-						"perfumeNo": perfumeNo,
-						"memberId": memberId
-					},
-					success: function(result) {
-						alert(result)
-					},
-					error: function(result) {
-						alert(result)
-					}
 
+				e.stopPropagation(); // 하트 클릭할 경우 detail로 이동 방지
+
+				let perfumeNo = $(tag).attr('id');
+				let memberId = '${sessionScope.member.memberId }';
+
+				if (memberId == '') {
+					alert('로그인부터 하시길!')
+				} else {
+					if($(tag).data('status') == 0) {
+						// 찜을 안 누른 상태라면 찜
+						$(tag).data('status', 1);
+						$.ajax({
+							url:'/wish/add',
+							type: 'POST',
+							data:{
+								"perfumeNo": perfumeNo,
+								"memberId": memberId
+							},
+							success: function(result) {
+								checkWish();
+
+							},
+							error: function(result) {
+							}
+						});
+					} else {
+						// 찜을 누른 상태라면 찜 취소
+						// 근데 찜 취소가 wishNo를 이용해서 여기서 처리할 수가 없음
+						// 임시로 wishNo 가져오겟슴 일단
+						$(tag).data('status', 0);
+						$.ajax({
+							url: '/perfume/getWishNo',
+							type:'POST',
+							data: {
+								"perfumeNo": perfumeNo,
+								"memberId": memberId
+							},
+							success: function(wishNo) {
+								$.ajax({
+									url: '/wish/remove',
+									type: 'POST',
+									data:{
+										"wishNo": wishNo,
+									},
+									success: function(result) {
+										checkWish();
+									},
+									error: function(result) {
+									}
+								});
+							},
+							error: function(result) {
+
+							}
+						});
+					}
+					
+				}
+			}
+
+			// wish  전체 개수 및 자기가 누른 위시 여부 확인하기
+			checkWish = function() {
+				let memberId = '${sessionScope.member.memberId }';
+				$('.wishImg').filter(function() {
+
+					let perfumeNo = $(this).attr('id');
+					let wishTag = $(this);
+					
+					$.ajax({
+						url: '/perfume/wishCnt',
+						type: 'POST',
+						data: {
+							"perfumeNo": perfumeNo
+						},
+						success: function(wishCnt) {
+							$(wishTag).closest('td').find('.wishCnt').val('❤️' + parseInt(wishCnt));
+						},
+						error: function(result) {
+							alert(result);
+						}
+					});
+
+					if (memberId != '') {
+						$.ajax({
+							url:'/perfume/checkWish',
+							type:'POST',
+							data: {
+								"perfumeNo": perfumeNo,
+								"memberId": memberId
+							},
+							success: function(result) {
+								if (result == 'success') {
+									$(wishTag).css({
+										'transition-duration': '0.3s',
+										'background-image': 'url(../../../resources/img/common/wish-1.png)'
+									});
+									$(wishTag).data('status', 1);
+									
+								} else {
+									$(wishTag).css({
+										'transition-duration': '0.3s',
+										'background-image': 'url(../../../resources/img/common/wish-0.png)' 
+									});
+									$(wishTag).data('status', 0);
+								}
+							},
+							error: function(result) {
+								alert(result);
+							}
+						});
+					} 
+					
 				});
 			}
+			checkWish();
 
 			
 
