@@ -113,3 +113,10 @@ main table tbody tr td button{
     height: 25px;
     cursor: pointer;
 }
+
+main .content{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}

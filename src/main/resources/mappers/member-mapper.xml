@@ -26,7 +26,7 @@
    </insert>
 
    <select id="login" resultMap="memberResultMap">
-      SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE
+      SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE, MEMBER_STATUS
       FROM MEMBER_TBL
       WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
    </select>
@@ -62,7 +62,7 @@
       <if test="memberEmail != null and memberEmail != '' ">
          AND MEMBER_EMAIL = #{memberEmail}
       </if>
-      <if test="memberPhone != null and memberPhone != ''">
+      <if test="memberPhone != null and memberPhone != '' ">
          AND MEMBER_PHONE = #{memberPhone}
       </if>
    </select>
@@ -72,7 +72,7 @@
       <if test="memberEmail != null and memberEmail != '' ">
          AND MEMBER_EMAIL = #{memberEmail}
       </if>
-      <if test="memberPhone != null and memberPhone != ''">
+      <if test="memberPhone != null and memberPhone != '' ">
          AND MEMBER_PHONE = #{memberPhone}
       </if>
    </select>
@@ -90,5 +90,13 @@
       #{memberPhone}, MEMBER_ADDR = #{memberAddr}
       WHERE MEMBER_ID = #{memberId}
    </update>
+   
+   <select id="checkPw" resultMap="memberResultMap">
+   		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw} AND MEMBER_STATUS = 1
+   </select>
+   
+   <update id="bye">
+  		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 WHERE MEMBER_ID = #{memberId} AND MEMBER_STATUS = 1
+  </update>
 
 </mapper>

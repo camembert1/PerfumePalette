@@ -8,9 +8,11 @@ public interface WishStore {
 
 	int removeWish(int perfumeNo);
 	
-	List<Wish> selectPerfumeList(String id);
+	List<Wish> selectPerfumeListLogin(String id);
 
 	List<Wish> selectWishList(String id);
+
+	List<Wish> selectPerfumeList();
 
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -62,24 +63,28 @@ public class CartController {
 
 	@GetMapping("/list")
 	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		String id = (String) session.getAttribute("member");
-		if (id != null) {
+		try {
+			Member member = (Member) session.getAttribute("member");
 			List<Wish> perfumeList = null;
-			perfumeList = cService.selectCartList(id);
-			if (perfumeList.size() != 0) {
-				mv.addObject("perfumeList", perfumeList);
-				mv.setViewName("cart/list");
-			} else {
-				Alert alert = new Alert("/", "장바구니 내역이 존재하지 않습니다.");
+			if (member == null || member.getMemberId() == null) {
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
+			} else {
+				perfumeList = cService.selectCartList(member.getMemberId());
+				if (perfumeList.size() != 0) {
+					mv.addObject("perfumeList", perfumeList);
+					mv.setViewName("cart/list");
+				} else {
+					Alert alert = new Alert("/", "장바구니 내역이 존재하지 않습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
 			}
-		} else {
-			Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
-			mv.addObject("alert", alert);
-			mv.setViewName("common/alert");
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
-
 		return mv;
 	}
 

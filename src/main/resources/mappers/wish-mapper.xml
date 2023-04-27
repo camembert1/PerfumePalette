@@ -21,6 +21,8 @@
 		<result property="pFilepath" column="P_FILEPATH" />
 		<result property="perfumeDate" column="PERFUME_DATE" />
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
+		<result property="wishCount" column="WISH_COUNT" />
+		<result property="cartCount" column="CART_COUNT" />
 	</resultMap>
 
 	<insert id="addWish">
@@ -43,7 +45,8 @@
 		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
 		WHERE
 		W.MEMBER_ID = #{memberId}
-		ORDER BY P.PERFUME_NO DESC
+		AND P.PERFUME_STATUS = '1' 
+		ORDER BY W.WISH_DATE DESC
 	</select>
 
 	<select id="selectPerfumeListLogin" resultMap="wishResultMap">
@@ -58,6 +61,25 @@
 		JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO AND C.MEMBER_ID
 		=
 		#{memberId}
+		WHERE P.PERFUME_STATUS = '1'
+	</select>
+
+	<select id="selectPerfumeList" resultMap="wishResultMap">
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM
+		PERFUME_TBL P
+		WHERE P.PERFUME_STATUS = '1'
 	</select>
 
 </mapper>

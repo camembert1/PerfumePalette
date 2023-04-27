@@ -11,6 +11,7 @@
 		<typeAlias type="com.kh.perfumePalette.wish.Wish" alias="Wish" />
 		<typeAlias type="com.kh.perfumePalette.cart.Cart" alias="Cart" />
 		<typeAlias type="com.kh.perfumePalette.review.Review" alias="Review"/>
+		<typeAlias type="com.kh.perfumePalette.chatting.Chatting" alias="Chatting"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
@@ -18,6 +19,7 @@
 		<mapper resource="mappers/wish-mapper.xml" />
 		<mapper resource="mappers/cart-mapper.xml" />
 		<mapper resource ="mappers/review-mapper.xml"/>
+		<mapper resource ="mappers/chatting-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml" />
 	</mappers>
 </configuration>

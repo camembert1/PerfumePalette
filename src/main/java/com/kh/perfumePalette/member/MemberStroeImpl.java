@@ -75,4 +75,21 @@ public class MemberStroeImpl implements MemberStore {
 		return result;
 	}
 
+	@Override
+	public Member checkPw(Member member) {
+		Member result = session.selectOne("memberMapper.checkPw", member);
+		return result;
+	}
+	
+	@Override
+	public int bye(Member member) {
+		int result = session.update("memberMapper.bye", member);
+		return result;
+	}
+
+
+
+
+	
+
 }
