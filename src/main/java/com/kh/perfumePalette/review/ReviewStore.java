@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.report.Report;
 
 public interface ReviewStore {
 
@@ -49,14 +50,7 @@ public interface ReviewStore {
 	 * @param search
 	 * @return List<Review>
 	 */
-	List<Review> selectListByKeyword(SqlSession session, Search search);
-
-	/**
-	 * 후기게시판 게시물 전체 개수 Store
-	 * @param session
-	 * @return int
-	 */
-	int getListCount(SqlSession session);
+	List<Review> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
 
 	/**
 	 * 후기게시판 검색 전체 개수 Store
@@ -64,6 +58,23 @@ public interface ReviewStore {
 	 * @param search
 	 * @return int
 	 */
-//	int getListCount(SqlSession session, Search search);
+	int getListCount(SqlSession session, Search search);
 
+	/**
+	 * 페이징
+	 * 후기게시판 게시물 전체 개수 Store
+	 * @param session
+	 * @return int
+	 */
+	int getListCount(SqlSession session);
+
+	/**
+	 * 후기 게시판 수정 Store
+	 * @param session
+	 * @param review
+	 * @return int
+	 */
+	int updateReview(SqlSession session, Review review);
+
+	int reviewReport(SqlSession session, Report report);
 }

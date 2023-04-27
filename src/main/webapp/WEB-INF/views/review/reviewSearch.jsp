@@ -22,15 +22,14 @@
 		<div id="forCenter">
 		<div id="subject">REVIEW</div>
 		<div class ="search">
-		<form action="/review/search" method="GET">
+		<form action="/review/reviewSearch" method="GET">
          	<select name="searchCondition" id="sortby-select">
-         		<option value="all" <c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
 			    <option value="latest" <c:if test="${search.searchCondition == 'latest' }">selected</c:if>>최신순</option>
-			    <option value="most-viewed" <c:if test="${search.searchCondition == 'most-viewed' }">selected</c:if>>조회순</option>
-			    <option value="highest-rated" <c:if test="${search.searchCondition == 'highest-rated' }">selected</c:if>>별점순</option>
+			    <option value="viewed" <c:if test="${search.searchCondition == 'viewed' }">selected</c:if>>조회순</option>
+			    <option value="star" <c:if test="${search.searchCondition == 'star' }">selected</c:if>>별점순</option>
 			</select>
 			<select name="searchPerfume" id="perfume-select">
-			    <option value="">향종류</option>
+			    <option value="All" <c:if test="${search.searchPerfume == 'All' }">selected</c:if>>향종류</option>
 			    <option value="Woody" <c:if test="${search.searchPerfume == 'Woody' }">selected</c:if>>Woody</option>
 			    <option value="Floral" <c:if test="${search.searchPerfume == 'Floral' }">selected</c:if>>Floral</option>
 			    <option value="Fruity" <c:if test="${search.searchPerfume == 'Fruity' }">selected</c:if>>Fruity</option>
@@ -45,6 +44,7 @@
 		 <table border="1">
         <thead> <!-- 테이블 헤더 -->
             <tr>
+            	<th>번호</th>
                 <th>별점</th>
                 <th>내용</th>
                 <th>작성자</th>
@@ -53,8 +53,9 @@
             </tr>
         </thead>
         <tbody> <!-- 테이블 본문 -->
-        <c:forEach items="${rList }" var="review">
+        <c:forEach items="${rList }" var="review" varStatus="r">
             <tr>
+            	<td>${r.count }</td>
                 <td>
                 	<div class="star-rating">
                 	<span class="fa ${review.rViewscore >= 1 ? 'fa-star' : 'fa-star-o'}" data-rating="1"></span>
@@ -88,14 +89,38 @@
         <tfoot>
 	        <tr>
 		        <td colspan="6" class="line">
-			        <a href="" class="page">&lt;&lt;</a> 
-			        <a href="" class="page"> &lt;</a> 
-			        <a href="" class="number page">1</a> 
-			        <a href="" class="number page">2</a> 
-			        <a href="" class="number page">3</a> 
-			        <a href="" class="number page">4</a>
-					<a href="" class="number page">5</a> <a href="" class="page">&gt;</a>
-					<a href="" class="page">&gt;&gt;</a>
+			        <div id="paging">
+					<c:if test="${paging.totalCount ne null }">
+						<c:if test="${paging.currentPage != 1}">
+							<c:if test="${paging.startNavi != 1}">
+								<!-- 첫 페이지로 버튼 -->
+								<a href="/review/reviewSearch?page=1&searchCondition=${search.searchCondition}&searchPerfume=${search.searchPerfume}&searchValue=${search.searchValue}" class="move first">&lt;&lt;</a>
+							</c:if>	
+							<!-- 이전 페이지로 버튼 -->
+							<a href="/review/reviewSearch?page=${paging.currentPage-1}&searchCondition=${search.searchCondition}&searchPerfume=${search.searchPerfume}&searchValue=${search.searchValue}" class="move prev">&lt;</a>
+						</c:if>
+						
+						<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+							<c:choose>
+								<c:when test="${i == paging.currentPage}">
+									<span class="page current">${i}</span>
+								</c:when>
+								<c:otherwise>
+									<a href="/review/reviewSearch?page=${i}&searchCondition=${search.searchCondition}&searchPerfume=${search.searchPerfume}&searchValue=${search.searchValue}" class="page">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+		
+						<c:if test="${paging.currentPage != paging.lastPage}">
+							<!-- 다음 페이지로 버튼 -->
+							<a href="/review/reviewSearch?page=${paging.currentPage+1}&searchCondition=${search.searchCondition}&searchPerfume=${search.searchPerfume}&searchValue=${search.searchValue}" class="move next">&gt;</a>
+							<c:if test="${paging.endNavi != paging.lastPage}">
+								<!-- 맨 끝 페이지로 버튼 -->
+								<a href="/review/reviewSearch?page=${paging.lastPage}&searchCondition=${search.searchCondition}&searchPerfume=${search.searchPerfume}&searchValue=${search.searchValue}" class="move last">&gt;&gt;</a>
+							</c:if>
+						</c:if>
+					</c:if>
+				</div>
 				</td>
 			</tr>
 		</tfoot>

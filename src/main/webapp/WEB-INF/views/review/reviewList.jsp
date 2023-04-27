@@ -22,29 +22,29 @@
 		<div id="forCenter">
 		<div id="subject">REVIEW</div>
 		<div class ="search">
-		<form action="/review/search" method="GET">
+		<form action="/review/reviewSearch" method="GET">
          	<select name="searchCondition" id="sortby-select">
-         		<option value="all">전체</option>
 			    <option value="latest">최신순</option>
-			    <option value="most-viewed">조회순</option>
-			    <option value="highest-rated">별점순</option>
+			    <option value="viewed">조회순</option>
+			    <option value="star">별점순</option>
 			</select>
-			<!-- <select name="searchPerfume" id="perfume-select">
-			    <option value="">향종류</option>
+			<select name="searchPerfume" id="perfume-select">
+			    <option value="All">향종류</option>
 			    <option value="Woody">Woody</option>
 			    <option value="Floral">Floral</option>
 			    <option value="Fruity">Fruity</option>
 			    <option value="Spicy">Spicy</option>
 			    <option value="Citrus">Citrus</option>
-			</select> -->
+			</select>
 			<input type="search" name="searchValue" value="${search.searchValue }" placeholder="상품명을 검색해주세요" aria-label="Search">
 			<input type="submit" value="검색">
 		</form>
 		</div>
 		
-		 <table border="1">
+		 <table>
         <thead> <!-- 테이블 헤더 -->
             <tr>
+            	<th>번호</th>
                 <th>별점</th>
                 <th>내용</th>
                 <th>작성자</th>
@@ -53,8 +53,9 @@
             </tr>
         </thead>
         <tbody> <!-- 테이블 본문 -->
-        <c:forEach items="${rList }" var="review">
+        <c:forEach items="${rList }" var="review" varStatus="r">
             <tr>
+            	<td>${r.count }</td>
                 <td>
                 	<div class="star-rating">
                 	<span class="fa ${review.rViewscore >= 1 ? 'fa-star' : 'fa-star-o'}" data-rating="1"></span>
@@ -62,12 +63,6 @@
 					<span class="fa ${review.rViewscore >= 3 ? 'fa-star' : 'fa-star-o'}" data-rating="3"></span>
 					<span class="fa ${review.rViewscore >= 4 ? 'fa-star' : 'fa-star-o'}" data-rating="4"></span>
 					<span class="fa ${review.rViewscore >= 5 ? 'fa-star' : 'fa-star-o'}" data-rating="5"></span>
-
-					<!-- <span class="fa fa-star-o" data-rating="1"></span>
-					    <span class="fa fa-star-o" data-rating="2"></span>
-					    <span class="fa fa-star-o" data-rating="3"></span>
-					    <span class="fa fa-star-o" data-rating="4"></span>
-					    <span class="fa fa-star-o" data-rating="5"></span> -->
 					    <input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 				     </div>
                 </td>
