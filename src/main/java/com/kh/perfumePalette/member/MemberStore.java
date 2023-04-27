@@ -23,6 +23,11 @@ public interface MemberStore {
 
 	int updatePw(Member member);
 
+	Member checkPw(Member member);
+	
+	int bye(Member member);
+
+
 	
 
 }

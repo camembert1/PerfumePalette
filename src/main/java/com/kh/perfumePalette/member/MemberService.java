@@ -23,5 +23,8 @@ public interface MemberService {
 
 	int updatePw(Member member);
 
+	Member checkPw(Member member);
+	
+	int bye(Member member);
 
 }

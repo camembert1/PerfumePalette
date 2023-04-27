@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.perfumePalette.FileUtil;
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.wish.Wish;
 
 @Controller
 @RequestMapping("/perfume")
@@ -39,13 +43,9 @@ public class PerfumeController {
 	public ModelAndView perfumeShopList(
 			ModelAndView mv
 			, @ModelAttribute PageAndFilter pageAndFilter
-			, @ModelAttribute Compare compare
 			, @RequestParam(name = "page", defaultValue = "1") int currentPage) {
 		try {
 			
-			System.out.println("perfume1 : " + compare.getPerfume1());
-			System.out.println("perfume2 : " + compare.getPerfume2());
-			System.out.println("perfume3 : " + compare.getPerfume3());
 			
 			// 페이징 + 필터링
 			int totalCount = pService.selectTotalPerfumeCount(pageAndFilter);
@@ -58,7 +58,6 @@ public class PerfumeController {
 				mv.addObject("pList", pList)
 				.addObject("paging", pageInfo)
 				.addObject("filtering", pageAndFilter)
-				.addObject("compare", compare)
 				.setViewName("perfumeShop/list");
 				
 			} else {
@@ -81,15 +80,16 @@ public class PerfumeController {
 	 * @param perfumeNo
 	 * @return
 	 */
-	@GetMapping("/detail")
-	public ModelAndView perfumeShopDetail(ModelAndView mv, Integer perfumeNo) {
+	@GetMapping("/detail/{perfumeNo}")
+	public ModelAndView perfumeShopDetail(ModelAndView mv, @PathVariable Integer perfumeNo) {
 		
 		try {
 			
 			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
+			int reviewCnt = pService.reviewCntByPerfumeNo(perfumeNo);
 			
 			if(perfume != null) {
-				mv.addObject("perfume", perfume).setViewName("perfumeShop/detail");
+				mv.addObject("perfume", perfume).addObject("reviewCnt", reviewCnt).setViewName("perfumeShop/detail");
 			} else {
 				// 상품 번호를 통한 디테일 페이지 조회 실패 시
 			}
@@ -100,5 +100,74 @@ public class PerfumeController {
 		}
 		return mv;
 	}
+	
+	// for비교
+	@PostMapping(value = "/getPerfume", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String getPerfume(Integer perfumeNo) {
+		try {
+			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
+			return new Gson().toJson(perfume);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // 에러 발생
+		}
+	}
+	
+	
+	@PostMapping("/checkWish")
+	@ResponseBody
+	public String checkWish(@ModelAttribute Wish wish) {
+		
+
+		try {
+			int result = pService.checkWish(wish);
+			if (result > 0) {
+				return "success"; // 찜햇다
+			} else {
+				return "fail"; // 찜안햇다
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // 에러 발생
+		}
+	}
+	
+	@PostMapping("/wishCnt")
+	@ResponseBody
+	public String wishCnt(@ModelAttribute Wish wish) {
+		try {
+			int wishCnt = pService.wishCnt(wish);
+			return wishCnt + "";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // 에러 발생
+		}
+	}
+	
+	@PostMapping("/getWishNo")
+	@ResponseBody
+	public String getWishNo(@ModelAttribute Wish wish) {
+		try {
+			int wishNo = pService.getWishNo(wish);
+			if (wishNo > 0) {
+				return wishNo + "";
+			} else {
+				return "fail";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	
+	@PostMapping("/paySuccess")
+	@ResponseBody
+	public void paySuccess(String memberEmail, Integer orderAmount) {
+		System.out.println("이메일 : " +  memberEmail + "\n주문량 : " + orderAmount);		
+	}
+	
+	
 
 }

@@ -44,12 +44,12 @@
 			<span><a href="/admin/review/list">후기관리</a></span>
 		</c:if>
 		<c:if test="${memerOne.memberId ne 'admin'}">
-			<span><a href="#">주문내역조회</a></span>
-			<span><a href="#">작성후기</a></span>
-			<span><a href="#">작성문의</a></span>
-			<span><a href="#">작성댓글</a></span>
-			<span><a href="#">장바구니목록</a></span>
-			<span><a href="#">회원탈퇴</a></span>
+			<span><a href="/member/myPage">마이페이지</a></span>
+			<span><a href="/member/orderList">주문내역조회</a></span>
+			<span><a href="/member/myReview">작성후기</a></span>
+			<span><a href="/member/myQna">작성문의</a></span>
+			<span><a href="/member/myComment">작성댓글</a></span>
+			<span><a href="/member/bye">회원탈퇴</a></span>
 		</c:if>
 	</div>
 

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.perfumePalette.wish.Wish;
+
 
 @Repository
 public class PerfumeStoreImpl implements PerfumeStore{
@@ -40,6 +42,30 @@ public class PerfumeStoreImpl implements PerfumeStore{
 	public int selectTotalPerfumeCount(PageAndFilter pageAndFilter) {
 		int totalCount = session.selectOne("PerfumeMapper.selectTotalPerfumeCount", pageAndFilter);
 		return totalCount;
+	}
+
+	@Override
+	public int checkWish(Wish wish) {
+		int result = session.selectOne("PerfumeMapper.checkWish", wish);
+		return result;
+	}
+
+	@Override
+	public int getWishNo(Wish wish) {
+		int wishNo = session.selectOne("PerfumeMapper.getWishNo", wish);
+		return wishNo;
+	}
+
+	@Override
+	public int wishCnt(Wish wish) {
+		int wishCnt = session.selectOne("PerfumeMapper.wishCnt", wish);
+		return wishCnt;
+	}
+
+	@Override
+	public int reviewCntByPerfumeNo(Integer perfumeNo) {
+		int reviewCnt = session.selectOne("PerfumeMapper.reviewCnt", perfumeNo);
+		return reviewCnt;
 	}
 
 

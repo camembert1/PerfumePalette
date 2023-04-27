@@ -10,7 +10,7 @@
 		<result property="reviewDate" column="REVIEW_DATE"/>
 		<result property="rFilename" column="R_FILENAME"/>
 		
-		<result property="fFilerename" column="R_FILERENAME"/>
+		<result property="rFilerename" column="R_FILERENAME"/>
 		<result property="rFilepath" column="R_FILEPATH"/>
 		<result property="rViewcount" column="R_VIEW_COUNT"/>
 		
@@ -21,6 +21,7 @@
 		<result property="perfumeName" column="PERFUME_NAME"/>
 		<result property="perfumePrice" column="PERFUME_PRICE"/>
 		<result property="pFilerename" column="P_FILERENAME"/>
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
 	</resultMap>
 	
 	<resultMap type="Perfume" id="perfumeResultMap">
@@ -44,9 +45,9 @@
 	</select>
 	
 	<!-- 후기 게시판 등록 -->
-	<insert id="insertReview">
+	<insert id="insertReview">  
 		INSERT INTO REVIEW_TBL
-		VALUES (SEQ_REVIEWNO.NEXTVAL, #{reviewContents}, DEFAULT, #{memberNo}, #{rFilename}, #{fFilerename}, #{rFilepath}, 0, #{rViewscore},#{perfumeNo})
+		VALUES (SEQ_REVIEWNO.NEXTVAL, #{reviewContents}, DEFAULT, #{memberNo}, #{rFilename}, #{rFilerename}, #{rFilepath}, 0, #{rViewscore},#{perfumeNo})
 	</insert>
 	
 	<!-- 후기 게시판 리스트 -->
@@ -60,6 +61,105 @@
 	
 	<!-- 후기 게시판 Detail -->
 	<select id="selectOneReview" resultMap="reviewResultMap">
-		SELECT * FROM REVIEW_TBL WHERE REVIEW_NO=#{reviewNo} 
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.PERFUME_PRICE, C.P_FILERENAME
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		WHERE REVIEW_NO=#{reviewNo}
 	</select>
+	
+	<!-- 후기게시판 조회수 증가 -->
+	<update id="updateReviewCount" parameterType="int">
+		UPDATE REVIEW_TBL SET R_VIEW_COUNT = R_VIEW_COUNT+1 WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 페이징 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
+	</select>
+	
+	<select id="selectListByKeyword" resultMap="reviewResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME, C.P_SCENT_CATEGORY
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		<where>
+			C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			<if test="searchPerfume eq 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</if>
+			<if test="searchPerfume == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</if>
+			<if test="searchPerfume == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</if>
+			<if test="searchPerfume == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</if>
+			<if test="searchPerfume == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</if>
+			<if test="searchPerfume == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</if>
+		</where>
+		<choose>
+			<when test="searchCondition == 'latest'">
+				ORDER BY REVIEW_DATE DESC
+			</when>
+			<when test="searchCondition == 'viewed'">
+				ORDER BY R_VIEW_COUNT DESC
+			</when>
+			<when test="searchCondition == 'star'">
+				 ORDER BY REVIEW_SCORE DESC
+			</when>
+		</choose>
+	</select>
+
+	<select id="getSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
+		JOIN MEMBER_TBL USING(MEMBER_NO)
+		JOIN PERFUME_TBL USING(PERFUME_NO)
+		WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		<choose>
+			<when test="searchPerfume == 'All'">
+				AND (P_SCENT_CATEGORY = 'Woody'
+				OR P_SCENT_CATEGORY = 'Floral'
+				OR P_SCENT_CATEGORY = 'Fruity'
+				OR P_SCENT_CATEGORY = 'Spicy'
+				OR P_SCENT_CATEGORY = 'Citrus')
+			</when>
+			<when test="searchPerfume == 'Woody'">
+				AND P_SCENT_CATEGORY = 'Woody'
+			</when>
+			<when test="searchPerfume == 'Floral'">
+				AND P_SCENT_CATEGORY = 'Floral'
+			</when>
+			<when test="searchPerfume == 'Fruity'">
+				AND P_SCENT_CATEGORY = 'Fruity'
+			</when>
+			<when test="searchPerfume == 'Spicy'">
+				AND P_SCENT_CATEGORY = 'Spicy'
+			</when>
+			<when test="searchPerfume == 'Citrus'">
+				AND P_SCENT_CATEGORY = 'Citrus'
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 후기게시판 수정 -->
+	<update id="updateReview">
+		UPDATE REVIEW_TBL SET REVIEW_CONTENTS=#{reviewContents}, REVIEW_SCORE=#{rViewscore}
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 신고하기 -->
+	<insert id="reviewReport">
+		INSERT INTO REPORT_TBL VALUES(SEQ_REPORTNO.NEXTVAL,#{reviewNo}, #{memberNo}, #{reportType}, #{reportContent}, DEFAULT)
+	</insert>
 </mapper>
