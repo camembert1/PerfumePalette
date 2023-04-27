@@ -7,9 +7,22 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<style>
+main img {
+width: 98%;
+margin: auto;
+    display: block;
+   margin-bottom: 10px;
+}
+ 
+</style>
 <link rel="stylesheet" href="../../../resources/memberCss/login.css">
-</head>
+<script>
 
+
+</script>
+
+</head>
 <body>
 	<jsp:include page="../common/header.jsp" />
 	<main>
@@ -61,9 +74,12 @@
 				<h2>SNS 로그인</h2>
 	
 				<div class="input-btn">
-					<button type="button">
-						<span>카카오 원터치 로그인/회원가입</span>
-					</button>
+					<div class="kakaoBtn">
+						<a href="https://kauth.kakao.com/oauth/authorize?client_id=59c4b66fb0ac37a154ec85db3a5e6f99&redirect_uri=	
+http://localhost:8080/kakaoLogin&response_type=code">
+							<img src="../../../resources/img/member/kakao_login_btn.png">
+						</a>
+					</div>
 					<button type="button">
 						<span>네이버 계정으로 로그인</span>
 					</button>
@@ -76,5 +92,10 @@
 
 	
 </body>
+
+<script>
+
+</script>
+	
 
 </html>

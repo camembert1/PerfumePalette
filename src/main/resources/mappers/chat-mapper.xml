@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatMapper">
+	<resultMap type="Chat" id="chatResultMap">
+		<id property="chatNo" column="CHAT_NO"></id>
+		<result property="chatContent" column="CHAT_CONTENT" />
+		<result property="chatDate" column="CHAT_DATE" />
+		<result property="roomNo" column="ROOM_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+	</resultMap>
+
+	<insert id="insertMessage">
+		INSERT INTO CHAT_TBL
+		VALUES(SEQ_CHATNO.NEXTVAL ,
+		#{chatContent} , DEFAULT, #{roomNo}, #{memberId})
+	</insert>
+
+	<!-- 채팅방 참여 여부 확인 -->
+	<select id="joinCheck" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		CHAT_ROOM_TBL
+		WHERE ROOM_NO = #{roomNo} AND MEMBER_ID = #{memberId}
+	</select>
+
+	<!-- 채팅방 참여 -->
+	<insert id="joinChatRoom">
+		INSERT INTO CHAT_ROOM_TBL
+		VALUES(#{memberId},
+		#{roomNo})
+	</insert>
+
+	<!-- 채팅메세지 목록 조회 -->
+	<select id="selectChatList" resultMap="chatResultMap">
+		SELECT
+		CHAT_CONTENT,
+		CHAT_DATE,
+		MEMBER_ID,
+		MEMBER_NICKNAME
+		FROM CHAT_TBL
+		JOIN MEMBER_TBL
+		USING(MEMBER_ID)
+		WHERE ROOM_NO = #{roomNo}
+		ORDER BY CHAT_NO
+	</select>
+
+</mapper>

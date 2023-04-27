@@ -27,6 +27,7 @@ body {
 main {
    width: 100vw;
    min-height: 100vh;
+   margin-bottom: 100px;
 }
 
 main>div[id=forHeader] {
@@ -86,13 +87,14 @@ main #hrefName {
 /* 사이드바 끝 */
 
 main h1{
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
 
 main table{
 	text-align: center;
 	border-collapse: collapse;
 	width: 55%;
+	height: 130px;
 }
 
 main thead {
@@ -100,6 +102,7 @@ main thead {
 	color: white;
 	background-color: #34443E;
 }
+
 main table tbody tr td button{
 	background-color: #222222;
     color: white;
@@ -108,4 +111,5 @@ main table tbody tr td button{
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     width: 85%;
     height: 25px;
+    cursor: pointer;
 }

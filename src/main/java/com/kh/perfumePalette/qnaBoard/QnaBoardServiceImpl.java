@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.PageInfo;
+
 @Service
 public class QnaBoardServiceImpl implements QnaBoardService {
 	
@@ -15,8 +17,8 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 	private SqlSession session;
 	
 	@Override
-	public List<QnaBoard> selectAllQnaBoard() {
-		List<QnaBoard> qbList =  qbStore.selectAllQnaBoard(session);
+	public List<QnaBoard> selectAllQnaBoard(PageInfo pi) {
+		List<QnaBoard> qbList =  qbStore.selectAllQnaBoard(session, pi);
 		return qbList;
 	}
 
@@ -32,6 +34,41 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return qnaboard;
 	}
 
-	
+	@Override
+	public QnaBoard selectOneByNo(Integer qnaNo) {
+		QnaBoard qnaboard = qbStore.selectOneByNo(session, qnaNo);
+		return qnaboard;
+	}
+
+	@Override
+	public int updateqnaBoard(QnaBoard qnaboard) {
+		int result = qbStore.updateqnaBoard(session, qnaboard);
+		return result;
+	}
+
+	@Override
+	public int deleteQnaBoard(int qnaNo) {
+		int result = qbStore.deleteQnaBoard(session, qnaNo);
+		return result;
+	}
+
+	@Override
+	public int getqnaBoardCount() {
+		int result  = qbStore.getqnaBoardCount(session);
+		return result;
+	}
+
+	@Override
+	public int insertReply(QnaReply qnaReply) {
+		int result = qbStore.insertReply(session, qnaReply);
+		return result;
+	}
+
+	@Override
+	public List<QnaReply> selectAllReply(Integer qnaNo) {
+		List<QnaReply> qrlist = qbStore.selectAllReply(session, qnaNo);
+		return qrlist;
+	}
+
 
 }

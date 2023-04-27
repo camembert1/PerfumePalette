@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.perfumePalette.wish.Wish;
+
 public interface PerfumeStore {
 
 
@@ -18,6 +20,14 @@ public interface PerfumeStore {
 
 	// 향수 총 개수 - 페이징 + 필터링 + STATUS1 Store
 	int selectTotalPerfumeCount(PageAndFilter pageAndFilter);
+
+	int checkWish(Wish wish);
+
+	int getWishNo(Wish wish);
+
+	int wishCnt(Wish wish);
+
+	int reviewCntByPerfumeNo(Integer perfumeNo);
 
 
 }

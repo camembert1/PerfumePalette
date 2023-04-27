@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+@font-face {
+   font-family: '마포꽃섬';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+   --font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'ghana';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   font-family: '마포꽃섬';
+}
+
+body {
+   overflow-x: hidden;
+}
+
+main {
+   width: 100vw;
+   min-height: 100vh;
+   margin-bottom: 100px;
+}
+
+main>div[id=forHeader] {
+
+   /* 헤더 공간 비워두기 위함  */
+   height: 190px;
+
+   /* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+   margin-bottom: 100px;
+
+}
+
+main>div[id=forCenter] {
+
+   /* 본문 내용 가운데 정렬 위함 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+/* 고정 끝 */
+
+/* 사이드바 시작 */
+main #hrefList {
+  position: absolute;
+  left: 5%;
+  --position: fixed;
+  --align-self: flex-start;
+  --top: 50%;
+  --transform: translateY(-75%);
+  --margin-left: 50px;
+}
+
+main #hrefList span {
+  display: block;
+  margin: 0 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+main #hrefList span a:after,
+main #hrefList span a {
+  text-decoration: none;
+  color: black;
+}
+
+main #hrefName {
+  font-size: 35px;
+  border-bottom: 1px solid black;
+  margin: 0 10px;
+  margin-bottom: 10px;
+}
+/* 사이드바 끝 */
+
+main h1{
+	margin-bottom: 25px;
+}
+
+main table{
+	text-align: center;
+	border-collapse: collapse;
+	width: 55%;
+	height: 130px;
+}
+
+main thead {
+	height: 50px;
+	color: white;
+	background-color: #34443E;
+}
+
+main .btn{
+	background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    width: 8%;
+    height: 33px;
+    cursor: pointer;
+}
+
+main .content{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
