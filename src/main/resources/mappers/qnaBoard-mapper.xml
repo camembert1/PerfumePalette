@@ -17,8 +17,16 @@
       <result property="qQnaNo" column="Q_QNA_NO" />
       <result property="memberNickname" column="MEMBER_NICKNAME" />
    </resultMap>
-
-
+   
+   <resultMap type="QnaReply" id="replyResultMap">
+      <id property="replyNo" column="REPLY_NO"/>
+      <result property="repQnaNo" column="REP_QNA_NO"/>
+      <result property="memberNickname" column="MEMBER_NICKNAME"/>
+      <result property="replyContents" column="REPLY_CONTENTS"/>
+      <result property="memberNo" column="MEMBER_NO"/>
+      <result property="repDate" column="REP_CREATE_DATE"/>
+   </resultMap>
+   
    <!-- 문의 게시판 글쓰기 -->
    <insert id="writeQnaBoard">
       INSERT INTO QNA_TBL VALUES(SEQ_QNA_NO.NEXTVAL, #{perfumeNo}, #{qnaType}, #{qnaSubject}, #{qnaContents}
@@ -26,10 +34,16 @@
    </insert>
    
    <!-- 문의 게시판 Detail 수정 -->
-   <update id="selectOneByNo">
-      UPDATE QNA_TBL SET QNA_TYPE = #{qnaType}, QNA_SUBJECT = #{qnaSubject}, QNA_CONTENTS = #{qnaContents}, QNA_DATE = #{qnaDate}, 
+   <update id="updateqnaBoard">
+      UPDATE QNA_TBL SET QNA_TYPE = #{qnaType}, QNA_SUBJECT = #{qnaSubject}, QNA_CONTENTS = #{qnaContents}, QNA_DATE = DEFAULT
+      , Q_FILENAME = #{qFilename}, Q_FILERENAME = #{qFilerename}, Q_FILEPATH = #{qFilepath}, QNA_PASSWORD = #{qnaPassword}
+      WHERE QNA_NO = #{qnaNo}
    </update>
-
+   
+   <!-- 문의 게시판 삭제 -->
+   <delete id="deleteQnaBoard" parameterType="_int">
+      DELETE FROM QNA_TBL WHERE QNA_NO = #{qnaNo}
+   </delete>
    <!-- 문의 게시판 목록 조회 -->
    <select id="selectAllQnaBoard" resultMap="qnaBoardResultMap">
      SELECT Q.*, M.MEMBER_NICKNAME
@@ -46,6 +60,20 @@
       LEFT OUTER JOIN MEMBER_TBL M
       ON Q.MEMBER_NO = M.MEMBER_NO
       WHERE Q.QNA_NO = #{qnaNo}
+   </select>
+   
+   <select id="getqnaBoardCount" resultType="_int">
+       SELECT COUNT(*) FROM QNA_TBL
+   </select>
+   
+   <!-- 댓글 입력 -->
+   <insert id="insertReply">
+      INSERT INTO Q_REPLY_TBL VALUES(SEQ_REPLY_NO.NEXTVAL, #{repQnaNo}, #{memberNo}, #{memberNickname},  #{replyContents}, DEFAULT)
+   </insert>
+   
+   <!-- 댓글 목록 -->
+   <select id="selectAllReply" resultMap="replyResultMap">
+      SELECT * FROM Q_REPLY_TBL WHERE REP_QNA_NO = #{repQnaNo}   
    </select>
 
 
