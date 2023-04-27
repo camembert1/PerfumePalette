@@ -16,6 +16,9 @@
 		<typeAlias type="com.kh.perfumePalette.review.Review" alias="Review"/>
 		<typeAlias type="com.kh.perfumePalette.chatting.Room" alias="Room"/>
 		<typeAlias type="com.kh.perfumePalette.chatting.Chat" alias="Chat"/>
+		<typeAlias type="com.kh.perfumePalette.order.domain.Order" alias="Order"/>
+		<typeAlias type="com.kh.perfumePalette.order.domain.OrderDetail" alias="OrderDetail"/>
+		<typeAlias type="com.kh.perfumePalette.order.domain.OrderPayment" alias="OrderPayment"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
@@ -27,5 +30,6 @@
 		<mapper resource ="mappers/room-mapper.xml"/>
 		<mapper resource ="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml" />
+		<mapper resource="mappers/order-mapper.xml" />
 	</mappers>
 </configuration>

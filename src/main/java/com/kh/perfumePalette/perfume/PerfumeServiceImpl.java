@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.perfumePalette.wish.Wish;
+
 @Service
 public class PerfumeServiceImpl implements PerfumeService{
 	
@@ -36,6 +38,30 @@ public class PerfumeServiceImpl implements PerfumeService{
 	public int selectTotalPerfumeCount(PageAndFilter pageAndFilter) {
 		int totalCount = pStore.selectTotalPerfumeCount(pageAndFilter);
 		return totalCount;
+	}
+
+	@Override
+	public int checkWish(Wish wish) {
+		int result = pStore.checkWish(wish);
+		return result;
+	}
+
+	@Override
+	public int getWishNo(Wish wish) {
+		int wishNo = pStore.getWishNo(wish);
+		return wishNo;
+	}
+
+	@Override
+	public int wishCnt(Wish wish) {
+		int wishCnt = pStore.wishCnt(wish);
+		return wishCnt;
+	}
+
+	@Override
+	public int reviewCntByPerfumeNo(Integer perfumeNo) {
+		int reviewCnt = pStore.reviewCntByPerfumeNo(perfumeNo);
+		return reviewCnt;
 	}
 
 	

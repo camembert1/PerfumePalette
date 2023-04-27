@@ -105,6 +105,30 @@
 			</if>
 		</if>
 	</select>
+	
+	<select id="checkWish" resultType="_int">
+		SELECT COUNT(*)
+		FROM WISH_TBL
+		WHERE MEMBER_ID = #{memberId } AND PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="getWishNo" resultType="_int">
+		SELECT WISH_NO
+		FROM WISH_TBL
+		WHERE MEMBER_ID = #{memberId } AND PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="wishCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM WISH_TBL
+		WHERE PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="reviewCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW_TBL
+		WHERE PERFUME_NO = #{perfumeNo }
+	</select>
 	<!-- 유정 끝 -->
 	
 
