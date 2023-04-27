@@ -32,7 +32,7 @@
 			<input type="hidden" name="perfumeBrand" value="${perfume.perfumeBrand}">
 			<input type="hidden" name="perfumeName" value="${perfume.perfumeName}">
 			<input type="hidden" name="perfumePrice" value="${perfume.perfumePrice}">
-			<input type="hidden" name="memberNo" value="${sessionScope.memberNo }">
+			<input type="hidden" name="memberNo" value="${member.memberNo }">
 				<div id="outter">
 					<h1>REVIEW</h1>
 					<div class="productInfo">
@@ -53,7 +53,7 @@
 						<div class="product">
 							<label>작성자</label>
 						</div>
-						<div class="user-name">${sessionScope.nickname }</div>
+						<div class="user-name">${member.memberNickname }</div>
 					</div>
 					<div class="productInfo">
 						<div class="product">별점</div>

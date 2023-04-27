@@ -44,14 +44,120 @@ main>div[id=forCenter] {
    align-items: center;
 }
 
-main #writer{
-	background-color: red;
-	width: 1000px;
-	height: 20px;
+main #outter{
+	/* background-color: #008080; */
+	/* padding-top: 15vh; */
+	/* height: 85vh; */
+	width: 60vw;
+	margin: 0 auto;
 }
 
-main #info{
-	background-color: blue;
+main h1{
+	text-align: center;
+}
+
+main .date{
+	/* background-color: green;
 	width: 1000px;
-	height: 300px;
+	height: 20px; */
+}
+
+main .productInfo{
+	display: flex;
+	margin: 10px 0;
+}
+main .product{
+	width: 25%;
+	display: flex;
+	align-items: center;
+}
+main .user-name{
+	width: 60%;
+}
+
+main .product-info{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+main .productImg{
+	width: 250px;
+	height: 250px;
+	border-radius: 10px;
+	/* background-color: #c0c0c0; */
+}
+	main img{
+		width: 200px;
+		height: 200px;
+	}
+
+main .productDetails{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 70px 0 70px 35px;
+}
+	/*별점*/
+    .fa-star {
+        color: #FFD700; /* 선택된 별의 색깔을 #FFD700으로 설정 */
+    }
+
+    .fa-star-o:before {
+        content: "\f006"; /* 별의 테두리가 검정색일 때의 아이콘 설정 */
+        color: black; /* 별의 테두리가 검정색일 때의 아이콘 색상 설정 */
+    }
+    
+	.productTitle {
+		font-size: 20px;
+		font-weight: bold;
+	}
+	
+	.productPrice {
+		font-size: 20px;
+	}
+
+main #productImgInfo {
+	width: inherit;
+	height: 200px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+main #productImgInfo img {
+	width: 200px;
+	height: 200px;
+}
+
+main #reviewContents{
+	background-color: gray;
+	width: 1000px;
+	height: 200px;
+	margin-top: 15px;
+}
+
+main .input-btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+main input[type=submit], input[type=reset]{
+    width: 100px;
+    height: 40px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shado2w: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+/* 댓글 영역 */
+main #reply{
+	background-color: gold;
+	/* width: 1000px; */
+	height: 500px;
 }

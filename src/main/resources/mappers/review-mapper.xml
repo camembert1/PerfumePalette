@@ -60,6 +60,19 @@
 	
 	<!-- 후기 게시판 Detail -->
 	<select id="selectOneReview" resultMap="reviewResultMap">
-		SELECT * FROM REVIEW_TBL WHERE REVIEW_NO=#{reviewNo} 
+		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.PERFUME_PRICE
+		FROM REVIEW_TBL A
+		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
+		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		WHERE REVIEW_NO=#{reviewNo}
+	</select>
+	
+	<!-- 후기게시판 조회수 증가 -->
+	<update id="updateReviewCount" parameterType="int">
+		UPDATE REVIEW_TBL SET R_VIEW_COUNT = R_VIEW_COUNT+1 WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL
 	</select>
 </mapper>

@@ -1,0 +1,103 @@
+@charset "UTF-8";
+@font-face {
+    font-family: '마포꽃섬';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    --font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ghana';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+   font-family: '마포꽃섬';
+}
+body {
+    overflow-x: hidden;
+}
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+main>div[id=forHeader] {
+
+    /* 헤더 공간 비워두기 위함  */
+    height: 190px;
+
+    /* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+    margin-bottom: 100px;
+
+}
+main>div[id=forCenter] {
+
+   /* 본문 내용 가운데 정렬 위함 */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+main #subject {
+   font-size: 50px;
+   font-weight: bold;
+   margin-bottom: 20px;
+}
+
+main .search{
+	margin-bottom: 20px;
+}
+
+
+main table{
+	text-align: center;
+	border-collapse: collapse;
+	width: 80%;
+}
+main thead {
+	height: 50px;
+	color: white;
+	background-color: #34443E;
+}
+
+main a{
+	text-decoration: none;
+}
+
+/*별점*/
+    .fa-star {
+        color: #FFD700; /* 선택된 별의 색깔을 #FFD700으로 설정 */
+    }
+
+    .fa-star-o:before {
+        content: "\f006"; /* 별의 테두리가 검정색일 때의 아이콘 설정 */
+        color: black; /* 별의 테두리가 검정색일 때의 아이콘 색상 설정 */
+    }
+    
+main img{
+	width: 200px;
+	height: 200px;
+}
+
+main .page {
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+    box-sizing: content-box;
+    width: 3px;
+    height: 3px;
+}
+	.number:hover {
+	    background-color: rgba(200, 194, 194, 0.901);
+	    padding: 7px 17px;
+	    border-radius: 100%;
+	}
+	.number:not(.number:hover){
+	    margin: 7px 17px;
+	}
+	
