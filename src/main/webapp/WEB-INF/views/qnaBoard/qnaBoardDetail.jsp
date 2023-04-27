@@ -115,11 +115,11 @@
 					const qnaNo = "${qnaboard.qnaNo}";
 					const memberNo = "${member.memberNo}";
 					const replyContents = $("#replyContents").val();
-					console.log({
-						repQnaNo: qnaNo,
-						memberNo: memberNo,
-						replyContents: replyContents
-					});
+					// console.log({
+					// 	repQnaNo: qnaNo,
+					// 	memberNo: memberNo,
+					// 	replyContents: replyContents
+					// });
 					$.ajax({
 						url: "/qnaboard/reply/register",  // ajax 요청을 보낼 URL
 						data: {
@@ -157,7 +157,7 @@
 									tr = $("<tr>");
 									rWriter = $("<td width='100'>").text(data[i].replyWriter);
 									rContent = $("<td>").text(data[i].replyContents);
-									rCreateDate = $("<td width='100'>").text(data[i].repDate);
+									repDate = $("<td width='100'>").text(data[i].repDate);
 									btnArea = $("<td width='80'>").append(
 										$("<a href='javascript:void(0)' onclick='modifyReply(this, \"" + data[i].repDate + "\", " + data[i].replyNo + ");'>수정</a>")
 									).append(
