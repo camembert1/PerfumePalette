@@ -41,7 +41,7 @@
 		</form>
 		</div>
 		
-		 <table border="1">
+		 <table>
         <thead> <!-- 테이블 헤더 -->
             <tr>
             	<th>번호</th>
@@ -63,12 +63,6 @@
 					<span class="fa ${review.rViewscore >= 3 ? 'fa-star' : 'fa-star-o'}" data-rating="3"></span>
 					<span class="fa ${review.rViewscore >= 4 ? 'fa-star' : 'fa-star-o'}" data-rating="4"></span>
 					<span class="fa ${review.rViewscore >= 5 ? 'fa-star' : 'fa-star-o'}" data-rating="5"></span>
-
-					<!-- <span class="fa fa-star-o" data-rating="1"></span>
-					    <span class="fa fa-star-o" data-rating="2"></span>
-					    <span class="fa fa-star-o" data-rating="3"></span>
-					    <span class="fa fa-star-o" data-rating="4"></span>
-					    <span class="fa fa-star-o" data-rating="5"></span> -->
 					    <input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 				     </div>
                 </td>

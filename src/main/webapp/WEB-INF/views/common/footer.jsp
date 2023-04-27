@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="../../../resources/commonCss/footer.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 
 	<!-- 유튜브 플레이어 -->
 	<script async src="https://www.youtube.com/iframe_api"></script>
@@ -141,7 +141,7 @@
 		}
 	}
 
-	$(function() {
+	 $(function() {
 		let windowHeight = $(window).height();
 		let footerHeight = windowHeight; // footer = 100vh니까
 		let documentHeight = $(document).height();

@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 후기 게시판 등록 -->
-	<insert id="insertReview">
+	<insert id="insertReview">  
 		INSERT INTO REVIEW_TBL
 		VALUES (SEQ_REVIEWNO.NEXTVAL, #{reviewContents}, DEFAULT, #{memberNo}, #{rFilename}, #{rFilerename}, #{rFilepath}, 0, #{rViewscore},#{perfumeNo})
 	</insert>
@@ -157,4 +157,9 @@
 		UPDATE REVIEW_TBL SET REVIEW_CONTENTS=#{reviewContents}, REVIEW_SCORE=#{rViewscore}
 		WHERE REVIEW_NO = #{reviewNo}
 	</update>
+	
+	<!-- 신고하기 -->
+	<insert id="reviewReport">
+		INSERT INTO REPORT_TBL VALUES(SEQ_REPORTNO.NEXTVAL,#{reviewNo}, #{memberNo}, #{reportType}, #{reportContent}, DEFAULT)
+	</insert>
 </mapper>

@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -28,8 +28,9 @@
 		<!-- 본문 내용 가운데 정렬 위한 div -->
 		<div id="forCenter">
 			<form action="/review/reviewModify" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="id" value="${id }" id="id">
 				<input type="hidden" name="reviewNo" value="${review.reviewNo }">
-				<input type="hidden" name="rFilerename" value="${review.rFilerename }">
+				<input type="hidden" name="rFilename" value="${review.rFilename }">
 					<div id="outter">
 						<h1>REVIEW</h1>
 						<div class="productInfo">
@@ -60,13 +61,8 @@
 								<span class="fa ${review.rViewscore >= 3 ? 'fa-star checked' : 'fa-star-o'}" data-rating="3"></span>
 								<span class="fa ${review.rViewscore >= 4 ? 'fa-star checked' : 'fa-star-o'}" data-rating="4"></span>
 								<span class="fa ${review.rViewscore >= 5 ? 'fa-star checked' : 'fa-star-o'}" data-rating="5"></span>
-					           <!-- <span class="fa fa-star-o" data-rating="1"></span>
-					            <span class="fa fa-star-o" data-rating="2"></span>
-					            <span class="fa fa-star-o" data-rating="3"></span>
-					            <span class="fa fa-star-o" data-rating="4"></span>
-					            <span class="fa fa-star-o" data-rating="5"></span> -->
 					            <!-- 별 몇개 찍혔는지 출력해 줌 -->
-					            <input type="text" name="rViewscore" class="rating-value" value="${review.rViewscore }">
+					            <input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 					        </div>
 						</div>
 						<div class="productInfo">
@@ -75,7 +71,6 @@
 						<div id="editorapi">
 							<textarea id="summernote" name="reviewContents">${review.reviewContents }</textarea>
 						</div>
-						<input type="file" name="reloadFile">${review.rFilerename }
 						<div class="input-btn">
 							<input type="submit" value="수정하기">
 			         		<input type="reset" value="취소하기">
@@ -125,8 +120,35 @@
              ],
              fontNames: fontList,
              fontNamesIgnoreCheck: fontList,
-             fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+             fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+             callbacks : {
+         	    onImageUpload : function(files, editor, welEditable) {
+         	        for (let i = files.length - 1; i >= 0; i--) {
+         	            uploadSummernoteImageFile(files[i],
+         	                this);
+         	        }
+         	    }
+         	}
           });
+        
+        function uploadSummernoteImageFile(file, el) {
+            let data = new FormData();
+            let id = document.getElementById("id").value;
+            data.append("file", file);
+            data.append("id", id);
+            $.ajax({
+                data : data,
+                type : "POST",
+                url : "/review/ImgFileUpload",
+                contentType : false,
+                enctype : 'multipart/form-data',
+                processData : false,
+                success : function(data) {
+                    $img = $('<img>').attr({ src: data.src });
+                    $(el).summernote('insertNode', $img[0]);
+                }
+            });
+        }
 	</script>
 	
 <jsp:include page="../common/footer.jsp" />

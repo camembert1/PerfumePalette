@@ -34,7 +34,7 @@ public class ReviewFileUtil {
 				folder.mkdirs();
 			}
 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "."
 					+ originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 

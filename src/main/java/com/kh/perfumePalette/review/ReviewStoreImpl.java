@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.report.Report;
 
 @Repository
 public class ReviewStoreImpl implements ReviewStore{
@@ -71,6 +72,12 @@ public class ReviewStoreImpl implements ReviewStore{
 	@Override
 	public int updateReview(SqlSession session, Review review) {
 		int result = session.update("ReviewMapper.updateReview", review);
+		return result;
+	}
+
+	@Override
+	public int reviewReport(SqlSession session, Report report) {
+		int result = session.insert("ReviewMapper.reviewReport", report);
 		return result;
 	}
 }

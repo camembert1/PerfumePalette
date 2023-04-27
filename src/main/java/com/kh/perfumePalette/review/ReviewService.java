@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.report.Report;
 
 public interface ReviewService {
 
@@ -65,4 +66,6 @@ public interface ReviewService {
 	 * @return int
 	 */
 	int updateReview(Review review);
+
+	int reviewReport(Report report);
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.report.Report;
 
 public interface ReviewStore {
 
@@ -74,4 +75,6 @@ public interface ReviewStore {
 	 * @return int
 	 */
 	int updateReview(SqlSession session, Review review);
+
+	int reviewReport(SqlSession session, Report report);
 }

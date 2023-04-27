@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.report.Report;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -75,6 +76,13 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int updateReview(Review review) {
 		int result = rStore.updateReview(session, review);
+		return result;
+	}
+
+
+	@Override
+	public int reviewReport(Report report) {
+		int result = rStore.reviewReport(session, report);
 		return result;
 	}
 

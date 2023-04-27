@@ -84,6 +84,7 @@ main img{
 	height: 200px;
 }
 
+/* 페이징 CSS */
 main .page {
     text-decoration: none;
     color: black;
