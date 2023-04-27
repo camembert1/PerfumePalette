@@ -8,12 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -133,25 +131,30 @@ public class MemberController {
 	@PostMapping("/login")
 	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
 		try {
-			//int result = mService.login(member);
-			Member loginUser = mService.login(member); 
+			// int result = mService.login(member);
+			Member loginUser = mService.login(member);
 			if (loginUser != null) {
-				HttpSession session = request.getSession();
-				
-				// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
-                session.setAttribute("member", loginUser);
-                
-				if (session.getAttribute("mbtiResult") == null) {
-					mv.setViewName("redirect:/");
-				} else {
-					mv.setViewName("redirect:/mbti/mbtiResult");
-				}
-			} else {
-				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
-				mv.addObject("alert", alert);
-				mv.setViewName("common/alert");
-			}
+				// member_status = 1인 사람만 로그인 가능
+				if (loginUser.getMemberStatus() == 1) { 
+					HttpSession session = request.getSession();
+					// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
+					session.setAttribute("member", loginUser);
 
+					if (session.getAttribute("mbtiResult") == null) {
+						mv.setViewName("redirect:/");
+					} else {
+						mv.setViewName("redirect:/mbti/mbtiResult");
+					}
+				} else { // 탈퇴한 회원일 경우
+					Alert alert = new Alert("/member/login", "이미 탈퇴한 회원입니다.");
+					mv.addObject("alert", alert)
+					.setViewName("common/alert");
+				}
+			} else {	// 로그인 실패
+				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
+				mv.addObject("alert", alert)
+				.setViewName("common/alert");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
@@ -181,8 +184,9 @@ public class MemberController {
 	@GetMapping("/myPage")
 	public ModelAndView myPage(HttpSession session, HttpServletRequest request, ModelAndView mv) {
 		try {
-			Member member = mService.selectMemberById(((Member)session.getAttribute("member")).getMemberId());
+			Member member = (Member) session.getAttribute("member");
 			if (member != null) {
+				member = mService.selectMemberById(member.getMemberId());
 				mv.addObject("memerOne", member);
 				mv.setViewName("member/myPage");
 			} else {
@@ -218,115 +222,167 @@ public class MemberController {
 		}
 		return mv;
 	}
-	
+
 	// 아이디 찾기
 	@GetMapping("findId")
 	public ModelAndView findId(ModelAndView mv) {
-	    mv.setViewName("member/findId");
-	    return mv;
+		mv.setViewName("member/findId");
+		return mv;
 	}
 
 	@PostMapping("/findId")
-	public ModelAndView findId(
-	        @ModelAttribute Member member
-	        , ModelAndView mv) {
-	    try {
-	        Member getUser = mService.findId(member);
-	        if(getUser != null) {
-	            mv.addObject("member", getUser);
-	            mv.setViewName("member/showId");
-	        } else {
-	            Alert alert = new Alert("/member/findId", "일치하는 정보가 존재하지 않습니다");
-	            mv.addObject("alert", alert);
-	            mv.setViewName("common/alert");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        mv.addObject("msg", e.getMessage());
-	        mv.setViewName("common/error");
-	    }
-	    return mv;
+	public ModelAndView findId(@ModelAttribute Member member, ModelAndView mv) {
+		try {
+			Member getUser = mService.findId(member);
+			if (getUser != null) {
+				mv.addObject("member", getUser);
+				mv.setViewName("member/showId");
+			} else {
+				Alert alert = new Alert("/member/findId", "일치하는 정보가 존재하지 않습니다");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
 	}
-	
-	
-	// 비밀번호 찾기 
+
+	// 비밀번호 찾기
 	@GetMapping("findPw")
 	public ModelAndView findPw(ModelAndView mv) {
-	    mv.setViewName("member/findPw");
-	    return mv;
+		mv.setViewName("member/findPw");
+		return mv;
 	}
-	
+
 	@PostMapping("/findPw")
-	public ModelAndView findPw(
-			@ModelAttribute Member member
-			, ModelAndView mv) {
+	public ModelAndView findPw(@ModelAttribute Member member, ModelAndView mv) {
 		try {
 			Member getUser = mService.findPw(member);
-			if(getUser != null) {
+			if (getUser != null) {
 				mv.addObject("member", getUser);
 				mv.setViewName("member/changePw");
 			} else {
 				Alert alert = new Alert("/member/findPw", "일치하는 회원 정보가 존재하지 않습니다");
-	            mv.addObject("alert", alert);
-	            mv.setViewName("common/alert");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-	        mv.addObject("msg", e.getMessage());
-	        mv.setViewName("common/error");
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
 		}
 		return mv;
 	}
-	
-	
-	// 비밀번호 변경 
+
+	// 비밀번호 변경
 	@PostMapping("/changePw")
-	public ModelAndView changePw(
-	        @ModelAttribute Member member,
-	        String newPw,
-	        String confirmPw,
-	        ModelAndView mv) {
-	    try {
-	        // 비밀번호 유효성 체크
-	        String pwPattern = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$";
-	        
-	        boolean isValidPw = newPw.matches(pwPattern);
-	        
-	        if(!newPw.equals(confirmPw)) {
-	            Alert alert = new Alert("/member/findPw", "새로운 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
-	            mv.addObject("alert", alert);
-	            mv.setViewName("common/alert");
-	        } else if (!isValidPw) {
-	            Alert alert = new Alert("/member/findPw", "비밀번호는 8자 이상, 영문, 숫자 조합으로 이루어져야 합니다.");
-	            mv.addObject("alert", alert);
-	            mv.setViewName("common/alert");
-	        } else {
-	            member.setMemberPw(newPw);
-	            int result = mService.updatePw(member);
-	            if(result > 0) {
-	                Alert alert = new Alert("/member/login", "비밀번호 변경에 성공하였습니다.");
-		            mv.addObject("alert", alert);
-		            mv.setViewName("common/alert");
-	            } else {
-	                Alert alert = new Alert("/member/findPw", "비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
-	                mv.addObject("alert", alert);
-	                mv.setViewName("common/alert");
-	            }
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        mv.addObject("msg", e.getMessage());
-	        mv.setViewName("common/error");
-	    }
-	    return mv;
+	public ModelAndView changePw(@ModelAttribute Member member, String newPw, String confirmPw, ModelAndView mv) {
+		try {
+			// 비밀번호 유효성 체크
+			String pwPattern = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$";
+
+			boolean isValidPw = newPw.matches(pwPattern);
+
+			if (!newPw.equals(confirmPw)) {
+				Alert alert = new Alert("/member/findPw", "새로운 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else if (!isValidPw) {
+				Alert alert = new Alert("/member/findPw", "비밀번호는 8자 이상, 영문, 숫자 조합으로 이루어져야 합니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				member.setMemberPw(newPw);
+				int result = mService.updatePw(member);
+				if (result > 0) {
+					Alert alert = new Alert("/member/login", "비밀번호 변경에 성공하였습니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				} else {
+					Alert alert = new Alert("/member/findPw", "비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
 	}
-	
-	// 주문내역조회 
+
+	// 주문내역조회
 	@GetMapping("/orderList")
 	public ModelAndView orderList(ModelAndView mv) {
-	    mv.setViewName("member/orderList");
-	    return mv;
+		mv.setViewName("member/orderList");
+		return mv;
 	}
-	
-	
+
+	// 내가 작성한 후기
+	@GetMapping("/myReview")
+	public ModelAndView myReview(ModelAndView mv) {
+		mv.setViewName("member/myReview");
+		return mv;
+	}
+
+	// 내가 작성한 문의
+	@GetMapping("/myQna")
+	public ModelAndView myQna(ModelAndView mv) {
+		mv.setViewName("member/myQna");
+		return mv;
+	}
+
+	// 내가 작성한 댓글
+	@GetMapping("/myComment")
+	public ModelAndView myComment(ModelAndView mv) {
+		mv.setViewName("member/myComment");
+		return mv;
+	}
+
+	// 회원탈퇴
+	@GetMapping("/bye")
+	public ModelAndView bye(ModelAndView mv) {
+		mv.setViewName("member/bye");
+		return mv;
+	}
+
+	@PostMapping("/bye")
+	public ModelAndView bye(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
+		try {
+			// 입력한 비밀번호를 확인하고 맞지 않으면 회원탈퇴 실패 처리
+			Member checkPw = mService.checkPw(member);
+			if (checkPw == null || !checkPw.getMemberPw().equals(member.getMemberPw())) {
+				Alert alert = new Alert("/member/bye", "비밀번호가 일치하지 않습니다");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				// 회원탈퇴 처리
+				member.setMemberStatus(0);
+				int result = mService.bye(member);
+				if (result > 0) {
+					// 세션 무효화 후 메인 페이지로 이동
+					HttpSession session = request.getSession();
+					if (session != null) {
+						session.invalidate();
+					}
+					Alert alert = new Alert("/", "탈퇴처리 되었습니다. 이용해주셔서 감사합니다.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				} else {
+					Alert alert = new Alert("/member/bye", "회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+					mv.addObject("alert", alert);
+					mv.setViewName("common/alert");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+
 }

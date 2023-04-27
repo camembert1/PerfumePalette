@@ -18,17 +18,116 @@
 	</resultMap>
 
 	<!-- 유정 시작 -->
+	
+	<!-- 쇼핑몰 - 향수 목록 출력 페이징 + 필터링 + STATUS1 -->
 	<select id="selectAvailablePerfumes" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL WHERE PERFUME_STATUS = 1
-		<if test="scentCategory != null and scentCategory != ''">
-			<if test="animalSpecies !=  'All'">
-			      AND P_SCENT_CATEGORY = #{scentCategory }
+		SELECT * 
+		FROM PERFUME_TBL
+		WHERE PERFUME_STATUS = 1
+		AND PERFUME_PRICE &gt;= #{startPerfumePrice }
+		<if test="endPerfumePrice != 600000">
+			AND PERFUME_PRICE &lt;= #{endPerfumePrice }
+		</if>
+		<if test="pScentCategory != null and pScentCategory != ''">
+			<if test="pScentCategory !=  'All'">
+			      AND P_SCENT_CATEGORY = #{pScentCategory }
 	    	</if>
+		</if>
+		<if test="perfumeSearch != null and perfumeSearch != ''">		
+			AND REGEXP_REPLACE(
+						CONCAT(PERFUME_BRAND, PERFUME_NAME)
+						, '[[:space:]]'
+						, '')
+				LIKE '%' || REGEXP_REPLACE(#{perfumeSearch}, '[[:space:]]', '') || '%'
+		</if>
+		<if test="perfumeSort != null and perfumeSort !=''">
+			<if test="perfumeSort eq 'new'">
+				ORDER BY PERFUME_DATE DESC
+			</if>
+			<if test="perfumeSort eq 'hot'">
+				<!-- 주문 테이블 조인 예정 -->
+			</if>
+			<if test="perfumeSort eq 'review'">
+				<!-- 리뷰 테이블 조인 예정 -->
+			</if>
+			<if test="perfumeSort eq 'highPrice'">
+				ORDER BY PERFUME_PRICE DESC
+			</if>
+			<if test="perfumeSort eq 'lowPrice'">
+				ORDER BY PERFUME_PRICE ASC
+			</if>
 		</if>
 	</select>
 	
+	<!-- 쇼핑몰 - 향수 디테일 출력 -->
 	<select id="selectOneByPerfumeNo" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo }
+		SELECT * 
+		FROM PERFUME_TBL 
+		WHERE PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<!-- 향수 총 개수 - 페이징 + 필터링 + STATUS1 -->
+	<select id="selectTotalPerfumeCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PERFUME_TBL
+		WHERE PERFUME_STATUS = 1
+		AND PERFUME_PRICE &gt;= #{startPerfumePrice }
+		<if test="endPerfumePrice != 600000">
+			AND PERFUME_PRICE &lt;= #{endPerfumePrice }
+		</if>
+		<if test="pScentCategory != null and pScentCategory != ''">
+			<if test="pScentCategory !=  'All'">
+			      AND P_SCENT_CATEGORY = #{pScentCategory }
+	    	</if>
+		</if>
+		<if test="perfumeSearch != null and perfumeSearch != ''">		
+			AND REGEXP_REPLACE(
+						CONCAT(PERFUME_BRAND, PERFUME_NAME)
+						, '[[:space:]]'
+						, '')
+				LIKE '%' || REGEXP_REPLACE(#{perfumeSearch}, '[[:space:]]', '') || '%'
+		</if>
+		<if test="perfumeSort != null and perfumeSort !=''">
+			<if test="perfumeSort eq 'new'">
+				ORDER BY PERFUME_DATE DESC
+			</if>
+			<if test="perfumeSort eq 'hot'">
+				<!-- 주문 테이블 조인 예정 -->
+			</if>
+			<if test="perfumeSort eq 'review'">
+				<!-- 리뷰 테이블 조인 예정 -->
+			</if>
+			<if test="perfumeSort eq 'highPrice'">
+				ORDER BY PERFUME_PRICE DESC
+			</if>
+			<if test="perfumeSort eq 'lowPrice'">
+				ORDER BY PERFUME_PRICE ASC
+			</if>
+		</if>
+	</select>
+	
+	<select id="checkWish" resultType="_int">
+		SELECT COUNT(*)
+		FROM WISH_TBL
+		WHERE MEMBER_ID = #{memberId } AND PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="getWishNo" resultType="_int">
+		SELECT WISH_NO
+		FROM WISH_TBL
+		WHERE MEMBER_ID = #{memberId } AND PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="wishCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM WISH_TBL
+		WHERE PERFUME_NO = #{perfumeNo }
+	</select>
+	
+	<select id="reviewCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW_TBL
+		WHERE PERFUME_NO = #{perfumeNo }
 	</select>
 	<!-- 유정 끝 -->
 	

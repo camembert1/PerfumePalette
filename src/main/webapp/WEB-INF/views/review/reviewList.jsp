@@ -21,27 +21,30 @@
 		<!-- 본문 내용 가운데 정렬 위한 div -->
 		<div id="forCenter">
 		<div id="subject">REVIEW</div>
-		<div id="search">
-         	<select name="sortby" id="sortby-select">
-			    <option name="" value="latest">최신순</option>
-			    <option name="" value="most-viewed">조회순</option>
-			    <option name="" value="highest-rated">별점순</option>
+		<div class ="search">
+		<form action="/review/reviewSearch" method="GET">
+         	<select name="searchCondition" id="sortby-select">
+			    <option value="latest">최신순</option>
+			    <option value="viewed">조회순</option>
+			    <option value="star">별점순</option>
 			</select>
-			<select name="perfume" id="perfume-select">
-			    <option name ="" value="">향종류</option>
-			    <option name ="" value="Woody">Woody</option>
-			    <option name ="" value="Floral">Floral</option>
-			    <option name ="" value="Fruity">Fruity</option>
-			    <option name ="" value="Spicy">Spicy</option>
-			    <option name ="" value="Citrus">Citrus</option>
+			<select name="searchPerfume" id="perfume-select">
+			    <option value="All">향종류</option>
+			    <option value="Woody">Woody</option>
+			    <option value="Floral">Floral</option>
+			    <option value="Fruity">Fruity</option>
+			    <option value="Spicy">Spicy</option>
+			    <option value="Citrus">Citrus</option>
 			</select>
-			<input type="text">
-			<button>검색</button>
+			<input type="search" name="searchValue" value="${search.searchValue }" placeholder="상품명을 검색해주세요" aria-label="Search">
+			<input type="submit" value="검색">
+		</form>
 		</div>
 		
-		 <table border="1">
+		 <table>
         <thead> <!-- 테이블 헤더 -->
             <tr>
+            	<th>번호</th>
                 <th>별점</th>
                 <th>내용</th>
                 <th>작성자</th>
@@ -50,8 +53,9 @@
             </tr>
         </thead>
         <tbody> <!-- 테이블 본문 -->
-        <c:forEach items="${rList }" var="review">
+        <c:forEach items="${rList }" var="review" varStatus="r">
             <tr>
+            	<td>${r.count }</td>
                 <td>
                 	<div class="star-rating">
                 	<span class="fa ${review.rViewscore >= 1 ? 'fa-star' : 'fa-star-o'}" data-rating="1"></span>
@@ -59,18 +63,12 @@
 					<span class="fa ${review.rViewscore >= 3 ? 'fa-star' : 'fa-star-o'}" data-rating="3"></span>
 					<span class="fa ${review.rViewscore >= 4 ? 'fa-star' : 'fa-star-o'}" data-rating="4"></span>
 					<span class="fa ${review.rViewscore >= 5 ? 'fa-star' : 'fa-star-o'}" data-rating="5"></span>
-
-					<!-- <span class="fa fa-star-o" data-rating="1"></span>
-					    <span class="fa fa-star-o" data-rating="2"></span>
-					    <span class="fa fa-star-o" data-rating="3"></span>
-					    <span class="fa fa-star-o" data-rating="4"></span>
-					    <span class="fa fa-star-o" data-rating="5"></span> -->
 					    <input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 				     </div>
                 </td>
                 <td>
                 	<div>
-                		<a href="">
+                		<a href="/review/reviewDetail/${review.reviewNo }">
 						<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 	                    <strong>[${review.perfumeBrand }] ${review.perfumeName }</strong>
 	                    </a>
@@ -85,14 +83,38 @@
         <tfoot>
 	        <tr>
 		        <td colspan="6" class="line">
-			        <a href="" class="page">&lt;&lt;</a> 
-			        <a href="" class="page"> &lt;</a> 
-			        <a href="" class="number page">1</a> 
-			        <a href="" class="number page">2</a> 
-			        <a href="" class="number page">3</a> 
-			        <a href="" class="number page">4</a>
-					<a href="" class="number page">5</a> <a href="" class="page">&gt;</a>
-					<a href="" class="page">&gt;&gt;</a>
+			        <div id="paging">
+					<c:if test="${paging.totalCount ne null }">
+						<c:if test="${paging.currentPage != 1}">
+							<c:if test="${paging.startNavi != 1}">
+								<!-- 첫 페이지로 버튼 -->
+								<a href="/review/reviewList?page=1" class="move first">&lt;&lt;</a>
+							</c:if>	
+							<!-- 이전 페이지로 버튼 -->
+							<a href="/review/reviewList?page=${paging.currentPage-1}" class="move prev">&lt;</a>
+						</c:if>
+						
+						<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+							<c:choose>
+								<c:when test="${i == paging.currentPage}">
+									<span class="page current">${i}</span>
+								</c:when>
+								<c:otherwise>
+									<a href="/review/reviewList?page=${i}" class="page">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+		
+						<c:if test="${paging.currentPage != paging.lastPage}">
+							<!-- 다음 페이지로 버튼 -->
+							<a href="/review/reviewList?page=${paging.currentPage+1}" class="move next">&gt;</a>
+							<c:if test="${paging.endNavi != paging.lastPage}">
+								<!-- 맨 끝 페이지로 버튼 -->
+								<a href="/review/reviewList?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+							</c:if>
+						</c:if>
+					</c:if>
+				</div>
 				</td>
 			</tr>
 		</tfoot>

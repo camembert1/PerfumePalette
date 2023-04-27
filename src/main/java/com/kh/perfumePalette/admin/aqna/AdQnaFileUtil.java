@@ -1,4 +1,4 @@
-package com.kh.perfumePalette.perfume;
+package com.kh.perfumePalette.admin.aqna;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component("pFileUtil")
-public class PerfumeFileUtil {
+@Component("aqFileUtil")
+public class AdQnaFileUtil {
 
 	public Map<String, String> saveFile(MultipartFile multipartFile, HttpServletRequest req) throws Exception {
 		Map<String, String> result = null;

@@ -24,14 +24,15 @@ public class Review {
 	
 	private String perfumeName;   //향수 이름
 	private int perfumePrice;     //향수 가격
+	private String pScentCategory;	// 향 분류
 	private String pFilerename;	 
 	
 	public Review() {}
 
-
 	public Review(int reviewNo, int perfumeNo, int memberNo, String reviewContents, Timestamp reviewDate,
 			String rFilename, String fFilerename, String rFilepath, int rViewcount, int rViewscore,
-			String memberNickname, String perfumeBrand, String perfumeName, int perfumePrice, String pFilerename) {
+			String memberNickname, String perfumeBrand, String perfumeName, int perfumePrice, String pScentCategory,
+			String pFilerename) {
 		super();
 		this.reviewNo = reviewNo;
 		this.perfumeNo = perfumeNo;
@@ -47,9 +48,9 @@ public class Review {
 		this.perfumeBrand = perfumeBrand;
 		this.perfumeName = perfumeName;
 		this.perfumePrice = perfumePrice;
+		this.pScentCategory = pScentCategory;
 		this.pFilerename = pFilerename;
 	}
-
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -163,6 +164,14 @@ public class Review {
 		this.perfumePrice = perfumePrice;
 	}
 
+	public String getpScentCategory() {
+		return pScentCategory;
+	}
+
+	public void setpScentCategory(String pScentCategory) {
+		this.pScentCategory = pScentCategory;
+	}
+
 	public String getpFilerename() {
 		return pFilerename;
 	}
@@ -177,9 +186,11 @@ public class Review {
 				+ ", reviewContents=" + reviewContents + ", reviewDate=" + reviewDate + ", rFilename=" + rFilename
 				+ ", fFilerename=" + fFilerename + ", rFilepath=" + rFilepath + ", rViewcount=" + rViewcount
 				+ ", rViewscore=" + rViewscore + ", memberNickname=" + memberNickname + ", perfumeBrand=" + perfumeBrand
-				+ ", perfumeName=" + perfumeName + ", perfumePrice=" + perfumePrice + ", pFilerename=" + pFilerename
-				+ "]";
+				+ ", perfumeName=" + perfumeName + ", perfumePrice=" + perfumePrice + ", pScentCategory="
+				+ pScentCategory + ", pFilerename=" + pFilerename + "]";
 	}
+
+
 
 	
 }

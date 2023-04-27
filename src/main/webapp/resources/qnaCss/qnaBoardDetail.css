@@ -49,44 +49,13 @@ main .container {
     /* background-color: aqua; */
 }
 
-main h1 {
-	margin-bottom : 20px;
-	display: flex;
-   	flex-direction: column;
-   	align-items: center;
-   	margin-bottom : 50px;
-}
-
 main .submit-btn {
 	display: flex;
 	justify-content: center;
-	/* margin-top: 15px; */
-	margin-bottom: 65px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
-
-img {
-	
-}
-
-#photo {
-	display : flex;
-	justify-content: center;
-	margin : 20px 0px 20px 0px;
-    /* margin-bottom: 20px; */
-    border-bottom : 1px solid gray; 
-}
-
-main #textarea {
-    width: 757px;
-    height: 150px;
-    border-bottom : 1px solid gray; 
-    border-right: none;
-    border-left: none;
-    border-radius: 3px;
-    font-size : 16px;
-    /* text-align : center; */
-}
-main input[type=submit], input[type=button], input[type=reset]{
+main input[type=submit], input[type=reset]{
     width: 100px;
     height: 40px;
     background-color: #222222;
@@ -121,30 +90,17 @@ input[type=file]::file-span {
     height: 20px;
 }
 
-main #category {
-    /* border: 1px solid gray; */
-    display : inline;
-    width : 61px;
-    
-}
-
-span #qnatype {
-    border-radius: 3px;
-   /*  border: 1px solid gray; */
+input.radius {
+    border-radius: 5px;
+    border: 1px solid gray;
     box-sizing: border-box;
-    padding: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size : 13px;
-    
 }
 
 .title {
     height: 20px;
     width: 500px;
-    margin-left: 185px;
+    margin-left: 44px;
     margin-bottom: 20px;
-    font-size : 13px;
 }
 
 input:focus {

@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: '마포꽃섬';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff')
+		format('woff'); -
+	-font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ghana';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: '마포꽃섬';
+}
+
+body {
+	overflow-x: hidden;
+}
+
+main {
+	width: 100vw;
+	min-height: 100vh;
+}
+
+main>div[id=forHeader] {
+	/* 헤더 공간 비워두기 위함  */
+	height: 190px;
+	/* 
+        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+    */
+	margin-bottom: 100px;
+}
+
+main>div[id=forCenter] {
+	/* 본문 내용 가운데 정렬 위함 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+main #outter{
+	/* background-color: #008080; */
+	/* padding-top: 15vh; */
+	/* height: 85vh; */
+	width: 60vw;
+	margin: 0 auto;
+}
+main h1{
+	text-align: center;
+}
+main .productInfo{
+	display: flex;
+	margin: 10px 0;
+}
+main .product{
+	width: 25%;
+	display: flex;
+	align-items: center;
+}
+
+main .product-info{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+main .productImg{
+	width: 250px;
+	height: 250px;
+	border-radius: 10px;
+	/* background-color: #c0c0c0; */
+}
+	main img{
+		width: 250px;
+		height: 250px;
+	}
+
+main .productDetails{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 33px 0 33px 35px;
+}
+	.productTitle {
+		font-size: 30px;
+		font-weight: bold;
+	}
+	
+	.productPrice {
+		font-size: 25px;
+	}
+main .user-name{
+	width: 60%;
+}
+
+/*별점*/
+.star-rating {
+	/* background-color: aqua; */
+}
+
+.star-rating span:before {
+	font-size: 50px;
+	content: "\f005";
+	color: #FFD700;
+}
+
+.star-rating span:not(span.checked):before {
+	content: "\f006";
+	color: black
+}
+
+.star-rating:hover>span:before {
+	content: "\f005" !important;
+	color: #FFD700 !important;
+}
+
+.star-rating span:hover ~span:before {
+	content: "\f006" !important;
+	color: black !important;
+}
+
+main #editorapi{
+	/* height: 600px; */
+}
+
+main .input-btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+main input[type=submit], input[type=reset]{
+    width: 100px;
+    height: 40px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+main label{
+	font-size: 20px;
+}

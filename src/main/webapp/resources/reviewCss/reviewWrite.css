@@ -105,9 +105,7 @@ main .user-name{
 }
 
 /*별점*/
-.star-rating {
-	/* background-color: aqua; */
-}
+
 
 .star-rating span:before {
 	font-size: 50px;
@@ -121,13 +119,18 @@ main .user-name{
 }
 
 .star-rating:hover>span:before {
-	content: "\f005" !important;
-	color: #FFD700 !important;
+	content: "\f005";
+	color: #FFD700;
 }
 
 .star-rating span:hover ~span:before {
-	content: "\f006" !important;
-	color: black !important;
+	content: "\f006";
+	color: black;
+}
+
+
+.star-rating {
+	/* background-color: aqua; */
 }
 
 main #editorapi{

@@ -75,6 +75,19 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public Member checkPw(Member member) {
+		Member result = mStore.checkPw(member);
+		return result;
+	}
+
+	@Override
+	public int bye(Member member) {
+		int result = mStore.bye(member);
+		return result;
+	}
+
+
 	
 
 	
