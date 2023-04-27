@@ -24,5 +24,9 @@ public interface AdMemberStore {
 
 	int getListCount(SqlSession session);
 
+	int updateStopMember(SqlSession session, int i);
+
+	int updateStartMember(SqlSession session, int i);
+
 
 }

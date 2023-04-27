@@ -56,15 +56,22 @@ public class AdMemberController {
 	// 회원 리스트
 	@RequestMapping(value = "/amList", method = RequestMethod.GET)
 	public ModelAndView viewAdminMemberList(ModelAndView mv
+			, HttpSession session
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
-			int totalCount = amService.getListCount();
-			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-			List<Member> amList = amService.selectAdMemberList(pi);
-			mv.addObject("paging", pi);
-			mv.addObject("amList", amList);
-			mv.setViewName("admin/member/amList");
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				int totalCount = amService.getListCount();
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<Member> amList = amService.selectAdMemberList(pi);
+				mv.addObject("paging", pi);
+				mv.addObject("amList", amList);
+				mv.setViewName("admin/member/amList");
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
 		return mv;
@@ -74,22 +81,31 @@ public class AdMemberController {
 	@GetMapping("/search")
 	public String memberSearchView(
 			@ModelAttribute Search search
+			, HttpSession session
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
-			int totalCount = amService.getListCount(search);
-			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-			List<Member> searchList = amService.selectListByKeyword(pi, search);
-			if(!searchList.isEmpty()) {
-				model.addAttribute("paging", pi);
-				model.addAttribute("search", search);
-				model.addAttribute("sList", searchList);
-				return "admin/member/search";
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				model.addAttribute("alert", alert);
+				return "common/alert";
 			} else {
-				model.addAttribute("msg", "조회에 실패하였습니다.");
-				return "common/error";
+				int totalCount = amService.getListCount(search);
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<Member> searchList = amService.selectListByKeyword(pi, search);
+				if(!searchList.isEmpty()) {
+					model.addAttribute("paging", pi);
+					model.addAttribute("search", search);
+					model.addAttribute("sList", searchList);
+					return "admin/member/search";
+				} else {
+					model.addAttribute("msg", "조회에 실패하였습니다.");
+					return "common/error";
+				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
 	}
@@ -131,6 +147,49 @@ public class AdMemberController {
 			return e.getMessage();
 		}
 	}
+	
+	// 회원 다중 수정(회원 임시 정지)
+	@PostMapping("/stop")
+	@ResponseBody
+	public String memberStop(int [] arr
+			, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for (int i = 0; i < arr.length; i++) {
+				result = amService.updateStopMember(arr[i]);
+			}
+			if(result > 0) {
+				return "1";
+			} else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	// 회원 다중 수정(정지 복구)
+	@PostMapping("/start")
+	@ResponseBody
+	public String memberStart(int [] arr
+			, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for (int i = 0; i < arr.length; i++) {
+				result = amService.updateStartMember(arr[i]);
+			}
+			if (result > 0) {
+				return "1";
+			} else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	
+	
 	
 }
 

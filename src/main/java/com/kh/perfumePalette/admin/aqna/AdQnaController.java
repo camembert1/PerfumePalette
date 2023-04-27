@@ -3,6 +3,7 @@ package com.kh.perfumePalette.admin.aqna;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
+import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
 
 @Controller
@@ -56,12 +59,18 @@ public class AdQnaController {
 	// 문의 리스트
 	@GetMapping("/list")
 	public ModelAndView viewAdminQnaList(ModelAndView mv
+			, HttpSession session
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
-			int totalCount = qService.getListCount();
-			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-			List<QnaBoard> qList = qService.selectAllQna(pi);
-			mv.addObject("paging", pi).addObject("qList", qList).setViewName("admin/qna/list");
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				int totalCount = qService.getListCount();
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<QnaBoard> qList = qService.selectAllQna(pi);
+				mv.addObject("paging", pi).addObject("qList", qList).setViewName("admin/qna/list");
+			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}
@@ -72,22 +81,32 @@ public class AdQnaController {
 	@GetMapping("/search")
 	public String qnaSearchView(
 			@ModelAttribute Search search
+			, HttpSession session
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
-			int totalCount = qService.getListCount(search);
-			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-			List<QnaBoard> searchList = qService.selectListByKeyword(pi, search);
-			if(!searchList.isEmpty()) {
-				model.addAttribute("paging", pi);
-				model.addAttribute("search", search);
-				model.addAttribute("sList", searchList);
-				return "admin/qna/search";
-			}else {
-				model.addAttribute("msg", "조회에 실패하였습니다.");
-				return "common/error";
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				model.addAttribute("alert", alert);
+				return "common/alert";
+			} else {
+				int totalCount = qService.getListCount(search);
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<QnaBoard> searchList = qService.selectListByKeyword(pi, search);
+				if(!searchList.isEmpty()) {
+					model.addAttribute("paging", pi);
+					model.addAttribute("search", search);
+					model.addAttribute("sList", searchList);
+					return "admin/qna/search";
+				}else {
+					Alert alert = new Alert("/admin/review/search", "존재하지 않는 상품입니다.");
+					model.addAttribute("alert", alert);
+					return "common/alert";
+				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
 	}

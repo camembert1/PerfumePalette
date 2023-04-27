@@ -55,6 +55,16 @@ public class AdMemberServiceImpl implements AdMemberService {
 		return amStore.getListCount(session);
 	}
 
+	@Override
+	public int updateStopMember(int i) {
+		return amStore.updateStopMember(session, i);
+	}
+
+	@Override
+	public int updateStartMember(int i) {
+		return amStore.updateStartMember(session, i);
+	}
+
 
 	
 }

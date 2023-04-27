@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,8 +53,6 @@
 				<form action="/perfume/search" method="get">
 					<select name="searchOder">
 						<option value="Date" class="New" <c:if test="${search.searchOder == 'All' }">selected</c:if>>최신순</option>
-						<option value="Popul" class="New" <c:if test="${search.searchOder == 'Popul' }">selected</c:if>>인기순</option>
-						<option value="Star" class="New" <c:if test="${search.searchOder == 'Star' }">selected</c:if>>별점순</option>
 						<option value="PriceH" class="New" <c:if test="${search.searchOder == 'PriceH' }">selected</c:if>>높은가격</option>
 						<option value="PriceR" class="New" <c:if test="${search.searchOder == 'PriceR' }">selected</c:if>>낮은가격</option>
 					</select>
@@ -70,25 +69,26 @@
 						<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
 						<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
 					</select> 
-					<input type="text" name="searchValue" placeholder="상품명 검색">
-					<button type="submit">검색</button>
+					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
+					<button type="submit" class="small_btn">검색</button>
 				</form>
 			</div>
 			<table>
 				<thead>
 					<tr>
 						<th><input type="checkbox" class="allCheck"></th>
-						<th>번 호</th>
 						<th>이미지</th>
-						<th>브랜드</th>
-						<th>상품명</th>
-						<th>용 량</th>
-						<th>가 격</th>
-						<th>재 고</th>
-						<th>향 분류</th>
-						<th>이미지 분류</th>
-						<th>노출 여부</th>
-						<th>수 정</th>
+						<th style="width: 80px">브랜드</th>
+						<th style="width: 200px">상품명</th>
+						<th style="width: 60px">용 량</th>
+						<th style="width: 80px">가 격</th>
+						<th style="width: 80px">재 고</th>
+						<th style="width: 100px">향 분류</th>
+						<th style="width: 200px">이미지 분류</th>
+						<th style="width: 70px">찜</th>
+						<th style="width: 70px">장바구니</th>
+						<th style="width: 70px">노출 여부</th>
+						<th style="width: 50px">수 정</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -96,7 +96,6 @@
 						<tr>
 							<td class="td"><input type="checkbox" class="check"
 								value="${perfume.perfumeNo }"></td>
-							<td class="td">${i.count }</td>
 							<td class="td"><img
 								src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }"
 								alt="상품 이미지"></td>
@@ -104,22 +103,23 @@
 							<td class="td"><a
 								href="/perfume/mDetail?perfumeNo=${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
 							<td class="td">${perfume.perfumeVolume }ml</td>
-							<td class="td">${perfume.perfumePrice }원</td>
+							<td class="td"><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
 							<td class="td">${perfume.perfumeQuantity }&nbsp;EA</td>
 							<td class="td">${perfume.pScentCategory }</td>
 							<td class="td">${perfume.pImageCategory }</td>
+							<td class="td">${perfume.wishCount }</td>
+							<td class="td">${perfume.cartCount }</td>
 							<td class="td"><c:choose>
 									<c:when test="${perfume.perfumeStatus eq 1}">O</c:when>
 									<c:when test="${perfume.perfumeStatus eq 0}">X</c:when>
 								</c:choose></td>
-							<td><button
-									onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수정</button></td>
+							<td><button class="small_btn" onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수정</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="7" class="line">
+						<td colspan="13" class="line paging">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
@@ -155,11 +155,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td><button type="button" class="show">선택 노출</button></td>
-						<td><button type="button" class="noShow">선택 비노출</button></td>
-						<td><button type="button" class="del">삭제하기</button></td>
-						<td><button type="button"
-								onclick="location.href='/perfume/write'">상품 등록</button></td>
+						<td colspan="9"></td>
+						<td><button type="button" class="bot_btn show">선택 노출</button></td>
+						<td><button type="button" class="bot_btn noShow">선택 비노출</button></td>
+						<td><button type="button" class="bot_btn del">삭제하기</button></td>
+						<td><button type="button" class="bot_btn" onclick="location.href='/perfume/write'">상품 등록</button></td>
 					</tr>
 				</tfoot>
 			</table>

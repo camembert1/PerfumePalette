@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="../../../../resources/adminCss/adMemberCss/amList.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
@@ -26,37 +27,11 @@
 	display: none;
 }
 
-/* 			모달 css */
-.modal {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: none;
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal.show {
-	display: block;
-}
-
-.modal_body {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 500px;
-	height: 600px;
-	padding: 40px;
-	text-align: center;
-	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
-	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-	transform: translateX(-50%) translateY(-50%);
-}
 </style>
 </head>
 <body>
+<!-- 	모달 이외 모자이크 -->
+	<div id="modal-bg"></div>
 	<jsp:include page="../../common/header.jsp" />
 	<main>
 		<!-- 헤더 부분 피하기 위한 div -->
@@ -86,82 +61,85 @@
 						<option value="Nickname" <c:if test="${search.searchCondition == 'Nickname' }">selected</c:if>>닉네임</option>
 					</select>
 					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
-					<button type="submit">검 색</button>
+					<button type="submit" class="modal_btn">검 색</button>
 				</form>
 			</div>
 			<table>
 				<thead>
-					<tr>
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>번 호</th>
-						<th>이 름</th>
-						<th>아이디</th>
-						<th>비밀번호</th>
-						<th>닉네임</th>
-						<th>이메일</th>
-						<th>전화번호</th>
-						<th>주소</th>
-						<th>등록일</th>
-						<th>수 정</th>
+					<tr class="headList">
+						<th style="width: 40px;"><input type="checkbox" class="allCheck"></th>
+						<th style="width: 60px;">이 름</th>
+						<th style="width: 100px;">아이디</th>
+						<th style="width: 120px;">닉네임</th>
+						<th style="width: 150px;">이메일</th>
+						<th style="width: 110px;">전화번호</th>
+						<th style="width: 200px;">주 소</th>
+						<th style="width: 100px;">등록일</th>
+						<th style="width: 100px;">탈퇴여부</th>
+						<th style="width: 120px;">수 정</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${sList }" var="member" varStatus="i">
-						<tr>
+						<tr class="amList">
 							<td class="td"><input type="checkbox" class="check"
 								value="${member.memberNo }"></td>
-							<td class="td">${i.count }</td>
 							<td class="td">${member.memberName }</td>
 							<td class="td">${member.memberId }</td>
-							<td class="td">${member.memberPw }</td>
 							<td class="td">${member.memberNickname }</td>
 							<td class="td">${member.memberEmail }</td>
-							<td class="td">${member.memberPhone }</td>
-							<td class="td">${member.memberAddr }</td>
+							<td class="td">${member.memberPhone.substring(0,3)}-${member.memberPhone.substring(3,7)}-${member.memberPhone.substring(7,11)}</td>
+							<td class="td tdAddr">${member.memberAddr }</td>
 							<td class="td"><fmt:formatDate value="${member.memberDate }" pattern="yyyy-MM-dd" /></td>
+							<td class="td">
+								<c:choose>
+									<c:when test="${member.memberStatus eq 1}">X</c:when>
+									<c:when test="${member.memberStatus eq 0}">O</c:when>
+								</c:choose>
+							</td>
 							<td class="td"><button class="modal_btn"
-									data-target="#modal${i.index }">상세</button></td>
+									data-target="#modal${i.index }">수 정</button></td>
 						</tr>
 						<!-- 		여기서부터 모달 -->
-						<form action="/admin/member/amList" method="post">
+						<form action="/admin/member/amList" method="post" class="row g-3">
 							<input type="hidden" class="" name="memberNo"
 								value="${member.memberNo }" />
 							<div class="modal" id="modal${i.index }">
 								<div class="modal_body">
-									<h1>${member.memberNickname }님의 상세정보입니다.</h1>
+									<h1 class="modal_h1">${member.memberNickname }님의 상세정보입니다.</h1>
 									<div class="Detail_box">
-										<div>
-											<label>아이디</label> <input type="text" class=""
-												name="memberId" value="${member.memberId }" />
+										<div class="mb-3">
+											<label class="form-label">아이디</label> <input type="text" class=""
+												name="memberId" class="form-control" value="${member.memberId }" />
 										</div>
-										<div>
-											<label>비밀번호</label> <input type="password" class=""
-												name="memberPw" value="${member.memberPw }">
+										<div class="mb-3">
+											<label class="form-label">비밀번호</label> <input type="password" class=""
+												name="memberPw" class="form-control" value="${member.memberPw }">
 										</div>
-										<div>
-											<label>이름</label> <input type="text" class=""
-												name="memberName" value="${member.memberName }" />
+										<div class="mb-3">
+											<label class="form-label">이름</label> <input type="text" class=""
+												name="memberName" class="form-control" value="${member.memberName }" />
 										</div>
-										<div>
-											<label>닉네임</label> <input type="text" class=""
-												name="memberNickname" value="${member.memberNickname }" />
+										<div class="mb-3">
+											<label class="form-label">닉네임</label> <input type="text" class=""
+												name="memberNickname" class="form-control" value="${member.memberNickname }" />
 										</div>
-										<div>
-											<label>이메일</label> <input type="text" class=""
-												name="memberEmail" value="${member.memberEmail }" />
+										<div class="mb-3">
+											<label class="form-label">이메일</label> <input type="text" class=""
+												name="memberEmail" class="form-control" value="${member.memberEmail }" />
 										</div>
-										<div>
-											<label>전화번호</label> <input type="text" class=""
-												name="memberPhone" value="${member.memberPhone }" />
+										<div class="mb-3">
+											<label class="form-label">전화번호</label> <input type="text" class=""
+												name="memberPhone" class="form-control" class="form-control" value="${member.memberPhone }" />
 										</div>
-										<div>
-											<label>주소</label> <input type="text" class=""
-												name="memberAddr" value="${member.memberAddr }" readonly />
+										<div class="mb-3">
+											<label class="form-label">주소</label> <input type="text" class=""
+												name="memberAddr" class="form-control" value="${member.memberAddr }" readonly />
 										</div>
 									</div>
 									<div>
-										<button class="modal_modify">수정하기</button>
-										<button type="button" class="modal_close">닫기</button>
+										<button class="modal_modify modal_botton">수 정</button>
+										<button type="button" class="modal_close modal_botton">닫 기</button>
 									</div>
 								</div>
 								<br>
@@ -171,12 +149,8 @@
 					</c:forEach>
 				</tbody>
 				<tfoot>
-					<tr>
-						<td colspan="11"></td>
-						<td><button type="button" class="del">선택 삭제</button></td>
-					</tr>
-					<tr>
-						<td colspan="11" class="line">
+					<tr class="paging">
+						<td colspan="10" class="line">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
@@ -210,6 +184,12 @@
 							</c:if>
 						</div>
 						</td>
+					</tr>
+					<tr>
+						<td colspan="7"></td>
+						<td><button type="button" class="foot_btn start">선택 활성</button></td>
+						<td><button type="button" class="foot_btn stop">선택 정지</button></td>
+						<td><button type="button" class="foot_btn del">선택 삭제</button></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -261,6 +241,66 @@
 				});
 			}
 		});
+		
+		// 선택 계정 활성
+		document.querySelector(".start").addEventListener('click', function() {
+				var start = new Array();
+				var list = document.querySelectorAll(".check");
+				for(var i = 0; i < list.length; i++) {
+					if(list[i].checked) {
+						start.push(list[i].value);
+					}
+				}
+				console.log(start);
+				if(confirm("정말 변경 하시겠습니까?")) {
+					$.ajax({
+						url:'/admin/member/start',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':start},
+						success : function(data) {
+							if(data == 1) {
+								alert("계정이 활성화 되었습니다.");
+								location.href = "/admin/member/amList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					});
+				}
+			});
+		// 선택 계정 정지
+		document.querySelector(".stop").addEventListener('click', function() {
+				var stop = new Array();
+				var list = document.querySelectorAll(".check");
+				for(var i = 0; i < list.length; i++) {
+					if(list[i].checked) {
+						stop.push(list[i].value);
+					}
+				}
+				console.log(stop);
+				if(confirm("정말 변경 하시겠습니까?")) {
+					$.ajax({
+						url:'/admin/member/stop',
+						type : 'post',
+						dataType : 'json',
+						traditional : 'true',
+						data : {'arr':stop},
+						success : function(data) {
+							if(data == 1) {
+								alert("계정이 정지되었습니다.");
+								location.href = "/admin/member/amList";
+							}
+						},
+						error : function(data) {
+							console.log(data)
+						}
+					});
+				}
+			});
+		
 		
 		
 		// 여기부터 모달!!!!!!!!!!!!!!!!!!!!!!!!!!

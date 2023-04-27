@@ -18,7 +18,7 @@
 	</resultMap>
 
 <!-- 	Perfume-Mapper -->
-	<resultMap type="Perfume" id="perfumeResultMap">
+	<resultMap type="AdPerfume" id="perfumeResultMap">
 		<id property="perfumeNo" column="PERFUME_NO"></id>
 		<result property="perfumeName" column="PERFUME_NAME" />
 		<result property="perfumeBrand" column="PERFUME_BRAND" />
@@ -32,6 +32,17 @@
 		<result property="pFilepath" column="P_FILEPATH" />
 		<result property="perfumeDate" column="PERFUME_DATE" />
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	
+		<result property="wishNo" column="WISH_NO"/>
+		<result property="wishDate" column="WISH_DATE" />
+		<result property="wishCount" column="WISH_COUNT" />
+		
+		<result property="cartNo" column="CART_NO" />
+		<result property="cartQuantity" column="CART_QUANTITY" />
+		<result property="cartDate" column="CART_DATE" />
+		<result property="cartCount" column="CART_COUNT" />
+		
+		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
 	
 <!-- 	Review-Mapper -->
@@ -84,6 +95,13 @@
 		, MEMBER_NAME=#{memberName}, MEMBER_EMAIL=#{memberEmail}, MEMBER_PHONE=#{memberPhone}
 		, MEMBER_ADDR=#{memberAddr} WHERE MEMBER_NO = #{memberNo}
 	</update>
+	<update id="stopMember">
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	<update id="startMember">
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 1 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
 	<delete id="deleteMember">
 		DELETE FROM MEMBER_TBL WHERE MEMBER_NO = #{memberNo}
 	</delete>
@@ -136,6 +154,7 @@
 <!-- 	향수 시작 -->
 	<insert id="insertPerfume">
 		INSERT INTO PERFUME_TBL
+		
 		VALUES(SEQ_PERFUME_NO.NEXTVAL, #{perfumeName}, #{perfumeBrand}, #{perfumeVolume}, #{perfumePrice}
 		, #{perfumeQuantity}, #{pScentCategory}, #{pImageCategory}, #{pFilename}, #{pFilerename}, #{pFilepath}
 		, DEFAULT, #{perfumeStatus})
@@ -164,7 +183,20 @@
 	</select>
 	
 	<select id="selectPerfumeList" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL ORDER BY PERFUME_NO DESC
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM PERFUME_TBL P
+		ORDER BY PERFUME_DATE DESC
 	</select>
 	
 	<select id="getListCount" resultType="_int">
@@ -172,7 +204,19 @@
 	</select>
 	
 	<select id="selectListByKeyword" resultMap="perfumeResultMap">
-		SELECT * FROM PERFUME_TBL
+		SELECT
+		P.*,
+		(
+		SELECT COUNT(*)
+		FROM WISH_TBL W
+		WHERE W.PERFUME_NO = P.PERFUME_NO
+		) AS WISH_COUNT,
+		(
+		SELECT COUNT(*)
+		FROM CART_TBL C
+		WHERE C.PERFUME_NO = P.PERFUME_NO
+		) AS CART_COUNT
+		FROM PERFUME_TBL P
 		<where>
 		<if test="searchCondition == 'All'">
 			PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
@@ -211,12 +255,6 @@
 			<when test="searchOder == 'Date'">
 				ORDER BY PERFUME_DATE DESC
 			</when>
-<!-- 			<when test="searchOder == 'Popul'"> -->
-<!-- 				조인 후 구현 -->
-<!-- 			</when> -->
-<!-- 			<when test="searchOder == 'Star'"> -->
-<!-- 				조인 후 구현 -->
-<!-- 			</when> -->
 			<when test="searchOder == 'PriceH'">
 				ORDER BY PERFUME_PRICE DESC
 			</when>
@@ -262,6 +300,32 @@
 				AND P_SCENT_CATEGORY = 'Woody'
 			</when>
 		</choose> 
+	</select>
+	<select id="selectWishList" resultMap="perfumeResultMap">
+		SELECT P.PERFUME_NO, P.PERFUME_NAME, P.PERFUME_BRAND,
+		W.*
+		FROM PERFUME_TBL P
+		LEFT OUTER JOIN WISH_TBL W ON P.PERFUME_NO = W.PERFUME_NO
+		WHERE W.PERFUME_NO = #{perfumeNo }
+		ORDER BY W.WISH_DATE DESC
+	</select>
+	<select id="getWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL P
+		LEFT OUTER JOIN WISH_TBL W ON P.PERFUME_NO = W.PERFUME_NO
+		WHERE W.PERFUME_NO = #{perfumeNo }
+	</select>
+	<select id="selectCartList" resultMap="perfumeResultMap">
+		SELECT P.PERFUME_NAME, P.PERFUME_BRAND,
+		C.*
+		FROM PERFUME_TBL P
+		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE C.PERFUME_NO = #{perfumeNo }
+		ORDER BY C.CART_DATE DESC
+	</select>
+	<select id="getCartListCount" resultType="_int">
+		SELECT COUNT(*) FROM PERFUME_TBL P
+		LEFT OUTER JOIN CART_TBL C ON P.PERFUME_NO = C.PERFUME_NO
+		WHERE C.PERFUME_NO = #{perfumeNo }
 	</select>
 	<!-- 	향수 끝 -->
 	

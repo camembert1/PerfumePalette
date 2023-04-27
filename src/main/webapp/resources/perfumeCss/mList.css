@@ -84,7 +84,12 @@ main #hrefName {
 }
 /* 사이드바 끝 */
 
-
+main .top_category {
+	text-align: center;
+}
+main .top_category h1 {
+	margin-bottom: 50px;
+}
 
 
 /* 검색, 수정버튼 */
@@ -141,4 +146,7 @@ main #thead {
 }
 main a {
 	text-decoration: none;
+}
+main .paging {
+	text-align: center;
 }

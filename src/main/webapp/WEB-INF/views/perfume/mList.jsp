@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,51 +47,49 @@
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
-			<h1>상품 관리</h1>
-			
-<!-- 			<a href="/perfume/write">상품 등록</a> -->
+			<div class="perfumeList">
 			<div class="top_category">
+				<h1>상품 관리</h1>
 				<form action="/perfume/search" method="get">
-				<select name="searchOder">
-					<option value="Date" class="New">최신순</option>
-					<option value="Popul" class="New">인기순</option>
-					<option value="Star" class="New">별점순</option>
-					<option value="PriceH" class="New">높은가격</option>
-					<option value="PriceR" class="New">낮은가격</option>
-				</select>
-				<select name="searchIncense">
-					<option value="All" class="New">향 분류</option>
-					<option value="Woody" class="New">Woody</option>
-					<option value="Floral" class="New">Floral</option>
-					<option value="Fruity" class="New">Fruity</option>
-					<option value="Spicy" class="New">Spicy</option>
-					<option value="Citrus" class="New">Citrus</option>
-				</select>
-				
-				<select name="searchCondition">
-					<option value="All">All</option>
-					<option value="Brand">Brand</option>
-					<option value="perfumeName">perfumeName</option>
-				</select> 
-				<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
-				<button type="submit" class="small_btn">검 색</button>
+					<select name="searchOder">
+						<option value="Date" class="New">최신순</option>
+						<option value="PriceH" class="New">높은가격</option>
+						<option value="PriceR" class="New">낮은가격</option>
+					</select>
+					<select name="searchIncense">
+						<option value="All" class="New">향 분류</option>
+						<option value="Woody" class="New">Woody</option>
+						<option value="Floral" class="New">Floral</option>
+						<option value="Fruity" class="New">Fruity</option>
+						<option value="Spicy" class="New">Spicy</option>
+						<option value="Citrus" class="New">Citrus</option>
+					</select>
+					
+					<select name="searchCondition">
+						<option value="All">All</option>
+						<option value="Brand">Brand</option>
+						<option value="perfumeName">perfumeName</option>
+					</select> 
+					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
+					<button type="submit" class="small_btn">검 색</button>
 				</form>
 			</div>
 			<table>
 				<thead>
 					<tr id="thead">
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>번 호</th>
+						<th style="width: 40px"><input type="checkbox" class="allCheck"></th>
 						<th>이미지</th>
-						<th>브랜드</th>
-						<th>상품명</th>
-						<th>용 량</th>
-						<th>가 격</th>
-						<th>재 고</th>
-						<th>향 분류</th>
-						<th>이미지 분류</th>
-						<th>노출 여부</th>
-						<th>수 정</th>
+						<th style="width: 80px">브랜드</th>
+						<th style="width: 200px">상품명</th>
+						<th style="width: 60px">용 량</th>
+						<th style="width: 80px">가 격</th>
+						<th style="width: 80px">재 고</th>
+						<th style="width: 100px">향 분류</th>
+						<th style="width: 200px">이미지 분류</th>
+						<th style="width: 70px">찜</th>
+						<th style="width: 70px">장바구니</th>
+						<th style="width: 70px">노출 여부</th>
+						<th style="width: 50px">수 정</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -98,7 +97,6 @@
 						<tr>
 							<td class="td"><input type="checkbox" class="check"
 								value="${perfume.perfumeNo }"></td>
-							<td class="td">${i.count }</td>
 							<td class="td"><img
 								src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }"
 								alt="상품 이미지"></td>
@@ -106,10 +104,14 @@
 							<td class="td"><a
 								href="../perfume/detail?perfumeNo=${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
 							<td class="td">${perfume.perfumeVolume }ml</td>
-							<td class="td">${perfume.perfumePrice }원</td>
+							<td class="td"><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
 							<td class="td">${perfume.perfumeQuantity }&nbsp;EA</td>
 							<td class="td">${perfume.pScentCategory }</td>
 							<td class="td">${perfume.pImageCategory }</td>
+							<td class="td"><a
+								href="../perfume/wishList?perfumeNo=${perfume.perfumeNo }">${perfume.wishCount }</a></td>
+							<td class="td"><a
+								href="../perfume/cartList?perfumeNo=${perfume.perfumeNo }">${perfume.cartCount }</a></td>
 							<td class="td">
 								<c:choose>
 									<c:when test="${perfume.perfumeStatus eq 1}">O</c:when>
@@ -124,7 +126,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="7" class="line">
+						<td colspan="13" class="line paging">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
@@ -160,6 +162,7 @@
 						</td>
 					</tr>
 					<tr>
+						<td colspan="9"></td>
 						<td><button type="button" class="bot_btn show">선택 노출</button></td>
 						<td><button type="button" class="bot_btn noShow">선택 비노출</button></td>
 						<td><button type="button" class="bot_btn del">삭제하기</button></td>
@@ -168,6 +171,7 @@
 					</tr>
 				</tfoot>
 			</table>
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
@@ -268,7 +272,7 @@
 						error : function(data) {
 							console.log(data)
 						}
-					})
+					});
 				}
 			});
 			

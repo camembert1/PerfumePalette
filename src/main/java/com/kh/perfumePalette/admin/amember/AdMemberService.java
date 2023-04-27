@@ -55,5 +55,19 @@ public interface AdMemberService {
 	 */
 	int getListCount();
 
+	/**
+	 * 회원 일시 정지 Service
+	 * @param i
+	 * @return int
+	 */
+	int updateStopMember(int i);
+
+	/**
+	 * 회원 정지 풀림 Service
+	 * @param i
+	 * @return int
+	 */
+	int updateStartMember(int i);
+
 
 }

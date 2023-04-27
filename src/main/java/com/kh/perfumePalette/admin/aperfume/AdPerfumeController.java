@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.member.Member;
-import com.kh.perfumePalette.perfume.Perfume;
 
 @Controller
 @RequestMapping("/perfume")
@@ -64,7 +63,7 @@ public class AdPerfumeController {
 			ModelAndView mv
 			, @RequestParam(value = "uploadFile", required=false) MultipartFile multi
 			, HttpServletRequest request
-			, @ModelAttribute Perfume perfume) {
+			, @ModelAttribute AdPerfume perfume) {
 		Map<String, String> fileInfo = null;
 		try {
 			HttpSession session = request.getSession();
@@ -109,7 +108,7 @@ public class AdPerfumeController {
 				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert).setViewName("common/alert");
 			} else {
-				Perfume perfume = pService.selectOneByNo(perfumeNo);
+				AdPerfume perfume = pService.selectOneByNo(perfumeNo);
 				mv.addObject("perfume", perfume);
 				mv.setViewName("perfume/modify");
 			}
@@ -124,7 +123,7 @@ public class AdPerfumeController {
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ModelAndView perfumeModify(ModelAndView mv
 			, @RequestParam(value = "reloadFile", required = false) MultipartFile multi
-			, @ModelAttribute Perfume perfume
+			, @ModelAttribute AdPerfume perfume
 			, HttpServletRequest request) {
 		Map<String, String> fileInfo = null;
 		try {
@@ -241,7 +240,7 @@ public class AdPerfumeController {
 		try {
 			for(int i = 0; i < arr.length; i++) {
 				System.out.println(arr[i]);
-				Perfume perfumeOne = pService.selectOneByNo(arr[i]);
+				AdPerfume perfumeOne = pService.selectOneByNo(arr[i]);
 				if (perfumeOne.getpFilename() != null) {
 					// 기존 파일 삭제
 					this.deleteFile(perfumeOne.getpFilerename(), request);
@@ -250,11 +249,7 @@ public class AdPerfumeController {
 			}
 			if (result > 0) {
 				return "1";
-//				Alert alert = new Alert("/perfume/mList", "상품 삭제가 완료되었습니다.");
-//				mv.addObject("alert", alert);
-//				mv.setViewName("common/alert");
 			} else {
-//				mv.addObject("msg", "삭제가 완료되지 않았습니다.");
 				return "0";
 			}
 			
@@ -291,7 +286,7 @@ public class AdPerfumeController {
 			} else {
 				int totalCount = pService.getListCount();
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-				List<Perfume> pList = pService.selectPerfumeList(pi);
+				List<AdPerfume> pList = pService.selectPerfumeList(pi);
 				mv.addObject("paging", pi);
 				mv.addObject("pList", pList);
 				mv.setViewName("perfume/mList");
@@ -307,7 +302,7 @@ public class AdPerfumeController {
 	@RequestMapping(value = "/mDetail", method = RequestMethod.GET)
 	public String perfumeDetailView(@RequestParam("perfumeNo") int perfumeNo, Model model) {
 		try {
-			Perfume perfume = pService.selectOneByNo(perfumeNo);
+			AdPerfume perfume = pService.selectOneByNo(perfumeNo);
 			model.addAttribute("perfume", perfume);
 			return "perfume/mDetail";
 
@@ -325,17 +320,19 @@ public class AdPerfumeController {
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, Model model) {
 		try {
+			
 			int totalCount = pService.getListCount(search);
 			PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-			List<Perfume> searchList = pService.selectListByKeyword(pi, search);
+			List<AdPerfume> searchList = pService.selectListByKeyword(pi, search);
 			if(!searchList.isEmpty()) {
 				model.addAttribute("paging", pi);
 				model.addAttribute("search", search);
 				model.addAttribute("sList", searchList);
 				return "perfume/search";
 			}else {
-				model.addAttribute("msg", "조회에 실패하였습니다.");
-				return "common/error";
+				Alert alert = new Alert("/perfume/search", "존재하지 않는 상품입니다.");
+				model.addAttribute("alert", alert);
+				return "common/alert";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -344,6 +341,57 @@ public class AdPerfumeController {
 		}
 	}
 	
+	// 찜 리스트
+	@GetMapping(value = "/wishList")
+	public ModelAndView viewPerfumeWishList(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam("perfumeNo") int perfumeNo
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		try {
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				int totalCount = pService.getWishListCount();
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<AdPerfume> wList = pService.selectWishList(perfumeNo, pi);
+				mv.addObject("paging", pi);
+				mv.addObject("wList", wList);
+				mv.setViewName("perfume/wishList");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	// 장바구니 리스트
+	@GetMapping(value = "/cartList")
+	public ModelAndView viewPerfumeCartList(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam("perfumeNo") int perfumeNo
+			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		try {
+			if(session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				int totalCount = pService.getCartListCount();
+				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
+				List<AdPerfume> cList = pService.selectCartList(perfumeNo, pi);
+				mv.addObject("paging", pi);
+				mv.addObject("cList", cList);
+				mv.setViewName("perfume/cartList");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
 }
 
 

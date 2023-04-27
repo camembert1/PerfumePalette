@@ -59,5 +59,15 @@ public class AdMemberStoreLogic implements AdMemberStore {
 		return session.selectOne("AdminMapper.getMListCount");
 	}
 
+	@Override
+	public int updateStopMember(SqlSession session, int i) {
+		return session.update("AdminMapper.stopMember", i);
+	}
+
+	@Override
+	public int updateStartMember(SqlSession session, int i) {
+		return session.update("AdminMapper.startMember", i);
+	}
+
 
 }
