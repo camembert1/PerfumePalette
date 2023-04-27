@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.member.Member;
@@ -48,11 +50,12 @@ public class QnaBoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public ModelAndView qnaBoardInsert(ModelAndView mv,
 			@RequestParam(name = "uploadFile", required = false) MultipartFile multi, HttpServletRequest request,
-			@ModelAttribute QnaBoard qnaboard, HttpSession session) {
+			@ModelAttribute QnaBoard qnaboard, HttpSession session , @RequestParam(name = "qnaPassword") Integer qnaPassword) {
 		Map<String, String> fileInfo = null;
 		try {
 			Integer UserNo = ((Member) session.getAttribute("member")).getMemberNo();
 			qnaboard.setMemberNo(UserNo);
+			qnaboard.setQnaPassword(qnaPassword); // 비밀번호 설정
 			if (multi.getSize() != 0 && !multi.getOriginalFilename().equals("")) {
 				fileInfo = qnafileUtil.saveFile(multi, request);
 				qnaboard.setqFilename(fileInfo.get("original"));
@@ -106,27 +109,42 @@ public class QnaBoardController {
 //		return mv;
 //	}
 
-
-	// 문의 게시판 목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView viewQnaBoardList(@RequestParam(value="page", required = false, defaultValue = "1") int currentPage, ModelAndView mv) {
-		try {
-			int totalCount = qbService.getqnaBoardCount(); // 전체 게시글 개수 조회
-			PageInfo pi = new PageInfo(currentPage, totalCount, 10); // 한 페이지당 10개씩 표시
-			List<QnaBoard> qbList = qbService.selectAllQnaBoard(pi); // 해당 페이지의 게시글 목록 조회
-			mv.addObject("paging", pi);
-			mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist");
-		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-		}
+	public ModelAndView viewQnaBoardList(@RequestParam(value = "page", required = false, defaultValue = "1") int currentPage, HttpSession session, ModelAndView mv) {
+	    try {
+	        int totalCount = qbService.getqnaBoardCount(); // 전체 게시글 개수 조회
+	        PageInfo pi = new PageInfo(currentPage, totalCount, 10); // 한 페이지당 10개씩 표시
+	        List<QnaBoard> qbList = qbService.selectAllQnaBoard(pi); // 해당 페이지의 게시글 목록 조회
+	        mv.addObject("paging", pi);
+
+	            mv.addObject("qbList", qbList).setViewName("qnaBoard/qnaBoardlist"); // 일반 사용자용 jsp 페이지
+	        
+	    } catch (Exception e) {
+	        mv.addObject("msg", e.getMessage()).setViewName("common/error");
+	    }
 	    return mv;
 	}
 
 	
 
+//	// 문의 게시판 Detail
+//	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+//	public ModelAndView qnaDetailView(@RequestParam(value = "qnaNo", required = false) Integer qnaNo, ModelAndView mv) {
+//		try {
+//			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
+//			mv.addObject("qnaNo", qnaNo);
+//			mv.addObject("qnaboard", qnaboard).setViewName("qnaBoard/qnaBoardDetail");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			mv.addObject("msg", e.getMessage());
+//			mv.setViewName("common/error");
+//		}
+//		return mv;
+//	}
+	
 	// 문의 게시판 Detail
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public ModelAndView qnaDetailView(@RequestParam(value = "qnaNo", required = false) Integer qnaNo, ModelAndView mv) {
+	public ModelAndView qnaDetailView(@RequestParam(value = "qnaNo", required = false) Integer qnaNo, HttpSession session,  ModelAndView mv) {
 		try {
 			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
 			mv.addObject("qnaNo", qnaNo);
@@ -137,6 +155,35 @@ public class QnaBoardController {
 			mv.setViewName("common/error");
 		}
 		return mv;
+	}
+	
+	// 문의 게시판 비밀글 Detail
+	@RequestMapping(value = "/pwdetail", method = RequestMethod.GET)
+	public ModelAndView pwboardModifyView(@RequestParam("qnaNo") Integer qnaNo, HttpSession session, ModelAndView mv, @RequestParam(name = "qnaPassword") Integer qnaPassword) {
+	    try {
+	        // 입력된 비밀번호를 이용해서 QnaBoard 조회
+	        QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
+	        if (qnaboard != null) {
+	            // QnaBoard 객체에 저장된 비밀번호와 입력받은 비밀번호를 비교하여 일치하면 detail 페이지로 이동
+	            if (qnaboard.getQnaPassword().equals(qnaPassword)) {
+	                mv.addObject("qnaNo", qnaNo);
+	                mv.addObject("qnaboard", qnaboard);
+	                mv.setViewName("qnaBoard/qnaBoardDetail");
+	            } else {
+	                // 비밀번호가 일치하지 않을 경우, 에러 메시지를 출력하고 이전 페이지로 이동
+	                mv.addObject("msg", "비밀번호가 일치하지 않습니다.");
+	                mv.setViewName("common/error");
+	            }
+	        } else {
+	            mv.addObject("msg", "데이터 조회에 실패하였습니다.");
+	            mv.setViewName("common/error");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        mv.addObject("msg", e.getMessage());
+	        mv.setViewName("common/error");
+	    }
+	    return mv;
 	}
 
 	// 문의 게시판 Detail 수정 View
@@ -214,5 +261,59 @@ public class QnaBoardController {
 		}
 		return mv;
 	}
-
+	
+	// Detail 관리자 댓글 작성
+	@ResponseBody
+	@RequestMapping(value = "/reply/register", method = RequestMethod.POST)
+	public String ReplyInsert(@ModelAttribute QnaReply qnaReply) {
+		try {
+			int result = qbService.insertReply(qnaReply);
+			if(result > 0) {
+				return "1";
+			}else {
+				return "0";
+			}
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+	
+	// Detail 관리자 댓글 목록
+	@ResponseBody
+	@RequestMapping(value = "/reply/list", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String Replylist(Integer qnaNo ) {
+		List<QnaReply> qrList = qbService.selectAllReply(qnaNo);
+		// JSONArray <- JSONObject
+		// => GSON 한방!
+		return new Gson().toJson(qrList);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+	
+

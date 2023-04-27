@@ -23,6 +23,11 @@ main {
     width: 100vw;
     min-height: 100vh;
 }
+
+h1 {
+	margin-bottom : 40px;
+}
+
 main>div[id=forHeader] {
 
     /* 헤더 공간 비워두기 위함  */

@@ -107,6 +107,15 @@ a {
     margin: 7px 17px;
 }
 
+.hidden-password {
+	display : flex;
+	justify-content : center;
+}
+
+.hidden {
+	margin-left : 10px;
+	margin-right : 10px;
+}
 /* .now {
     background-color: rgba(200, 194, 194, 0.901);
     padding: 7px 17px;

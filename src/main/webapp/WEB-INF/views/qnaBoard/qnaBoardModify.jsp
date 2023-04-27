@@ -27,6 +27,7 @@
 					<!-- 본문 내용 가운데 정렬 위한 div -->
 					<div id="forCenter">
 						<div class="container">
+						<h1>문의 수정</h1>
 							<form action="/qnaboard/modify" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="qnaNo" value="${qnaboard.qnaNo }">
 								<select name="qnaType" id="qnaType" onchange="changeFn()" class="select"

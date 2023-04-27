@@ -19,6 +19,11 @@
 body {
     overflow-x: hidden;
 }
+
+h1 {
+ margin-bottom : 40px;	
+}
+
 main {
     width: 100vw;
     min-height: 100vh;
@@ -104,4 +109,12 @@ main input:focus {
 main form span[aria-hidden="true"] {
     margin-left: 30px;
 } 
+
+#hiddendiv {
+    display: inline;
+}
+
+.password-label {
+    float: left;
+  }
 

@@ -22,4 +22,8 @@ public interface QnaBoardStore {
 
 	int getqnaBoardCount(SqlSession session);
 
+	int insertReply(SqlSession session, QnaReply qnaReply);
+
+	List<QnaReply> selectAllReply(SqlSession session, Integer qnaNo);
+
 }

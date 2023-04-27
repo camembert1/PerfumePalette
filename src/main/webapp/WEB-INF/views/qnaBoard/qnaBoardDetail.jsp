@@ -60,14 +60,44 @@
 							<div id="textarea">${qnaboard.qnaContents }</div>
 							<br> <br>
 							<div class="submit-btn">
-								<input type="button" value="수정"
-									onclick="location.href='/qnaboard/modify?qnaNo=' + ${qnaboard.qnaNo}">
-								<input type="button" id="qnaboardDelete" value="삭제"
-									onclick="removeCheck(${qnaboard.qnaNo});">
-								<input type="button" value="목록" onclick="location.href='/qnaboard/list'">
+								<c:if test="${member.memberNo != '2' }">
+									<input type="button" value="수정"
+										onclick="location.href='/qnaboard/modify?qnaNo=' + ${qnaboard.qnaNo}">
+									<input type="button" id="qnaboardDelete" value="삭제"
+										onclick="removeCheck(${qnaboard.qnaNo});">
+									<input type="button" value="목록" onclick="location.href='/qnaboard/list'">
+								</c:if>
+								<c:if test="${member.memberNo == '2' }">
+									<!-- <input type="button" value="답변하기"> -->
+									<!-- 댓글 영역 -->
+									<!-- 댓글 등록 -->
+									<table align="center" width="500" border="1">
+										<tr>
+											<td>${member.memberNickname}</td>
+											<!-- <td><input type="text" id="memberNickname" name="memberNickname"></td> -->
+										</tr>
+										<tr>
+											<td><textarea name="replyContents" id="replyContents" cols="55"
+													rows="3"></textarea></td>
+											<td><button id="rsubmit">등록하기</button></td>
+										</tr>
+									</table>
+									<!-- 댓글 목록 -->
+									<table align="center" width="500" border="1" id="replyTable">
+										<thead>
+											<tr>
+												<!-- 댓글 갯수 -->
+												<td colspan="4"><b id="replyCount"></b></td>
+											</tr>
+										</thead>
+										<tbody>
 
+										</tbody>
+									</table>
+								</c:if>
 							</div>
 						</form>
+
 					</div>
 				</div>
 			</main>
@@ -79,6 +109,77 @@
 						location.href = "/qnaboard/remove?qnaNo=" + qnaNo;
 					}
 				}
+
+				$("#rsubmit").on("click", function () {
+					event.preventDefault();  // 버튼의 기본 동작을 막음
+					const qnaNo = "${qnaboard.qnaNo}";
+					const memberNo = "${member.memberNo}";
+					const replyContents = $("#replyContents").val();
+					console.log({
+						repQnaNo: qnaNo,
+						memberNo: memberNo,
+						replyContents: replyContents
+					});
+					$.ajax({
+						url: "/qnaboard/reply/register",  // ajax 요청을 보낼 URL
+						data: {
+							repQnaNo: qnaNo,
+							memberNo: memberNo,
+							replyContents: replyContents
+						},
+						type: "POST",  // ajax 요청 방식
+						success: function (result) {
+							if (result == '1') {
+								alert("댓글 등록 성공");
+								$("#replyContents").val("");  // 댓글 입력창 비우기
+							}
+						}
+					})
+				});
+
+
+
+				// 댓글 목록을 가져오는 함수
+				function getReplyList() {
+					const qnaNo = "${qnaboard.qnaNo}"; // Q&A 게시물 번호
+					$.ajax({
+						url: "/qnaboard/reply/list", // 댓글 목록을 가져오는 URL
+						data: { "qnaNo": qnaNo },
+						type: "GET",
+						success: function (data) {
+							$("#replyCount").text("댓글 (" + data.length + ")");
+							const tableBody = $("#replyTable tbody");
+							tableBody.html("");
+							console.log(data);
+							let tr, rWriter, rContent, repDate, btnArea;
+							if (data.length > 0) {
+								for (let i in data) {
+									tr = $("<tr>");
+									rWriter = $("<td width='100'>").text(data[i].replyWriter);
+									rContent = $("<td>").text(data[i].replyContents);
+									rCreateDate = $("<td width='100'>").text(data[i].repDate);
+									btnArea = $("<td width='80'>").append(
+										$("<a href='javascript:void(0)' onclick='modifyReply(this, \"" + data[i].repDate + "\", " + data[i].replyNo + ");'>수정</a>")
+									).append(
+										$("<a href='javascript:void(0)' onclick='removeReply(" + data[i].replyNo + ");'>삭제</a>")
+									);
+									tr.append(rWriter);
+									tr.append(rContent);
+									tr.append(repDate);
+									tr.append(btnArea);
+									tableBody.append(tr);
+								}
+							}
+						},
+						error: function () {
+							alert("AJAX 처리 실패! 관리자 문의 요망");
+						}
+					});
+				}
+
+
+
+
 			</script>
 		</body>
 

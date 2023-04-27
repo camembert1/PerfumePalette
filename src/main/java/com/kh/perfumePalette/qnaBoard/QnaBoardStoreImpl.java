@@ -58,4 +58,16 @@ public class QnaBoardStoreImpl implements QnaBoardStore {
 		return result;
 	}
 
+	@Override
+	public int insertReply(SqlSession session, QnaReply qnaReply) {
+		int result = session.insert("qnaBoardMapper.insertReply", qnaReply);
+		return result;
+	}
+
+	@Override
+	public List<QnaReply> selectAllReply(SqlSession session, Integer qnaNo) {
+		List<QnaReply> qrlist = session.selectList("qnaBoardMapper.selectAllReply", qnaNo);
+		return qrlist;
+	}
+
 }

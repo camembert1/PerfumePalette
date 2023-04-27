@@ -58,6 +58,19 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return result;
 	}
 
+	@Override
+	public int insertReply(QnaReply qnaReply) {
+		int result = qbStore.insertReply(session, qnaReply);
+		return result;
+	}
+
+	@Override
+	public List<QnaReply> selectAllReply(Integer qnaNo) {
+		List<QnaReply> qrlist = qbStore.selectAllReply(session, qnaNo);
+		return qrlist;
+	}
+
+
 	
 
 }

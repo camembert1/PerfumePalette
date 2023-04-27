@@ -52,6 +52,14 @@ public interface QnaBoardService {
 	 * @return
 	 */
 	int deleteQnaBoard(int qnaNo);
+	
+	/**
+	 * 문의 게시판 관리자 댓글
+	 * @return
+	 */
+	int insertReply(QnaReply qnaReply);
+
+	List<QnaReply> selectAllReply(Integer qnaNo);
 
 	
 

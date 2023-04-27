@@ -17,8 +17,15 @@
 		<result property="qQnaNo" column="Q_QNA_NO" />
 		<result property="memberNickname" column="MEMBER_NICKNAME" />
 	</resultMap>
-
-
+	
+	<resultMap type="QnaReply" id="replyResultMap">
+		<id property="replyNo" column="REPLY_NO"/>
+		<result property="repQnaNo" column="REP_QNA_NO"/>
+		<result property="replyContents" column="REPLY_CONTENTS"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="repDate" column="REP_CREATE_DATE"/>
+	</resultMap>
+	
 	<!-- 문의 게시판 글쓰기 -->
 	<insert id="writeQnaBoard">
 		INSERT INTO QNA_TBL VALUES(SEQ_QNA_NO.NEXTVAL, #{perfumeNo}, #{qnaType}, #{qnaSubject}, #{qnaContents}
@@ -56,6 +63,16 @@
 	
 	<select id="getqnaBoardCount" resultType="_int">
 	 	SELECT COUNT(*) FROM QNA_TBL
+	</select>
+	
+	<!-- 댓글 입력 -->
+	<insert id="insertReply">
+		INSERT INTO Q_REPLY_TBL VALUES(SEQ_REPLY_NO.NEXTVAL, #{repQnaNo}, #{memberNo}, #{replyContents}, DEFAULT)
+	</insert>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectAllReply" resultMap="replyResultMap">
+		SELECT * FROM Q_REPLY_TBL WHERE REP_QNA_NO = #{repQnaNo}
 	</select>
 
 
