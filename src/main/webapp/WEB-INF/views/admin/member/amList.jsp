@@ -68,16 +68,16 @@
 			<table>
 				<thead>
 					<tr class="headList">
-						<th style="width: 40px;"><input type="checkbox" class="allCheck"></th>
-						<th style="width: 60px;">이 름</th>
-						<th style="width: 100px;">아이디</th>
-						<th style="width: 120px;">닉네임</th>
-						<th style="width: 150px;">이메일</th>
-						<th style="width: 110px;">전화번호</th>
-						<th style="width: 200px;">주 소</th>
-						<th style="width: 100px;">등록일</th>
-						<th style="width: 100px;">탈퇴여부</th>
-						<th style="width: 120px;">수 정</th>
+						<th><input type="checkbox" class="allCheck"></th>
+						<th>이 름</th>
+						<th>아이디</th>
+						<th>닉네임</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주 소</th>
+						<th>등록일</th>
+						<th>탈퇴여부</th>
+						<th>수 정</th>
 					</tr>
 				</thead>
 				<tbody>

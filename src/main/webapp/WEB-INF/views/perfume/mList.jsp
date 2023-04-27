@@ -79,17 +79,17 @@
 					<tr id="thead">
 						<th style="width: 40px"><input type="checkbox" class="allCheck"></th>
 						<th>이미지</th>
-						<th style="width: 80px">브랜드</th>
-						<th style="width: 200px">상품명</th>
-						<th style="width: 60px">용 량</th>
-						<th style="width: 80px">가 격</th>
-						<th style="width: 80px">재 고</th>
-						<th style="width: 100px">향 분류</th>
-						<th style="width: 200px">이미지 분류</th>
-						<th style="width: 70px">찜</th>
-						<th style="width: 70px">장바구니</th>
-						<th style="width: 70px">노출 여부</th>
-						<th style="width: 50px">수 정</th>
+						<th>브랜드</th>
+						<th>상품명</th>
+						<th>용 량</th>
+						<th>가 격</th>
+						<th>재 고</th>
+						<th>향 분류</th>
+						<th>이미지 분류</th>
+						<th>찜</th>
+						<th>장바구니</th>
+						<th>노출 여부</th>
+						<th>수 정</th>
 					</tr>
 				</thead>
 				<tbody>

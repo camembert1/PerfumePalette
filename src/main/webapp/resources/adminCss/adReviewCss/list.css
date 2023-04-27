@@ -91,3 +91,34 @@ main table, tr, th, td {
 main img {
 	height: 100px;
 }
+
+/* 페이징 CSS */
+main #paging {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+main #paging a,
+main #paging span {
+  display: inline-block;
+  padding: 8px 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main #paging a:hover {
+  background-color: #ddd;
+}
+
+main #paging .current {
+  font-weight: bold;
+  color: #fff;
+  background-color: #333;
+  border-color: #333;
+  cursor: default;
+}
