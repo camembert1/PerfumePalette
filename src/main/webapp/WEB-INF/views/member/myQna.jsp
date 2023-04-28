@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +50,15 @@
             </thead>
             <tbody>
             <!-- 테이블 본문 -->
+            <c:forEach items="${myQna }" var="qna" >
+            	<tr>
+            		<td><input type="checkbox" class="check"  value="${review.reviewNo}"></td>
+            		<td>[${review.perfumeBrand }] ${review.perfumeName }</td>
+            		<td>${review.reviewContents }</td>
+            		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
+            		<td>${review.rViewcount }</td>
+            	</tr>
+            </c:forEach>  
             <tr>
               <td>[배송]</td>
               <td>향수 오다가 쏟으셨는지?</td>
@@ -56,17 +67,8 @@
                <td>
                 <button>삭제</button>
               </td>
-            </tr>
+            </tr>    
             
-            
-              <td>[교환]</td>
-              <td>구린내가 나요...</td>
-              <td>2023-04-01</td>
-              <td>O</td>
-               <td>
-                <button>삭제</button>
-              </td>
-            </tr>
            
 
             

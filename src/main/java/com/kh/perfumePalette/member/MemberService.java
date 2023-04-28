@@ -1,5 +1,9 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
+
+import com.kh.perfumePalette.review.Review;
+
 public interface MemberService {
 
 	int insertMember(Member member);
@@ -26,5 +30,7 @@ public interface MemberService {
 	Member checkPw(Member member);
 	
 	int bye(Member member);
+
+	List<Review> getMyReviews(int memberNo);
 
 }

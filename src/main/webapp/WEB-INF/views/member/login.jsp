@@ -14,14 +14,12 @@ margin: auto;
     display: block;
    margin-bottom: 10px;
 }
- 
 </style>
 <link rel="stylesheet" href="../../../resources/memberCss/login.css">
-<script>
 
-
-</script>
-
+<!-- favicon : 탭에 보이는 아이콘 -->
+   <link rel="icon" href="../../resources/img/common/favicon.png" />
+   <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />

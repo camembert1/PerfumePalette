@@ -1,8 +1,12 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.perfumePalette.review.Review;
 
 @Repository
 public class MemberStroeImpl implements MemberStore {
@@ -85,6 +89,12 @@ public class MemberStroeImpl implements MemberStore {
 	public int bye(Member member) {
 		int result = session.update("memberMapper.bye", member);
 		return result;
+	}
+
+	@Override
+	public List<Review> myReviews(int memberNo) {
+		List<Review> rList = session.selectList("memberMapper.myReviews", memberNo);
+		return rList;
 	}
 
 

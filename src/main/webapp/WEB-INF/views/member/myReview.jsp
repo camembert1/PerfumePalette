@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +22,7 @@
       <!-- 헤더 부분 피하기 위한 div -->
       <div id="forHeader"></div>
       <!-- 본문 내용 가운데 정렬 위한 div -->
-      <div id="forCenter">
+      <div id="forCenter"></div>
         <!-- 사이드바 -->
         <div id="hrefList">
           <div id="hrefName">${member.memberName }님</div>
@@ -39,29 +42,63 @@
             <thead>
                 <!-- 테이블 헤더 -->
                 <tr>
-                	<th>선택</th>
+                	<th><input type="checkbox" name="allCheck" ></th>
                     <th>제품명</th>
-                    <th>제목</th>
+                    <th>상품평</th>
                     <th>작성일</th>
                     <th>조회수</th>
                 </tr>
             </thead>
             <tbody>
-            <!-- 테이블 본문 -->
-            <tr>
-            <td><input type="checkbox" name=""></td>
-              <td>
-                <a href="">딥디크 어쩌고</a>
-              </td>
-              <td>엄청 좋아요</td>
-              <td>2023-04-01</td>
-              <td>15</td>
-            </tr>
+            <c:forEach items="${myReviews }" var="review" >
+            	<tr>
+            		<td><input type="checkbox" class="check"  value="${review.reviewNo}"></td>
+            		<td>[${review.perfumeBrand }] ${review.perfumeName }</td>
+            		<c:set var="str" value="${review.reviewContents }"/>
+					<c:set var="result" value="${fn:replace(str, '^.*?>', '')}"/>
+					<c:set var="result" value="${fn:replace(result, '<.*$', '')}"/>
+            		<td>${result }</td>
+            		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
+            		<td>${review.rViewcount }</td>
+            	</tr>
+            </c:forEach>            
+            	<tr>
+            		<td><input type="checkbox" class="check"></td>
+            		<td>
+            			<a href="">[디올] 옴므 코롱 어쩌고</a>
+            		</td>
+            		<td>디지버지게 좋네요</td>
+            		<td>4444-44-44</td>
+            		<td>44</td>
+            	</tr>
           </tbody>
         </table>
+        <button class="btn" class="del">선택삭제</button>
       </div>
-        <button class="btn">선택삭제</button>
     </main>
     <jsp:include page="../common/footer.jsp" />
+    
+    
+    <script>
+    // 체크박스 - 전체선택  
+	var allCheck = document.querySelector(".allCheck");
+	var list = document.querySelectorAll(".check");
+	allCheck.onclick = () => {
+		if(allCheck.checked) {
+			for(var i = 0; i < list.length; i++) {
+				list[i].checked = true;
+			}
+		} else {
+			for(var i = 0; i < list.length; i++) {
+				list[i].checked = false;
+			}
+		}
+	}
+	
+	// 선택 삭제 버튼 
+	
+	
+	
+    </script>
 </body>
 </html>

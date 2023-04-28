@@ -1,102 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-   <resultMap type="Member" id="memberResultMap">
-      <id property="memberNo" column="MEMBER_NO"></id>
-      <result property="memberId" column="MEMBER_ID" />
-      <result property="memberNickname" column="MEMBER_NICKNAME" />
-      <result property="memberPw" column="MEMBER_PW" />
-      <result property="memberName" column="MEMBER_NAME" />
-      <result property="memberEmail" column="MEMBER_EMAIL" />
-      <result property="memberPhone" column="MEMBER_PHONE" />
-      <result property="memberAddr" column="MEMBER_ADDR" />
-      <result property="memberDate" column="MEMBER_DATE" />
-      <result property="memberEndDate" column="MEMBER_END_DATE" />
-      <result property="memberStatus" column="MEMBER_STATUS" />
-      <result property="memberType" column="MEMBER_TYPE" />
-   </resultMap>
+	<resultMap type="Member" id="memberResultMap">
+		<id property="memberNo" column="MEMBER_NO"></id>
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="memberDate" column="MEMBER_DATE" />
+		<result property="memberEndDate" column="MEMBER_END_DATE" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberType" column="MEMBER_TYPE" />
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="perfumeNo" column="PERFUME_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="reviewContents" column="REVIEW_CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		
+		<result property="rViewcount" column="R_VIEW_COUNT"/>
+		
+		<result property="rViewscore" column="REVIEW_SCORE"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="perfumeBrand" column="PERFUME_BRAND"/>
+		
+		<result property="perfumeName" column="PERFUME_NAME"/>
+		<result property="perfumePrice" column="PERFUME_PRICE"/>
+		<result property="pFilerename" column="P_FILERENAME"/>
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+	</resultMap>
 
-   <insert id="insertMember">
-      INSERT INTO MEMBER_TBL(MEMBER_NO, MEMBER_ID,
-      MEMBER_NICKNAME, MEMBER_PW, MEMBER_NAME, MEMBER_EMAIL, MEMBER_PHONE,
-      MEMBER_ADDR, MEMBER_DATE, MEMBER_STATUS, MEMBER_TYPE)
-      VALUES(SEQ_MEMBERNO.NEXTVAL, #{memberId}, #{memberNickname},
-      #{memberPw}, #{memberName}, #{memberEmail}, #{memberPhone},
-      #{memberAddr}, DEFAULT, DEFAULT, DEFAULT)
-   </insert>
+	<insert id="insertMember">
+		INSERT INTO MEMBER_TBL(MEMBER_NO, MEMBER_ID,
+		MEMBER_NICKNAME, MEMBER_PW, MEMBER_NAME, MEMBER_EMAIL, MEMBER_PHONE,
+		MEMBER_ADDR, MEMBER_DATE, MEMBER_STATUS, MEMBER_TYPE)
+		VALUES(SEQ_MEMBERNO.NEXTVAL, #{memberId}, #{memberNickname},
+		#{memberPw}, #{memberName}, #{memberEmail}, #{memberPhone},
+		#{memberAddr}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
 
-   <select id="login" resultMap="memberResultMap">
-      SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE, MEMBER_STATUS
-      FROM MEMBER_TBL
-      WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
-   </select>
+	<select id="login" resultMap="memberResultMap">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE,
+		MEMBER_STATUS
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
+	</select>
 
-   <select id="selectMemberById" resultMap="memberResultMap">
-      SELECT *
-      FROM MEMBER_TBL
-      WHERE MEMBER_ID = #{memberId}
-   </select>
+	<select id="selectMemberById" resultMap="memberResultMap">
+		SELECT *
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
-   <select id="checkId" resultType="_int">
-      SELECT COUNT(*)
-      FROM MEMBER_TBL
-      WHERE MEMBER_ID = #{memberId}
-   </select>
+	<select id="checkId" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
-   <select id="checkNickname" resultType="_int">
-      SELECT COUNT(*)
-      FROM
-      MEMBER_TBL
-      WHERE MEMBER_NICKNAME = #{memberNickname}
-   </select>
+	<select id="checkNickname" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		MEMBER_TBL
+		WHERE MEMBER_NICKNAME = #{memberNickname}
+	</select>
 
-   <select id="checkEmail" resultType="_int">
-      SELECT COUNT(*)
-      FROM
-      MEMBER_TBL
-      WHERE MEMBER_EMAIL = #{memberEmail}
-   </select>
-   
-   <select id="findId" resultMap="memberResultMap">
-      SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME = #{memberName}
-      <if test="memberEmail != null and memberEmail != '' ">
-         AND MEMBER_EMAIL = #{memberEmail}
-      </if>
-      <if test="memberPhone != null and memberPhone != '' ">
-         AND MEMBER_PHONE = #{memberPhone}
-      </if>
-   </select>
-   
-   <select id="findPw" resultMap="memberResultMap">
-      SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_NAME = #{memberName}
-      <if test="memberEmail != null and memberEmail != '' ">
-         AND MEMBER_EMAIL = #{memberEmail}
-      </if>
-      <if test="memberPhone != null and memberPhone != '' ">
-         AND MEMBER_PHONE = #{memberPhone}
-      </if>
-   </select>
-   
-   <update id="updatePw">
-      UPDATE MEMBER_TBL 
-      SET MEMBER_PW = #{memberPw} 
-      WHERE MEMBER_ID = #{memberId}
-   </update>
-   
-   <update id="modifyMember">
-      UPDATE MEMBER_TBL SET MEMBER_NICKNAME =
-      #{memberNickname}, MEMBER_PW = #{memberPw}, MEMBER_NAME =
-      #{memberName}, MEMBER_EMAIL = #{memberEmail}, MEMBER_PHONE =
-      #{memberPhone}, MEMBER_ADDR = #{memberAddr}
-      WHERE MEMBER_ID = #{memberId}
-   </update>
-   
-   <select id="checkPw" resultMap="memberResultMap">
-   		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw} AND MEMBER_STATUS = 1
-   </select>
-   
-   <update id="bye">
-  		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 WHERE MEMBER_ID = #{memberId} AND MEMBER_STATUS = 1
-  </update>
+	<select id="checkEmail" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		MEMBER_TBL
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+
+	<select id="findId" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME = #{memberName}
+		<if test="memberEmail != null and memberEmail != '' ">
+			AND MEMBER_EMAIL = #{memberEmail}
+		</if>
+		<if test="memberPhone != null and memberPhone != '' ">
+			AND MEMBER_PHONE = #{memberPhone}
+		</if>
+	</select>
+
+	<select id="findPw" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_NAME
+		= #{memberName}
+		<if test="memberEmail != null and memberEmail != '' ">
+			AND MEMBER_EMAIL = #{memberEmail}
+		</if>
+		<if test="memberPhone != null and memberPhone != '' ">
+			AND MEMBER_PHONE = #{memberPhone}
+		</if>
+	</select>
+
+	<update id="updatePw">
+		UPDATE MEMBER_TBL
+		SET MEMBER_PW = #{memberPw}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+
+	<update id="modifyMember">
+		UPDATE MEMBER_TBL SET MEMBER_NICKNAME =
+		#{memberNickname}, MEMBER_PW = #{memberPw}, MEMBER_NAME =
+		#{memberName}, MEMBER_EMAIL = #{memberEmail}, MEMBER_PHONE =
+		#{memberPhone}, MEMBER_ADDR = #{memberAddr}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+
+	<select id="checkPw" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_PW =
+		#{memberPw} AND MEMBER_STATUS = 1
+	</select>
+
+	<update id="bye">
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 WHERE MEMBER_ID = #{memberId} AND
+		MEMBER_STATUS = 1
+	</update>
+
+	<select id="myReviews" resultMap="reviewResultMap">
+		SELECT * FROM MEMBER_TBL
+		JOIN REVIEW_TBL USING(MEMBER_NO)
+		JOIN PERFUME_TBL USING(PERFUME_NO)
+		WHERE MEMBER_NO = #{memberNo }
+	</select>
+	
+	
+	
+
+
+
 
 </mapper>

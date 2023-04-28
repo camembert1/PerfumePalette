@@ -1,5 +1,6 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.review.Review;
 
 @Controller
 @RequestMapping("/member")
@@ -135,7 +137,7 @@ public class MemberController {
 			Member loginUser = mService.login(member);
 			if (loginUser != null) {
 				// member_status = 1인 사람만 로그인 가능
-				if (loginUser.getMemberStatus() == 1) { 
+				if (loginUser.getMemberStatus() == 1) {
 					HttpSession session = request.getSession();
 					// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
 					session.setAttribute("member", loginUser);
@@ -147,13 +149,11 @@ public class MemberController {
 					}
 				} else { // 탈퇴한 회원일 경우
 					Alert alert = new Alert("/member/login", "이미 탈퇴한 회원입니다.");
-					mv.addObject("alert", alert)
-					.setViewName("common/alert");
+					mv.addObject("alert", alert).setViewName("common/alert");
 				}
-			} else {	// 로그인 실패
+			} else { // 로그인 실패
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
-				mv.addObject("alert", alert)
-				.setViewName("common/alert");
+				mv.addObject("alert", alert).setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -324,10 +324,34 @@ public class MemberController {
 
 	// 내가 작성한 후기
 	@GetMapping("/myReview")
-	public ModelAndView myReview(ModelAndView mv) {
-		mv.setViewName("member/myReview");
+	public ModelAndView myReviewList(ModelAndView mv
+			, HttpServletRequest request
+			, HttpSession session) {
+		try {
+			// 로그인 여부 체크
+			if (session.getAttribute("member") == null) {
+				throw new RuntimeException("로그인 후 이용 가능합니다.");
+			}
+			
+			// 현재 로그인한 사용자의 회원 번호 가져오기
+			 int memberNo = ((Member) session.getAttribute("member")).getMemberNo();
+
+			// memberNo에 해당하는 후기 목록 가져오기***
+			List<Review> myReviews = mService.getMyReviews(memberNo);
+			
+
+			// JSP에서 사용할 rList에 myReviews 설정
+			mv.addObject("myReviews", myReviews);
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		
 		return mv;
 	}
+	
+	
+	
 
 	// 내가 작성한 문의
 	@GetMapping("/myQna")

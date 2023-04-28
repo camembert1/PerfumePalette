@@ -1,7 +1,11 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.kh.perfumePalette.review.Review;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -85,6 +89,12 @@ public class MemberServiceImpl implements MemberService{
 	public int bye(Member member) {
 		int result = mStore.bye(member);
 		return result;
+	}
+
+	@Override
+	public List<Review> getMyReviews(int memberNo) {
+		List<Review> rList = mStore.myReviews(memberNo);
+		return rList;
 	}
 
 
