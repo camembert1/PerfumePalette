@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,39 +42,35 @@
             <thead>
                 <!-- 테이블 헤더 -->
                 <tr>
+                    <th><input type="checkbox" name="allCheck" ></th>
                     <th>분류</th>
                     <th>제목</th>
                     <th>작성일</th>
-                    <th>답변여부</th>
-                    <th></th>
+                    <th>답변 상태</th>
                 </tr>
             </thead>
             <tbody>
             <!-- 테이블 본문 -->
             <c:forEach items="${myQna }" var="qna" >
             	<tr>
-            		<td><input type="checkbox" class="check"  value="${review.reviewNo}"></td>
-            		<td>[${review.perfumeBrand }] ${review.perfumeName }</td>
-            		<td>${review.reviewContents }</td>
-            		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
-            		<td>${review.rViewcount }</td>
+            		<td><input type="checkbox" class="check"  value="${qna.qnaNo}"></td>
+            		<td>
+            			<c:if test="${qna.qnaType == 1 }">상품문의</c:if>
+	                    <c:if test="${qna.qnaType == 2 }">배송문의</c:if>
+	                    <c:if test="${qna.qnaType == 3 }">교환/환불</c:if>
+	                    <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
+	                </td>
+            		<td>${qna.qnaSubject }</td>
+            		<td><fmt:formatDate value="${qna.qnaDate }" pattern="yyyy-MM-dd" /></td>
+            		<td>
+            			<c:if test="${qna.qQnaNo eq null}">대기</c:if>
+	                    <c:if test="${qna.qQnaNo ne null}">완료</c:if>
+	                 </td>
             	</tr>
             </c:forEach>  
-            <tr>
-              <td>[배송]</td>
-              <td>향수 오다가 쏟으셨는지?</td>
-              <td>2023-04-01</td>
-              <td>X</td>
-               <td>
-                <button>삭제</button>
-              </td>
-            </tr>    
-            
-           
-
-            
           </tbody>
         </table>
+        <button class="btn" class="del">선택삭제</button>
       </div>
     </main>
     <jsp:include page="../common/footer.jsp" />

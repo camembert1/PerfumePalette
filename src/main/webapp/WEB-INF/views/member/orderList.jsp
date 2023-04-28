@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,35 +41,28 @@
             <tr>
                 <th>주문번호</th>
                 <th>제품명</th>
-                <th>가격</th>
+                <th>상품구매금액</th>
                 <th>주문처리상태</th>
                 <th>후기작성</th>
             </tr>
         </thead>
         <tbody>
-        <!-- 테이블 본문 -->
+        <c:forEach items="${orderList}" var="order">
             <tr>
-                <td>1234567</td>
-                <td>
-                		<a href="">딥디크 어쩌고</a>
-                </td>
-                <td>10,000,000원</td>
-                <td>배송 완</td> 
-                <td>
-                	<button onclick = "location.href = '/review/reviewWrite'">후기작성</button>
-                </td>
+                <td>[${order.orderNo}]</td>
+                <td><a href=""></a></td>
+                <td></td>
+                <td></td> 
+                <td><button onclick = "location.href = '/review/reviewWrite'">후기작성</button></td>
             </tr>
-            
+        </c:forEach>
+        
             <tr>
                 <td>444444</td>
-                <td>
-                		<a href="">디올옴므</a>
-                </td>
+                <td><a href="">디올옴므</a></td>
                 <td>9,000,000원</td>
                 <td>배송 완</td> 
-                <td>
-                	<button>후기작성</button>
-                </td>
+                <td><button>후기작성</button></td>
             </tr>
             </tbody>
             </table>

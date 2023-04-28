@@ -9,12 +9,11 @@
 <meta charset="UTF-8">
 <title>작성 후기</title>
 <link rel="stylesheet" href="../../../resources/memberCss/myReview.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <!-- favicon : 탭에 보이는 아이콘 -->
     <link rel="icon" href="../../resources/img/common/favicon.png" />
-    <link
-      rel="apple-touch-icon"
-      href="../../resources/img/common/favicon.png"
-    />
+    <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>    
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
@@ -54,23 +53,11 @@
             	<tr>
             		<td><input type="checkbox" class="check"  value="${review.reviewNo}"></td>
             		<td>[${review.perfumeBrand }] ${review.perfumeName }</td>
-            		<c:set var="str" value="${review.reviewContents }"/>
-					<c:set var="result" value="${fn:replace(str, '^.*?>', '')}"/>
-					<c:set var="result" value="${fn:replace(result, '<.*$', '')}"/>
-            		<td>${result }</td>
+            		<td>${review.reviewContents }</td>
             		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
             		<td>${review.rViewcount }</td>
             	</tr>
             </c:forEach>            
-            	<tr>
-            		<td><input type="checkbox" class="check"></td>
-            		<td>
-            			<a href="">[디올] 옴므 코롱 어쩌고</a>
-            		</td>
-            		<td>디지버지게 좋네요</td>
-            		<td>4444-44-44</td>
-            		<td>44</td>
-            	</tr>
           </tbody>
         </table>
         <button class="btn" class="del">선택삭제</button>
@@ -80,7 +67,7 @@
     
     
     <script>
-    // 체크박스 - 전체선택  
+    // 전체 선택 박스   
 	var allCheck = document.querySelector(".allCheck");
 	var list = document.querySelectorAll(".check");
 	allCheck.onclick = () => {
@@ -96,7 +83,34 @@
 	}
 	
 	// 선택 삭제 버튼 
-	
+	document.querySelector(".del").addEventListener('click', function() {
+			var del = new Array();
+			var list = document.querySelectorAll(".check");
+			for(var i = 0; i < list.length; i++) {
+				if(list[i].checked) {
+					del.push(list[i].value);
+				}
+			}
+			console.log(del);
+			if(confirm("삭제 하시겠습니까?")) {
+				$.ajax({
+					url:'/member/myReview/Remove',
+					type : 'post',
+					dataType : 'json',
+					traditional : 'true',
+					data : {'arr':del},
+					success : function(data){
+						if(data == 1) {
+							alert("삭제되었습니다!");
+							location.href = "/member/myReview";
+						}
+					},
+					error : function(data) {
+						console.log(data)
+					}
+				});
+			}
+		});
 	
 	
     </script>

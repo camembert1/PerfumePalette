@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.qnaBoard.QnaBoard;
 import com.kh.perfumePalette.review.Review;
 
 @Controller
@@ -321,6 +322,7 @@ public class MemberController {
 		mv.setViewName("member/orderList");
 		return mv;
 	}
+	
 
 	// 내가 작성한 후기
 	@GetMapping("/myReview")
@@ -339,6 +341,10 @@ public class MemberController {
 			// memberNo에 해당하는 후기 목록 가져오기***
 			List<Review> myReviews = mService.getMyReviews(memberNo);
 			
+			for(Review review : myReviews) {
+	            String outpuString = review.getReviewContents().replaceAll("<[^>]*>", "");
+	            review.setReviewContents(outpuString);
+	         }
 
 			// JSP에서 사용할 rList에 myReviews 설정
 			mv.addObject("myReviews", myReviews);
@@ -349,16 +355,57 @@ public class MemberController {
 		
 		return mv;
 	}
-	
-	
-	
 
+	// 후기 다중 삭제 
+	@PostMapping("/Remove")
+	@ResponseBody
+	public String removeReview(int [] arr
+			, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for(int i = 0; i < arr.length; i++) {
+				result = mService.removeReview(arr[i]);
+			}
+			if(result > 0) {
+				return "1";
+			}else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	
+	
+	
 	// 내가 작성한 문의
 	@GetMapping("/myQna")
-	public ModelAndView myQna(ModelAndView mv) {
-		mv.setViewName("member/myQna");
+	public ModelAndView myQna(ModelAndView mv
+			, HttpServletRequest request
+			, HttpSession session) {
+		try {
+			// 로그인 여부 체크 
+			if(session.getAttribute("member") == null) {
+				throw new RuntimeException("로그인 후 이용 가능합니다.");
+			}
+			// 현재 로그인한 사용자의 회원 번호 가져오기 
+			 int memberNo = ((Member) session.getAttribute("member")).getMemberNo();
+			
+			 // memberNo에 해당하는 문의 목록 가져오기 
+			List<QnaBoard> myQna = mService.getMyQna(memberNo);
+			
+			// JSP에서 사용할 rList에 myReviews 설정
+			mv.addObject("myQna", myQna);
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		
 		return mv;
 	}
+	
+	
 
 	// 내가 작성한 댓글
 	@GetMapping("/myComment")

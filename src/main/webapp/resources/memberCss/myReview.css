@@ -102,17 +102,17 @@ main thead {
 	color: white;
 	background-color: #34443E;
 }
-
-main .btn{
+main table tbody tr td button{
 	background-color: #222222;
     color: white;
     border: none;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    width: 8%;
-    height: 33px;
+    width: 85%;
+    height: 25px;
     cursor: pointer;
 }
+
 
 main .content{
 	display: flex;
