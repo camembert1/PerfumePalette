@@ -38,9 +38,9 @@
 					<c:forEach items="${perfumeList }" var="perfume" varStatus="i">
 						<tr>
 							<td><input type="checkbox" class="check" value="${perfume.wishNo }"></td>
-							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'"><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
-							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeBrand }</td>
-							<td onclick="location.href='/perfume/detail?perfumeNo=${perfume.perfumeNo}'">${perfume.perfumeName }</td>
+							<td onclick="location.href='/perfume/detail/${perfume.perfumeNo}'"><img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename}" alt="향수이미지"></td>
+							<td onclick="location.href='/perfume/detail/${perfume.perfumeNo}'">${perfume.perfumeBrand }</td>
+							<td onclick="location.href='/perfume/detail/${perfume.perfumeNo}'">${perfume.perfumeName }</td>
 							<td>${perfume.perfumeVolume }ml</td>
 							<td><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
 							<td>

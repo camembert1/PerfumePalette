@@ -133,9 +133,10 @@ main .fas {
 	vertical-align: middle;
 	color: #28302d;
 	font-size: 20px;
+	cursor: pointer;
 }
 
-main .fas:last-child{
+main .fas:last-child {
 	margin-left: 0px;
 	margin-right: 5px;
 }
@@ -195,6 +196,19 @@ main div[id*="reload"] img {
 	cursor: pointer;
 }
 
-main td[onclick] {
+main button {
 	cursor: pointer;
+}
+
+main tr td {
+	transition: transform 0.2s ease-in-out;
+}
+
+main tr:hover td {
+	transform: translate(2.5px, 2.5px);
+}
+
+main tr td {
+	transition-delay: 0.2s;
+	transform: translate
 }

@@ -200,7 +200,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						<span id="perfumePrice">[가격]</span>
 					</div>
 					<div id="updown">
-						<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1">
+						<input type="number" id="perfumeQuantity" value="1" min="0" max="100" size="1">개
 						<span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
 					</div>
 				</div>
