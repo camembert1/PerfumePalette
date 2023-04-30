@@ -1,123 +1,187 @@
 @charset "UTF-8";
 
 @font-face {
-   font-family: '마포꽃섬';
-   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
-   --font-weight: normal;
-   font-style: normal;
+	font-family: '마포꽃섬';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff')
+		format('woff'); 
+	-font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-   font-family: 'ghana';
-   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff') format('woff');
-   font-weight: normal;
-   font-style: normal;
+	font-family: 'ghana';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 * {
-   margin: 0;
-   padding: 0;
-   font-family: '마포꽃섬';
+	margin: 0;
+	padding: 0;
+	font-family: '마포꽃섬';
 }
 
 body {
-   overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 main {
-   width: 100vw;
-   min-height: 100vh;
-   margin-bottom: 100px;
+	width: 100vw;
+	min-height: 100vh;
+	margin-bottom: 100px;
 }
 
 main>div[id=forHeader] {
-
-   /* 헤더 공간 비워두기 위함  */
-   height: 190px;
-
-   /* 
+	/* 헤더 공간 비워두기 위함  */
+	height: 190px;
+	/* 
         헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
         margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
     */
-   margin-bottom: 100px;
-
+	margin-bottom: 100px;
 }
 
 main>div[id=forCenter] {
-
-   /* 본문 내용 가운데 정렬 위함 */
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+	/* 본문 내용 가운데 정렬 위함 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 /* 고정 끝 */
 
 /* 사이드바 시작 */
 main #hrefList {
-  position: absolute;
-  left: 5%;
-  --position: fixed;
-  --align-self: flex-start;
-  --top: 50%;
-  --transform: translateY(-75%);
-  --margin-left: 50px;
+	position: absolute;
+	left: 5%; 
+	-position: fixed; 
+	-align-self: flex-start; 
+	-top: 50%; 
+	-transform: translateY(-75%); 
+	-margin-left: 50px;
 }
 
 main #hrefList span {
-  display: block;
-  margin: 0 10px;
-  margin-bottom: 5px;
-  font-size: 20px;
-  cursor: pointer;
+	display: block;
+	margin: 0 10px;
+	margin-bottom: 5px;
+	font-size: 20px;
+	cursor: pointer;
 }
 
-main #hrefList span a:after,
-main #hrefList span a {
-  text-decoration: none;
-  color: black;
+main #hrefList span a:after, main #hrefList span a {
+	text-decoration: none;
+	color: black;
 }
 
 main #hrefName {
-  font-size: 35px;
-  border-bottom: 1px solid black;
-  margin: 0 10px;
-  margin-bottom: 10px;
+	font-size: 35px;
+	border-bottom: 1px solid black;
+	margin: 0 10px;
+	margin-bottom: 10px;
 }
 /* 사이드바 끝 */
-
-main h1{
+main h1 {
 	margin-bottom: 25px;
 }
 
-main table{
+main table {
 	text-align: center;
 	border-collapse: collapse;
-	width: 55%;
-	height: 130px;
+	border-top: 1px solid black;
+	width: 60%;
 }
 
 main thead {
-	height: 50px;
 	color: white;
 	background-color: #34443E;
-}
-main table tbody tr td button{
-	background-color: #222222;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    width: 85%;
-    height: 25px;
-    cursor: pointer;
+	height: 48px;
 }
 
+main table tr {
+	border-bottom: 1px solid;
+}
 
-main .content{
+main .content {
 	display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
+	flex-direction: column;
+	align-items: center;
+	width: 110%;
+	margin-bottom: 20px;
 }
+
+main table tfoot tr td button {
+	padding: 0;
+	height: 45px;
+	width: 100%;
+	margin-bottom: 10px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+}
+
+/*체크 박스 디자인 */
+/*체크 안했을때 */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  background-color: #34443E;
+  border-radius: 10%;
+  transition: 0.2s all linear;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+main #tdCheck{
+	-webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #34443E;
+  background-color: #34443E;
+  border-radius: 10%;
+  transition: 0.2s all linear;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+	
+}
+
+/*체크했을때*/
+input[type="checkbox"]:checked:before {
+  content: "✔";
+  font-family: Arial;
+  display: block;
+  position: absolute;
+  font-size: 16px;
+  background-color: #34443E;
+  color: white;
+  width: 18px;
+  height: 4px;
+  text-align: center;
+}
+
+main table tbody tr td a:link{
+  text-decoration: none; 
+  color: black;
+}
+
+main table tbody tr td a:visited {
+  text-decoration: none;
+  color: black;
+}
+main table tbody tr td a:hover {
+  text-decoration: underline;
+}
+
+
+

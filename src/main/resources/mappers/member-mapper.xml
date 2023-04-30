@@ -153,6 +153,11 @@
 		JOIN QNA_TBL USING(MEMBER_NO)
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
+	
+	<delete id="removeQna">
+		DELETE FROM QNA_TBL
+		WHERE QNA_NO = #{qnaNo}
+	</delete>
 
 
 

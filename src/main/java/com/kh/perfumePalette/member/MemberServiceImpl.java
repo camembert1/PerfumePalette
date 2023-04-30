@@ -110,6 +110,12 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public int removeQna(int i) {
+		int result = mStore.removeQna(i);
+		return result;
+	}
+
 
 	
 

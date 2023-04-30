@@ -38,4 +38,6 @@ public interface MemberService {
 
 	int removeReview(int i);
 
+	int removeQna(int i);
+
 }

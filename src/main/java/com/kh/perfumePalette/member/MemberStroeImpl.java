@@ -110,6 +110,12 @@ public class MemberStroeImpl implements MemberStore {
 		return result;
 	}
 
+	@Override
+	public int removeQna(int i) {
+		int result = session.delete("memberMapper.removeQna", i);
+		return result;
+	}
+
 
 
 

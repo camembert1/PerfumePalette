@@ -2,8 +2,6 @@ package com.kh.perfumePalette.qnaBoard;
 
 import java.sql.Timestamp;
 
-import oracle.sql.CLOB;
-
 public class QnaBoard {
 	
 	private int qnaNo; // 게시글 번호

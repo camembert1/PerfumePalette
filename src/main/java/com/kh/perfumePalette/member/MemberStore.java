@@ -38,6 +38,8 @@ public interface MemberStore {
 
 	int removeReview(int i);
 
+	int removeQna(int i);
+
 
 	
 
