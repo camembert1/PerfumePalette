@@ -48,7 +48,7 @@ public class ChattingController {
 	// 채팅방 만들기
 	@PostMapping("/chat/openChatRoom")
 	public String openChatRoom(@ModelAttribute("member") Member member, // loginUser값을 얻어와야해서 @ModelAttribute 생략하면
-																				// 안됨
+																		// 안됨
 			Model model, ChatRoom room, RedirectAttributes ra) {
 
 		// @ModelAttribute -> 커맨드객체 (@ModelAttribute는 생략가능)
@@ -73,10 +73,27 @@ public class ChattingController {
 		return path;
 	}
 
+	// 채팅방 만들기
+	@PostMapping("/chat/openChatRoom2")
+	@ResponseBody
+	public int openChatRoomAjax(@ModelAttribute("member") Member member, // loginUser값을 얻어와야해서 @ModelAttribute 생략하면
+																			// 안됨
+			Model model, ChatRoom room, RedirectAttributes ra) {
+
+		// @ModelAttribute -> 커맨드객체 (@ModelAttribute는 생략가능)
+
+		room.setMemberId(member.getMemberId());
+
+		int chatRoomNo = cService.openChatRoom(room);
+		// pk값을 반환 받기 위해 객체이름을 chatRoomNo으로 작성
+
+		return chatRoomNo;
+	}
+
 	// 채팅방 입장
 	@GetMapping("/chat/room/{roomNo}")
-	public String joinChatRoom(@ModelAttribute("member") Member member, Model model,
-			@PathVariable("roomNo") int roomNo, ChatRoom join, RedirectAttributes ra) {
+	public String joinChatRoom(@ModelAttribute("member") Member member, Model model, @PathVariable("roomNo") int roomNo,
+			ChatRoom join, RedirectAttributes ra) {
 		join.setMemberId(member.getMemberId());
 		List<Chat> list = cService.joinChatRoom(join);
 

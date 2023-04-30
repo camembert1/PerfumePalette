@@ -59,34 +59,4 @@
 			</form>
 		</div>
 	</c:if>
-	<br>
-	<br>
-
-	<!-- <div class="modal fade" id="chatModal">
-		<div class="modal-dialog modal-sm"> -->
-	<!-- <div class="modal-content"> -->
-	<!-- 
-				모달 해더
-				<div class="modal-header">
-					<h4 class="modal-title">채팅방 만들기</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				 -->
-	<!-- <form action="/chat/openChatRoom" method="post">
-		<button type="submit" class="btn btn-primary">만들기</button> -->
-		<!-- 
-					<div class="modal-body">
-						<label for="title" class="mr-sm-2">제목</label> <input type="text" class="form-controll mb-2 mr-sm-2" placeholder="채팅방 제목" id="title" name="title">
-					</div>
-
-					모달 푸터
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">만들기</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-					</div> 
-					-->
-	<!-- </form> -->
-	<!-- 		</div>
-		</div>
-	</div> -->
 </body>
