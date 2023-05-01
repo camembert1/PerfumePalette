@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -79,11 +80,39 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 
-
+	@Override
+		public int deleteReview(int reviewNo) {
+			int result = rStore.deleteReview(session, reviewNo);
+			return result;
+		}
 	@Override
 	public int reviewReport(Report report) {
 		int result = rStore.reviewReport(session, report);
 		return result;
 	}
+
+
+	@Override
+	public int selectReportCnt(Report report) {
+		int result = rStore.selectReportCnt(session, report);
+		return result;
+	}
+
+
+	@Override
+	public int addLike(Like like) {
+		int result = rStore.addLike(session, like);
+		return result;
+	}
+
+
+	@Override
+	public int removeLike(int likeNo) {
+		int result = rStore.removeLike(session, likeNo);
+		return result;
+	}
+
+
+	
 
 }

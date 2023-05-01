@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -31,7 +32,7 @@ public interface ReviewStore {
 	/**
 	 * 후기게시판 Detail 보여주기
 	 * @param session
-	 * @param reviewNo
+	 * @param like
 	 * @return Review
 	 */
 	Review selectOneReview(SqlSession session, Integer reviewNo);
@@ -75,6 +76,38 @@ public interface ReviewStore {
 	 * @return int
 	 */
 	int updateReview(SqlSession session, Review review);
+	
+	/**
+	 * 후기 게시판 삭제 Store
+	 * @param session
+	 * @param reviewNo
+	 * @return int
+	 */
+	int deleteReview(SqlSession session, int reviewNo);
 
+	/**
+	 * 신고하기 Store
+	 * @param session
+	 * @param report
+	 * @return int
+	 */
 	int reviewReport(SqlSession session, Report report);
+
+	int selectReportCnt(SqlSession session, Report report);
+
+	/**
+	 * 좋아요
+	 * @param session 
+	 * @param like
+	 * @return int 
+	 */
+	int addLike(SqlSession session, Like like);
+
+	/**
+	 * 좋아요 삭제 
+	 * @param likeNo
+	 * @return int
+	 */
+	int removeLike(SqlSession session, int likeNo);
+
 }

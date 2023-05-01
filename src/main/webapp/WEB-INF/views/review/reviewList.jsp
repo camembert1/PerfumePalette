@@ -42,16 +42,16 @@
 		</div>
 		
 		 <table>
-        <thead> <!-- 테이블 헤더 -->
-            <tr>
-            	<th>번호</th>
-                <th>별점</th>
-                <th>내용</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>조회수</th>
-            </tr>
-        </thead>
+	        <thead> <!-- 테이블 헤더 -->
+	            <tr>
+	            	<th>번호</th>
+	                <th>별점</th>
+	                <th>상품</th>
+	                <th>작성자</th>
+	                <th>작성일</th>
+	                <th>조회수</th>
+	            </tr>
+	        </thead>
         <tbody> <!-- 테이블 본문 -->
         <c:forEach items="${rList }" var="review" varStatus="r">
             <tr>
@@ -67,7 +67,7 @@
 				     </div>
                 </td>
                 <td>
-                	<div>
+                	<div class="perfumeInfo">
                 		<a href="/review/reviewDetail/${review.reviewNo }">
 						<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 	                    <strong>[${review.perfumeBrand }] ${review.perfumeName }</strong>

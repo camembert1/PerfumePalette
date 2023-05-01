@@ -14,6 +14,7 @@
 		<typeAlias type="com.kh.perfumePalette.wish.Wish" alias="Wish" />
 		<typeAlias type="com.kh.perfumePalette.cart.Cart" alias="Cart" />
 		<typeAlias type="com.kh.perfumePalette.review.Review" alias="Review"/>
+		<typeAlias type="com.kh.perfumePalette.like.Like" alias="Like"/>
 		<typeAlias type="com.kh.perfumePalette.chatting.Room" alias="Room"/>
 		<typeAlias type="com.kh.perfumePalette.chatting.Chat" alias="Chat"/>
 		<typeAlias type="com.kh.perfumePalette.order.domain.Order" alias="Order"/>

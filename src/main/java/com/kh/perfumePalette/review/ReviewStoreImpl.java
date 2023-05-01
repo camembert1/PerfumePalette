@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -74,10 +75,36 @@ public class ReviewStoreImpl implements ReviewStore{
 		int result = session.update("ReviewMapper.updateReview", review);
 		return result;
 	}
-
+	@Override
+		public int deleteReview(SqlSession session, int reviewNo) {
+			int result = session.delete("ReviewMapper.deleteReview", reviewNo);
+;			return result;
+	}
+	
 	@Override
 	public int reviewReport(SqlSession session, Report report) {
 		int result = session.insert("ReviewMapper.reviewReport", report);
 		return result;
 	}
+
+	@Override
+	public int selectReportCnt(SqlSession session, Report report) {
+		int result = session.selectOne("ReviewMapper.selectReportCnt",report);
+		return result;
+	}
+
+	@Override
+	public int addLike(SqlSession session, Like like) {
+		int result = session.insert("ReviewMapper.addLike", like);
+		return result;
+	}
+
+	@Override
+	public int removeLike(SqlSession session, int likeNo) {
+		int result = session.delete("ReviewMapper.removeLike", likeNo);
+		return result;
+	}
+
+	
+
 }
