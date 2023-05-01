@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="OrderMapper">
-
-	<resultMap 	type="Order" 				id="orderResultMap">
+<mapper namespace="OrderMapper">	
+	
+	
+	<!-- ALL_ORDER_INFO ResultMap -->
+	<resultMap 	type="AllOrderInfo" 		id="allOrderResultMap">
+		
 		<id 	property="orderNo" 			column="ORDER_NO"></id>
+		<id 	property="perfumeNo" 		column="PERFUME_NO"></id>
+		<result property="orderQuantity" 	column="ORDER_QUANTITY" />
+		<result property="reviewStatus" 	column="REVIEW_STATUS" />
+		
 		<result property="orderDate" 		column="ORDER_DATE" />
 		<result property="orderStatus" 		column="ORDER_STATUS" />
 		<result property="memberNo" 		column="MEMBER_NO" />
@@ -11,57 +18,214 @@
 		<result property="recipientPhone" 	column="RECIPIENT_PHONE" />
 		<result property="deliveryAddr" 	column="DELIVERY_ADDR" />
 		<result property="deliveryMsg" 		column="DELIVERY_MSG" />
-	</resultMap>
-	
-	<resultMap 	type="OrderDetail" 			id="oDetailResultMap">
-		<id 	property="orderNo" 			column="ORDER_NO"></id>
-		<id 	property="perfumeNo" 		column="PERFUME_NO"></id>
-		<result property="orderQuantity" 	column="ORDER_QUANTITY" />
-		<result property="perfumePrice" 	column="PERFUME_PRICE" />
-	</resultMap>
-	
-	<resultMap	type="OrderPayment" 		id="oPaymentResultMap">
-		<id 	property="paymentNo" 		column="PAYMENT_NO"></id>
-		<result property="orderNo" 			column="ORDER_NO" />
+		<result property="trackingNo" 		column="TRACKING_NO" />
+		
+		<result property="paymentNo" 		column="PAYMENT_NO" />
 		<result property="paymentDate" 		column="PAYMENT_DATE" />
 		<result property="paymentMethod" 	column="PAYMENT_METHOD" />
+		<result property="paymentStatus" 	column="PAYMENT_STATUS" />
 		<result property="paymentAmount" 	column="PAYMENT_AMOUNT" />
+		<result property="cancelAmount" 	column="CANCEL_AMOUNT" />
+		<result property="vbankNo" 			column="VBANK_NO" />
+		<result property="vbankName" 		column="VBANK_NAME" />
+		<result property="vbankDate" 		column="VBANK_DATE" />
+		
+		<result property="perfumeName" 		column="PERFUME_NAME" />
+		<result property="perfumeBrand" 	column="PERFUME_BRAND" />
+		<result property="perfumeVolume" 	column="PERFUME_VOLUME" />
+		<result property="perfumePrice" 	column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" 	column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" 	column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" 	column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" 		column="P_FILENAME" />
+		<result property="pFilerename" 		column="P_FILERENAME" />
+		<result property="pFilepath" 		column="P_FILEPATH" />
+		<result property="perfumeDate" 		column="PERFUME_DATE" />
+		<result property="perfumeStatus" 	column="PERFUME_STATUS" />
+		
 	</resultMap>
 	
+	
+	<!-- ORDER_TBL ResultMap -->
+	<resultMap 	type="Order" 				id="orderResultMap">
+		
+		<id 	property="orderNo" 			column="ORDER_NO"></id>
+		<result property="orderDate" 		column="ORDER_DATE" />
+		<result property="orderStatus" 		column="ORDER_STATUS" />
+		<result property="memberNo" 		column="MEMBER_NO" />
+		
+		<result property="recipientName" 	column="RECIPIENT_NAME" />
+		<result property="recipientPhone" 	column="RECIPIENT_PHONE" />
+		
+		<result property="deliveryAddr" 	column="DELIVERY_ADDR" />
+		<result property="deliveryMsg" 		column="DELIVERY_MSG" />
+		<result property="trackingNo" 		column="TRACKING_NO" />
+		
+	</resultMap>
+	
+	
+	<!-- ORDER_DETAIL_TBL ResultMap -->
+	<resultMap 	type="OrderDetail" 			id="oDetailResultMap">
+		
+		<id 	property="orderNo" 			column="ORDER_NO"></id>
+		<id 	property="perfumeNo" 		column="PERFUME_NO"></id>
+		
+		<result property="orderQuantity" 	column="ORDER_QUANTITY" />
+		<result property="perfumePrice" 	column="PERFUME_PRICE" />
+		
+		<result property="reviewStatus" 	column="REVIEW_STATUS" />
+	
+	</resultMap>
+	
+	
+	<!-- ORDER_PAYMENT_TBL ResultMap -->
+	<resultMap	type="OrderPayment" 		id="oPaymentResultMap">
+		
+		<id 	property="paymentNo" 		column="PAYMENT_NO"></id>
+		<result property="orderNo" 			column="ORDER_NO" />
+		
+		<result property="paymentDate" 		column="PAYMENT_DATE" />
+		<result property="paymentMethod" 	column="PAYMENT_METHOD" />
+		<result property="paymentStatus" 	column="PAYMENT_STATUS" />
+		
+		<result property="paymentAmount" 	column="PAYMENT_AMOUNT" />
+		<result property="cancelAmount" 	column="CANCEL_AMOUNT" />
+		
+		<result property="vbankNo" 			column="VBANK_NO" />
+		<result property="vbankName" 		column="VBANK_NAME" />
+		<result property="vbankDate" 		column="VBANK_DATE" />
+	
+	</resultMap>
+	
+	
+	<!-- CART_TBL ResultMap -->
+	<resultMap type="Cart" id="cartResultMap">
+		<id property="cartNo" column="CART_NO"></id>
+		<result property="cartQuantity" column="CART_QUANTITY" />
+		<result property="cartDate" column="CART_DATE" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="perfumeNo" column="PERFUME_NO" />
+		
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeVolume" column="PERFUME_VOLUME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" column="P_FILENAME" />
+		<result property="pFilerename" column="P_FILERENAME" />
+		<result property="pFilepath" column="P_FILEPATH" />
+		<result property="perfumeDate" column="PERFUME_DATE" />
+		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	</resultMap>
+
+
+	<!-- !!!여기부터 쿼리문!!! -->
+	<!-- !!!여기부터 쿼리문!!! -->
+	<!-- !!!여기부터 쿼리문!!! -->
+	
+	
+	<!-- 결제 정보 조회 by orderNo -->
+	<select id="selectPaymentInfo" resultMap="oPaymentResultMap">
+		SELECT *
+		FROM ORDER_PAYMENT_TBL
+		WHERE ORDER_NO = #{orderNo }
+	</select>
+	
+	
+	<!-- 카트 정보 조회 by cartNo -->
+	<select id="selectByCartNo" resultMap="cartResultMap">
+		SELECT *
+		FROM CART_TBL
+		JOIN PERFUME_TBL USING(PERFUME_NO)
+		WHERE CART_NO = #{cartNo }
+	</select>
+	
+	
+	<!-- 결제 성공 시 관련 정보 DB 저장1 - ORDER_TBL -->
 	<insert id="insertOrder">
 		INSERT INTO ORDER_TBL VALUES (
+		
     		#{orderNo }
    			, #{orderDate }
     		, #{orderStatus }
     		, #{memberNo }
+    		
     		, #{recipientName }
     		, #{recipientPhone }
+    		
     		, #{deliveryAddr }
     		, #{deliveryMsg }
+    		, #{trackingNo }
+    		
 		) 
 	</insert>
 	
+	<!-- 결제 성공 시 관련 정보 DB 저장2 - ORDER_DETAIL_TBL -->
 	<insert id="insertOrderDetail">
 		INSERT INTO ORDER_DETAIL_TBL VALUES (
+		
     		#{orderNo }
    			, #{perfumeNo }
+   			
     		, #{orderQuantity }
     		, #{perfumePrice }
+    		
+    		, #{reviewStatus }
+    		
 		) 
 	</insert>
 	
+	<!-- 결제 성공 시 관련 정보 DB 저장3 - ORDER_PAYMENT_TBL -->
 	<insert id="insertOrderPayment">
 		INSERT INTO ORDER_PAYMENT_TBL VALUES (
+		
     		#{paymentNo }
    			, #{orderNo }
+   			
     		, #{paymentDate }
     		, #{paymentMethod }
+    		, #{paymentStatus}
+    		
     		, #{paymentAmount }
+    		, #{cancelAmount }
+    		
+    		, #{vbankNo }
+    		, #{vbankName }
+    		, #{vbankDate }
+    		
 		) 
 	</insert>
-	
-	
-	
-	
 
+
+	<!-- 주문 내역 조회 시 관련 모든 정보 조회 by memberNo -->
+	<select id="selectAllOrderInfo" resultMap="allOrderResultMap">
+		SELECT od.*, o.*, op.*, p.*
+		FROM ORDER_DETAIL_TBL od
+		    JOIN PERFUME_TBL p          ON od.PERFUME_NO    = p.PERFUME_NO
+		    JOIN ORDER_TBL o            ON od.ORDER_NO      = o.ORDER_NO
+		    JOIN ORDER_PAYMENT_TBL op   ON od.ORDER_NO      = op.ORDER_NO
+		WHERE MEMBER_NO = #{memberNo }
+		ORDER BY od.ORDER_NO DESC
+	</select>
+	
+	
+	<!-- 결제 상태 업데이트 by orderNo -->
+	<update id="updatePaymentInfo">
+		UPDATE ORDER_PAYMENT_TBL
+		SET PAYMENT_DATE = #{paymentDate }
+			, CANCEL_AMOUNT = #{cancelAmount }
+			, PAYMENT_STATUS = #{paymentStatus }
+		WHERE PAYMENT_NO = #{paymentNo }
+	</update>
+	
+	<!-- ReviewWrite - 후기 작성 여부 확인을 위해 OrderDetail 조회 by orderNo, perfumeNo -->
+	<select id="selectOrderDetailBy" resultMap="oDetailResultMap">
+		SELECT *
+		FROM ORDER_DETAIL_TBL
+		WHERE ORDER_NO = #{orderNo }
+			AND PERFUME_NO = #{perfumeNo }
+	</select>
+	
 </mapper>

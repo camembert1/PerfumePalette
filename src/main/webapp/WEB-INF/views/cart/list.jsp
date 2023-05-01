@@ -63,11 +63,44 @@
 					합계 금액 : <span id="totalPrice">0원</span>
 				</p>
 			</div>
+
+
+			<form action="/order/orderSheet" method="post" id="orderForm"></form>
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
 
 	<script>
+
+		// 선택 박스 구매
+		document.querySelector("#buy").addEventListener('click', function () {
+
+			let list = document.querySelectorAll(".check");
+			
+			let flag = false;
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) flag = true;
+			}
+
+			if (!flag) {
+				alert("선택된 상품이 없습니다.");
+				return;
+			}
+			
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) {
+					document.querySelector('#orderForm').innerHTML += '<input type="hidden" name="cartNoArr" value="' + list[i].value + '">';
+				}
+			}
+			
+			document.querySelector('#orderForm').innerHTML += '<input type="hidden" name="totalPrice" value="'
+			+ parseInt((document.querySelector('#totalPrice').innerHTML).replace(/,/g, ''))
+			+ '">';
+
+			document.querySelector('#orderForm').submit();
+		});
+	
+
 					// 전체 선택 박스
 					var allCheck = document.querySelector("#allCheck");
 					allCheck.onclick = () => {

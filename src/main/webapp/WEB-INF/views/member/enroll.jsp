@@ -146,10 +146,9 @@ display: none;
                      <label>주소<span class="star">*</span></label>
                   </div>
                   <div class="content-text">
-                     <input id="address" class="input-box box" type="text"
-                        name="memberAddr" placeholder="주소를 검색해주세요"> <input id="detailAddress"
-                        class="input-box" type="text" name="memberDetailAddr"
-                        placeholder="상세주소를 입력해주세요">
+                     <input id="address" class="input-box box" type="text" name="memberAddr" placeholder="주소를 검색해주세요">
+                     <input id="detailAddress" class="input-box" type="text" name="memberDetailAddr" placeholder="상세주소를 입력해주세요">
+                     <input id="postcode" name="postcode" type="hidden">
                   </div>
                   <div class="content-btn">
                      <button type="button" onclick="sample4_execDaumPostcode()">주소찾기</button>
@@ -369,6 +368,7 @@ display: none;
                      }
 
                      // 우편번호 + 주소(도로명,지번) + 참고항목
+                     document.getElementById('postcode').value = data.zonecode;
                      document.getElementById("address").value = addr
                            + extraAddr;
                      // 위에가 다 입력될시 커서포커스를 상세주소입력칸으로 이동 

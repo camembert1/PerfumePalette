@@ -86,10 +86,10 @@
 					<input type="hidden" name="endPerfumePrice" value="${filtering.endPerfumePrice }">
 					<input type="hidden" name="perfumeSearch" value="${filtering.perfumeSearch }">
 
-					<input type="text" name="perfumeNo1" value="${filtering.perfumeNo1 }">
-					<input type="text" name="perfumeNo2" value="${filtering.perfumeNo2 }">
-					<input type="text" name="perfumeNo3" value="${filtering.perfumeNo3 }">
-					<input type="text" name="compareCnt" value="${filtering.compareCnt }" id="compare-cnt">
+					<input type="hidden" name="perfumeNo1" value="${filtering.perfumeNo1 }">
+					<input type="hidden" name="perfumeNo2" value="${filtering.perfumeNo2 }">
+					<input type="hidden" name="perfumeNo3" value="${filtering.perfumeNo3 }">
+					<input type="hidden" name="compareCnt" value="${filtering.compareCnt }" id="compare-cnt">
 
 				</form>
 

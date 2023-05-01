@@ -141,7 +141,7 @@
 		}
 	}
 
-	 $(function() {
+	$(function() {
 		let windowHeight = $(window).height();
 		let footerHeight = windowHeight; // footer = 100vh니까
 		let documentHeight = $(document).height();

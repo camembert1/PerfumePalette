@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,6 +28,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonObject;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.order.OrderService;
+import com.kh.perfumePalette.order.OrderServiceImpl;
+import com.kh.perfumePalette.order.domain.OrderDetail;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -43,9 +48,49 @@ public class ReviewController {
 
 	// 후기 게시판 작성 페이지 보여주기
 	@RequestMapping(value = "/reviewWrite", method = RequestMethod.GET)
-	public ModelAndView showReviewWrite(ModelAndView mv, Integer perfumeNo) {
+	public ModelAndView showReviewWrite(ModelAndView mv
+			, HttpSession session
+			, String orderInfo) {
+		
+		// 주문자 회원 번호 가져오기
+		int orderMemberNo = Integer.parseInt(orderInfo.split(";")[0]);
+		
+		// 세션에 있는 회원번호와 다르면 잘못된 접근 처리하기
+		Member loginUser = (Member) session.getAttribute("member");
+		if (loginUser == null) {
+			Alert alert = new Alert("/member/login", "잘못된 접근입니다.");
+			mv.addObject("alert", alert).setViewName("common/alert");
+			return mv;
+		} else if (orderMemberNo != loginUser.getMemberNo()) {
+			Alert alert = new Alert("/", "잘못된 접근입니다.");
+			mv.addObject("alert", alert).setViewName("common/alert");
+			return mv;
+		}
+		
+		// 주문 번호 가져와서 addObject
+		// write페이지에서 글 등록 성공 시
+		// 글번호를 ORDER_DETAIL_TBL의 REVIEW_STATUS컬럼에 업데이트하도록 처리하기 위해 필요함
+		String orderNo = orderInfo.split(";")[2];
+		mv.addObject("orderNo", orderNo);
+		
+		// 향수 번호 가져오기
+		int perfumeNo = Integer.parseInt(orderInfo.split(";")[1]);
+		
+		// 이미 해당 구매건에 대한 후기를 썼다면 이미 작성한 후기입니다 alert 띄우기
+		// 어차피 마이페이지 - 주문 목록에서 작성 버튼은 노출되지 않지만
+		// 주소로 입력할 경우 접근 가능할 수 있으므로 차단!
+		OrderDetail odInfo = new OrderDetail();
+		odInfo.setOrderNo(orderNo);
+		odInfo.setPerfumeNo(perfumeNo);
+		OrderDetail oDetail = (new OrderServiceImpl()).selectOrderDetailBy(odInfo); 
+		if (oDetail.getReviewStatus() != 0) {
+			Alert alert = new Alert("/", "이미 후기 작성이 완료되었습니다.");
+			mv.addObject("alert", alert).setViewName("common/alert");
+			return mv;
+		}
+		
 		// 하드코딩해둔 것
-		perfumeNo = 80;
+//		int perfumeNo = 80;
 		Perfume perfume = rService.selectOneByPerfumeNo(perfumeNo);
 		
 		mv.addObject("id",UUID.randomUUID());

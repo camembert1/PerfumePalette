@@ -36,9 +36,10 @@ public class MemberController {
 
 	@PostMapping("/enroll")
 	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member,
-			@RequestParam("memberDetailAddr") String memberDetailAddr) {
+			@RequestParam("memberDetailAddr") String memberDetailAddr
+			, String postcode) {
 		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr + " (" + postcode + ")");
 			int result = mService.insertMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/login", "회원가입에 성공했습니다");
@@ -203,9 +204,10 @@ public class MemberController {
 
 	@PostMapping("/myPage")
 	public ModelAndView myPage(ModelAndView mv, @ModelAttribute Member member,
-			@RequestParam("memberDetailAddr") String memberDetailAddr) {
+			@RequestParam("memberDetailAddr") String memberDetailAddr
+			, String postcode) {
 		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr + " (" + postcode + ")");
 			int result = mService.modifyMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/myPage", "정보변경 성공했습니다");
@@ -338,6 +340,10 @@ public class MemberController {
 
 			// memberNo에 해당하는 후기 목록 가져오기***
 			List<Review> myReviews = mService.getMyReviews(memberNo);
+			for(Review review : myReviews) {
+				String outpuString = review.getReviewContents().replaceAll("<[^>]*>", "");
+				review.setReviewContents(outpuString);
+			}
 			
 
 			// JSP에서 사용할 rList에 myReviews 설정

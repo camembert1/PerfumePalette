@@ -4,7 +4,6 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,25 +16,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.kh.perfumePalette.FileUtil;
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
 @RequestMapping("/perfume")
-public class PerfumeController {
+public class PerfumeController {	
 
 	@Autowired
 	private PerfumeService pService;
 
-	@Autowired
-	@Qualifier("FileUtil")
-	private FileUtil fileUtil;
-
 	
-	//유정
 	/**
-	 * 쇼핑몰 - 향수 목록 출력 페이징 + 필터링 + STATUS1
+	 * 향수 목록 출력 / 페이징 + 필터링 + STATUS1
 	 * @param mv
 	 * @return
 	 */
@@ -73,9 +67,8 @@ public class PerfumeController {
 	}
 	
 	
-	
 	/**
-	 * 쇼핑몰 - 향수 디테일 출력
+	 * 향수 디테일 출력
 	 * @param mv
 	 * @param perfumeNo
 	 * @return
@@ -101,9 +94,14 @@ public class PerfumeController {
 		return mv;
 	}
 	
-	// for비교
-	@PostMapping(value = "/getPerfume", produces = "application/json;charset=utf-8")
+	
+	/**
+	 * 목록 - 비교 모달창에 넣을 향수 정보 by perfumeNo
+	 * @param perfumeNo
+	 * @return
+	 */
 	@ResponseBody
+	@PostMapping(value = "/getPerfume", produces = "application/json;charset=utf-8")
 	public String getPerfume(Integer perfumeNo) {
 		try {
 			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
@@ -115,12 +113,17 @@ public class PerfumeController {
 	}
 	
 	
-	@PostMapping("/checkWish")
+	/**
+	 * 목록 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo
+	 * @param wish
+	 * @return
+	 */
 	@ResponseBody
-	public String checkWish(@ModelAttribute Wish wish) {
-		
-
+	@PostMapping("/checkWish")
+	public String checkWish(@ModelAttribute Wish wish) {	
 		try {
+			
+			// wish에 들은 정보 : pefumeNo, memberId
 			int result = pService.checkWish(wish);
 			if (result > 0) {
 				return "success"; // 찜햇다
@@ -133,8 +136,14 @@ public class PerfumeController {
 		}
 	}
 	
-	@PostMapping("/wishCnt")
+	
+	/**
+	 * 목록 - 해당 향수 찜 개수 조회 by perfumeNo
+	 * @param wish
+	 * @return
+	 */
 	@ResponseBody
+	@PostMapping("/wishCnt")
 	public String wishCnt(@ModelAttribute Wish wish) {
 		try {
 			int wishCnt = pService.wishCnt(wish);
@@ -145,8 +154,14 @@ public class PerfumeController {
 		}
 	}
 	
-	@PostMapping("/getWishNo")
+	
+	/**
+	 * 목록 - 찜 취소를 위한 찜 번호 조회 by memberId, perfumeNo
+	 * @param wish
+	 * @return
+	 */
 	@ResponseBody
+	@PostMapping("/getWishNo")
 	public String getWishNo(@ModelAttribute Wish wish) {
 		try {
 			int wishNo = pService.getWishNo(wish);
@@ -162,12 +177,46 @@ public class PerfumeController {
 	}
 	
 	
-	@PostMapping("/paySuccess")
+	/**
+	 * 디테일 - 로그인한 회원의 장바구니 여부 조회 by memberId, perfumeNo
+	 * @param cart
+	 * @return
+	 */
 	@ResponseBody
-	public void paySuccess(String memberEmail, Integer orderAmount) {
-		System.out.println("이메일 : " +  memberEmail + "\n주문량 : " + orderAmount);		
+	@PostMapping("/checkCart")
+	public int checkCart(@ModelAttribute Cart cart) {
+		try {
+			int result = pService.checkCart(cart);
+			if (result > 0) return result;
+			else return 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	
+	/**
+	 * 주문서 - 구매 성공 시 재고 감소 by cartNo
+	 * @param cartNoArr
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/minusStock")
+	public int minusStock(int[] cartNoArr) {
+		try {
+			int result = 0;
+			for(int cartNo : cartNoArr) {
+				// cartNo를 통해 perfumeNo, cartQuantity 조회 가능
+				// 해당 향수의 수량을 cartQuantity만큼 감소
+				result = 0;
+				result = pService.minusStock(cartNo);
+			}
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 }

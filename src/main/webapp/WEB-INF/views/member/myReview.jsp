@@ -54,10 +54,7 @@
             	<tr>
             		<td><input type="checkbox" class="check"  value="${review.reviewNo}"></td>
             		<td>[${review.perfumeBrand }] ${review.perfumeName }</td>
-            		<c:set var="str" value="${review.reviewContents }"/>
-					<c:set var="result" value="${fn:replace(str, '^.*?>', '')}"/>
-					<c:set var="result" value="${fn:replace(result, '<.*$', '')}"/>
-            		<td>${result }</td>
+            		<td>${review.reviewContents }</td>
             		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
             		<td>${review.rViewcount }</td>
             	</tr>

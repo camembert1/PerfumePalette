@@ -164,10 +164,9 @@
                         <label>주소<span class="star">*</span></label>
                      </div>
                      <div class="content-text">
-                        <input id="address" class="input-box box" type="text"
-                           name="memberAddr"> <input
-                           id="detailAddress" class="input-box" type="text"
-                           name="memberDetailAddr">
+                        <input id="address" class="input-box box" type="text" name="memberAddr">
+                        <input id="detailAddress" class="input-box" type="text" name="memberDetailAddr">
+                        <input id="postcode" name="postcode" type="hidden">
                      </div>
                      <div class="content-btn">
                         <button type="button" onclick="sample4_execDaumPostcode()">주소찾기</button>
@@ -184,8 +183,11 @@
          <script>
             const addr = "${memerOne.memberAddr }";
             const splitAddr = addr.split("/ ");
+            const postcode = splitAddr[1].substr(splitAddr[1].length - 6, 5);
+            const detailAddr = splitAddr[1].substr(0, splitAddr[1].length - 8);
             $("[id=address]").attr("value", splitAddr[0]);
-            $("[id=detailAddress]").attr("value", splitAddr[1]);
+            $("[id=detailAddress]").attr("value", detailAddr);
+            $("[id=postcode]").attr("value", postcode);
          </script>
       </form>
    </div>
@@ -349,6 +351,7 @@
                      }
 
                      // 우편번호 + 주소(도로명,지번) + 참고항목
+                     document.getElementById('postcode').value = data.zonecode;
                      document.getElementById("address").value = addr
                            + extraAddr;
                      // 위에가 다 입력될시 커서포커스를 상세주소입력칸으로 이동 
