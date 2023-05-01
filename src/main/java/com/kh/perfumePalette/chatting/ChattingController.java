@@ -104,6 +104,19 @@ public class ChattingController {
 
 	}
 
+	// 채팅방 입장
+	@GetMapping("/chat/room2/{roomNo}")
+	@ResponseBody
+	public void joinChatRoomAjax(@ModelAttribute("member") Member member, Model model, @PathVariable("roomNo") int roomNo,
+			ChatRoom join, RedirectAttributes ra) {
+		join.setMemberId(member.getMemberId());
+		List<Chat> list = cService.joinChatRoom(join);
+
+		model.addAttribute("list", list);
+		model.addAttribute("roomNo", roomNo); // session스코프에 roomNo저장됨.
+
+	}
+
 	// 채팅방 나가기
 	@GetMapping("/chat/exit")
 	@ResponseBody
