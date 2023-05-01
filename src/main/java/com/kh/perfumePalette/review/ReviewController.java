@@ -80,15 +80,15 @@ public class ReviewController {
 		// 이미 해당 구매건에 대한 후기를 썼다면 이미 작성한 후기입니다 alert 띄우기
 		// 어차피 마이페이지 - 주문 목록에서 작성 버튼은 노출되지 않지만
 		// 주소로 입력할 경우 접근 가능할 수 있으므로 차단!
-		OrderDetail odInfo = new OrderDetail();
-		odInfo.setOrderNo(orderNo);
-		odInfo.setPerfumeNo(perfumeNo);
-		OrderDetail oDetail = (new OrderServiceImpl()).selectOrderDetailBy(odInfo); 
-		if (oDetail.getReviewStatus() != 0) {
-			Alert alert = new Alert("/", "이미 후기 작성이 완료되었습니다.");
-			mv.addObject("alert", alert).setViewName("common/alert");
-			return mv;
-		}
+//		OrderDetail odInfo = new OrderDetail();
+//		odInfo.setOrderNo(orderNo);
+//		odInfo.setPerfumeNo(perfumeNo);
+//		OrderDetail oDetail = (new OrderServiceImpl()).selectOrderDetailBy(odInfo); 
+//		if (oDetail.getReviewStatus() != 0) {
+//			Alert alert = new Alert("/", "이미 후기 작성이 완료되었습니다.");
+//			mv.addObject("alert", alert).setViewName("common/alert");
+//			return mv;
+//		}
 		
 		Perfume perfume = rService.selectOneByPerfumeNo(perfumeNo);
 		
