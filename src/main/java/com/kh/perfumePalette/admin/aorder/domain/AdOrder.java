@@ -19,7 +19,7 @@ public class AdOrder {
 	private String 		recipientPhone;		// 수취인 번호.
 	private String 		deliveryAddr;		// 배송 주소.
 	private String 		deliveryMsg;		// 배송 메세지.
-	private String		trackingNo;			// 이건 물어보자
+	private String		trackingNo;			// 송장 번호
 	
 	// ORDER_DETAIL_TBL
 	
