@@ -19,13 +19,30 @@
 		FROM CHAT_ROOM_TBL B
 		WHERE
 		B.ROOM_NO =
+		A.ROOM_NO AND B.MEMBER_ID != 'admin') AS CNT
+		FROM ROOM_TBL A
+		JOIN
+		MEMBER_TBL M
+		USING (MEMBER_ID)
+		ORDER BY ROOM_NO DESC
+	</select>
+
+	<!-- <select id="selectChatRoomList" resultMap="roomResultMap">
+		SELECT
+		ROOM_NO,
+		MEMBER_ID,
+		(SELECT
+		COUNT(*)
+		FROM CHAT_ROOM_TBL B
+		WHERE
+		B.ROOM_NO =
 		A.ROOM_NO) AS CNT
 		FROM ROOM_TBL A
 		JOIN MEMBER_TBL M
 		USING (MEMBER_ID)
 		WHERE A.ROOM_STATUS ='Y'
 		ORDER BY ROOM_NO DESC
-	</select>
+	</select> -->
 
 	<!-- 채팅방 생성 -->
 	<insert id="openChatRoom" useGeneratedKeys="true">

@@ -2,6 +2,8 @@ package com.kh.perfumePalette.chatting;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.member.Member;
 
 @Controller
@@ -25,17 +28,24 @@ public class ChattingController {
 
 	// 채팅방 목록 조회
 	@GetMapping("/chat/chatRoomList")
-	public String selectChatRoomList(Model model) {
+	public String selectChatRoomList(Model model, HttpSession session) {
 
 		try {
 			List<ChatRoom> crList = cService.selectChatRoomList();
-			if (crList.size() == 0) {
-//				Alert alert = new Alert("/", "채팅방이 존재하지 않습니다.");
-//				model.addAttribute("alert", alert);
-				return "chat/chatRoomList";
+			Member member = (Member) session.getAttribute("member");
+			if (member == null || !member.getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				model.addAttribute("alert", alert);
+				return "common/alert";
 			} else {
-				model.addAttribute("chatRoomList", crList);
-				return "chat/chatRoomList";
+				if (crList.size() == 0) {
+					Alert alert = new Alert("/", "개설된 채팅방이 존재하지 않습니다.");
+					model.addAttribute("alert", alert);
+					return "common/alert";
+				} else {
+					model.addAttribute("chatRoomList", crList);
+					return "chat/chatRoomList";
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); // 콘솔창에 에러 출력
@@ -107,8 +117,8 @@ public class ChattingController {
 	// 채팅방 입장
 	@GetMapping("/chat/room2/{roomNo}")
 	@ResponseBody
-	public void joinChatRoomAjax(@ModelAttribute("member") Member member, Model model, @PathVariable("roomNo") int roomNo,
-			ChatRoom join, RedirectAttributes ra) {
+	public void joinChatRoomAjax(@ModelAttribute("member") Member member, Model model,
+			@PathVariable("roomNo") int roomNo, ChatRoom join, RedirectAttributes ra) {
 		join.setMemberId(member.getMemberId());
 		List<Chat> list = cService.joinChatRoom(join);
 

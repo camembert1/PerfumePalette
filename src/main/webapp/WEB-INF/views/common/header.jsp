@@ -108,48 +108,44 @@
 	</div>
 
 	<div id="chat-area">
-		<c:if test="${member.memberId ne 'admin' }">
-			<div onclick="chat()" id="chat-btn">
-				<img src="../../resources/img/common/chat-white.png" alt="">
-			</div>
+		<div onclick="chat()" id="chat-btn">
+			<img src="../../resources/img/common/chat-white.png" alt="">
+		</div>
 
-			<div id="chat-modal-bg">
-				<div id="chat-modal">
-					<span id="chat-modal-close-btn">×</span>
-					<div id="helloMsg">
-						<div id="pBox">
-							<p>Perfume Palette에 상담하기</p>
-							<p>️⚡️월요일 09:00부터 운영</p>
-						</div>
-						<div class="chatting-area">
-							<ul class="display-chatting">
-								<c:forEach items="${list }" var="msg">
-									<%-- <fmt:formatDate var="chatDate" value="${msg.chatDate}"
-															pattern="yyyy년 MM월 dd일 HH:mm:ss" /> --%>
-									<%-- 1) 내가 보낸 메세지 --%>
-									<c:if test="${msg.memberId == member.memberId }">
-										<li class="myChat"><span class="chatDate">${chatDate}</span>
-											<p class="chat">${msg.chatContent}</p></li>
-									</c:if>
-									<%-- 2) 남(이름)이 보낸 메세지 --%>
-									<c:if test="${msg.memberId != member.memberId }">
-										<li><b>${msg.memberNickname}</b><br>
-											<p class="chat">${msg.chatContent}</p> <span class="chatDate">${chatDate}</span></li>
-									</c:if>
-								</c:forEach>
-							</ul>
+		<div id="chat-modal-bg">
+			<div id="chat-modal">
+				<span id="chat-modal-close-btn">×</span>
+				<div id="helloMsg">
+					<div id="pBox">
+						<p>Perfume Palette에 상담하기</p>
+						<p>️⚡️월요일 09:00부터 운영</p>
+					</div>
+					<div class="chatting-area">
+						<ul class="display-chatting">
+							<c:forEach items="${list }" var="msg">
+								<%-- 1) 내가 보낸 메세지 --%>
+								<c:if test="${msg.memberId == member.memberId }">
+									<li class="myChat"><span class="chatDate">${chatDate}</span>
+										<p class="chat" style="text-align: left;">${msg.chatContent}</p></li>
+								</c:if>
+								<%-- 2) 남(이름)이 보낸 메세지 --%>
+								<c:if test="${msg.memberId != member.memberId }">
+									<li><b>${msg.memberNickname}</b><br>
+										<p class="chat">${msg.chatContent}</p> <span class="chatDate">${chatDate}</span></li>
+								</c:if>
+							</c:forEach>
+						</ul>
 
-							<div class="input-area">
-								<textarea id="inputChatting" placeholder="메세지를 입력해주세요."></textarea>
-								<button id="send">
-									<img src="../../../resources/img/chat/arrow.png" alt="arrow">
-								</button>
-							</div>
+						<div class="input-area">
+							<textarea id="inputChatting" placeholder="메세지를 입력해주세요."></textarea>
+							<button id="send">
+								<img src="../../../resources/img/chat/arrow.png" alt="arrow">
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</c:if>
+		</div>
 
 	</div>
 </header>
@@ -171,9 +167,20 @@
 
 	// 방만들었는지 확인하는 변수
 	var storeRoomNum = -1;
+	var chatSocket = null;
 
 	// 채팅 버튼 눌렀을 때
 	chat = function() {
+		
+		if(${sessionScope.member eq null}){
+			alert("로그인이 필요한 서비스입니다.");
+			return;
+		}
+		
+		if(${sessionScope.member.memberId eq 'admin'}){
+			location.href = '/chat/chatRoomList';
+			return;
+		}
 
 		// 모달창 여닫는 속도
 		let modalSpeed = 200;
@@ -196,7 +203,7 @@
 						goChatRoom(storeRoomNum);
 					},
 					error : function(roomNum) {
-						console.log("방 만들기 실패..")
+						/* console.log("방 만들기 실패..") */
 					}
 				});
 			} else {
@@ -217,7 +224,9 @@
 							const roomNo = no;
 
 							// /chat이라는 요청주소로 통신할수있는 webSocket 객체 생성 --> /spring/chat
-							let chatSocket = new SockJS("/chat");
+							if (!chatSocket) {
+								chatSocket = new SockJS("/chat");
+							}
 							//-> websocket 프로토콜을 이용해서 해당주소로 데이터를 송/수신 할수 있다.
 
 							/*	WebSocket
@@ -250,7 +259,7 @@
 								//클라이언트가 채팅내용을 입력하지 않은상태로 보내기 버튼을 누른경우
 								if (inputChatting.value.trim().length == 0) {
 
-									alert("채팅내용을 입력해주세요.");
+									/* alert("채팅내용을 입력해주세요."); */
 
 									inputChatting.value = ""; // 공백문자 제거해주기.
 									inputChatting.focus();
@@ -267,7 +276,7 @@
 									// JSON.stringify(객체) : JS Ojbect -> JSON
 
 									/* console.log(chatMessage); */
-									console.log(JSON.stringify(chatMessage));
+									/* console.log(JSON.stringify(chatMessage)); */
 
 									// chatSocket(웹소켓객체)를 이용하여 메세지 보내기
 									// chatSocket.send(값) : 웹소켓 핸들러로 값을 보냄.
@@ -277,9 +286,9 @@
 
 									inputChatting.value = "";
 								}
-								console.log(chatSocket.readyState
+								/* console.log(chatSocket.readyState
 										+ ": 1이 출력되어야 정상");
-								console.log(roomNo + ": 방 번호 체크");
+								console.log(roomNo + ": 방 번호 체크"); */
 							}
 
 							// 웹소켓에서  sendMessage라는 함수가 실행되었을때 -> 메세지가 전달되었을때
@@ -291,7 +300,7 @@
 
 								// 전달받은 메세지를 JS객체로 변환
 								const chatMessage = JSON.parse(e.data); // js객체로 변환.
-								console.log(chatMessage + "sendMessage가 실행됨!!");
+								/* console.log(chatMessage + "sendMessage가 실행됨!!"); */
 
 								/*
 									<li>
@@ -374,10 +383,10 @@
 									},
 									success : function(result) {
 										/* chatSocket.close(); */
-										console.log("정상적 방나가기!!")
+										/* console.log("정상적 방나가기!!") */
 									},
 									error : function(result) {
-										console.log("비정상적 방나가기..")
+										/* console.log("비정상적 방나가기..") */
 									}
 								});
 							}

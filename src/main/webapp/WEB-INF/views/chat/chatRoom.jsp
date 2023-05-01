@@ -30,6 +30,7 @@
 	width: 800px;
 	margin-top: 50px;
 	margin-bottom: 500px;
+	vertical-align: middle;
 }
 
 #exit-area {
@@ -83,11 +84,9 @@
 	font-size: 10px;
 }
 
-.img {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	z-index: -100;
+.chat {
+	white-space: pre-wrap;
+	text-align: left;
 }
 </style>
 </head>
@@ -100,18 +99,18 @@
 			<button class="btn btn-outline-danger" id="exit-btn">나가기</button>
 		</div>
 		<ul class="display-chatting">
-			<!-- <img src=""/> -->
 			<c:forEach items="${list }" var="msg">
 				<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
 				<%-- 1) 내가 보낸 메세지 --%>
 				<c:if test="${msg.memberId == member.memberId }">
-					<li class="myChat"><span class="chatDate">${chatDate }</span>
-						<p class="chat">${msg.chatContent }</p></li>
+					<li class="myChat"><span class="chatDate">${chatDate}</span>
+						<p class="chat">${msg.chatContent}</p></li>
 				</c:if>
 				<%-- 2) 남(이름)이 보낸 메세지 --%>
 				<c:if test="${msg.memberId != member.memberId }">
-					<li><b>${msg.memberNickname }</b>
-						<p class="chat">${msg.chatContent }</p> <span class="chatDate">${chatDate }</span></li>
+					<li><b>${msg.memberNickname}</b><br>
+						<p class="chat">${msg.chatContent}</p>
+						<span class="chatDate">${chatDate}</span></li>
 				</c:if>
 			</c:forEach>
 		</ul>
@@ -124,6 +123,15 @@
 	</div>
 
 	<script>
+		// Enter key를 누르면 send 버튼을 클릭하는 이벤트 핸들러
+		document.getElementById("inputChatting").addEventListener("keydown",
+				function(event) {
+					if (event.keyCode === 13 && !event.shiftKey) { // Enter key
+						event.preventDefault(); // 기본 동작 취소 (textarea에서 줄바꿈 되는 것 방지)
+						document.getElementById("send").click(); // send 버튼 클릭
+					}
+				});
+
 		//el태그통해 js변수 셋팅
 		const memberId = "${member.memberId}";
 		const memberNickname = "${member.memberNickname}";
@@ -161,7 +169,7 @@
 			//클라이언트가 채팅내용을 입력하지 않은상태로 보내기 버튼을 누른경우
 			if (inputChatting.value.trim().length == 0) {
 
-				alert("채팅내용을 입력해주세요.");
+				/* alert("채팅내용을 입력해주세요."); */
 
 				inputChatting.value = ""; // 공백문자 제거해주기.
 				inputChatting.focus();
@@ -178,11 +186,10 @@
 				// JSON.stringify(객체) : JS Ojbect -> JSON
 
 				/* console.log(chatMessage); */
-				console.log(JSON.stringify(chatMessage));
+				/* console.log(JSON.stringify(chatMessage)); */
 
 				// chatSocket(웹소켓객체)를 이용하여 메세지 보내기
 				// chatSocket.send(값) : 웹소켓 핸들러로 값을 보냄.
-
 				chatSocket.send(JSON.stringify(chatMessage));
 
 				inputChatting.value = "";
@@ -199,7 +206,7 @@
 
 			// 전달받은 메세지를 JS객체로 변환
 			const chatMessage = JSON.parse(e.data); // js객체로 변환.
-			console.log(chatMessage);
+			/* console.log(chatMessage); */
 
 			/*
 				<li>
@@ -210,10 +217,11 @@
 			 */
 			const li = document.createElement("li");
 			const p = document.createElement("p");
+			const br = document.createElement("br");
 
 			p.classList.add("chat");
 
-			p.innerHTML = chatMessage.chatContent.replace(/\\n/gm, "<br>"); //줄바꿈 처리
+			p.innerHTML = chatMessage.chatContent.replace(/\n/g, "<br>"); /* 줄바꿈 효과 */
 
 			//span태그 추가
 			const span = document.createElement("span");
@@ -226,7 +234,7 @@
 				li.classList.add("myChat");
 			} else { // 남이 쓴 채팅
 				li.innerHTML = "<b>" + chatMessage.memberNickname + "</b>";
-				li.append(p, span);
+				li.append(br, p, span);
 			}
 
 			// 채팅창
@@ -245,19 +253,21 @@
 
 		function getCurrentTime() {
 
-			const now = new Date();
+		    const now = new Date();
 
-			const time = now.getFullYear() + "년 " + addZero(now.getMonth() + 1)
-					+ "월 " + addZero(now.getDate()) + "일 "
-					+ addZero(now.getHours()) + ":" + addZero(now.getMinutes())
-					+ ":" + addZero(now.getSeconds()) + " ";
+		    const time = now.getFullYear() + "년 " +
+		        addZero(now.getMonth() + 1) + "월 " +
+		        addZero(now.getDate()) + "일 " +
+		        addZero(now.getHours()) + ":" +
+		        addZero(now.getMinutes()) + ":" +
+		        addZero(now.getSeconds()) + " ";
 
-			return time;
+		    return time;
 		}
 
 		// 10보다 작은수가 매개변수로 들어오는경우 앞에 0을 붙여서 반환해주는함수.
 		function addZero(number) {
-			return number < 10 ? "0" + number : number;
+		    return number < 10 ? "0" + number : number;
 		}
 
 		document.getElementById("exit-btn").addEventListener("click", exit);

@@ -18,45 +18,38 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
 </head>
 <body>
-	<table class="table table-hover" align="center">
+	<table class="table table-hover" style="text-align: center">
 		<thead>
 			<tr>
 				<th>방번호</th>
 				<th>개설자</th>
-				<th>참여인수</th>
+				<th>대기여부</th>
+				<th>입장</th>
 			</tr>
 		</thead>
-
 		<tbody>
-			<c:choose>
-
-				<c:when test="${empty chatRoomList}">
-					<tr>
-						<td colspan="4" align="center">존재하는 채팅방이 없습니다.</td>
-					</tr>
-				</c:when>
-
-				<c:otherwise>
-					<c:forEach var="chatRoom" items="${chatRoomList }">
-						<tr>
-							<td>${chatRoom.roomNo }</td>
-							<td>${chatRoom.memberNickname }<c:if test="${!empty member }">
-									<button class="btn btn-primary" onclick="location.href='/chat/room/${chatRoom.roomNo}'">입장</button>
-								</c:if></td>
-							<td>${chatRoom.cnt }</td>
-						</tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+			<c:forEach var="chatRoom" items="${chatRoomList }">
+				<tr>
+					<td>${chatRoom.roomNo }</td>
+					<td>${chatRoom.memberId }</td>
+					<td>
+						<c:if test="${chatRoom.cnt == 0}">
+							X	
+						</c:if>
+						<c:if test="${chatRoom.cnt > 0}">
+							O
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${chatRoom.cnt == 0}">
+							<button class="btn btn-primary" onclick="location.href='/chat/room/${chatRoom.roomNo}'">선택</button>
+						</c:if>
+						<c:if test="${chatRoom.cnt > 0}">
+							<button class="btn btn-danger" onclick="location.href='/chat/room/${chatRoom.roomNo}'">선택</button>
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
-
-	<!-- 로그인이 되어있는 경우 -->
-	<c:if test="${!empty member }">
-		<div class="btn-area">
-			<form action="/chat/openChatRoom" method="post">
-				<button data-toggle="modal" data-target="#chatModal" class="btn btn-danger">채팅방 만들기</button>
-			</form>
-		</div>
-	</c:if>
 </body>
