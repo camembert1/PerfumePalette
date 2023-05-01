@@ -6,6 +6,7 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="../../../resources/chatCss/chatRoom.css">
 <!-- 공통적으로 사용할 라이브러리 추가 -->
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -23,103 +24,44 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 <!-- Semantic UI theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
-<style>
-.chatting-area {
-	margin: auto;
-	height: 600px;
-	width: 800px;
-	margin-top: 50px;
-	margin-bottom: 500px;
-	vertical-align: middle;
-}
-
-#exit-area {
-	text-align: right;
-	margin-bottom: 10px;
-}
-
-.display-chatting {
-	width: 100%;
-	height: 450px;
-	border: 1px solid gold;
-	overflow: auto;
-	/*스크롤 처럼*/
-	list-style: none;
-	padding: 10px 10px;
-	background: lightblue;
-	z-index: 1;
-	positon: absoulte;
-}
-
-.chat {
-	display: inline-block;
-	border-radius: 5px;
-	padding: 5px;
-	background-color: #eee;
-}
-
-.input-area {
-	width: 100%;
-	display: flex;
-}
-
-#inputChatting {
-	width: 80%;
-	resize: none;
-}
-
-#send {
-	width: 20%;
-}
-
-.myChat {
-	text-align: right;
-}
-
-.myChat>p {
-	background-color: gold;
-}
-
-.chatDate {
-	font-size: 10px;
-}
-
-.chat {
-	white-space: pre-wrap;
-	text-align: left;
-}
-</style>
 </head>
 
 <body>
 
-	<div class="chatting-area">
-		<br> <br>
-		<div id="exit-area">
-			<button class="btn btn-outline-danger" id="exit-btn">나가기</button>
-		</div>
-		<ul class="display-chatting">
-			<c:forEach items="${list }" var="msg">
-				<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
-				<%-- 1) 내가 보낸 메세지 --%>
-				<c:if test="${msg.memberId == member.memberId }">
-					<li class="myChat"><span class="chatDate">${chatDate}</span>
-						<p class="chat">${msg.chatContent}</p></li>
-				</c:if>
-				<%-- 2) 남(이름)이 보낸 메세지 --%>
-				<c:if test="${msg.memberId != member.memberId }">
-					<li><b>${msg.memberNickname}</b><br>
-						<p class="chat">${msg.chatContent}</p>
-						<span class="chatDate">${chatDate}</span></li>
-				</c:if>
-			</c:forEach>
-		</ul>
+	<div id="chat-modal-bg">
+		<div id="chat-modal">
+			<span id="chat-modal-close-btn">×</span>
+			<div id="helloMsg">
+				<div id="pBox">
+					<p>고객 말투 내 말투</p>
+					<p>⚔️진상 고객 강경 대응할 것️⚔️</p>
+				</div>
+				<div class="chatting-area">
+					<ul class="display-chatting">
+						<c:forEach items="${list }" var="msg">
+							<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
+							<%-- 1) 내가 보낸 메세지 --%>
+							<c:if test="${msg.memberId == member.memberId }">
+								<li class="myChat"><span class="chatDate">${chatDate}</span>
+									<p class="chat" style="text-align: left;">${msg.chatContent}</p></li>
+							</c:if>
+							<%-- 2) 남(이름)이 보낸 메세지 --%>
+							<c:if test="${msg.memberId != member.memberId }">
+								<li><b>${msg.memberNickname}</b><br>
+									<p class="chat">${msg.chatContent}</p><span class="chatDate">${chatDate}</span></li>
+							</c:if>
+						</c:forEach>
+					</ul>
 
-		<div class="input-area">
-			<textarea id="inputChatting" rows="3"></textarea>
-			<button id="send">보내기</button>
+					<div class="input-area">
+						<textarea id="inputChatting" placeholder="메세지를 입력해주세요."></textarea>
+						<button id="send">
+							<img src="../../../resources/img/chat/arrow.png" alt="arrow">
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 	<script>
@@ -253,24 +195,22 @@
 
 		function getCurrentTime() {
 
-		    const now = new Date();
+			const now = new Date();
 
-		    const time = now.getFullYear() + "년 " +
-		        addZero(now.getMonth() + 1) + "월 " +
-		        addZero(now.getDate()) + "일 " +
-		        addZero(now.getHours()) + ":" +
-		        addZero(now.getMinutes()) + ":" +
-		        addZero(now.getSeconds()) + " ";
-
-		    return time;
+			const time = now.getFullYear() + "년 " + addZero(now.getMonth() + 1)
+					+ "월 " + addZero(now.getDate()) + "일 "
+					+ addZero(now.getHours()) + ":" + addZero(now.getMinutes())
+					+ ":" + addZero(now.getSeconds()) + " ";
+					
+			return time;
 		}
 
 		// 10보다 작은수가 매개변수로 들어오는경우 앞에 0을 붙여서 반환해주는함수.
 		function addZero(number) {
-		    return number < 10 ? "0" + number : number;
+			return number < 10 ? "0" + number : number;
 		}
 
-		document.getElementById("exit-btn").addEventListener("click", exit);
+		document.getElementById("chat-modal-close-btn").addEventListener("click", exit);
 
 		function exit() {
 
@@ -280,14 +220,11 @@
 					"roomNo" : roomNo,
 					"memberId" : memberId
 				},
-				success : function(result) {
-					if (result == 1) { // 정상적으로 종료됨.
-						location.href = "/chat/chatRoomList"
-					} else { //
-						alert("에러가 발생했습니다.");
-					}
+				success : function() {
+					parent.outChatModal(roomNo);
 				}
-			})
+			});
+			
 		}
 	</script>
 
