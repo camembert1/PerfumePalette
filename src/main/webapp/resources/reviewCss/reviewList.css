@@ -23,6 +23,7 @@ body {
 main {
     width: 100vw;
     min-height: 100vh;
+    margin-bottom: 100px;
 }
 main>div[id=forHeader] {
 
@@ -46,23 +47,80 @@ main>div[id=forCenter] {
 main #subject {
    font-size: 50px;
    font-weight: bold;
-   margin-bottom: 20px;
+   margin-bottom: 25px;
+   text-align: center;
 }
 
-main .search{
-	margin-bottom: 20px;
+main .search {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-bottom: 25px;
 }
 
+main .search select, .search input[type="search"] {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #28302d;
+  margin-right: 10px;
+}
+
+main .search input[type="submit"] {
+  background-color: #28302d;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  padding: 6px 20px;
+  cursor: pointer;
+}
 
 main table{
-	text-align: center;
-	border-collapse: collapse;
-	width: 80%;
+	width: 85%;
+	border: none;
+	table-layout: fixed;
 }
-main thead {
-	height: 50px;
+
+main table, td, th, tr{
+	padding: 10px;
+	border-collapse: collapse;
+	text-align: center;
+}
+main th{
+	border: none;
+	background-color: #28302d;
 	color: white;
-	background-color: #34443E;
+	vertical-align: middle;
+}
+
+main th:nth-child(1) {
+  width: 10%;
+}
+main th:nth-child(2) {
+  width: 10%;
+}
+main th:nth-child(3) {
+  width: 30%;
+}
+main th:nth-child(4) {
+  width: 20%;
+}
+main th:nth-child(5) {
+  width: 15%;
+}
+main th:nth-child(6) {
+  width: 15%;
+}
+
+main tr:not(:first-child, :last-child){
+	border: 1px dotted black;
+	border-left: none;
+	border-right: none;
+}
+main tbody tr:last-child{
+	border: 1px dotted black;
+	border-bottom: 1px solid black;
+	border-left: none;
+	border-right: none;
 }
 
 main a{
@@ -79,10 +137,21 @@ main a{
         color: black; /* 별의 테두리가 검정색일 때의 아이콘 색상 설정 */
     }
     
-main img{
-	width: 200px;
-	height: 200px;
+main .perfumeInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+main .perfumeInfo img {
+  width: 100px;
+  height: 100px;
+}
+
+main .perfumeInfo strong {
+  text-align: center;
+}
+
 
 /* 페이징 CSS */
 main .page {

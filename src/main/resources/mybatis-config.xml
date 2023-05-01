@@ -19,6 +19,7 @@
 		<typeAlias type="com.kh.perfumePalette.order.domain.Order" alias="Order"/>
 		<typeAlias type="com.kh.perfumePalette.order.domain.OrderDetail" alias="OrderDetail"/>
 		<typeAlias type="com.kh.perfumePalette.order.domain.OrderPayment" alias="OrderPayment"/>
+		<typeAlias type="com.kh.perfumePalette.like.Like" alias="Like"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />

@@ -22,6 +22,11 @@
 		<result property="perfumePrice" column="PERFUME_PRICE"/>
 		<result property="pFilerename" column="P_FILERENAME"/>
 		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
+		
+		
+		<result property="likeNo" column="LIKE_NO" />
+		
+		
 	</resultMap>
 	
 	<resultMap type="Perfume" id="perfumeResultMap">
@@ -158,8 +163,27 @@
 		WHERE REVIEW_NO = #{reviewNo}
 	</update>
 	
+	<!-- 후기게시판 삭제 -->
+	<delete id="deleteReview">
+		DELETE REVIEW_TBL WHERE REVIEW_NO=#{reviewNo}
+	</delete>
 	<!-- 신고하기 -->
 	<insert id="reviewReport">
 		INSERT INTO REPORT_TBL VALUES(SEQ_REPORTNO.NEXTVAL,#{reviewNo}, #{memberNo}, #{reportType}, #{reportContent}, DEFAULT)
 	</insert>
+	
+	<select id="selectReportCnt" resultType="_int">
+		SELECT COUNT(*) FROM REPORT_TBL WHERE MEMBER_NO = #{memberNo} AND REVIEW_NO=#{reviewNo}
+	</select>
+	
+	<!-- 좋아요 -->
+	<insert id="addLike">
+		INSERT INTO LIKE_TBL VALUES(SEQ_LIKENO.NEXTVAL, #{reviewNo}, #{memberNo})
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="removeLike">
+		DELETE FROM LIKE_TBL
+		WHERE LIKE_NO=#{likeNo}
+	</delete>
 </mapper>

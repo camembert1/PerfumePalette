@@ -3,6 +3,7 @@ package com.kh.perfumePalette.review;
 import java.util.List;
 
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -26,7 +27,7 @@ public interface ReviewService {
 
 	/**
 	 * 후기 게시판 Detail 페이지 보여주기
-	 * @param reviewNo
+	 * @param like
 	 * @return
 	 */
 	Review selectOneReview(Integer reviewNo);
@@ -67,5 +68,36 @@ public interface ReviewService {
 	 */
 	int updateReview(Review review);
 
+	/**
+	 * 후기 게시판 삭제 Service
+	 * @param reviewNo
+	 * @return
+	 */
+	int deleteReview(int reviewNo);
+	
+	/**
+	 * 후기 게시판 신고 Service
+	 * @param report
+	 * @return
+	 */
 	int reviewReport(Report report);
+
+	int selectReportCnt(Report report);
+	
+	/**
+	 * 좋아요 
+	 * @param like
+	 * @return int
+	 */
+	int addLike(Like like);
+
+	
+	/**
+	 * 좋아요 삭제
+	 * @param likeNo
+	 * @return
+	 */
+	int removeLike(int likeNo);
+
+	
 }
