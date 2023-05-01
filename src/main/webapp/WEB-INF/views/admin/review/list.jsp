@@ -39,7 +39,8 @@
 				</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
-			<div id="subject">REVIEW</div>
+			<div id="subject"></div>
+			<h1>REVIEW</h1>
 			<div id="search">
 				<form action="/admin/review/search">
 	         		<select name="searchOder" id="sortby-select">
@@ -99,6 +100,7 @@
 							<td>${review.memberNickname }</td>
 							<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
 							<td>${review.rViewcount }</td>
+							<td><a href="/admin/review/report?reviewNo=${review.reviewNo }">${review.reportCount }</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

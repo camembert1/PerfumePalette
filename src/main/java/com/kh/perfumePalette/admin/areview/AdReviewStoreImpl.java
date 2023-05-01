@@ -13,7 +13,7 @@ import com.kh.perfumePalette.review.Review;
 public class AdReviewStoreImpl implements AdReviewStore{
 
 	@Override
-	public List<Review> selectAllReview(SqlSession session, PageInfo pi) {
+	public List<AdReview> selectAllReview(SqlSession session, PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int currentPage = pi.getCurrentPage();
 		int offset = (currentPage - 1) * limit;
@@ -32,7 +32,7 @@ public class AdReviewStoreImpl implements AdReviewStore{
 	}
 
 	@Override
-	public List<Review> selectListByKeyword(SqlSession session, PageInfo pi, Search search) {
+	public List<AdReview> selectListByKeyword(SqlSession session, PageInfo pi, Search search) {
 		int limit = pi.getBoardLimit();
 		int currentPage = pi.getCurrentPage();
 		int offset = (currentPage - 1) * limit;
@@ -43,6 +43,20 @@ public class AdReviewStoreImpl implements AdReviewStore{
 	@Override
 	public int getListCount(SqlSession session) {
 		return session.selectOne("AdminMapper.getRListCount");
+	}
+
+	@Override
+	public int getRListCount(SqlSession session) {
+		return session.selectOne("AdminMapper.getReportListCount");
+	}
+
+	@Override
+	public List<AdReview> selectAllReport(SqlSession session, int reviewNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("AdminMapper.selectAllReport", reviewNo, rowBounds);
 	}
 
 	
