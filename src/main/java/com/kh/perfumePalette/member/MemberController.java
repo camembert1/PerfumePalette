@@ -130,20 +130,32 @@ public class MemberController {
 		mv.setViewName("member/login");
 		return mv;
 	}
-
+	
 	@PostMapping("/login")
-	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
+	public ModelAndView login(HttpServletRequest request
+			, @ModelAttribute Member member
+			, ModelAndView mv
+			, HttpSession session) {
 		try {
-			// int result = mService.login(member);
-			Member loginUser = mService.login(member);
+			// 세션에 저장된 회원 정보를 가져오기 
+	        Member loginUser = (Member) session.getAttribute("member");
+	        if (loginUser != null) {
+	            // 이미 로그인된 상태인 경우
+	            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+	            mv.addObject("alert", alert).setViewName("common/alert");
+	            return mv; // 홈으로 이동
+	        }
+			
+	        // 로그인 처리
+			loginUser = mService.login(member);
 			if (loginUser != null) {
 				// member_status = 1인 사람만 로그인 가능
 				if (loginUser.getMemberStatus() == 1) {
-					HttpSession session = request.getSession();
+					HttpSession session1 = request.getSession();
 					// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
-					session.setAttribute("member", loginUser);
+					session1.setAttribute("member", loginUser);
 
-					if (session.getAttribute("mbtiResult") == null) {
+					if (session1.getAttribute("mbtiResult") == null) {
 						mv.setViewName("redirect:/");
 					} else {
 						mv.setViewName("redirect:/mbti/mbtiResult");
@@ -163,6 +175,8 @@ public class MemberController {
 		return mv;
 	}
 
+	
+	
 	// 로그아웃
 	@GetMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request, ModelAndView mv) {
