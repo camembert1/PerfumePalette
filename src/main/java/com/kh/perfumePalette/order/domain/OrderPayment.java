@@ -1,10 +1,8 @@
 package com.kh.perfumePalette.order.domain;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderPayment {
