@@ -9,6 +9,8 @@
 		<typeAlias type="com.kh.perfumePalette.member.Member" alias="Member" />
 		<typeAlias type="com.kh.perfumePalette.perfume.Perfume" alias="Perfume" />
 		<typeAlias type="com.kh.perfumePalette.admin.aperfume.AdPerfume" alias="AdPerfume" />
+		<typeAlias type="com.kh.perfumePalette.admin.areview.AdReview" alias="AdReview"/>
+		<typeAlias type="com.kh.perfumePalette.admin.aorder.domain.AdOrder" alias="AdOrder"/>
 		<typeAlias type="com.kh.perfumePalette.qnaBoard.QnaBoard" alias="QnaBoard"/>
 		<typeAlias type="com.kh.perfumePalette.qnaBoard.QnaReply" alias="QnaReply" />
 		<typeAlias type="com.kh.perfumePalette.wish.Wish" alias="Wish" />
