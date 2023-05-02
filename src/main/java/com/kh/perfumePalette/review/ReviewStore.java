@@ -103,11 +103,10 @@ public interface ReviewStore {
 	 */
 	int addLike(SqlSession session, Like like);
 
-	/**
-	 * 좋아요 삭제 
-	 * @param likeNo
-	 * @return int
-	 */
-	int removeLike(SqlSession session, int likeNo);
+	int selectCheckLike(SqlSession session, Like like);
+
+	int selectTotalCnt(SqlSession session, Integer reviewNo);
+
+	int removeLike(SqlSession session, Like like);
 
 }

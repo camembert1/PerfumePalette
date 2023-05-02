@@ -91,13 +91,11 @@ public interface ReviewService {
 	 */
 	int addLike(Like like);
 
-	
-	/**
-	 * 좋아요 삭제
-	 * @param likeNo
-	 * @return
-	 */
-	int removeLike(int likeNo);
+	int selectCheckLike(Like like);
+
+	int selectTotalCnt(Integer reviewNo);
+
+	int removeLike(Like like);
 
 	
 }
