@@ -22,6 +22,9 @@
 	<!-- 부트스트랩인가?? 그 모달창에 버튼 위아래 아이콘인듯! -->
 	<script src="https://kit.fontawesome.com/972e551b53.js"></script>
 
+	<!-- 카카오 SDK(Software Development Kit) -->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 	
 </head>
 
@@ -35,13 +38,6 @@
 	<div id="forCenter">
 		
 		<!-- 여기부터 내용 입력하시면 됩니다! -->
-
-
-		<!-- <h3>perfumeNo : ${perfume.perfumeNo}</h3>
-		<h3>perfumeQuantity : ${perfume.perfumeQuantity}</h3>
-		<h3>pScentCategory : ${perfume.pScentCategory}</h3>
-		<h3>pImageCategory : ${perfume.pImageCategory}</h3>
-		<h3>perfumeDate : ${perfume.perfumeDate}</h3> -->
 
 		<div>
 			<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
@@ -67,9 +63,24 @@
 		<div>perfumePrice : ${perfume.perfumePrice }</div>
 
 		<div>
-			<button>SNS공유하기</button>
+			<button class="share" id="copy">링크복사</button>
+			<button class="share" id="kakao">카카오톡</button>
+			<button class="share" id="twitter">트위터</button>
+			<button class="share" id="facebook">페이스북</button>
 		</div>
 
+
+		<div>
+			<input type="hidden" id="wishStatus" value="${wishStatus}">
+			<button onclick="wish()" id="wishBtn">
+				<c:if test="${wishStatus == 1}">
+					❤️
+				</c:if>
+				<c:if test="${wishStatus == 0}">
+					🤍
+				</c:if>
+			</button>
+		</div>
 
 		<c:choose>
 			<c:when test="${perfume.perfumeQuantity > 0}">
@@ -138,22 +149,130 @@
 		</form>
 
 
-
-
-
 	</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
 
 	
-	
+
 
 	<script>
+
+		alertModal = function(msg) {
+			// css작업할 때 modal뜨는 걸로 수정하기!
+			alert(msg);
+		}
+
+		// 현재 링크
+		const url = encodeURI(window.location.href);
+
+		// 상품 디테일 페이지 링크 복사
+		$('#copy').click(function() {
+			window.navigator.clipboard.writeText(url).then(() => {
+				// 복사가 완료되면 호출된다.
+				alertModal('상품 링크가 복사되었습니다!');
+			});
+		});
+
+		// 공유하기 - 페북, 트위터
+		$('#facebook').click(function() {
+			window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
+		});
+		$('#twitter').click(function() {
+			window.open("https://twitter.com/intent/tweet?url=" +  url)
+		});
+
+		// 공유하기 - 카카오
+		Kakao.init('97a75fe20b070509cbcf578ae7f51492');
+		$('#kakao').click(function() {
+			Kakao.Link.sendDefault({
+				objectType: 'feed',
+				content: {
+					title: 'Perfume Palette',
+					description: '[${perfume.perfumeBrand}] ${perfume.perfumeName}',
+					imageUrl: url + '/resources/img/perfumeFileUploads/${perfume.pFilerename}',
+					link: {
+						webUrl : url,
+						mobileWebUrl : url,
+					},
+				},
+				buttons: [
+					{
+					title: '자세히 보기',
+					link: {
+						webUrl : url,
+						mobileWebUrl : url,
+					},
+					},
+				]
+			})
+		});
+
+		// 찜버튼
+		wish = function() {
+			let perfumeNo = '${perfume.perfumeNo}';
+			let memberId = '${sessionScope.member.memberId }';
+			if (memberId == '') {
+				alert('로그인부터 하시길!')
+			} else {
+				if($('#wishStatus').val() == 0) {
+					// 찜을 안 누른 상태라면 찜
+					$.ajax({
+						url:'/wish/add',
+						type: 'POST',
+						data:{
+							"perfumeNo": perfumeNo,
+							"memberId": memberId
+						},
+						success: function(result) {
+							$('#wishBtn').html('❤️');
+							$('#wishStatus').val(1);
+						},
+						error: function(result) {
+						}
+					});
+				} else {
+					// 찜을 누른 상태라면 찜 취소
+					// 근데 찜 취소가 wishNo를 이용해서 여기서 처리할 수가 없음
+					// 임시로 wishNo 가져오겟슴 일단
+					$.ajax({
+						url: '/perfume/getWishNo',
+						type:'POST',
+						data: {
+							"perfumeNo": perfumeNo,
+							"memberId": memberId
+						},
+						success: function(wishNo) {
+							$.ajax({
+								url: '/wish/remove',
+								type: 'POST',
+								data:{
+									"wishNo": wishNo,
+								},
+								success: function(result) {
+									$('#wishBtn').html('🤍');
+									$('#wishStatus').val(0);
+								},
+								error: function(result) {
+								}
+							});
+						},
+						error: function(result) {
+						}
+					});
+				}
+					
+			}
+		}
+		
+
+		// 모달 - 구매하기 (구매 submit버튼)
 		order = function() {
 			$('[name=cartQuantity]').val($("#perfumeQuantity").val());
 			$('#orderForm').submit();
 		}
 
+		// 디테일 - 구매하기 (모달 띄우는 버튼)
 		buy = function() {
 			if('${member.memberNo }' == '') {
 				goLogin();
@@ -177,6 +296,7 @@
 			}
 		}
 
+		// 디테일 - 장바구니 (모달 띄우는 버튼)
 		cart = function() {
 			if('${perfume.perfumeQuantity }' == 0) {
 				alert('품절된 상품입니다!');
@@ -258,6 +378,7 @@
 		});
 
 
+		// 모달 - 장바구니 (장바구니 add 버튼)
 		function addCartAjax() {
 			const memberId = '${sessionScope.member.memberId }';
 			const cartQuantity = $("#perfumeQuantity").val();
@@ -273,6 +394,7 @@
 				success: function (result) {
 					$("#reload2" + perfumeNo).load(location.href + " #reload2" + perfumeNo);
 					modalClose();
+					alertModal('장바구니에 추가되었습니다!');
 				},
 				error: function () {
 					alert("서버 처리 실패");
