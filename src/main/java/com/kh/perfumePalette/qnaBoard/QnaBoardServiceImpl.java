@@ -71,4 +71,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 	}
 
 
+	
+
 }

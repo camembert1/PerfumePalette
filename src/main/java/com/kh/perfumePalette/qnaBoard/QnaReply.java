@@ -7,16 +7,19 @@ public class QnaReply {
 	private int replyNo;
 	private int repQnaNo;
 	private int memberNo;
+	private String memberNickname;
 	private String replyContents;
 	private Timestamp repDate;
 	
 	public QnaReply () {}
 
-	public QnaReply(int replyNo, int repQnaNo, int memberNo, String replyContents, Timestamp repDate) {
+	public QnaReply(int replyNo, int repQnaNo, int memberNo, String memberNickname, String replyContents,
+			Timestamp repDate) {
 		super();
 		this.replyNo = replyNo;
 		this.repQnaNo = repQnaNo;
 		this.memberNo = memberNo;
+		this.memberNickname = memberNickname;
 		this.replyContents = replyContents;
 		this.repDate = repDate;
 	}
@@ -45,6 +48,14 @@ public class QnaReply {
 		this.memberNo = memberNo;
 	}
 
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+
 	public String getReplyContents() {
 		return replyContents;
 	}
@@ -63,10 +74,12 @@ public class QnaReply {
 
 	@Override
 	public String toString() {
-		return "QnaReply [replyNo=" + replyNo + ", repQnaNo=" + repQnaNo + ", memberNo=" + memberNo + ", replyContents="
-				+ replyContents + ", repDate=" + repDate + "]";
+		return "QnaReply [replyNo=" + replyNo + ", repQnaNo=" + repQnaNo + ", memberNo=" + memberNo
+				+ ", memberNickname=" + memberNickname + ", replyContents=" + replyContents + ", repDate=" + repDate
+				+ "]";
 	}
 
+	
 	
 	
 }

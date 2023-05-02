@@ -2,6 +2,8 @@ package com.kh.perfumePalette.chatting;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.member.Member;
 
 @Controller
@@ -25,17 +28,24 @@ public class ChattingController {
 
 	// 채팅방 목록 조회
 	@GetMapping("/chat/chatRoomList")
-	public String selectChatRoomList(Model model) {
+	public String selectChatRoomList(Model model, HttpSession session) {
 
 		try {
 			List<ChatRoom> crList = cService.selectChatRoomList();
-			if (crList.size() == 0) {
-//				Alert alert = new Alert("/", "채팅방이 존재하지 않습니다.");
-//				model.addAttribute("alert", alert);
-				return "chat/chatRoomList";
+			Member member = (Member) session.getAttribute("member");
+			if (member == null || !member.getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				model.addAttribute("alert", alert);
+				return "common/alert";
 			} else {
-				model.addAttribute("chatRoomList", crList);
-				return "chat/chatRoomList";
+				if (crList.size() == 0) {
+					Alert alert = new Alert("/", "개설된 채팅방이 존재하지 않습니다.");
+					model.addAttribute("alert", alert);
+					return "common/alert";
+				} else {
+					model.addAttribute("chatRoomList", crList);
+					return "chat/chatRoomList";
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); // 콘솔창에 에러 출력
@@ -48,7 +58,7 @@ public class ChattingController {
 	// 채팅방 만들기
 	@PostMapping("/chat/openChatRoom")
 	public String openChatRoom(@ModelAttribute("member") Member member, // loginUser값을 얻어와야해서 @ModelAttribute 생략하면
-																				// 안됨
+																		// 안됨
 			Model model, ChatRoom room, RedirectAttributes ra) {
 
 		// @ModelAttribute -> 커맨드객체 (@ModelAttribute는 생략가능)
@@ -73,10 +83,27 @@ public class ChattingController {
 		return path;
 	}
 
+	// 채팅방 만들기
+	@PostMapping("/chat/openChatRoom2")
+	@ResponseBody
+	public int openChatRoomAjax(@ModelAttribute("member") Member member, // loginUser값을 얻어와야해서 @ModelAttribute 생략하면
+																			// 안됨
+			Model model, ChatRoom room, RedirectAttributes ra) {
+
+		// @ModelAttribute -> 커맨드객체 (@ModelAttribute는 생략가능)
+
+		room.setMemberId(member.getMemberId());
+
+		int chatRoomNo = cService.openChatRoom(room);
+		// pk값을 반환 받기 위해 객체이름을 chatRoomNo으로 작성
+
+		return chatRoomNo;
+	}
+
 	// 채팅방 입장
 	@GetMapping("/chat/room/{roomNo}")
-	public String joinChatRoom(@ModelAttribute("member") Member member, Model model,
-			@PathVariable("roomNo") int roomNo, ChatRoom join, RedirectAttributes ra) {
+	public String joinChatRoom(@ModelAttribute("member") Member member, Model model, @PathVariable("roomNo") int roomNo,
+			ChatRoom join, RedirectAttributes ra) {
 		join.setMemberId(member.getMemberId());
 		List<Chat> list = cService.joinChatRoom(join);
 
@@ -84,6 +111,19 @@ public class ChattingController {
 		model.addAttribute("roomNo", roomNo); // session스코프에 roomNo저장됨.
 
 		return "chat/chatRoom";
+
+	}
+
+	// 채팅방 입장
+	@GetMapping("/chat/room2/{roomNo}")
+	@ResponseBody
+	public void joinChatRoomAjax(@ModelAttribute("member") Member member, Model model,
+			@PathVariable("roomNo") int roomNo, ChatRoom join, RedirectAttributes ra) {
+		join.setMemberId(member.getMemberId());
+		List<Chat> list = cService.joinChatRoom(join);
+
+		model.addAttribute("list", list);
+		model.addAttribute("roomNo", roomNo); // session스코프에 roomNo저장됨.
 
 	}
 

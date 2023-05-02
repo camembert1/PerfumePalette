@@ -6,6 +6,7 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="../../../resources/chatCss/chatRoom.css">
 <!-- 공통적으로 사용할 라이브러리 추가 -->
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -23,107 +24,56 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 <!-- Semantic UI theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
-<style>
-.chatting-area {
-	margin: auto;
-	height: 600px;
-	width: 800px;
-	margin-top: 50px;
-	margin-bottom: 500px;
-}
-
-#exit-area {
-	text-align: right;
-	margin-bottom: 10px;
-}
-
-.display-chatting {
-	width: 100%;
-	height: 450px;
-	border: 1px solid gold;
-	overflow: auto;
-	/*스크롤 처럼*/
-	list-style: none;
-	padding: 10px 10px;
-	background: lightblue;
-	z-index: 1;
-	positon: absoulte;
-}
-
-.chat {
-	display: inline-block;
-	border-radius: 5px;
-	padding: 5px;
-	background-color: #eee;
-}
-
-.input-area {
-	width: 100%;
-	display: flex;
-}
-
-#inputChatting {
-	width: 80%;
-	resize: none;
-}
-
-#send {
-	width: 20%;
-}
-
-.myChat {
-	text-align: right;
-}
-
-.myChat>p {
-	background-color: gold;
-}
-
-.chatDate {
-	font-size: 10px;
-}
-
-.img {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	z-index: -100;
-}
-</style>
 </head>
 
 <body>
 
-	<div class="chatting-area">
-		<br> <br>
-		<div id="exit-area">
-			<button class="btn btn-outline-danger" id="exit-btn">나가기</button>
-		</div>
-		<ul class="display-chatting">
-			<!-- <img src=""/> -->
-			<c:forEach items="${list }" var="msg">
-				<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
-				<%-- 1) 내가 보낸 메세지 --%>
-				<c:if test="${msg.memberId == member.memberId }">
-					<li class="myChat"><span class="chatDate">${chatDate }</span>
-						<p class="chat">${msg.chatContent }</p></li>
-				</c:if>
-				<%-- 2) 남(이름)이 보낸 메세지 --%>
-				<c:if test="${msg.memberId != member.memberId }">
-					<li><b>${msg.memberNickname }</b>
-						<p class="chat">${msg.chatContent }</p> <span class="chatDate">${chatDate }</span></li>
-				</c:if>
-			</c:forEach>
-		</ul>
+	<div id="chat-modal-bg">
+		<div id="chat-modal">
+			<span id="chat-modal-close-btn">×</span>
+			<div id="helloMsg">
+				<div id="pBox">
+					<p>고객 말투 내 말투</p>
+					<p>⚔️진상 고객 강경 대응할 것️⚔️</p>
+				</div>
+				<div class="chatting-area">
+					<ul class="display-chatting">
+						<c:forEach items="${list }" var="msg">
+							<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
+							<%-- 1) 내가 보낸 메세지 --%>
+							<c:if test="${msg.memberId == member.memberId }">
+								<li class="myChat"><span class="chatDate">${chatDate}</span>
+									<p class="chat" style="text-align: left;">${msg.chatContent}</p></li>
+							</c:if>
+							<%-- 2) 남(이름)이 보낸 메세지 --%>
+							<c:if test="${msg.memberId != member.memberId }">
+								<li><b>${msg.memberNickname}</b><br>
+									<p class="chat">${msg.chatContent}</p><span class="chatDate">${chatDate}</span></li>
+							</c:if>
+						</c:forEach>
+					</ul>
 
-		<div class="input-area">
-			<textarea id="inputChatting" rows="3"></textarea>
-			<button id="send">보내기</button>
+					<div class="input-area">
+						<textarea id="inputChatting" placeholder="메세지를 입력해주세요."></textarea>
+						<button id="send">
+							<img src="../../../resources/img/chat/arrow.png" alt="arrow">
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 	<script>
+		// Enter key를 누르면 send 버튼을 클릭하는 이벤트 핸들러
+		document.getElementById("inputChatting").addEventListener("keydown",
+				function(event) {
+					if (event.keyCode === 13 && !event.shiftKey) { // Enter key
+						event.preventDefault(); // 기본 동작 취소 (textarea에서 줄바꿈 되는 것 방지)
+						document.getElementById("send").click(); // send 버튼 클릭
+					}
+				});
+
 		//el태그통해 js변수 셋팅
 		const memberId = "${member.memberId}";
 		const memberNickname = "${member.memberNickname}";
@@ -161,7 +111,7 @@
 			//클라이언트가 채팅내용을 입력하지 않은상태로 보내기 버튼을 누른경우
 			if (inputChatting.value.trim().length == 0) {
 
-				alert("채팅내용을 입력해주세요.");
+				/* alert("채팅내용을 입력해주세요."); */
 
 				inputChatting.value = ""; // 공백문자 제거해주기.
 				inputChatting.focus();
@@ -178,11 +128,10 @@
 				// JSON.stringify(객체) : JS Ojbect -> JSON
 
 				/* console.log(chatMessage); */
-				console.log(JSON.stringify(chatMessage));
+				/* console.log(JSON.stringify(chatMessage)); */
 
 				// chatSocket(웹소켓객체)를 이용하여 메세지 보내기
 				// chatSocket.send(값) : 웹소켓 핸들러로 값을 보냄.
-
 				chatSocket.send(JSON.stringify(chatMessage));
 
 				inputChatting.value = "";
@@ -199,7 +148,7 @@
 
 			// 전달받은 메세지를 JS객체로 변환
 			const chatMessage = JSON.parse(e.data); // js객체로 변환.
-			console.log(chatMessage);
+			/* console.log(chatMessage); */
 
 			/*
 				<li>
@@ -210,10 +159,11 @@
 			 */
 			const li = document.createElement("li");
 			const p = document.createElement("p");
+			const br = document.createElement("br");
 
 			p.classList.add("chat");
 
-			p.innerHTML = chatMessage.chatContent.replace(/\\n/gm, "<br>"); //줄바꿈 처리
+			p.innerHTML = chatMessage.chatContent.replace(/\n/g, "<br>"); /* 줄바꿈 효과 */
 
 			//span태그 추가
 			const span = document.createElement("span");
@@ -226,7 +176,7 @@
 				li.classList.add("myChat");
 			} else { // 남이 쓴 채팅
 				li.innerHTML = "<b>" + chatMessage.memberNickname + "</b>";
-				li.append(p, span);
+				li.append(br, p, span);
 			}
 
 			// 채팅창
@@ -251,7 +201,7 @@
 					+ "월 " + addZero(now.getDate()) + "일 "
 					+ addZero(now.getHours()) + ":" + addZero(now.getMinutes())
 					+ ":" + addZero(now.getSeconds()) + " ";
-
+					
 			return time;
 		}
 
@@ -260,7 +210,7 @@
 			return number < 10 ? "0" + number : number;
 		}
 
-		document.getElementById("exit-btn").addEventListener("click", exit);
+		document.getElementById("chat-modal-close-btn").addEventListener("click", exit);
 
 		function exit() {
 
@@ -270,14 +220,11 @@
 					"roomNo" : roomNo,
 					"memberId" : memberId
 				},
-				success : function(result) {
-					if (result == 1) { // 정상적으로 종료됨.
-						location.href = "/chat/chatRoomList"
-					} else { //
-						alert("에러가 발생했습니다.");
-					}
+				success : function() {
+					parent.outChatModal(roomNo);
 				}
-			})
+			});
+			
 		}
 	</script>
 

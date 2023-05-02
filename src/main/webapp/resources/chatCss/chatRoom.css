@@ -1,0 +1,170 @@
+@font-face {
+	font-family: '마포꽃섬';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff')
+		format('woff');
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ghana';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: '마포꽃섬';
+}
+
+body {
+	height: 800px;
+	width: 600px;
+}
+
+#chat-modal {
+	height: 100%;
+	width: 100%;
+}
+
+#chat-modal-bg {
+	height: 100%;
+	width: 100%;
+}
+
+#chat-modal-close-btn {
+	font-size: 30px;
+	cursor: pointer;
+	height: 7.5%;
+	width: 100%;
+	display: block;
+	text-align: right;
+	padding: 10px 15px 0 0;
+	box-sizing: border-box;
+}
+
+#helloMsg {
+	height: 92.5%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#helloMsg #pBox {
+	height: 10%;
+	width: 100%;
+}
+
+.display-chatting p.chat {
+	white-space: pre-wrap;
+}
+
+#helloMsg #pBox p:nth-of-type(2) {
+	color: gray;
+}
+
+#helloMsg #pBox p {
+	/* margin-bottom: 0; */
+	text-align: center;
+}
+
+#helloMsg p:first-of-type {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#helloMsg p:last-of-type {
+	font-size: 0.8em;
+	color: black;
+}
+
+#helloMsg .chatting-area {
+	height: 90%;
+	width: 100%;
+}
+
+.chatting-area #exit-area {
+	text-align: right;
+	margin-bottom: 10px;
+}
+
+.chatting-area .display-chatting {
+	width: 100%;
+	height: 90%;
+	overflow: auto;
+	/*스크롤 처럼*/
+	list-style: none;
+	padding: 10px 10px;
+	background: lightblue;
+	z-index: 1;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.chatting-area .display-chatting b {
+	font-size: 15px;
+}
+
+.chatting-area .chat {
+	display: inline-block;
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #eee;
+}
+
+.myChat>p {
+	text-align: left;
+}
+
+.chatting-area .input-area {
+	height: 10%;
+	width: 100%;
+	display: flex;
+	border-radius: 0px 0px 35px 35px;
+}
+
+.chatting-area #inputChatting {
+	width: 90%;
+	resize: none;
+	border-radius: 0px 0px 0px 35px;
+	border: none;
+	outline: none;
+	background-color: #F0F0F1;
+	font-size: 15px;
+	padding: 20px;
+	box-sizing: border-box;
+	font-family: '마포꽃섬';
+}
+
+.chatting-area li {
+	margin-bottom: 5px;
+}
+
+.chatting-area #send {
+	width: 10%;
+	border-radius: 0px 0px 35px 0px;
+	border: none;
+	background-color: #F0F0F1;
+}
+
+#send img {
+	height: 20px;
+	width: 20px;
+}
+
+.chatting-area .myChat {
+	text-align: right;
+}
+
+.chatting-area .myChat>p {
+	background-color: gold;
+}
+
+.chatting-area .chatDate {
+	font-size: 10px;
+}

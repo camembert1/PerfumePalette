@@ -278,9 +278,10 @@ header #logo-img {
 }
 
 
+/* 여기 아래부터 채팅 관련 CSS 절대 건들지 마시오! */
+
+
 /* 헤더 - 버튼 시작 */
-#chat-area {
-}
 #chat-area #chat-btn {
 
     /* 채팅 버튼 위치 */
@@ -362,73 +363,132 @@ header #logo-img {
 }
 
 #chat-area #chat-modal-close-btn {
-    
-    /* 모달 닫기 x버튼 위치 */
-    position: absolute;
-    right: 15px;
-    top: 5px;
-
-    /*  X 크기 및 위치*/
-    font-size: 30pt;
-
-    /* 커서 */
+    font-size: 30px;
     cursor: pointer;
+    height: 7.5%;
+    width: 100%;
+    display: block;
+    text-align: right;
+    padding: 10px 15px 0 0;
+    box-sizing: border-box;
 }
 
 #helloMsg {
-	margin-top: 50px;
+	height: 92.5%;
 	display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-	#helloMsg img {
-		width: 150px;
-		height: 150px;
-		border-radius: 10%;
-		margin-bottom: 10px;
+	#helloMsg #pBox {
+		height: 10%;
+		width: 100%;
+	}
+	
+	#helloMsg #pBox p:nth-of-type(2) {
+		color: gray;
+	}
+	
+	#helloMsg #pBox p {
+		/* margin-bottom: 0; */
+		text-align: center;
 	}
 	
 	#helloMsg p:first-of-type {
 		font-size: 1.2em;
 		font-weight: bold;
-		margin-bottom: 5px;
 	}
 	
 	#helloMsg p:last-of-type {
 		font-size: 0.8em;
-		color: gray;
+		color: black;
+	}
+	
+	#helloMsg .chatting-area {
+		height: 90%;
+		width: 100%;
+	}
+	
+	.chatting-area #exit-area {
+		text-align: right;
+		margin-bottom: 10px;
+	}
+	
+	.chatting-area .display-chatting {
+		width: 100%;
+		height: 90%;
+		overflow: auto;
+		/*스크롤 처럼*/
+		list-style: none;
+		padding: 10px 10px;
+		background: lightblue;
+		z-index: 1;
+		margin: 0;
+		box-sizing: border-box;
+	}
+	
+	.chatting-area .display-chatting b {
+		font-size: 15px;
+	}
+	
+	.chatting-area .chat {
+		display: inline-block;
+		border-radius: 5px;
+		padding: 5px;
+		background-color: #eee;
+	}
+	
+	.myChat > p {
+  		text-align: left;
+	}
+	
+	 .chatting-area .input-area {
+		height: 10%;
+		width: 100%;
+		display: flex;
+		border-radius: 0px 0px 35px 35px;
 	}
 
-
-#chat {
-
-    /* 찐 채팅 영역 크기 */
-    height: 290px;
-    width: 100%;
-    --background-color: white;
-
-    /* 창 세로 스크롤 */
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-#chat-area #chat-real::-webkit-scrollbar {
-    /* 스크롤 너비 */
-    width: 20px;
-}
-#chat-area #chat-real::-webkit-scrollbar-thumb {
-    /* 스크롤바 디자인 */
-    background-color: rgb(0, 0, 0);
-    border-radius: 10px;
-
-    border: 7px solid rgb(255, 255, 255);
-
-}
-#chat-area #chat-real::-webkit-scrollbar-track {
-    /* 스크롤바 트랙 색상 */
-    background-color: rgba(255, 255, 255, 0);
-}
+	.chatting-area #inputChatting {
+		width: 90%;
+		resize: none;
+		border-radius: 0px 0px 0px 35px;
+		border: none;
+		outline: none;
+		background-color: #F0F0F1;
+		font-size: 15px;
+		padding: 17px;
+		box-sizing: border-box;
+		font-family: '마포꽃섬';
+	}
+	
+	.chatting-area li {
+		margin-bottom: 5px;
+	}
+	
+	.chatting-area #send {
+		width: 10%;
+		border-radius: 0px 0px 35px 0px;
+		border: none;
+		background-color: #F0F0F1;
+	}
+	
+	#send img {
+		height: 20px;
+		width: 20px;
+	}
+	
+	.chatting-area .myChat {
+		text-align: right;
+	}
+	
+	.chatting-area .myChat>p {
+		background-color: gold;
+	}
+	
+	.chatting-area .chatDate {
+		font-size: 10px;
+	}
 
 /* 헤더 - 버튼 끝 */
 

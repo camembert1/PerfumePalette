@@ -32,17 +32,24 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) {
 		Map map = (Map) session.getAttributes();
 		Member member = (Member) map.get("member");
-		String id = member.getMemberId();
 
-		// WebSocketSession : 웹소켓에 접속/요청한 클라이언트의 세션
-		logger.info(session.getId() + "연결됨" + "(" + id + ")"); // 세션아이디 확인
+		if (member != null) {
+			String id = member.getMemberId();
+			// WebSocketSession : 웹소켓에 접속/요청한 클라이언트의 세션
+			logger.info(session.getId() + "연결됨" + "(" + id + ")"); // 세션아이디 확인
+			sessions.add(session); // 전달받은 webSocketSession을 set에 추가
+		}
 
-		sessions.add(session); // 전달받은 webSocketSession을 set에 추가
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		sessions.remove(session);
+		Map map = (Map) session.getAttributes();
+		Member member = (Member) map.get("member");
+
+		if (member != null) {
+			sessions.remove(session);
+		}
 		// 웹소켓 연결이 종료되는 경우, sessions안에 저장되어있던 클라이언트의 session정보를 삭제
 	}
 
@@ -57,7 +64,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler {
 
 		Chat chatMessage = objectMapper.readValue(message.getPayload(), Chat.class);
 		chatMessage.setChatDate(new Timestamp(System.currentTimeMillis()));
-		logger.info("전달후 변환된 메세지 : " +chatMessage);
+		logger.info("전달후 변환된 메세지 : " + chatMessage);
 
 		// 전달 받은 채팅메세지를 db에 삽입
 		int result = cService.insertMessage(chatMessage);

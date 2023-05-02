@@ -125,12 +125,20 @@ main tr:first-child {
 
 main input[type=number] {
 	font-size: 16px;
+	vertical-align: middle;
 }
 
 main .fas {
 	margin: 0 5px;
+	vertical-align: middle;
 	color: #28302d;
 	font-size: 20px;
+	cursor: pointer;
+}
+
+main .fas:last-child {
+	margin-left: 0px;
+	margin-right: 5px;
 }
 
 main #btnBox {
@@ -183,11 +191,24 @@ main #allCheck:checked {
 }
 
 main div[id*="reload"] img {
-	width: 75px;
-	height: 75px;
+	width: 50px;
+	height: 50px;
 	cursor: pointer;
 }
 
-main td[onclick] {
+main button {
 	cursor: pointer;
+}
+
+main tr td {
+	transition: transform 0.2s ease-in-out;
+}
+
+main tr:hover td {
+	transform: translate(2.5px, 2.5px);
+}
+
+main tr td {
+	transition-delay: 0.2s;
+	transform: translate
 }
