@@ -84,7 +84,7 @@ public class PerfumeController {
 			int wishStatus = 0;
 			Member member = (Member) session.getAttribute("member");
 			if (member != null) {
-				 
+				
 				// 로그인 상태라면 해당 향수 찜 여부 확인하기!
 				Wish wishInfo = new Wish();
 				wishInfo.setMemberId(member.getMemberId());
