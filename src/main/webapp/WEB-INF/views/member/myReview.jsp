@@ -113,6 +113,25 @@
 		}
 	}
 	
+	// 선택 박스 클릭
+	var list = document.querySelectorAll(".check");
+	for (var i = 0; i < list.length; i++) {
+	  list[i].addEventListener('click', function () {
+	    var isAllChecked = true;
+	    for (var j = 0; j < list.length; j++) {
+	      if (!list[j].checked) {
+	        isAllChecked = false;
+	        break;
+	      }
+	    }
+	    if (isAllChecked) {
+	      allCheck.checked = true;
+	    } else {
+	      allCheck.checked = false;
+	    }
+	  });
+	}
+	
 	
 	// 선택 삭제 
 	document.querySelector("#del").addEventListener('click', function() {
