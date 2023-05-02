@@ -54,28 +54,31 @@ public class ReviewController {
 			, String orderInfo) {
 		
 		// 주문자 회원 번호 가져오기
-		int orderMemberNo = Integer.parseInt(orderInfo.split(";")[0]);
+		// int orderMemberNo = Integer.parseInt(orderInfo.split(";")[0]);
 		
 		// 세션에 있는 회원번호와 다르면 잘못된 접근 처리하기
-		Member loginUser = (Member) session.getAttribute("member");
-		if (loginUser == null) {
-			Alert alert = new Alert("/member/login", "잘못된 접근입니다.");
-			mv.addObject("alert", alert).setViewName("common/alert");
-			return mv;
-		} else if (orderMemberNo != loginUser.getMemberNo()) {
-			Alert alert = new Alert("/", "잘못된 접근입니다.");
-			mv.addObject("alert", alert).setViewName("common/alert");
-			return mv;
-		}
+//		Member loginUser = (Member) session.getAttribute("member");
+//		if (loginUser == null) {
+//			Alert alert = new Alert("/member/login", "잘못된 접근입니다.");
+//			mv.addObject("alert", alert).setViewName("common/alert");
+//			return mv;
+//		} else if (orderMemberNo != loginUser.getMemberNo()) {
+//			Alert alert = new Alert("/", "잘못된 접근입니다.");
+//			mv.addObject("alert", alert).setViewName("common/alert");
+//			return mv;
+//		}
 		
 		// 주문 번호 가져와서 addObject
 		// write페이지에서 글 등록 성공 시
 		// 글번호를 ORDER_DETAIL_TBL의 REVIEW_STATUS컬럼에 업데이트하도록 처리하기 위해 필요함
-		String orderNo = orderInfo.split(";")[2];
-		mv.addObject("orderNo", orderNo);
+		//String orderNo = orderInfo.split(";")[2];
+		//mv.addObject("orderNo", orderNo);
 		
 		// 향수 번호 가져오기
-		int perfumeNo = Integer.parseInt(orderInfo.split(";")[1]);
+		int perfumeNo = 80;
+		if (orderInfo!= null && !orderInfo.equals("")) {
+			perfumeNo = Integer.parseInt(orderInfo.split(";")[1]);			
+		}
 		
 		// 이미 해당 구매건에 대한 후기를 썼다면 이미 작성한 후기입니다 alert 띄우기
 		// 어차피 마이페이지 - 주문 목록에서 작성 버튼은 노출되지 않지만
@@ -221,12 +224,26 @@ public class ReviewController {
 
 	// 후기 게시판 Detail 보여주기
 	@RequestMapping(value = "/reviewDetail/{reviewNo}", method = RequestMethod.GET)
-	public ModelAndView viewReviewDetail(ModelAndView mv, @PathVariable Integer reviewNo) {
+	public ModelAndView viewReviewDetail(ModelAndView mv, @PathVariable Integer reviewNo, HttpSession session) {
 		try {
 			// 조회수 증가
 			rService.updateReviewCount(reviewNo);
 			Review review = rService.selectOneReview(reviewNo);
-			mv.addObject("review", review).setViewName("review/reviewDetail");
+			
+			Member member = (Member)session.getAttribute("member");
+			int likeTotalCnt = rService.selectTotalCnt(reviewNo);
+			if(member == null) {
+				mv.addObject("review", review)
+				.addObject("totalNo", likeTotalCnt).setViewName("review/reviewDetail");
+			} else {
+				Like like = new Like();
+				like.setReviewNo(reviewNo);
+				like.setMemberNo(member.getMemberNo());
+				int likeCheckNo = rService.selectCheckLike(like);
+				mv.addObject("review", review)
+				.addObject("likeNo", likeCheckNo)
+				.addObject("totalNo", likeTotalCnt).setViewName("review/reviewDetail");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
@@ -420,18 +437,23 @@ public class ReviewController {
 		}
 	}
 
-	// 신고하기
+	// 신고만 하기
 	@PostMapping("/report")
 	@ResponseBody
 	public int reviewReport(@ModelAttribute Report report) {
-		int reportCnt = rService.selectReportCnt(report);
 		int result = -1;
-		if(reportCnt <= 0) {
-			result = rService.reviewReport(report);
-			return result;
-		} else {
-			return result;
-		}
+		result = rService.reviewReport(report);
+		return result;
+	}
+	
+	// 신고체크
+	@PostMapping("/reportCheck")
+	@ResponseBody
+	public int reviewReportCheck(@ModelAttribute Report report) {
+		int reportCnt = rService.selectReportCnt(report);
+
+		return reportCnt;
+
 	}
 
 	// 좋아요
@@ -456,9 +478,12 @@ public class ReviewController {
 	
 	@PostMapping("/remove")
 	@ResponseBody
-	public String removeLike(int likeNo) {
+	public String removeLike(int reviewNo, int memberNo) {
 		try {
-			int result = rService.removeLike(likeNo);
+			Like like = new Like();
+			like.setMemberNo(memberNo);
+			like.setReviewNo(reviewNo);
+			int result = rService.removeLike(like);
 			if(result > 0) {
 				return "success";  // 좋아요 삭제 성공
 			} else {

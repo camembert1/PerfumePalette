@@ -184,6 +184,14 @@
 	<!-- 좋아요 취소 -->
 	<delete id="removeLike">
 		DELETE FROM LIKE_TBL
-		WHERE LIKE_NO=#{likeNo}
+		WHERE REVIEW_NO=#{reviewNo} AND MEMBER_NO=#{memberNo}
 	</delete>
+	
+	<select id="selectLike" resultType="int">
+		SELECT COUNT(*) FROM LIKE_TBL WHERE REVIEW_NO=#{reviewNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
+	<select id="selectTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM LIKE_TBL WHERE REVIEW_NO=#{reviewNo}
+	</select>
 </mapper>

@@ -58,13 +58,13 @@
 				</div>
 				<div class="productInfo">
 					<div id="like">
-						<c:if test="${likeNo ne null }">
-							<img alt="like_yes" src="../../../resources/img/wish/wish_yes.png" onclick="removeLike('${likeNo}')">
+						<c:if test="${likeNo ne 0 }">
+							<img alt="like_yes" src="../../../resources/img/wish/wish_yes.png" onclick="removeLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
-						<c:if test="${likeNo eq null }">
-							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike()">
+						<c:if test="${likeNo eq 0 }">
+							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
-						<span>좋아요[0]</span>
+						<span>좋아요[${totalNo }]</span>
 					</div>
 					<div id="report">
 						<button onclick="report()">🚨</button>
@@ -127,20 +127,82 @@
 			            </div>
 			            <div class="replyTable">
 			                <!-- 댓글 리스트가 들어갈 부분 -->
-			                
+			                <!-- 댓글 등록하기 -->
+				            <div class="replyForm">
+				                <div class="replyWriter">
+				                    <p>나유현죽</p>
+				                </div>
+				                <div class="replyContents">
+				                    <input type="text">
+				                </div>
+				                <div class="replySubmit">
+				                    <button id="rSubmit">댓글작성</button>
+				                </div>
+				            </div>
+				            <div class="replyForm">
+				                <div class="replyWriter">
+				                    <p>나유현죽</p>
+				                </div>
+				                <div class="replyContents">
+				                    <p>어쩌라고</p>
+				                </div>
+				                <div class="">
+				                	<p>2023-05-01 오후05:55</p>
+				                </div>
+				                <div class="">
+				                    <a>답댓글</a>
+				                </div>
+				                <div class="">
+				                    <a>수정</a>
+				                </div>
+				                <div class="">
+				                    <a>삭제</a>
+				                </div>
+				            </div>
+				            
+				            <div class="replyForm">
+				                <div class="replyWriter">
+				                    <p>ㄴ 가나다라마바사아</p>
+				                </div>
+				                <div class="replyContents">
+				                    <p>저쩌라고</p>
+				                </div>
+				                <div class="">
+				                	<p>2023-05-01 오후06:55</p>
+				                </div>
+				                <div class="">
+				                    <a>대댓글 달기</a>
+				                </div>
+				            </div>
+				            
+				            
+				            <div class="replyForm">
+				                <div class="replyWriter">
+				                    <p>나유현죽</p>
+				                </div>
+				                <div class="replyContents">
+				                    <input type="text">
+				                </div>
+				                 <div class="replySubmit">
+				                    <button id="rSubmit">대댓작성</button>
+				                </div>
+			                </div>
+			                <div class="replyForm">
+				                <div class="replyWriter">
+				                    <p>가나다라마바사아</p>
+				                </div>
+				                <div class="replyContents">
+				                    <p>저쩌라고</p>
+				                </div>
+				                <div class="">
+				                	<p>2023-05-01 오후06:55</p>
+				                </div>
+				                <div class="">
+				                    <a>대댓글 달기</a>
+				                </div>
+				            </div>
 			            </div>
-			            <!-- 댓글 등록하기 -->
-			            <div class="replyForm">
-			                <div class="replyWriter">
-			                    <p>가나다라바사</p>
-			                </div>
-			                <div class="replyContents">
-			                    <input type="text">
-			                </div>
-			                <div class="replySubmit">
-			                    <button id="rSubmit">댓글작성</button>
-			                </div>
-			            </div>
+			            
 			        </div>
 			</div>
 			
@@ -151,9 +213,29 @@
 	<script>
 		  // 모달창
 		  function report() {
-		    $("#modal").css("display", "block");
-		    $("#modal-bg").css("display", "block");
-		    $("body").css("overflow", "hidden");
+			  
+			  
+			  if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+		    
+		    $.ajax({
+				url: "/review/reportCheck",
+				type: "POST",
+				data: {
+					'reviewNo' : '${review.reviewNo}',
+					'memberNo' : '${member.memberNo}',
+				},
+				success: function(result){
+					if(result > 0){
+						alert("이미 신고된 게시글 입니다");
+					} else{
+						$("#modal").css("display", "block");
+					    $("#modal-bg").css("display", "block");
+					    $("body").css("overflow", "hidden");
+					}
+				}
+		  	})
 		  }
 
 		  function modalClose() {
@@ -202,22 +284,21 @@
 					'reportContent' : reportContent
 				},
 				success: function(result){
-					if(result == -1){
-						alert("이미 신고한 게시글 입니다.");
-					} else{
+					if(result > 0){
 						$("#modal").css("display", "none");
 						$("#modal-bg").css("display", "none");
 						alert("신고 완료");
-					}
-				},
-				error: function(){
-					alert("로그인 후 이용해주세요.");
+					} 
 				}
 			});
 		}
 		  
 		  
 		function addLike() {
+			if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+			  
 			let reviewNo = '${review.reviewNo}';
 			let memberNo = '${member.memberNo}';
 
@@ -230,31 +311,29 @@
 				},
 				success : function(result) {
 					if (result === "success") {
-						 $("#like img").attr("src", "../../../resources/img/wish/wish_yes.png");
-						 $("#like img").attr("onclick", "removeLike('" + result.likeNo + "')"); // likeNo 값을 받아와 removeLike 함수에 전달
+						$("#like").load(location.href + " #like");
 					} else if(result === "fail"){
 						alert("좋아요 추가 실패!");
 					}
-				},
-				error : function() {
-					alert("로그인 후에 이용해주세요.");
 				}
+				
 			});
 		}
 
-		function removeLike(likeNo) { // likeNo 값을 인자로 받도록 변경
+		function removeLike(reviewNo, memberNo) { // likeNo 값을 인자로 받도록 변경
+			if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+			  
 			$.ajax({
 				url : "/review/remove",
 				type : "POST",
 				data : {
-					likeNo : likeNo
+					reviewNo : reviewNo,
+					memberNo : memberNo
 				},
 				success : function(result) {
-					$("#like img").attr("src", "../../../resources/img/wish/wish_no.png");
-					 $("#like img").attr("onclick", "addLike()"); // 좋아요 취소 후에는 다시 addLike 함수를 실행할 수 있도록 onclick 속성 변경
-				},
-				error : function() {
-					alert("좋아요 취소 실패");
+					$("#like").load(location.href + " #like");
 				}
 			});
 		}

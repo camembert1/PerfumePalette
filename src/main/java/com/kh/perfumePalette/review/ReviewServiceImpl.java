@@ -105,10 +105,23 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 
+	@Override
+	public int selectCheckLike(Like like) {
+		int result = rStore.selectCheckLike(session, like);
+		return result;
+	}
+
 
 	@Override
-	public int removeLike(int likeNo) {
-		int result = rStore.removeLike(session, likeNo);
+	public int selectTotalCnt(Integer reviewNo) {
+		int result = rStore.selectTotalCnt(session, reviewNo);
+		return result;
+	}
+
+
+	@Override
+	public int removeLike(Like like) {
+		int result = rStore.removeLike(session, like);
 		return result;
 	}
 

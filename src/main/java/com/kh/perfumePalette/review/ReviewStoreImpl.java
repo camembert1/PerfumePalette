@@ -100,8 +100,20 @@ public class ReviewStoreImpl implements ReviewStore{
 	}
 
 	@Override
-	public int removeLike(SqlSession session, int likeNo) {
-		int result = session.delete("ReviewMapper.removeLike", likeNo);
+	public int selectCheckLike(SqlSession session, Like like) {
+		int result = session.selectOne("ReviewMapper.selectLike", like);
+		return result;
+	}
+
+	@Override
+	public int selectTotalCnt(SqlSession session, Integer reviewNo) {
+		int result = session.selectOne("ReviewMapper.selectTotalCnt",reviewNo);
+		return result;
+	}
+
+	@Override
+	public int removeLike(SqlSession session, Like like) {
+		int result = session.delete("ReviewMapper.removeLike", like);
 		return result;
 	}
 
