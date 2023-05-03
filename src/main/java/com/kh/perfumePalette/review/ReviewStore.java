@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.report.Report;
 
 public interface ReviewStore {
@@ -108,5 +109,21 @@ public interface ReviewStore {
 	int selectTotalCnt(SqlSession session, Integer reviewNo);
 
 	int removeLike(SqlSession session, Like like);
+
+	/**
+	 * 댓글 작성
+	 * @param session
+	 * @param rComment
+	 * @return
+	 */
+	int insertComment(SqlSession session, ReviewComment rComment);
+
+	/**
+	 * 댓글 리스트 
+	 * @param session
+	 * @param reviewNo
+	 * @return
+	 */
+	List<ReviewComment> listComment(SqlSession session, int reviewNo);
 
 }

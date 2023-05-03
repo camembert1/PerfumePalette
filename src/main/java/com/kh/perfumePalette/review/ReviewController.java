@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
@@ -34,6 +36,7 @@ import com.kh.perfumePalette.order.OrderService;
 import com.kh.perfumePalette.order.OrderServiceImpl;
 import com.kh.perfumePalette.order.domain.OrderDetail;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.report.Report;
 
 @Controller
@@ -494,4 +497,38 @@ public class ReviewController {
 			return "error";
 		}
 	}
+	
+	//댓글 작성
+	@PostMapping("/replyComment")
+	@ResponseBody
+	public String replyComment(int reviewNo, int memberNo, String Contents) {
+		ReviewComment rComment = new ReviewComment();
+		rComment.setReviewNo(reviewNo);
+		rComment.setMemberNo(memberNo);
+		rComment.setCommentContent(Contents);
+		int result = rService.insertComment(rComment);
+		return "success";
+	}
+	
+	// 댓글 리스트 
+	@GetMapping(value="/replyCommentList", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String replyCommentList(int reviewNo) {
+		List<ReviewComment> rComment = rService.listComment(reviewNo);
+		System.out.println(rComment.toString());
+		return new Gson().toJson(rComment);
+	}
+	
+	//대댓글 작성
+		@PostMapping("/commentReply")
+		@ResponseBody
+		public String CommentReply(int pcommentNo, int reviewNo, int memberNo, String Contents) {
+			ReviewComment rComment = new ReviewComment();
+			rComment.setPcommentNo(pcommentNo);
+			rComment.setReviewNo(reviewNo);
+			rComment.setMemberNo(memberNo);
+			rComment.setCommentContent(Contents);
+			int result = rService.insertComment(rComment);
+			return "success";
+		}
 }
