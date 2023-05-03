@@ -70,7 +70,33 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return qrlist;
 	}
 
+	@Override
+	public void updateReplyStatus(int repQnaNo, String replyStatus) {
+		qbStore.updateReplyStatus(session, repQnaNo, replyStatus);
+		
+	}
+
+	@Override
+	public int deleteReply(Integer replyNo) {
+		int result = qbStore.deleteReply(session, replyNo);
+		return result;
+	}
+
+	@Override
+	public int samepwd(Integer qnaNo) {
+		int result = qbStore.samepwd(session, qnaNo);
+		return result;
+	}
+
+	@Override
+	public int updateReply(QnaReply qnareply) {
+		int result = qbStore.updateReply(session, qnareply);
+		return result;
+	}
 
 	
+		
+	
+
 
 }

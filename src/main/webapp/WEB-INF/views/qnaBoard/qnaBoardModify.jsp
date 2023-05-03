@@ -10,6 +10,7 @@
 				<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 					integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 					crossorigin="anonymous"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 				<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 					rel="stylesheet">
 				<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -27,9 +28,11 @@
 					<!-- 본문 내용 가운데 정렬 위한 div -->
 					<div id="forCenter">
 						<div class="container">
-						<h1>문의 수정</h1>
+							<h1>문의 수정</h1>
 							<form action="/qnaboard/modify" method="post" enctype="multipart/form-data">
-								<input type="hidden" name="qnaNo" value="${qnaboard.qnaNo }">
+							<input type="hidden" name="id" value="${id }" id="id">
+				           	<input type="hidden" name="qnaNo" value="${qnaboard.qnaNo }">
+				            <input type="hidden" name="qFilename" value="${qnaboard.qFilename }">
 								<select name="qnaType" id="qnaType" onchange="changeFn()" class="select"
 									value="${qnaboard.qnaType }">
 									<option name="qnaType" value="1">상품문의</option>
@@ -39,20 +42,27 @@
 								</select>
 								<input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요"
 									value="${qnaboard.qnaSubject }">
-								<div id="photo">
-								<img src="../../../resources/img/qnaFileUploads/${qnaboard.qFilerename}" alt="이미지">
+<!-- 								<div id="photo"> -->
+<%-- 									<img src="../../../resources/img/qnaFileUploads/${qnaboard.qFilerename}" alt="이미지"> --%>
+<!-- 								</div> -->
+								<!-- 썸머노트 api -->
+								<div id="editorApi">
+									<textarea id="summernote" name="qnaContents">${qnaboard.qnaContents }</textarea>
 								</div>
-									<!-- 썸머노트 api -->
-									<div id="editorApi">
-										<textarea id="summernote" name="qnaContents">${qnaboard.qnaContents }</textarea>
-									</div>
-									<br> <input type="file" name="uploadFile" onchange="loadImg(this);">
-									<br>
-									<br>
-									비밀번호 <input class="radius" type="password" name="qnaPassword" id=""
-										placeholder="비밀번호를 입력해주세요" value="${qnaboard.qnaPassword }">
-									<br> <input class="submit-btn" type="submit" value="수정완료"
-										onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
+<!-- 								<br> <input type="file" name="uploadFile" onchange="loadImg(this);"> -->
+								<br>
+								<br>
+								공개글 <input type="radio" name="postType" id="publicPost" checked>
+								비밀글 <input type="radio" name="postType" id="privatePost" value="비밀글">
+								<br>
+								<br>	
+								<div id="hiddendiv" style="display:none">
+									<label for="passwordInput" class="password-label">비밀번호 : </label>
+									<input class="radius" type="password" name="qnaPassword" id="passwordInput"
+										placeholder="숫자만 입력가능합니다.">
+								</div>
+								<br> <input class="submit-btn" type="submit" value="수정완료"
+									onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
 							</form>
 						</div>
 					</div>
@@ -74,7 +84,7 @@
 							['para', ['ul', 'ol', 'paragraph']],
 							['height', ['height']],
 							['insert', ['picture']],
-							['view', ['fullscreen', 'help']]
+// 							['view', ['fullscreen', 'help']]
 						],
 						fontNames: fontList,
 						fontNamesIgnoreCheck: fontList,
@@ -97,6 +107,32 @@
 						var qnaType = document.getElementById("qnaType");
 						var value = (qnaType.options[qnaType.selectedIndex].value);
 					}
+					
+//				 	비밀글 라디오 버튼 토글
+					const publicPost = document.getElementById('publicPost');
+					const privatePost = document.getElementById('privatePost');
+					const hiddendiv = document.getElementById('hiddendiv');
+
+					privatePost.addEventListener('click', () => {
+						hiddendiv.style.display = privatePost.checked ? 'block' : 'none';
+					});
+
+					publicPost.addEventListener('click', () => {
+						hiddendiv.style.display = 'none';
+					});
+					
+					// 비밀글 유효성 검사
+					const passwordInput = document.getElementById("passwordInput");
+
+					passwordInput.addEventListener("input", function(event) {
+					  const input = event.target.value;
+					  const regex = /^[0-9]*$/;
+					  
+					  if (!regex.test(input)) {
+					    event.target.value = input.replace(/\D/g, "");
+					  }
+					});
+
 				</script>
 				<jsp:include page="../common/footer.jsp" />
 

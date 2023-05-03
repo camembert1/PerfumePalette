@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.review.Review;
 
 @Repository
@@ -113,6 +114,18 @@ public class MemberStroeImpl implements MemberStore {
 	@Override
 	public int removeQna(int i) {
 		int result = session.delete("memberMapper.removeQna", i);
+		return result;
+	}
+
+	@Override
+	public List<ReviewComment> myComment(int memberNo) {
+		List<ReviewComment> cList = session.selectList("memberMapper.myComment", memberNo);
+		return cList;
+	}
+
+	@Override
+	public int removeComment(int i) {
+		int result = session.delete("memberMapper.removeComment", i);
 		return result;
 	}
 

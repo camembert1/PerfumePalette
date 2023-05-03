@@ -3,6 +3,7 @@ package com.kh.perfumePalette.member;
 import java.util.List;
 
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.review.Review;
 
 public interface MemberStore {
@@ -39,6 +40,10 @@ public interface MemberStore {
 	int removeReview(int i);
 
 	int removeQna(int i);
+
+	List<ReviewComment> myComment(int memberNo);
+
+	int removeComment(int i);
 
 
 	
