@@ -123,6 +123,12 @@
 		<result property="vBankNo" column="VBANK_NO" />
 		<result property="vBankName" column="VBANK_NAME" />
 		<result property="vBankDate" column="VBANK_DATE" />
+		
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeName" column="PERFUME_NAME" />
 	</resultMap>
 	
 	
@@ -388,12 +394,16 @@
 	</select>
 	
 	<select id="selectRListByKeyword" resultMap="reviewResultMap">
-		SELECT A.*, B.MEMBER_NICKNAME, C.PERFUME_BRAND, C.PERFUME_NAME, C.P_FILERENAME, C.P_SCENT_CATEGORY
-		FROM REVIEW_TBL A
-		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO 
-		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
+		SELECT R.*, M.MEMBER_NICKNAME, P.PERFUME_BRAND, P.PERFUME_NAME, P.P_FILERENAME,
+		(SELECT COUNT(*)
+		FROM REPORT_TBL RP
+		WHERE RP.REVIEW_NO = R.REVIEW_NO
+		) AS REPORT_COUNT
+		FROM REVIEW_TBL R
+		INNER JOIN MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO 
+		INNER JOIN PERFUME_TBL P ON R.PERFUME_NO = P.PERFUME_NO
 		<where>
-			C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			P.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
 			<if test="searchIncense eq 'All'">
 				AND (P_SCENT_CATEGORY = 'Woody'
 				OR P_SCENT_CATEGORY = 'Floral'
@@ -492,9 +502,14 @@
 		SELECT COUNT(*) FROM QNA_TBL
 	</select>
 	<select id="getSearchQListCount" resultType="_int">
-		SELECT COUNT(*) FROM QNA_TBL
-		JOIN MEMBER_TBL USING(MEMBER_NO)
+		SELECT COUNT(*) FROM QNA_TBL Q
+      	LEFT OUTER JOIN MEMBER_TBL M
+      	ON Q.MEMBER_NO = M.MEMBER_NO
 		<choose>
+			<when test="searchCondition == 'All'">
+				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+				OR QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+			</when>
 			<when test="searchCondition == 'subject'">
 				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
 			</when>
@@ -508,35 +523,47 @@
       	FROM QNA_TBL Q
       	LEFT OUTER JOIN MEMBER_TBL M
       	ON Q.MEMBER_NO = M.MEMBER_NO
-      	<choose>
-      		<when test="searchCondition == 'All'">
-				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+      	<where>
+      		<if test="searchCondition == 'All'">
+				QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
 				OR QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
-      		</when>
-      		<when test="searchCondition == 'subject'">
-				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
-      		</when>
-      		<when test="searchCondition == 'contents'">
-      			WHERE QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
-      		</when>
-      	</choose>
+      		</if>
+      		<if test="searchCondition == 'subject'">
+				QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
+      		</if>
+      		<if test="searchCondition == 'contents'">
+      			QNA_CONTENTS LIKE '%' || #{searchValue} || '%'
+      		</if>
+      	</where>
+   		ORDER BY QNA_DATE DESC
 	</select>
 <!-- 문의 끝 -->
 
 <!-- 주문내역 시작 -->
 	<select id="getOrderListCount" resultType="_int">
 		SELECT COUNT(*) FROM ORDER_TBL O
+		LEFT OUTER JOIN MEMBER_TBL M ON O.MEMBER_NO = M.MEMBER_NO
 		LEFT OUTER JOIN ORDER_DETAIL_TBL OD ON O.ORDER_NO = OD.ORDER_NO
 		LEFT OUTER JOIN ORDER_PAYMENT_TBL OP ON O.ORDER_NO = OP.ORDER_NO
-		WHERE O.ORDER_NO = #{orderNo}
+		LEFT OUTER JOIN PERFUME_TBL P ON OD.PERFUME_NO = P.PERFUME_NO
 	</select>
 	<select id="selectAdminOrderList" resultMap="orderResultMap">
-		SELECT O.*, OD.*, OP.*
+		SELECT O.*, OD.*, OP.*, M.*, P.*
 		FROM ORDER_TBL O
+		LEFT OUTER JOIN MEMBER_TBL M ON O.MEMBER_NO = M.MEMBER_NO
 		LEFT OUTER JOIN ORDER_DETAIL_TBL OD ON O.ORDER_NO = OD.ORDER_NO
 		LEFT OUTER JOIN ORDER_PAYMENT_TBL OP ON O.ORDER_NO = OP.ORDER_NO
-		WHERE O.ORDER_NO = #{orderNo}
+		LEFT OUTER JOIN PERFUME_TBL P ON OD.PERFUME_NO = P.PERFUME_NO
 		ORDER BY O.ORDER_DATE DESC
+	</select>
+	<select id="selectAdminOrderDetail" resultMap="orderResultMap">
+		SELECT O.*, OD.*, OP.*, M.*, P.*
+		FROM ORDER_TBL O
+		LEFT OUTER JOIN MEMBER_TBL M ON O.MEMBER_NO = M.MEMBER_NO
+		LEFT OUTER JOIN ORDER_DETAIL_TBL OD ON O.ORDER_NO = OD.ORDER_NO
+		LEFT OUTER JOIN ORDER_PAYMENT_TBL OP ON O.ORDER_NO = OP.ORDER_NO
+		LEFT OUTER JOIN PERFUME_TBL P ON OD.PERFUME_NO = P.PERFUME_NO
+		WHERE O.ORDER_NO = #{orderNo}
 	</select>
 <!-- 주문내역 끝 -->
 </mapper>

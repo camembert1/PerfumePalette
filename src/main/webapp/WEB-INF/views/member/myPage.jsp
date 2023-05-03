@@ -41,7 +41,7 @@
 		<div id="hrefName">${memerOne.memberName }님</div>
 		<c:if test="${memerOne.memberId eq 'admin'}">
 			<span><a href="/perfume/mList">판매상품관리</a></span>
-			<span><a href="#">주문내역관리</a></span>
+			<span><a href="/admin/order/list">주문내역관리</a></span>
 			<span><a href="/admin/member/amList">회원관리</a></span>
 			<span><a href="/admin/qna/list">문의관리</a></span>
 			<span><a href="/admin/review/list">후기관리</a></span>

@@ -10,7 +10,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="../../../../resources/adminCss/adReviewCss/list.css">
+	href="../../../../resources/adminCss/adQnaCss/list.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon"
@@ -32,7 +32,7 @@
 			<div id="hrefList">
 				<div id="hrefName">${sessionScope.member.memberName }님</div>
 				<span><a href="/perfume/mList">판매상품관리</a></span> 
-				<span><a href="#">주문내역관리</a></span> 
+				<span><a href="/admin/order/list">주문내역관리</a></span> 
 				<span><a href="/admin/member/amList">회원관리</a></span>
 				<span><a href="/admin/qna/list">문의관리</a></span> 
 				<span><a href="/admin/review/list">후기관리</a></span>
@@ -50,23 +50,22 @@
 				<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
 				<button type="submit" class="small_btn">검 색</button>
 			</form>
+			<div class="continer">
 			<table class="table">
 				<thead>
 	                <tr>
 	                	<th><input type="checkbox" class="allCheck"></th>
-	                    <th width="120px">번호</th>
-	                    <th width="120px">구분</th>
-	                    <th width="540px">제목</th>
-	                    <th width="180px">작성일</th>
-	                    <th width="120px">작성자</thw>
-	                    <th width="120px">상태</th>
+	                    <th>구분</th>
+	                    <th>제목</th>
+	                    <th>작성일</th>
+	                    <th>작성자</th>
+	                    <th>상태</th>
 	                </tr>
                 </thead>
                 <tbody>
 	                <c:forEach items="${sList }" var="qnaboard" varStatus="i">
 	                    <tr>
 	                    	<td><input type="checkbox" class="check" value="${qnaboard.qnaNo }"></td>
-	                        <td>${i.count }</td>
 	                        <td>
 	                            <c:if test="${qnaboard.qnaType == 1 }">상품문의</c:if>
 	                            <c:if test="${qnaboard.qnaType == 2 }">배송문의</c:if>
@@ -89,6 +88,7 @@
                 </tbody>
                 <tfoot>
                 	<tr>
+               			<td colspan="5"></td>
 						<td><button type="button" class="del">삭제하기</button></td>
 					</tr>
 	                <tr>
@@ -98,10 +98,10 @@
 								<c:if test="${paging.currentPage != 1}">
 									<c:if test="${paging.startNavi != 1}">
 										<!-- 첫 페이지로 버튼 -->
-										<a href="/admin/qna/search?page=1&searchOder=${search.searchOder}&searchIncense=${search.searchIncense}&searchValue=${search.searchValue}" class="move first">&lt;&lt;</a>
+										<a href="/admin/qna/search?page=1&searchCondition=${search.searchCondition}&searchValue=${search.searchValue}" class="move first">&lt;&lt;</a>
 									</c:if>	
 									<!-- 이전 페이지로 버튼 -->
-									<a href="/admin/qna/search?page=${paging.currentPage-1}&searchOder=${search.searchOder}&searchIncense=${search.searchIncense}&searchValue=${search.searchValue}" class="move prev">&lt;</a>
+									<a href="/admin/qna/search?page=${paging.currentPage-1}&searchCondition=${search.searchCondition}&searchValue=${search.searchValue}" class="move prev">&lt;</a>
 								</c:if>
 								
 								<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
@@ -110,17 +110,17 @@
 											<span class="page current">${i}</span>
 										</c:when>
 										<c:otherwise>
-											<a href="/admin/qna/search?page=${i}&searchOder=${search.searchOder}&searchIncense=${search.searchIncense}&searchValue=${search.searchValue}" class="page">${i}</a>
+											<a href="/admin/qna/search?page=${i}&searchCondition=${search.searchCondition}&searchValue=${search.searchValue}" class="page">${i}</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 				
 								<c:if test="${paging.currentPage != paging.lastPage}">
 									<!-- 다음 페이지로 버튼 -->
-									<a href="/admin/qna/search?page=${paging.currentPage+1}&searchOder=${search.searchOder}&searchIncense=${search.searchIncense}&searchValue=${search.searchValue}" class="move next">&gt;</a>
+									<a href="/admin/qna/search?page=${paging.currentPage+1}&searchCondition=${search.searchCondition}&searchValue=${search.searchValue}" class="move next">&gt;</a>
 									<c:if test="${paging.endNavi != paging.lastPage}">
 										<!-- 맨 끝 페이지로 버튼 -->
-										<a href="/admin/qna/search?page=${paging.lastPage}&searchOder=${search.searchOder}&searchIncense=${search.searchIncense}&searchValue=${search.searchValue}" class="move last">&gt;&gt;</a>
+										<a href="/admin/qna/search?page=${paging.lastPage}&searchCondition=${search.searchCondition}&searchValue=${search.searchValue}" class="move last">&gt;&gt;</a>
 									</c:if>
 								</c:if>
 							</c:if>
@@ -129,6 +129,7 @@
 					</tr>
                 </tfoot>
             </table>
+			</div>
 		</div>
 	</main>
 	<script>

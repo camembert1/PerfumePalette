@@ -40,16 +40,16 @@
 			<div id="hrefList">
 				<div id="hrefName">${sessionScope.member.memberName }님</div>
 				<span><a href="/perfume/mList">판매상품관리</a></span>
-				<span><a href="#">주문내역관리</a></span>
+				<span><a href="/admin/order/list">주문내역관리</a></span>
 				<span><a href="/admin/member/amList">회원관리</a></span>
 				<span><a href="/admin/qna/list">문의관리</a></span>
 				<span><a href="/admin/review/list">후기관리</a></span>
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
-			<h1>상품 관리</h1>
-			<a href="/perfume/write">상품 등록</a>
+			<div class="perfumeList">
 			<div class="top_category">
+			<h1>상품 관리</h1>
 				<form action="/perfume/search" method="get">
 					<select name="searchOder">
 						<option value="Date" class="New" <c:if test="${search.searchOder == 'All' }">selected</c:if>>최신순</option>
@@ -64,31 +64,32 @@
 						<option value="Spicy" class="New" <c:if test="${search.searchIncense == 'Spicy' }">selected</c:if>>Spicy</option>
 						<option value="Woody" class="New" <c:if test="${search.searchIncense == 'Woody' }">selected</c:if>>Woody</option>
 					</select>
+					
 					<select name="searchCondition">
 						<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>All</option>
 						<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
 						<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
 					</select> 
 					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
-					<button type="submit" class="small_btn">검색</button>
+					<button type="submit" class="small_btn">검 색</button>
 				</form>
 			</div>
 			<table>
 				<thead>
-					<tr>
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>이미지</th>
-						<th style="width: 80px">브랜드</th>
-						<th style="width: 200px">상품명</th>
-						<th style="width: 60px">용 량</th>
-						<th style="width: 80px">가 격</th>
-						<th style="width: 80px">재 고</th>
-						<th style="width: 100px">향 분류</th>
-						<th style="width: 200px">이미지 분류</th>
-						<th style="width: 70px">찜</th>
-						<th style="width: 70px">장바구니</th>
-						<th style="width: 70px">노출 여부</th>
-						<th style="width: 50px">수 정</th>
+					<tr id="thead">
+						<th id="check"><input type="checkbox" class="allCheck"></th>
+						<th id="img">이미지</th>
+						<th id="brand">브랜드</th>
+						<th id="name">상품명</th>
+						<th id="volume">용 량</th>
+						<th id="price">가 격</th>
+						<th id="quantity">재 고</th>
+						<th id="scent">향 분류</th>
+						<th id="imgCategory">이미지 분류</th>
+						<th id="wish">찜</th>
+						<th id="cart">장바구니</th>
+						<th id="status">노출 여부</th>
+						<th id="modify">수 정</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -101,19 +102,33 @@
 								alt="상품 이미지"></td>
 							<td class="td">${perfume.perfumeBrand }</td>
 							<td class="td"><a
-								href="/perfume/mDetail?perfumeNo=${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
+								href="/perfume/detail/${perfume.perfumeNo }">${perfume.perfumeName }</a></td>
 							<td class="td">${perfume.perfumeVolume }ml</td>
 							<td class="td"><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,###" /> 원</td>
 							<td class="td">${perfume.perfumeQuantity }&nbsp;EA</td>
 							<td class="td">${perfume.pScentCategory }</td>
 							<td class="td">${perfume.pImageCategory }</td>
-							<td class="td">${perfume.wishCount }</td>
-							<td class="td">${perfume.cartCount }</td>
+							<td class="td">
+								<c:if test="${perfume.wishCount > 0 }">
+									<a href="../perfume/wishList?perfumeNo=${perfume.perfumeNo }">${perfume.wishCount }</a>
+								</c:if>
+								<c:if test="${perfume.wishCount == 0 }">
+									${perfume.wishCount }
+								</c:if>
+							</td>
+							<td class="td">
+								<c:if test="${perfume.cartCount > 0 }">
+									<a href="../perfume/cartList?perfumeNo=${perfume.perfumeNo }">${perfume.cartCount }</a>
+								</c:if>
+								<c:if test="${perfume.cartCount == 0 }">
+									${perfume.cartCount }
+								</c:if>
+							</td>
 							<td class="td"><c:choose>
 									<c:when test="${perfume.perfumeStatus eq 1}">O</c:when>
 									<c:when test="${perfume.perfumeStatus eq 0}">X</c:when>
 								</c:choose></td>
-							<td><button class="small_btn" onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수정</button></td>
+							<td><button class="small_btn" onclick="location.href='/perfume/modify?perfumeNo=' + ${perfume.perfumeNo}">수 정</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -156,42 +171,64 @@
 					</tr>
 					<tr>
 						<td colspan="9"></td>
-						<td><button type="button" class="bot_btn show">선택 노출</button></td>
+						<td style="text-align: right;"><button type="button" class="bot_btn show">선택 노출</button></td>
 						<td><button type="button" class="bot_btn noShow">선택 비노출</button></td>
 						<td><button type="button" class="bot_btn del">삭제하기</button></td>
 						<td><button type="button" class="bot_btn" onclick="location.href='/perfume/write'">상품 등록</button></td>
 					</tr>
 				</tfoot>
 			</table>
-			
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
 	<script>
 		// 전체 선택 박스
-// 		$(document).ready(function() {
-// 	        $('.allCheck').change(function() {
-// 	            if ($(this).is(":checked")) {
-// 	                $('.check').prop('checked', true);
-// 	            } else {
-// 	                $('.check').prop('checked', false);
-// 	            }
-// 	        });
-// 	    });
-			// 전체 선택 박스
-			var allCheck = document.querySelector(".allCheck");
-			var list = document.querySelectorAll(".check");
-			allCheck.onclick = () => {
-				if(allCheck.checked) {
-					for(var i = 0; i < list.length; i++) {
-						list[i].checked = true;
-					}
-				} else {
-					for(var i = 0; i < list.length; i++) {
-						list[i].checked = false;
-					}
+		var allCheck = document.querySelector(".allCheck");
+		allCheck.onclick = () => {
+			if (allCheck.checked) {
+				for (var i = 0; i < list.length; i++) {
+					list[i].checked = true;
+				}
+			} else {
+				for (var i = 0; i < list.length; i++) {
+					list[i].checked = false;
 				}
 			}
+		}
+		
+		// 선택 박스 클릭
+		var list = document.querySelectorAll(".check");
+		for (var i = 0; i < list.length; i++) {
+		  list[i].addEventListener('click', function () {
+		    var isAllChecked = true;
+		    for (var j = 0; j < list.length; j++) {
+		      if (!list[j].checked) {
+		        isAllChecked = false;
+		        break;
+		      }
+		    }
+		    if (isAllChecked) {
+		      allCheck.checked = true;
+		    } else {
+		      allCheck.checked = false;
+		    }
+		  });
+		}
+// 		// 전체 선택 박스
+// 		var allCheck = document.querySelector(".allCheck");
+// 		var list = document.querySelectorAll(".check");
+// 		allCheck.onclick = () => {
+// 			if(allCheck.checked) {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = true;
+// 				}
+// 			} else {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = false;
+// 				}
+// 			}
+// 		}
 		
 		
 		// 선택 삭제

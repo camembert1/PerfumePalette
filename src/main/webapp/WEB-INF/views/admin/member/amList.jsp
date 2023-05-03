@@ -16,17 +16,6 @@
 <link rel="apple-touch-icon" href="../../../resources/img/common/favicon.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
-/* 		고정 */
-#id_ok, #pw_ok, #nickName_ok, #email_ok {
-	color: #008000;
-	display: none;
-}
-
-#id_not_ok2, #id_not_ok3, #pw_not_ok2, #pw_not_ok3, #nickName_not_ok2,
-	#nickName_not_ok3, #email_not_ok2, #email_not_ok3, #email_not_ok4 {
-	color: #6A82FB;
-	display: none;
-}
 
 </style>
 </head>

@@ -28,6 +28,11 @@ public class AdOrderStoreImpl implements AdOrderStore {
 		return session.selectList("AdminMapper.selectAdminOrderList", null, rowBounds);
 	}
 
+	@Override
+	public List<AdOrder> selectOneByNo(SqlSession session, long orderNo) {
+		return session.selectList("AdminMapper.selectAdminOrderDetail", orderNo);
+	}
+
 
 
 
