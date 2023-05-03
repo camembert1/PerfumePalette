@@ -1,5 +1,6 @@
 package com.kh.perfumePalette.perfume;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -82,6 +84,7 @@ public class PerfumeController {
 		
 		try {
 			int wishStatus = 0;
+			int rAlertStatus = 0;
 			Member member = (Member) session.getAttribute("member");
 			if (member != null) {
 				
@@ -92,12 +95,23 @@ public class PerfumeController {
 				
 				// 찜했다면 wishStatus값이 1이 됨
 				wishStatus = pService.checkWish(wishInfo);
+				
+				
+				// 로그인 상태라면 해당 향수 재입고 알림 신청 여부 확인하기!
+				ShopAlert rAlertInfo = new ShopAlert();
+				rAlertInfo.setMemberNo(member.getMemberNo());
+				rAlertInfo.setPerfumeNo(perfumeNo);
+				
+				// 재입고 알림 신청 상태라면 값이 1이 됨
+				rAlertStatus = pService.checkAlert(rAlertInfo);
+				
 			}
 			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
 			int reviewCnt = pService.reviewCntByPerfumeNo(perfumeNo);
 			
 			if(perfume != null) {
 				mv
+				.addObject("rAlertStatus", rAlertStatus)
 				.addObject("wishStatus", wishStatus)
 				.addObject("perfume", perfume)
 				.addObject("reviewCnt", reviewCnt)
@@ -214,6 +228,23 @@ public class PerfumeController {
 		}
 	}
 	
+	/**
+	 * 디테일 - 재입고 알림 신청 by memberNo, perfumeNo
+	 * @param rAlert
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/restockAlert")
+	public int restockAlert(@ModelAttribute ShopAlert rAlert) {
+		try {
+			int result = pService.insertRestockAlert(rAlert);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	
 	/**
 	 * 주문서 - 구매 성공 시 재고 감소 by cartNo
@@ -237,5 +268,184 @@ public class PerfumeController {
 			return 0;
 		}
 	}
+	
+	
+	// 알림창 테스트 페이지 - 추후 헤더 알림창으로 이식!!
+	@GetMapping("/alertTest")
+	public ModelAndView alertTest(ModelAndView mv
+			, HttpSession session) {
+		
+		try {
+			
+			Member member = (Member) session.getAttribute("member");
+			if (member != null) {
+				
+				/*
+				 * 알림창 가져오는 조건
+				 * MEMBER_NO = #{memberNo }
+				 * ALERT_DATE IS NOT NULL
+				 * 
+				 * 왜 ALERT_DATE IS NOT NULL??
+				 * ALERT_DATE가 NULL인 거는 재입고가 안돼서 대기중인 재입고알림뿐임
+				 * 재입고가 되면 ALERT_DATE 컬럼이 NULL이 아닌 재입고 TIMESTAMP가 입력됨!
+				 * 
+				 */
+				
+				/*
+				 * 알림창 - 안 읽은 알림만 노출해야 하므로 A_CLICK_STATUS = 0
+				 * 마이페이지 - 읽음 여부 상관X, BUT 0과 1 구분해서 읽음 안읽음 확인할 수 있도록 해야함
+				 * 
+				 */
+				
+				/*
+				 * 재입고알림?
+				 * 
+				 * 만약 ALTER_TBL의 ALERT_CATEGORY 값이 '재입고'라면
+				 * 
+				 * PERFUME_TBL의 PERFUME_NO 컬럼과 조인해서
+				 * PERFUME_BRAND, PERFUME_NAME 컬럼을 가져옴
+				 * 
+				 * --> [${perfumeBrand}] ${perfumeName}이(가) 재입고되었습니다.
+				 * 
+				 */
+
+				/*
+				 * 좋아요? 
+				 * 
+				 * 만약 ALTER_TBL의 ALERT_CATEGORY 값이 '좋아요'라면
+				 * 
+				 *  1) REVIEW_TBL의 REVIEW_NO 컬럼과 조인해서
+				 *  REVIEW_CONTENTS 컬럼을 가져옴
+				 *  
+				 *  2) PERFUME_NO를 MEMBER_TBL의 MEMBER_NO와 조인해서
+				 *  MEMBER_TBL의 MEMBER_NICKNAME을 LIKE_MEMBER_NICKNAME으로 가져옴
+				 *  
+				 *  주의! 좋아요는 PERFUME_NO 컬럼에 좋아요를 누른 회원의 MEMBER_NO를 입력받음!
+				 *  >> TRIGGER가 작동해 ALERT가 입력될 당시에 알림 받을 회원이 아닌
+				 * 	   좋아요를 누른 회원의 MEMBER_NO를 입력받지 않는 경우
+				 *     나중에 그 당시에 누른 회원이 누구인지 찾을 방법이 없음
+				 *     테이블 수정하면 트리거 다 수정해야돼서 그냥 NULL인 PERFUME_NO칸 활용하자.. 
+				 *    
+				 *  
+				 *  --> ${reviewContents}에 ${likeMemberNickname}님이 좋아요를 눌렀습니다.	
+				 * 
+				 */
+
+				/*
+				 * 댓글?
+				 * 
+				 * 만약 ALTER_TBL의 ALERT_CATEGORY 값이 '댓글'이라면
+				 * 
+				 * REVIEW_TBL의 REVIEW_NO 컬럼과 조인해서
+				 * REVIEW_CONTENTS 컬럼을 가져옴
+				 * 
+				 * --> ${reviewContents}에 댓글이 달렸습니다.
+				 * 
+				 */
+
+				/*
+				 * 답댓글?
+				 * 
+				 * 만약 ALTER_TBL의 ALERT_CATEGORY 값이 '답댓글'이라면
+				 * 
+				 * COMMENT_TBL의 P_COMMENT_NO 컬럼과 조인해서
+				 * COMMENT_TBL의 COMMENT_CONTENT 컬럼을 P_COMMENT_CONTENT로 가져옴
+				 * 
+				 * --> ${pCommentContent}에 답댓글이 달렸습니다.
+				 * 
+				 */
+
+				int unclickAlertCnt = pService.selectUnclickAlertCnt(member.getMemberNo());
+				List<ShopAlert> unclickAlerttList = pService.selectUnclickAlert(member.getMemberNo());
+				
+				mv
+				.addObject("aCnt", unclickAlertCnt)
+				.addObject("aList", unclickAlerttList);
+				
+			} 
+			
+//			else {
+//				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
+//				mv.addObject("alert", alert).setViewName("common/alert");
+//			}
+			
+			
+			
+			
+			
+			mv.setViewName("perfumeShop/alertTest");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	
+	/**
+	 * 알림 클릭 시 읽음 처리 by alertNo
+	 * @param alertNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/clickAlert")
+	public int clickAlert(Integer alertNo) {
+		try {
+			int result = pService.clickAlert(alertNo);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	
+	/**
+	 * 안 읽은 알림 개수 by memberNo
+	 * @param memberNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/getAlertCnt")
+	public int getAlertCnt(Integer memberNo) {
+		try {
+			int alertCnt = pService.selectUnclickAlertCnt(memberNo);
+			return alertCnt;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	
+	/**
+	 * 안 읽은 알림 List by memberNo
+	 * @param memberNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping(value = "/getAlertList", produces = "application/json;charset=utf-8" )
+	public String getAlertList(Integer memberNo) {
+		try {
+			List<ShopAlert> aList = pService.selectUnclickAlert(memberNo);
+			
+			for (ShopAlert alert : aList) {
+				if (alert.getReviewContents() != null) {
+					String outputString = alert.getReviewContents().replaceAll("<[^>]*>", "");
+					alert.setReviewContents(outputString);
+				}
+				if (alert.getpCommentContent() != null) {
+					String outputString = alert.getpCommentContent().replaceAll("<[^>]*>", "");
+					alert.setpCommentContent(outputString);
+				}
+			}
+			
+			return new Gson().toJson(aList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 
 }

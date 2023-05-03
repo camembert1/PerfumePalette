@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
@@ -11,7 +13,7 @@
 <link rel="stylesheet" href="../../../resources/chatCss/chatRoomList.css">
 <!-- 채팅 관련 필요 -->
 <!-- Jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- sockjs  -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <!-- alertify 꾸미는 알림창-->
@@ -66,12 +68,12 @@
 			</table>
 		</div>
 	</main>
-
 	<jsp:include page="../common/footer.jsp" />
 
+	
 	<script>
 		function goChatModal(roomNo) {
-		    var url = "/chat/room/" + roomNo;
+			var url = "/chat/room/" + roomNo;
 		    document.getElementById("chat-iframe").src = url;
 		    $("#chat-iframe").css("display", "block");
 			$("#modal-bg").css("display", "block");
@@ -84,5 +86,6 @@
 		    $("#modal-bg").css("display", "none");
 		    $("body").css("overflow", "auto");
 		}
-	</script>
+		</script>
 </body>
+</html>

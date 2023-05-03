@@ -2,20 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="PerfumeMapper"
 >
-	<resultMap type="Perfume" id="perfumeResultMap">
-		<id property="perfumeNo" column="PERFUME_NO"></id>
-		<result property="perfumeName" column="PERFUME_NAME" />
-		<result property="perfumeBrand" column="PERFUME_BRAND" />
-		<result property="perfumeVolume" column="PERFUME_VOLUME" />
-		<result property="perfumePrice" column="PERFUME_PRICE" />
-		<result property="perfumeQuantity" column="PERFUME_QUANTITY" />
-		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
-		<result property="pImageCategory" column="P_IMAGE_CATEGORY" />
-		<result property="pFilename" column="P_FILENAME" />
-		<result property="pFilerename" column="P_FILERENAME" />
-		<result property="pFilepath" column="P_FILEPATH" />
-		<result property="perfumeDate" column="PERFUME_DATE" />
-		<result property="perfumeStatus" column="PERFUME_STATUS" />
+	<resultMap type="Perfume" 				id="perfumeResultMap">
+		<id 	property="perfumeNo" 		column="PERFUME_NO" />
+		<result property="perfumeName" 		column="PERFUME_NAME" />
+		<result property="perfumeBrand" 	column="PERFUME_BRAND" />
+		<result property="perfumeVolume" 	column="PERFUME_VOLUME" />
+		<result property="perfumePrice" 	column="PERFUME_PRICE" />
+		<result property="perfumeQuantity" 	column="PERFUME_QUANTITY" />
+		<result property="pScentCategory" 	column="P_SCENT_CATEGORY" />
+		<result property="pImageCategory" 	column="P_IMAGE_CATEGORY" />
+		<result property="pFilename" 		column="P_FILENAME" />
+		<result property="pFilerename" 		column="P_FILERENAME" />
+		<result property="pFilepath" 		column="P_FILEPATH" />
+		<result property="perfumeDate" 		column="PERFUME_DATE" />
+		<result property="perfumeStatus" 	column="PERFUME_STATUS" />
+	</resultMap>
+	
+	<resultMap type="ShopAlert" 			id="alertResultMap">
+		<id 	property="alertNo" 			column="ALERT_NO" />
+		<result property="alertCategory" 	column="ALERT_CATEGORY" />
+		<result property="memberNo" 		column="MEMBER_NO" />
+		<result property="perfumeNo" 		column="PERFUME_NO" />
+		<result property="reviewNo" 		column="REVIEW_NO" />
+		<result property="pCommentNo" 		column="P_COMMENT_NO" />
+		<result property="aRequestDate" 	column="A_REQUEST_DATE" />
+		<result property="alertDate" 		column="ALERT_DATE" />
+		<result property="aClickStatus" 	column="A_CLICK_STATUS" />
+		
+		
+		<result property="perfumeName" 			column="PERFUME_NAME" />
+		<result property="perfumeBrand" 		column="PERFUME_BRAND" />
+		<result property="reviewContents" 		column="REVIEW_CONTENTS" />
+		<result property="likeMemberNickname" 	column="LIKE_MEMBER_NICKNAME" />
+		<result property="pCommentContent" 		column="P_COMMENT_CONTENT" />
 	</resultMap>
 
 
@@ -145,6 +164,32 @@
 	</select>
 	
 	
+	<!-- 디테일 - 재입고 알림 신청 by memberNo, perfumeNo -->
+	<insert id="insertRestockAlert">
+		INSERT INTO ALERT_TBL VALUES (
+		    SEQ_ALERT_NO.NEXTVAL
+		    , '재입고'
+		    , #{memberNo }
+		    , #{perfumeNo }
+		    , NULL
+		    , NULL
+		    , DEFAULT
+		    , NULL
+		    , DEFAULT
+		)
+	</insert>
+	
+	<!-- 디테일 - 로그인한 회원의 재입고알림 신청 여부 조회 by memberNo, perfumeNo -->
+	<select id="checkAlert" resultType="_int">
+		SELECT COUNT(*)
+		FROM ALERT_TBL
+		WHERE MEMBER_NO = #{memberNo }
+				AND ALERT_CATEGORY = '재입고'
+				AND PERFUME_NO = #{perfumeNo }
+				AND ALERT_DATE IS NULL
+	</select>
+	
+	
 	<!-- 주문서 - 구매 성공 시 재고 감소 by cartNo -->
 	<update id="minusStock">
 		UPDATE PERFUME_TBL
@@ -156,6 +201,41 @@
 		  (SELECT PERFUME_NO 
 		   FROM CART_TBL 
 		   WHERE CART_NO = #{cartNo })
+	</update>
+	
+	
+	<!-- 헤더 알림창 - 안 읽은 알림 개수 by memberNo -->
+	<select id="selectUnclickAlertCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM ALERT_TBL
+		WHERE MEMBER_NO = #{memberNo }
+			AND A_CLICK_STATUS = 0
+			AND ALERT_DATE IS NOT NULL				
+	</select>
+	
+	<!-- 헤더 알림창 - 안 읽은 알림 목록 by memberNo -->
+	<select id="selectUnclickAlert" resultMap="alertResultMap">
+		SELECT a.*
+		    , p.PERFUME_BRAND, p.PERFUME_NAME
+		    , r.REVIEW_CONTENTS
+		    , m.MEMBER_NICKNAME AS LIKE_MEMBER_NICKNAME
+		    , c.COMMENT_CONTENT AS P_COMMENT_CONTENT
+		FROM ALERT_TBL a
+		    LEFT OUTER JOIN PERFUME_TBL p ON a.PERFUME_NO = p.PERFUME_NO AND a.ALERT_CATEGORY = '재입고'
+		    LEFT OUTER JOIN REVIEW_TBL r ON a.REVIEW_NO = r.REVIEW_NO AND (a.ALERT_CATEGORY = '좋아요' OR a.ALERT_CATEGORY = '댓글')
+		    LEFT OUTER JOIN MEMBER_TBL m ON a.PERFUME_NO = m.MEMBER_NO AND a.ALERT_CATEGORY = '좋아요'
+		    LEFT OUTER JOIN COMMENT_TBL c ON a.P_COMMENT_NO = c.COMMENT_NO AND a.ALERT_CATEGORY = '답댓글'
+		WHERE a.A_CLICK_STATUS = 0
+			AND a.ALERT_DATE IS NOT NULL
+		    AND a.MEMBER_NO = #{memberNo }
+		ORDER BY ALERT_DATE DESC
+	</select>
+	
+	<!-- 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo -->
+	<update id="clickAlert">
+		UPDATE ALERT_TBL
+		SET A_CLICK_STATUS = 1
+		WHERE ALERT_NO = #{alertNo }
 	</update>
 	
 

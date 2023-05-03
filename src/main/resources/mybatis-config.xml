@@ -8,6 +8,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.perfumePalette.member.Member" alias="Member" />
 		<typeAlias type="com.kh.perfumePalette.perfume.Perfume" alias="Perfume" />
+		<typeAlias type="com.kh.perfumePalette.perfume.ShopAlert" alias="ShopAlert" />
 		<typeAlias type="com.kh.perfumePalette.admin.aperfume.AdPerfume" alias="AdPerfume" />
 		<typeAlias type="com.kh.perfumePalette.admin.areview.AdReview" alias="AdReview"/>
 		<typeAlias type="com.kh.perfumePalette.admin.aorder.domain.AdOrder" alias="AdOrder"/>
