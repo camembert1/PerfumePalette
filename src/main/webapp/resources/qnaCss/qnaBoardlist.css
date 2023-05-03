@@ -32,7 +32,7 @@ main>div[id=forHeader] {
         헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
         margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
     */
-    margin-bottom: 100px;
+    margin-bottom: 120px;
 
 }
 main>div[id=forCenter] {
@@ -50,6 +50,7 @@ main>div[id=forCenter] {
     text-align: center;
     display: block;
     margin: 0 auto;
+    border-collapse: collapse;
 }
 
 .line {
@@ -57,14 +58,38 @@ main>div[id=forCenter] {
     padding-top: 30px;
     font-size: larger;
 }
+.submit-btn {
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 7px 15px;
+    /* margin-left: 382px; */
+    margin: 0px auto 20px auto;
+    float : right;
+}
 
+#submit{
+	background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 0px 10px;
+    /* margin-left: 382px; */
+    /* margin: 0px auto 20px auto; */
+    float : right;
+}
 
 th {
-    padding-bottom: 15px;
+    padding: 30px;
+    border-bottom: 1px solid darkgray;
 }
 
 td {
-    padding-bottom: 65px;
+    padding: 25px;
+    border-bottom: 1px solid rgba(200, 200, 201, 0.705);
 }
 
 h1 {
@@ -94,6 +119,15 @@ a {
     margin: 7px 17px;
 }
 
+.hidden-password {
+	display : flex;
+	justify-content : center;
+}
+
+.hidden {
+	margin-left : 10px;
+	margin-right : 10px;
+}
 /* .now {
     background-color: rgba(200, 194, 194, 0.901);
     padding: 7px 17px;

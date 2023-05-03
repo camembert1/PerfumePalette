@@ -19,12 +19,13 @@ public class QnaBoard {
 	private Integer qnaPassword; // 게시글 비밀번호
 	private String qQnaNo; // NULL이면 질문, 값이 있으먄 답변
 	private String memberNickname; // 작성자(닉네임)
+	private String replyStatus;
 	
 	public QnaBoard() {}
 
 	public QnaBoard(int qnaNo, int perfumeNo, String qnaType, String qnaSubject, String qnaContents, Timestamp qnaDate,
 			int memberNo, String qFilename, String qFilerename, String qFilepath, Integer qnaPassword, String qQnaNo,
-			String memberNickname) {
+			String memberNickname, String replyStatus) {
 		super();
 		this.qnaNo = qnaNo;
 		this.perfumeNo = perfumeNo;
@@ -39,6 +40,7 @@ public class QnaBoard {
 		this.qnaPassword = qnaPassword;
 		this.qQnaNo = qQnaNo;
 		this.memberNickname = memberNickname;
+		this.replyStatus = replyStatus;
 	}
 
 	public int getQnaNo() {
@@ -145,13 +147,24 @@ public class QnaBoard {
 		this.memberNickname = memberNickname;
 	}
 
+	public String getReplyStatus() {
+		return replyStatus;
+	}
+
+	public void setReplyStatus(String replyStatus) {
+		this.replyStatus = replyStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "QnaBoard [qnaNo=" + qnaNo + ", perfumeNo=" + perfumeNo + ", qnaType=" + qnaType + ", qnaSubject="
 				+ qnaSubject + ", qnaContents=" + qnaContents + ", qnaDate=" + qnaDate + ", memberNo=" + memberNo
 				+ ", qFilename=" + qFilename + ", qFilerename=" + qFilerename + ", qFilepath=" + qFilepath
-				+ ", qnaPassword=" + qnaPassword + ", qQnaNo=" + qQnaNo + ", memberNickname=" + memberNickname + "]";
+				+ ", qnaPassword=" + qnaPassword + ", qQnaNo=" + qQnaNo + ", memberNickname=" + memberNickname
+				+ ", replyStatus=" + replyStatus + "]";
 	}
+
+	
 
 	
 

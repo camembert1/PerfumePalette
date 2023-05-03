@@ -61,6 +61,15 @@ public interface QnaBoardService {
 
 	List<QnaReply> selectAllReply(Integer qnaNo);
 
+	void updateReplyStatus(int repQnaNo, String replyStatus);
+
+	int deleteReply(Integer replyNo);
+
+	int samepwd(Integer qnaNo);
+
+	int updateReply(QnaReply qnareply);
+
+
 	
 
 

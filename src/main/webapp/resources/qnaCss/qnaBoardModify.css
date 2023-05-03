@@ -26,6 +26,7 @@ main {
 
 h1 {
 	margin-bottom : 40px;
+	text-align: center;
 }
 
 main>div[id=forHeader] {
@@ -117,4 +118,17 @@ main input:focus {
 main form span[aria-hidden="true"] {
     margin-left: 30px;
 } 
+
+main input.radius {
+    border-radius: 5px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    margin-left: 10px;
+    padding: 3px;
+}
+
+.password-label {
+    float: left;
+    margin-top: 3px;
+  }
 
