@@ -46,4 +46,15 @@
 		ORDER BY CHAT_NO
 	</select>
 
+	<!-- <select id="selectFirstMessage" resultMap="chatResultMap">
+		SELECT *
+		FROM (
+		SELECT *
+		FROM CHAT_TBL
+		WHERE ROOM_NO = #{roomNo}
+		ORDER BY CHAT_NO ASC
+		)
+		WHERE ROWNUM = 1
+	</select> -->
+
 </mapper>

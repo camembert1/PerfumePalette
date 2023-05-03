@@ -24,4 +24,6 @@ public interface ChatStore {
 	
 	public int closeChatRoom(SqlSession sqlSession, int chatRoomNo);
 
+//	public Chat selectFirstMessage(SqlSession sqlSession, int roomNo);
+
 }

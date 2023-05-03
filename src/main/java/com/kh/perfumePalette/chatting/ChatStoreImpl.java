@@ -57,4 +57,9 @@ public class ChatStoreImpl implements ChatStore {
 	public int closeChatRoom(SqlSession sqlSession, int roomNo) {
 		return sqlSession.update("roomMapper.closeChatRoom", roomNo);
 	}
+
+//	@Override
+//	public Chat selectFirstMessage(SqlSession sqlSession, int roomNo) {
+//		return sqlSession.selectOne("chatMapper.selectFirstMessage", roomNo);
+//	}
 }

@@ -38,8 +38,8 @@
 				</div>
 				<div class="chatting-area">
 					<ul class="display-chatting">
-						<c:forEach items="${list }" var="msg">
-							<fmt:formatDate var="chatDate" value="${msg.chatDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
+						<c:forEach items="${sessionScope.list }" var="msg">
+							<fmt:formatDate var="chatDate" value="${msg.chatDate }" pattern="a hh:mm:ss"/>
 							<%-- 1) 내가 보낸 메세지 --%>
 							<c:if test="${msg.memberId == member.memberId }">
 								<li class="myChat"><span class="chatDate">${chatDate}</span>
@@ -48,7 +48,7 @@
 							<%-- 2) 남(이름)이 보낸 메세지 --%>
 							<c:if test="${msg.memberId != member.memberId }">
 								<li><b>${msg.memberNickname}</b><br>
-									<p class="chat">${msg.chatContent}</p> <span class="chatDate">${chatDate}</span></li>
+									<p class="chat">${msg.chatContent}</p><span class="chatDate">${chatDate}</span></li>
 							</c:if>
 						</c:forEach>
 					</ul>
@@ -75,9 +75,9 @@
 				});
 
 		//el태그통해 js변수 셋팅
-		const memberId = "${member.memberId}";
-		const memberNickname = "${member.memberNickname}";
-		const roomNo = "${roomNo}";
+		const memberId = "${sessionScope.member.memberId}";
+		const memberNickname = "${sessionScope.member.memberNickname}";
+		const roomNo = "${sessionScope.roomNo}";
 
 		// /chat이라는 요청주소로 통신할수있는 webSocket 객체 생성 --> /spring/chat
 		let chatSocket = new SockJS("/chat");
@@ -194,14 +194,9 @@
 		};
 
 		function getCurrentTime() {
-
 			const now = new Date();
-
-			const time = now.getFullYear() + "년 " + addZero(now.getMonth() + 1)
-					+ "월 " + addZero(now.getDate()) + "일 "
-					+ addZero(now.getHours()) + ":" + addZero(now.getMinutes())
-					+ ":" + addZero(now.getSeconds()) + " ";
-					
+			let h = now.getHours() < 12 ? ('오전 ' + addZero(now.getHours()) + ":") : ('오후 ' + addZero(now.getHours() - 12) + ":");
+			const time = " " + h + addZero(now.getMinutes()) + ":" + addZero(now.getSeconds()) + " ";
 			return time;
 		}
 
