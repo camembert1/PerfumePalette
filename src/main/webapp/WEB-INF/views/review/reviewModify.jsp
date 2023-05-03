@@ -32,7 +32,7 @@
 				<input type="hidden" name="reviewNo" value="${review.reviewNo }">
 				<input type="hidden" name="rFilename" value="${review.rFilename }">
 					<div id="outter">
-						<h1>REVIEW</h1>
+						<div id="subject">REVIEW</div>
 						<div class="productInfo">
 							<div class="product">
 								<label>상품정보</label>
@@ -54,7 +54,9 @@
 							<div class="user-name">${review.memberNickname }</div>
 						</div>
 						<div class="productInfo">
-							<div class="product">별점</div>
+							<div class="product">
+								<label>별점</label>
+							</div>
 							<div class="star-rating">
 								<span class="fa ${review.rViewscore >= 1 ? 'fa-star checked' : 'fa-star-o'}" data-rating="1"></span>
 								<span class="fa ${review.rViewscore >= 2 ? 'fa-star checked' : 'fa-star-o'}" data-rating="2"></span>
@@ -66,7 +68,9 @@
 					        </div>
 						</div>
 						<div class="productInfo">
-							<div class="product">상품평</div>
+							<div class="product">
+								<label>상품평</label>	
+							</div>
 						</div>
 						<div id="editorapi">
 							<textarea id="summernote" name="reviewContents">${review.reviewContents }</textarea>

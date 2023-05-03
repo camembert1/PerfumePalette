@@ -31,6 +31,7 @@ body {
 main {
 	width: 100vw;
 	min-height: 100vh;
+	margin-bottom: 100px;
 }
 
 main>div[id=forHeader] {
@@ -57,12 +58,17 @@ main #outter{
 	width: 60vw;
 	margin: 0 auto;
 }
-main h1{
+
+main #subject {
 	text-align: center;
+   font-size: 50px;
+   font-weight: bold;
+   margin-bottom: 20px;
 }
+
 main .productInfo{
 	display: flex;
-	margin: 10px 0;
+	margin: 10px 0 52px 0;
 }
 main .product{
 	width: 25%;
@@ -82,8 +88,8 @@ main .productImg{
 	/* background-color: #c0c0c0; */
 }
 	main img{
-		width: 250px;
-		height: 250px;
+		width: 230px;
+		height: 230px;
 	}
 
 main .productDetails{
@@ -93,7 +99,7 @@ main .productDetails{
 	margin: 33px 0 33px 35px;
 }
 	.productTitle {
-		font-size: 30px;
+		font-size: 25px;
 		font-weight: bold;
 	}
 	
@@ -102,13 +108,14 @@ main .productDetails{
 	}
 main .user-name{
 	width: 60%;
+	font-size: 15px;
+	font-weight: bold;
 }
 
 /*별점*/
 
-
 .star-rating span:before {
-	font-size: 50px;
+	font-size: 32px;
 	content: "\f005";
 	color: #FFD700;
 }
@@ -154,8 +161,10 @@ main input[type=submit], input[type=reset]{
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     margin-right: 50px;
     margin-left: 50px;
+    cursor: pointer;
 }
 
 main label{
-	font-size: 20px;
+	font-size: 25px;
+	font-weight: bold;
 }

@@ -1,5 +1,6 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
+import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.review.Review;
 
 @Controller
 @RequestMapping("/member")
@@ -34,9 +37,10 @@ public class MemberController {
 
 	@PostMapping("/enroll")
 	public ModelAndView enroll(ModelAndView mv, @ModelAttribute Member member,
-			@RequestParam("memberDetailAddr") String memberDetailAddr) {
+			@RequestParam("memberDetailAddr") String memberDetailAddr
+			, String postcode) {
 		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr + " (" + postcode + ")");
 			int result = mService.insertMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/login", "회원가입에 성공했습니다");
@@ -127,33 +131,43 @@ public class MemberController {
 		mv.setViewName("member/login");
 		return mv;
 	}
-
+	
 	@PostMapping("/login")
-	public ModelAndView login(HttpServletRequest request, @ModelAttribute Member member, ModelAndView mv) {
+	public ModelAndView login(HttpServletRequest request
+			, @ModelAttribute Member member
+			, ModelAndView mv
+			, HttpSession session) {
 		try {
-			// int result = mService.login(member);
-			Member loginUser = mService.login(member);
+			// 세션에 저장된 회원 정보를 가져오기 
+	        Member loginUser = (Member) session.getAttribute("member");
+	        if (loginUser != null) {
+	            // 이미 로그인된 상태인 경우
+	            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+	            mv.addObject("alert", alert).setViewName("common/alert");
+	            return mv; // 홈으로 이동
+	        }
+			
+	        // 로그인 처리
+			loginUser = mService.login(member);
 			if (loginUser != null) {
 				// member_status = 1인 사람만 로그인 가능
-				if (loginUser.getMemberStatus() == 1) { 
-					HttpSession session = request.getSession();
+				if (loginUser.getMemberStatus() == 1) {
+					HttpSession session1 = request.getSession();
 					// 최종 수정 - memberNo, memberId, memberNickname, memberName 들어있음!
-					session.setAttribute("member", loginUser);
+					session1.setAttribute("member", loginUser);
 
-					if (session.getAttribute("mbtiResult") == null) {
+					if (session1.getAttribute("mbtiResult") == null) {
 						mv.setViewName("redirect:/");
 					} else {
 						mv.setViewName("redirect:/mbti/mbtiResult");
 					}
 				} else { // 탈퇴한 회원일 경우
 					Alert alert = new Alert("/member/login", "이미 탈퇴한 회원입니다.");
-					mv.addObject("alert", alert)
-					.setViewName("common/alert");
+					mv.addObject("alert", alert).setViewName("common/alert");
 				}
-			} else {	// 로그인 실패
+			} else { // 로그인 실패
 				Alert alert = new Alert("/member/login", "아이디 또는 비밀번호를 다시 확인해주세요");
-				mv.addObject("alert", alert)
-				.setViewName("common/alert");
+				mv.addObject("alert", alert).setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,6 +176,8 @@ public class MemberController {
 		return mv;
 	}
 
+	
+	
 	// 로그아웃
 	@GetMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request, ModelAndView mv) {
@@ -203,9 +219,10 @@ public class MemberController {
 
 	@PostMapping("/myPage")
 	public ModelAndView myPage(ModelAndView mv, @ModelAttribute Member member,
-			@RequestParam("memberDetailAddr") String memberDetailAddr) {
+			@RequestParam("memberDetailAddr") String memberDetailAddr
+			, String postcode) {
 		try {
-			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr);
+			member.setMemberAddr(member.getMemberAddr() + "/ " + memberDetailAddr + " (" + postcode + ")");
 			int result = mService.modifyMember(member);
 			if (result > 0) {
 				Alert alert = new Alert("/member/myPage", "정보변경 성공했습니다");
@@ -324,17 +341,100 @@ public class MemberController {
 
 	// 내가 작성한 후기
 	@GetMapping("/myReview")
-	public ModelAndView myReview(ModelAndView mv) {
-		mv.setViewName("member/myReview");
+	public ModelAndView myReviewList(ModelAndView mv
+			, HttpServletRequest request
+			, HttpSession session) {
+		try {
+			Member member = (Member) session.getAttribute("member");
+			if (member == null) {
+				// member가 null인 경우 처리
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				int memberNo = member.getMemberNo();
+				// memberNo를 이용한 다른 처리
+				// memberNo에 해당하는 후기 목록 가져오기***
+				List<Review> myReviews = mService.getMyReviews(memberNo);
+				for (Review review : myReviews) {
+					String outpuString = review.getReviewContents().replaceAll("<[^>]*>", "");
+					review.setReviewContents(outpuString);
+					
+					// JSP에서 사용할 rList에 myReviews 설정
+					mv.addObject("myReviews", myReviews);
+				}
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
+	}
+
+	// 후기 다중 삭제
+	@PostMapping("/removeReview")
+	@ResponseBody
+	public String removeReview(int[] arr, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for (int i = 0; i < arr.length; i++) {
+				result = mService.removeReview(arr[i]);
+			}
+			if (result > 0) {
+				return "1";
+			} else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 
 	// 내가 작성한 문의
 	@GetMapping("/myQna")
-	public ModelAndView myQna(ModelAndView mv) {
-		mv.setViewName("member/myQna");
+	public ModelAndView myQna(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		try {
+			Member member = (Member) session.getAttribute("member");
+			if (member == null) {
+				// member가 null인 경우 처리
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				int memberNo = member.getMemberNo();
+//			    // memberNo를 이용한 다른 처리
+//			    // memberNo에 해당하는 문의 목록 가져오기
+				List<QnaBoard> myQna = mService.getMyQna(memberNo);
+				
+//			    // JSP에서 사용할 qList에 myQna 설정
+				mv.addObject("myQna", myQna);
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
+	
+	// 문의글 다중 삭제
+	@PostMapping("/removeQna")
+	@ResponseBody
+	public String removeQna(int[] arr, HttpServletRequest request) {
+		int result = 0;
+		try {
+			for (int i = 0; i < arr.length; i++) {
+				result = mService.removeQna(arr[i]);
+			}
+			if (result > 0) {
+				return "1";
+			} else {
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	
 
 	// 내가 작성한 댓글
 	@GetMapping("/myComment")

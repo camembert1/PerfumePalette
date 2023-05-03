@@ -41,7 +41,7 @@
 		</form>
 		</div>
 		
-		 <table border="1">
+		 <table>
         <thead> <!-- 테이블 헤더 -->
             <tr>
             	<th>번호</th>
@@ -73,7 +73,7 @@
 				     </div>
                 </td>
                 <td>
-                	<div>
+                	<div class="perfumeInfo">
                 		<a href="/review/reviewDetail/${review.reviewNo }">
 						<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 	                    <strong>[${review.perfumeBrand }] ${review.perfumeName }</strong>

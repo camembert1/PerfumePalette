@@ -46,7 +46,7 @@
 					<div class="nav-left-bar"></div>
 					<div style="width: 150px; background-color: rgba(255, 255, 255, 0);"></div>
 					<div class="nav-left-detail">
-						<div>Review</div>
+						<div onclick="location.href='/review/reviewList'">Review</div>
 						<div onclick="location.href='/qnaboard/list'">Q&A</div>
 					</div>
 				</div>

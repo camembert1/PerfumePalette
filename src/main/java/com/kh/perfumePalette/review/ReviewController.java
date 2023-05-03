@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,6 +28,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonObject;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
+import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.like.Like;
+import com.kh.perfumePalette.order.OrderService;
+import com.kh.perfumePalette.order.OrderServiceImpl;
+import com.kh.perfumePalette.order.domain.OrderDetail;
 import com.kh.perfumePalette.perfume.Perfume;
 import com.kh.perfumePalette.report.Report;
 
@@ -43,9 +49,47 @@ public class ReviewController {
 
 	// 후기 게시판 작성 페이지 보여주기
 	@RequestMapping(value = "/reviewWrite", method = RequestMethod.GET)
-	public ModelAndView showReviewWrite(ModelAndView mv, Integer perfumeNo) {
-		// 하드코딩해둔 것
-		perfumeNo = 80;
+	public ModelAndView showReviewWrite(ModelAndView mv
+			, HttpSession session
+			, String orderInfo) {
+		
+		// 주문자 회원 번호 가져오기
+		int orderMemberNo = Integer.parseInt(orderInfo.split(";")[0]);
+		
+		// 세션에 있는 회원번호와 다르면 잘못된 접근 처리하기
+		Member loginUser = (Member) session.getAttribute("member");
+		if (loginUser == null) {
+			Alert alert = new Alert("/member/login", "잘못된 접근입니다.");
+			mv.addObject("alert", alert).setViewName("common/alert");
+			return mv;
+		} else if (orderMemberNo != loginUser.getMemberNo()) {
+			Alert alert = new Alert("/", "잘못된 접근입니다.");
+			mv.addObject("alert", alert).setViewName("common/alert");
+			return mv;
+		}
+		
+		// 주문 번호 가져와서 addObject
+		// write페이지에서 글 등록 성공 시
+		// 글번호를 ORDER_DETAIL_TBL의 REVIEW_STATUS컬럼에 업데이트하도록 처리하기 위해 필요함
+		String orderNo = orderInfo.split(";")[2];
+		mv.addObject("orderNo", orderNo);
+		
+		// 향수 번호 가져오기
+		int perfumeNo = Integer.parseInt(orderInfo.split(";")[1]);
+		
+		// 이미 해당 구매건에 대한 후기를 썼다면 이미 작성한 후기입니다 alert 띄우기
+		// 어차피 마이페이지 - 주문 목록에서 작성 버튼은 노출되지 않지만
+		// 주소로 입력할 경우 접근 가능할 수 있으므로 차단!
+//		OrderDetail odInfo = new OrderDetail();
+//		odInfo.setOrderNo(orderNo);
+//		odInfo.setPerfumeNo(perfumeNo);
+//		OrderDetail oDetail = (new OrderServiceImpl()).selectOrderDetailBy(odInfo); 
+//		if (oDetail.getReviewStatus() != 0) {
+//			Alert alert = new Alert("/", "이미 후기 작성이 완료되었습니다.");
+//			mv.addObject("alert", alert).setViewName("common/alert");
+//			return mv;
+//		}
+		
 		Perfume perfume = rService.selectOneByPerfumeNo(perfumeNo);
 		
 		mv.addObject("id",UUID.randomUUID());
@@ -189,6 +233,7 @@ public class ReviewController {
 		}
 		return mv;
 	}
+	
 
 	// 후기 게시판 검색
 	@RequestMapping(value = "/reviewSearch", method = RequestMethod.GET)
@@ -216,8 +261,12 @@ public class ReviewController {
 
 	// 후기 게시판 수정 화면
 	@RequestMapping(value = "/reviewModify", method = RequestMethod.GET)
-	public String showReviewModify(@RequestParam("reviewNo") Integer reviewNo, Model model) {
+	public String showReviewModify(@RequestParam("reviewNo") Integer reviewNo, Model model, HttpSession session) {
 		try {
+			Member member = (Member)session.getAttribute("member");
+			Like like = new Like();
+			like.setMemberNo(member.getMemberNo());
+			like.setReviewNo(reviewNo);
 			Review review = rService.selectOneReview(reviewNo);
 			model.addAttribute("id",UUID.randomUUID());
 			if (review != null) {
@@ -248,32 +297,44 @@ public class ReviewController {
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
 			String savePath = wasRoot + "\\" + "reviewFileUploads\\" ;
 			File diretory = new File(savePath + id);
-			File folder = new File(savePath + code);
-			System.out.println(savePath + code);
-			
+			File folder = new File(savePath + code);	
+			if(!diretory.exists()){
+			    diretory.mkdirs();
+			}
+			if(!folder.exists()){
+			    folder.mkdirs();
+			}
 			if (result > 0) {
 				if(folder.exists()){ //파일존재여부확인
 				    if(folder.isDirectory()){ //파일이 디렉토리인지 확인
+				    	String[] sList = content.split("\"");
+						List<String> fileList = new ArrayList<String>();
+						for(String aa : sList){
+						    if(aa.startsWith(".")){
+						        fileList.add(aa);
+						    }
+						}
 				        File[] files = folder.listFiles();
+				        int[] valid = new int[files.length];
 				        for(int i = 0; i < files.length; i++){
-				        	
-				            if (files[i].delete()) {
-				                // 폴더 안 파일 삭제 성공시
-				            } else {
-				                // 삭제 실패시
-				            }
+				        	for(String fileName : fileList) {
+					        	 if (("../../../resources/img/reviewFileUploads/" + code + "/" + files[i].getName()).equals(fileName)) {
+					        		 valid[i] = 1;
+					        	 }
+				        	}
 				        }
-				    }
-				    if(folder.delete()){
-				        // 폴더 삭제시
-				    }else{
-				        // 폴더 삭제 실패시
+				        for(int i = 0; i < valid.length; i++) {
+				        	if(valid[i] != 1) {
+				        		if(files[i].delete()) {
+				        			
+				        		}else {
+				        			
+				        		}
+				        	}
+				        }
 				    }
 				}else{
 				    // 임시 폴더가 없을 시
-				}
-				if(!folder.exists()){
-					folder.mkdirs();
 				}
 			}
 			String[] sList = content.split("\"");
@@ -283,10 +344,7 @@ public class ReviewController {
 			        fileList.add(aa);
 			    }
 			}
-			
-			if(!diretory.exists()){
-			    diretory.mkdirs();
-			}
+
 			if(diretory.exists()){ //파일존재여부확인
 			    if(diretory.isDirectory()){ //파일이 디렉토리인지 확인
 			        File[] files = diretory.listFiles();
@@ -326,24 +384,89 @@ public class ReviewController {
 		}
 		return mv;
 	}
-
-	// 수정, 삭제시 기존 파일 삭제
-	private void deleteFile(String getrFilename, HttpServletRequest request) throws Exception {
-		String root = request.getSession().getServletContext().getRealPath("resources/img");
-		String delPath = root + "\\" + "reviewFileUploads";
-		String delFilePath = delPath + "\\" + getrFilename;
-		File delFile = new File(delFilePath);
-		if (delFile.exists()) {
-			delFile.delete();
+	
+	//후기 게시판 삭제하기
+	@RequestMapping(value="/reviewRemove", method = RequestMethod.GET)
+	public String reviewRemove(
+			@RequestParam("reviewNo") int reviewNo
+			, HttpServletRequest request
+			, Model model) {
+		try {
+			// reviewNo에 해당하는 게시물 정보 가져오기
+			Review review = rService.selectOneReview(reviewNo); // reviewNo에 해당하는 게시물 정보 가져오기
+	        if (review != null) {
+	            // 해당 게시물에 업로드된 이미지 파일 삭제
+	            String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
+	            String savePath = wasRoot + "\\" + "reviewFileUploads\\" + review.getrFilename();
+	            File folder = new File(savePath);
+	            if (folder.exists() && folder.isDirectory()) {
+	                File[] files = folder.listFiles();
+	                for (File file : files) {
+	                    file.delete();
+	                }
+	                folder.delete();
+	            }
+	        }
+			int result = rService.deleteReview(reviewNo);
+			if(result > 0) {
+				return "redirect:/review/reviewList";
+			} else {
+				model.addAttribute("msg", "삭제가 완료되지 않았습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
 		}
-
 	}
 
+	// 신고하기
 	@PostMapping("/report")
 	@ResponseBody
 	public int reviewReport(@ModelAttribute Report report) {
-		int result = rService.reviewReport(report);
-		return result;
+		int reportCnt = rService.selectReportCnt(report);
+		int result = -1;
+		if(reportCnt <= 0) {
+			result = rService.reviewReport(report);
+			return result;
+		} else {
+			return result;
+		}
 	}
 
+	// 좋아요
+	@PostMapping("/like")
+	@ResponseBody
+	public String addLike(int memberNo, int reviewNo) {
+		try {
+			Like like = new Like();
+			like.setMemberNo(memberNo);
+			like.setReviewNo(reviewNo);
+			int result = rService.addLike(like);
+			if(result > 0) {
+				return "success";  // 좋아요 성공
+			} else {
+				return "fail";    //좋아요 실패
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@PostMapping("/remove")
+	@ResponseBody
+	public String removeLike(int likeNo) {
+		try {
+			int result = rService.removeLike(likeNo);
+			if(result > 0) {
+				return "success";  // 좋아요 삭제 성공
+			} else {
+				return "fail";  // 좋아요 삭제 실패 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
 }

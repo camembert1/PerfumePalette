@@ -28,11 +28,11 @@ public interface AdPerfumeStore {
 
 	int getListCount(SqlSession session);
 
-	int getWishListCount(SqlSession session);
+	int getWishListCount(SqlSession session, int perfumeNo);
 
 	List<AdPerfume> selectWishList(SqlSession session, int perfumeNo, PageInfo pi);
 
-	int getCartListCount(SqlSession session);
+	int getCartListCount(SqlSession session, int perfumeNo);
 
 	List<AdPerfume> selectCartList(SqlSession session, int perfumeNo, PageInfo pi);
 

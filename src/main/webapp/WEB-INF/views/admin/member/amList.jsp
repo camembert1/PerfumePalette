@@ -16,17 +16,6 @@
 <link rel="apple-touch-icon" href="../../../resources/img/common/favicon.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
-/* 		고정 */
-#id_ok, #pw_ok, #nickName_ok, #email_ok {
-	color: #008000;
-	display: none;
-}
-
-#id_not_ok2, #id_not_ok3, #pw_not_ok2, #pw_not_ok3, #nickName_not_ok2,
-	#nickName_not_ok3, #email_not_ok2, #email_not_ok3, #email_not_ok4 {
-	color: #6A82FB;
-	display: none;
-}
 
 </style>
 </head>
@@ -68,16 +57,16 @@
 			<table>
 				<thead>
 					<tr class="headList">
-						<th style="width: 40px;"><input type="checkbox" class="allCheck"></th>
-						<th style="width: 60px;">이 름</th>
-						<th style="width: 100px;">아이디</th>
-						<th style="width: 120px;">닉네임</th>
-						<th style="width: 150px;">이메일</th>
-						<th style="width: 110px;">전화번호</th>
-						<th style="width: 200px;">주 소</th>
-						<th style="width: 100px;">등록일</th>
-						<th style="width: 100px;">탈퇴여부</th>
-						<th style="width: 120px;">수 정</th>
+						<th><input type="checkbox" class="allCheck"></th>
+						<th>이 름</th>
+						<th>아이디</th>
+						<th>닉네임</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주 소</th>
+						<th>등록일</th>
+						<th>탈퇴여부</th>
+						<th>수 정</th>
 					</tr>
 				</thead>
 				<tbody>

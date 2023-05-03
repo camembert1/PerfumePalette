@@ -52,7 +52,7 @@
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<h1>회원 관리</h1>
-			<div>
+			<div class="search">
 				<form action="/admin/member/search" method="get">
 					<select name="searchCondition">
 						<option value="All" <c:if test="${search.searchCondition == 'All' }">selected</c:if>>전체</option>
@@ -67,16 +67,16 @@
 			<table>
 				<thead>
 					<tr class="headList">
-						<th style="width: 40px;"><input type="checkbox" class="allCheck"></th>
-						<th style="width: 60px;">이 름</th>
-						<th style="width: 100px;">아이디</th>
-						<th style="width: 120px;">닉네임</th>
-						<th style="width: 150px;">이메일</th>
-						<th style="width: 110px;">전화번호</th>
-						<th style="width: 200px;">주 소</th>
-						<th style="width: 100px;">등록일</th>
-						<th style="width: 100px;">탈퇴여부</th>
-						<th style="width: 120px;">수 정</th>
+						<th><input type="checkbox" class="allCheck"></th>
+						<th>이 름</th>
+						<th>아이디</th>
+						<th>닉네임</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주 소</th>
+						<th>등록일</th>
+						<th>탈퇴여부</th>
+						<th>수 정</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,14 +84,14 @@
 						<tr class="amList">
 							<td class="td"><input type="checkbox" class="check"
 								value="${member.memberNo }"></td>
-							<td class="td">${member.memberName }</td>
-							<td class="td">${member.memberId }</td>
-							<td class="td">${member.memberNickname }</td>
-							<td class="td">${member.memberEmail }</td>
-							<td class="td">${member.memberPhone.substring(0,3)}-${member.memberPhone.substring(3,7)}-${member.memberPhone.substring(7,11)}</td>
-							<td class="td tdAddr">${member.memberAddr }</td>
-							<td class="td"><fmt:formatDate value="${member.memberDate }" pattern="yyyy-MM-dd" /></td>
-							<td class="td">
+							<td class="td tdOver">${member.memberName }</td>
+							<td class="td tdOver">${member.memberId }</td>
+							<td class="td tdOver">${member.memberNickname }</td>
+							<td class="td tdOver">${member.memberEmail }</td>
+							<td class="td tdOver">${member.memberPhone.substring(0,3)}-${member.memberPhone.substring(3,7)}-${member.memberPhone.substring(7,11)}</td>
+							<td class="td tdOver">${member.memberAddr }</td>
+							<td class="td tdOver"><fmt:formatDate value="${member.memberDate }" pattern="yyyy-MM-dd" /></td>
+							<td class="td tdOver">
 								<c:choose>
 									<c:when test="${member.memberStatus eq 1}">X</c:when>
 									<c:when test="${member.memberStatus eq 0}">O</c:when>

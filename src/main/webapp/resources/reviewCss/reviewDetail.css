@@ -23,6 +23,7 @@ body {
 main {
     width: 100vw;
     min-height: 100vh;
+    margin-bottom: 100px;
 }
 main>div[id=forHeader] {
 
@@ -52,27 +53,39 @@ main #outter{
 	margin: 0 auto;
 }
 
-main h1{
-	text-align: center;
+main #subject {
+	text-align: center; 
+	font-size : 50px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	font-size: 50px;
 }
 
 main .date{
-	/* background-color: green;
-	width: 1000px;
-	height: 20px; */
+	/* float: right; */
+	margin-bottom: 30px;
 }
 
 main .productInfo{
 	display: flex;
-	margin: 10px 0;
+	margin: 10px 0 30px 0;
+	align-items: center;
 }
 main .product{
 	width: 25%;
 	display: flex;
 	align-items: center;
 }
+main .product label{
+	font-size: 15px;
+	font-weight: bold;
+}
+
 main .user-name{
 	width: 60%;
+	font-size: 20px;
+	font-weight: bold;
+	
 }
 
 main .product-info{
@@ -81,21 +94,21 @@ main .product-info{
 	justify-content: space-between;
 }
 main .productImg{
-	width: 250px;
-	height: 250px;
+	width: 200px;
+	height: 200px;
 	border-radius: 10px;
 	/* background-color: #c0c0c0; */
 }
 	main img{
-		width: 200px;
-		height: 200px;
+		width: 170px;
+		height: 170px;
 	}
 
 main .productDetails{
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin: 70px 0 70px 35px;
+	margin: 35px 0 35px 25px;
 }
 	/*별점*/
     .fa-star {
@@ -108,12 +121,12 @@ main .productDetails{
     }
     
 	.productTitle {
-		font-size: 20px;
+		font-size: 18px;
 		font-weight: bold;
 	}
 	
 	.productPrice {
-		font-size: 20px;
+		font-size: 15px;
 	}
 
 main #productImgInfo {
@@ -130,25 +143,26 @@ main #productImgInfo img {
 }
 
 main #reviewContents{
-	background-color: gray;
-	/* width: 1000px; */
-	height: 200px;
+	border-top: 2px solid #28302d;
+	border-bottom: 2px solid #28302d;
+	/* border: 3px solid #28302d; */
+	height: 350px;
 	margin-top: 15px;
 	overflow: scroll;
 }
 
-	#reviewContents::-webkit-scrollbar {
-	  width: 8px;  /* 스크롤바의 너비 */
+	 #reviewContents::-webkit-scrollbar {
+	  width: 8px;  스크롤바의 너비
 	}
 	
 	#reviewContents::-webkit-scrollbar-thumb {
-	  background-color: #ddd; /* 스크롤바 썸네일의 배경 색상 */
-	  border-radius: 8px; /* 스크롤바 썸네일의 모서리 반경 */
+	  background-color: #28302d; 스크롤바 썸네일의 배경 색상
+	  border-radius: 8px; 스크롤바 썸네일의 모서리 반경
 	}
 	
 	#writeContent::-webkit-scrollbar-track {
-	  background-color: #f1f1f1; /* 스크롤바 트랙의 배경 색상 */
-	  border-radius: 8px; /* 스크롤바 트랙의 모서리 반경 */
+	  background-color: #f1f1f1; 스크롤바 트랙의 배경 색상
+	  border-radius: 8px; 스크롤바 트랙의 모서리 반경
 	}
 
 main .input-btn {
@@ -158,7 +172,7 @@ main .input-btn {
 	margin-bottom: 15px;
 }
 
-main input[type=submit], input[type=reset]{
+main input[type=button], input[type=submit]{
     width: 100px;
     height: 50px;
     background-color: #222222;
@@ -168,6 +182,7 @@ main input[type=submit], input[type=reset]{
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     margin-right: 50px;
     margin-left: 50px;
+    cursor: pointer;
 }
 
 /* 모달 창 띄우기 디자인 */
@@ -180,7 +195,7 @@ main input[type=submit], input[type=reset]{
 	display: none;
 }
 
-#modal {
+main #modal {
 	height: 400px;
 	width: 650px;
 	border-radius: 25px;
@@ -192,15 +207,156 @@ main input[type=submit], input[type=reset]{
 	border-radius: 20px;
 	background-color: white;
 	display: none;
+	text-align: center;
 }
 
-/* 신고하기 디자인*/
+/* 좋아요 디자인 */
+main #like {
+	display: flex;
+	align-items: center;
+}
+main .productInfo #like img {
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	margin-right: 5px;
+}
 
 
+/* 신고하기 버튼 */
+main #report button {
+  background-color: white;
+  border: none;
+  /* color: black; */
+  padding: 3px 6px;
+  margin-left: 10px;
+  /* text-align: center; */
+  /* text-decoration: none; */
+  /* display: inline-block; */
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); */
+}
+
+/* 신고하기 디자인(모달창) */
+main #reportReason {
+  margin-top: 20px;
+}
+
+main #reportReason label {
+  display: inline-block;
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+main #reportReason select {
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+main #reportperfume {
+  margin: 5px;
+}
+
+main #reportperfume label {
+  display: inline-block;
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+main #reportperfume span {
+  font-size: 16px;
+}
+
+main #reportWrite {
+ margin: 5px;
+}
+
+main #reportWrite label {
+  display: inline-block;
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+main #reportWrite span {
+  font-size: 16px;
+}
+
+main #reportContents {
+  margin: 5px;
+}
+
+main #reportContents textarea {
+  width: 500px;
+  height: 160px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+
+main #btn-box button{
+	width: 100px;
+    height: 50px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-right: 50px;
+    margin-left: 50px;
+    cursor: pointer;
+}
 
 /* 댓글 영역 */
-main #reply{
-	background-color: gold;
-	/* width: 1000px; */
-	height: 500px;
+.replyTable {
+	margin-top: 10px;
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.replyForm {
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.replyForm .replyWriter {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.replyForm .replyContents {
+	flex: 1;
+	margin: 0 10px;
+}
+
+.replyForm .replyContents input[type="text"] {
+	width: 95%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #28302d;
+	font-size: 15px;
+}
+
+.replyForm .replySubmit button {
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: #28302d;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
 }

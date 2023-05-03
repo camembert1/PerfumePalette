@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../resources/perfumeCss/mList.css">
+<link rel="stylesheet" href="../../../resources/perfumeCss/cartWish.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon" href="../../../resources/img/common/favicon.png" />
@@ -47,6 +47,7 @@
 			</div>
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<h1>장바구니 회원</h1>
+			<div class="table_continer">
 			<table style="text-align: center;">
 				<thead>
 					<tr id="thead">
@@ -107,6 +108,7 @@
 					</tr>
 				</tfoot>
 			</table>
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />

@@ -1,7 +1,12 @@
 package com.kh.perfumePalette.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.review.Review;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -84,6 +89,30 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int bye(Member member) {
 		int result = mStore.bye(member);
+		return result;
+	}
+
+	@Override
+	public List<Review> getMyReviews(int memberNo) {
+		List<Review> rList = mStore.myReviews(memberNo);
+		return rList;
+	}
+
+	@Override
+	public List<QnaBoard> getMyQna(int memberNo) {
+		List<QnaBoard> qList = mStore.myQna(memberNo);
+		return qList;
+	}
+
+	@Override
+	public int removeReview(int i) {
+		int result = mStore.removeReview(i);
+		return result;
+	}
+
+	@Override
+	public int removeQna(int i) {
+		int result = mStore.removeQna(i);
 		return result;
 	}
 

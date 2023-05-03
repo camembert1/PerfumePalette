@@ -6,6 +6,9 @@ pageEncoding="UTF-8"%>
     <meta charset="UTF-8" />
     <title>아이디 찾기</title>
     <link rel="stylesheet" href="../../../resources/memberCss/findId.css" />
+    <!-- favicon : 탭에 보이는 아이콘 -->
+   <link rel="icon" href="../../resources/img/common/favicon.png" />
+   <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
   </head>
   <body>
     <jsp:include page="../common/header.jsp" />

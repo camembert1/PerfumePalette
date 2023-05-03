@@ -10,8 +10,11 @@ public class OrderDetail {
 	
 	private String 		orderNo;
 	private int 		perfumeNo;
+	
 	private int			orderQuantity;
 	private int			perfumePrice;
+	
+	private int 		reviewStatus;
 	
 	
 	public OrderDetail() {}
@@ -19,13 +22,15 @@ public class OrderDetail {
 			String orderNo
 			, int perfumeNo
 			, int orderQuantity
-			, int perfumePrice) {
+			, int perfumePrice
+			, int reviewStatus) {
 		
 		super();
 		this.orderNo = orderNo;
 		this.perfumeNo = perfumeNo;
 		this.orderQuantity = orderQuantity;
 		this.perfumePrice = perfumePrice;
+		this.reviewStatus = reviewStatus;
 	}
 
 
@@ -61,10 +66,19 @@ public class OrderDetail {
 		this.perfumePrice = perfumePrice;
 	}
 	
+	public int getReviewStatus() {
+		return reviewStatus;
+	}
+	
+	public void setReviewStatus(int reviewStatus) {
+		this.reviewStatus = reviewStatus;
+	}
 	@Override
 	public String toString() {
 		return "OrderDetail [orderNo=" + orderNo + ", perfumeNo=" + perfumeNo + ", orderQuantity=" + orderQuantity
-				+ ", perfumePrice=" + perfumePrice + "]";
+				+ ", perfumePrice=" + perfumePrice + ", reviewStatus=" + reviewStatus + "]";
 	}
+	
+	
 
 }

@@ -77,9 +77,10 @@ public interface AdPerfumeService {
 
 	/**
 	 * 찜한 멤버 갯수 Service
+	 * @param perfumeNo 
 	 * @return int
 	 */
-	int getWishListCount();
+	int getWishListCount(int perfumeNo);
 
 	/**
 	 * 찜한 멤버 리스트 Service
@@ -91,9 +92,10 @@ public interface AdPerfumeService {
 
 	/**
 	 * 장바구니 멤버 갯수 Service
+	 * @param perfumeNo 
 	 * @return int
 	 */
-	int getCartListCount();
+	int getCartListCount(int perfumeNo);
 
 	/**
 	 * 장바구니 멤버 리스트 Service

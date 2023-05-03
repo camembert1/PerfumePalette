@@ -353,7 +353,7 @@ public class AdPerfumeController {
 				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert).setViewName("common/alert");
 			} else {
-				int totalCount = pService.getWishListCount();
+				int totalCount = pService.getWishListCount(perfumeNo);
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
 				List<AdPerfume> wList = pService.selectWishList(perfumeNo, pi);
 				mv.addObject("paging", pi);
@@ -379,7 +379,7 @@ public class AdPerfumeController {
 				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert).setViewName("common/alert");
 			} else {
-				int totalCount = pService.getCartListCount();
+				int totalCount = pService.getCartListCount(perfumeNo);
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
 				List<AdPerfume> cList = pService.selectCartList(perfumeNo, pi);
 				mv.addObject("paging", pi);

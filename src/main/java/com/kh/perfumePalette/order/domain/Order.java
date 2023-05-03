@@ -15,12 +15,15 @@ public class Order {
 	private Timestamp 	orderDate;
 	private String 		orderStatus;
 	private int			memberNo;
+	
 	private String 		recipientName;
 	private String 		recipientPhone;
+	
 	private String 		deliveryAddr;
 	private String 		deliveryMsg;
+	private String		trackingNo;
 	
-	// for Timestamp
+	// for TimeStamp
 	private long  		orderDateMilis;
 
 
@@ -33,6 +36,7 @@ public class Order {
 			, String recipientPhone
 			, String deliveryAddr
 			, String deliveryMsg
+			, String trackingNo
 			
 			, long orderDateMilis) {
 		
@@ -45,6 +49,7 @@ public class Order {
 		this.recipientPhone = recipientPhone;
 		this.deliveryAddr = deliveryAddr;
 		this.deliveryMsg = deliveryMsg;
+		this.trackingNo = trackingNo;
 	}
 
 	public String getOrderNo() {
@@ -59,7 +64,7 @@ public class Order {
 		return orderDate;
 	}
 
-	public void setOrderDate(long orderDateMilis) {
+	public void setOrderDate(Timestamp orderDate) {
 		this.orderDate = new Timestamp(this.orderDateMilis);
 	}
 
@@ -118,14 +123,21 @@ public class Order {
 	public void setOrderDateMilis(long orderDateMilis) {
 		this.orderDateMilis = orderDateMilis;
 	}
-
 	
+	public String getTrackingNo() {
+		return trackingNo;
+	}
+	public void setTrackingNo(String trackingNo) {
+		this.trackingNo = trackingNo;
+	}
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderStatus=" + orderStatus + ", memberNo="
 				+ memberNo + ", recipientName=" + recipientName + ", recipientPhone=" + recipientPhone
-				+ ", deliveryAddr=" + deliveryAddr + ", deliveryMsg=" + deliveryMsg + ", orderDateMilis="
-				+ orderDateMilis + "]";
+				+ ", deliveryAddr=" + deliveryAddr + ", deliveryMsg=" + deliveryMsg + ", trackingNo=" + trackingNo
+				+ ", orderDateMilis=" + orderDateMilis + "]";
 	}
+	
+	
 	
 }

@@ -32,14 +32,15 @@
 			<div id="hrefList">
 				<div id="hrefName">${sessionScope.member.memberName }님</div>
 					<span><a href="/perfume/mList">판매상품관리</a></span>
-					<span><a href="#">주문내역관리</a></span>
+					<span><a href="/admin/order/list">주문내역관리</a></span>
 					<span><a href="/admin/member/amList">회원관리</a></span>
 					<span><a href="/admin/qna/list">문의관리</a></span>
 					<span><a href="/admin/review/list">후기관리</a></span>
 				</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
-			<div id="subject">REVIEW</div>
+			<div id="subject"></div>
+			<h1>REVIEW</h1>
 			<div id="search">
 				<form action="/admin/review/search">
 	         		<select name="searchOder" id="sortby-select">
@@ -56,14 +57,14 @@
 					    <option name ="" value="Citrus">Citrus</option>
 					</select>
 					<input type="text" name="searchValue" value="${search.searchValue }" placeholder="상품명 검색">
-					<button type="submit">검색</button>
+					<button type="submit" class="small_button">검 색</button>
 				</form>
 			</div>
+			<div class="continer">
 			<table>
 				<thead>
 					<tr>
 						<th><input type="checkbox" class="allCheck"></th>
-						<th>번호</th>
 						<th>별점</th>
 						<th>이미지</th>
 						<th>[브랜드] 이름</th>
@@ -77,7 +78,6 @@
 					<c:forEach items="${rList }" var="review" varStatus="i">
 						<tr>
 							<td><input type="checkbox" class="check" value="${review.reviewNo }"></td>
-							<td>${i.count }</td>
 							<td>
 								<div class="star-rating">
 				                	<span class="fa ${review.rViewscore >= 1 ? 'fa-star' : 'fa-star-o'}" data-rating="1"></span>
@@ -88,26 +88,31 @@
 									<input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 								</div>
 							</td>
-							<td>
-								<div>
-			                		<a href="">
-									<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
-				                    </a>
-			                    </div>
+							<td onclick="window.location.href='/perfume/detail/${review.perfumeNo}';">
+								<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 							</td>
-							<td><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
-							<td>${review.memberNickname }</td>
+							<td onclick="window.location.href='/perfume/detail/${review.perfumeNo}';"><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
+							<td onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">${review.memberNickname }</td>
 							<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
 							<td>${review.rViewcount }</td>
+							<td>
+								<c:if test="${review.reportCount > 0 }">
+									<a href="/admin/review/report?reviewNo=${review.reviewNo }">${review.reportCount }</a>
+								</c:if>
+								<c:if test="${review.reportCount == 0 }">
+									${review.reportCount }
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 				<tfoot>
 					<tr>
+						<td colspan="7"></td>
 						<td><button type="button" class="del">삭제하기</button></td>
 					</tr>
 			        <tr>
-						<td colspan="6" class="line">
+						<td colspan="8" class="line">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
@@ -144,25 +149,59 @@
 					</tr>
 				</tfoot>
 			</table>
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../../common/footer.jsp" />
 	
 	<script>
-		// 전체 선택 박스
-		var allCheck = document.querySelector(".allCheck");
-		var list = document.querySelectorAll(".check");
-		allCheck.onclick = () => {
-			if(allCheck.checked) {
-				for(var i = 0; i < list.length; i++) {
-					list[i].checked = true;
-				}
-			} else {
-				for(var i = 0; i < list.length; i++) {
-					list[i].checked = false;
-				}
+	// 전체 선택 박스
+	var allCheck = document.querySelector(".allCheck");
+	allCheck.onclick = () => {
+		if (allCheck.checked) {
+			for (var i = 0; i < list.length; i++) {
+				list[i].checked = true;
+			}
+		} else {
+			for (var i = 0; i < list.length; i++) {
+				list[i].checked = false;
 			}
 		}
+	}
+	
+	// 선택 박스 클릭
+	var list = document.querySelectorAll(".check");
+	for (var i = 0; i < list.length; i++) {
+	  list[i].addEventListener('click', function () {
+	    var isAllChecked = true;
+	    for (var j = 0; j < list.length; j++) {
+	      if (!list[j].checked) {
+	        isAllChecked = false;
+	        break;
+	      }
+	    }
+	    if (isAllChecked) {
+	      allCheck.checked = true;
+	    } else {
+	      allCheck.checked = false;
+	    }
+	  });
+	}
+// 		// 전체 선택 박스
+// 		var allCheck = document.querySelector(".allCheck");
+// 		var list = document.querySelectorAll(".check");
+// 		allCheck.onclick = () => {
+// 			if(allCheck.checked) {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = true;
+// 				}
+// 			} else {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = false;
+// 				}
+// 			}
+// 		}
+
 		
 		// 선택 삭제 
 		document.querySelector(".del").addEventListener('click', function() {

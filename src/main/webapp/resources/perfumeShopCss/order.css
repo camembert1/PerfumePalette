@@ -47,5 +47,17 @@ main>div[id=forCenter] {
 
 
 main img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
+main tr, th, td {
+    border: 1px solid black;
+}
+
+main table {
+    border-collapse: collapse;
+    width: 700px;
 }

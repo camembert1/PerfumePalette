@@ -35,7 +35,7 @@
          <input type="hidden" name="perfumePrice" value="${perfume.perfumePrice}">
          <input type="hidden" name="memberNo" value="${member.memberNo }">
             <div id="outter">
-               <h1>REVIEW</h1>
+               <div id="subject">REVIEW</div>
                <div class="productInfo">
                   <div class="product">
                      <label>상품정보</label>
@@ -57,7 +57,9 @@
                   <div class="user-name">${member.memberNickname }</div>
                </div>
                <div class="productInfo">
-                  <div class="product">별점</div>
+                  <div class="product">
+                  	<label>별점</label>
+                  </div>
                   <div class="star-rating">
                         <span class="fa fa-star-o" data-rating="1"></span>
                         <span class="fa fa-star-o" data-rating="2"></span>
@@ -69,7 +71,9 @@
                     </div>
                </div>
                <div class="productInfo">
-                  <div class="product">상품평</div>
+                  <div class="product">
+                  	<label>상품평</label>
+                  </div>
                </div>
                <div id="editorapi">
                   <textarea id="summernote" name="reviewContents"></textarea>

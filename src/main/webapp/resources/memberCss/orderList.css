@@ -36,8 +36,8 @@ main>div[id=forHeader] {
    height: 190px;
 
    /* 
-        헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
-        margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
+      헤더와 본인이 만든 본문 내용 사이의 간격 (헤더 아래로 여백) :
+      margin-bottom값을 임의로 조절해서 쓰시면 됩니다.
     */
    margin-bottom: 100px;
 
@@ -55,34 +55,29 @@ main>div[id=forCenter] {
 
 /* 사이드바 시작 */
 main #hrefList {
-  position: absolute;
-  left: 5%;
-  --position: fixed;
-  --align-self: flex-start;
-  --top: 50%;
-  --transform: translateY(-75%);
-  --margin-left: 50px;
+   position: absolute;
+   left: 5%;
 }
 
 main #hrefList span {
-  display: block;
-  margin: 0 10px;
-  margin-bottom: 5px;
-  font-size: 20px;
-  cursor: pointer;
+   display: block;
+   margin: 0 10px;
+   margin-bottom: 5px;
+   font-size: 20px;
+   cursor: pointer;
 }
 
 main #hrefList span a:after,
 main #hrefList span a {
-  text-decoration: none;
-  color: black;
+   text-decoration: none;
+   color: black;
 }
 
 main #hrefName {
-  font-size: 35px;
-  border-bottom: 1px solid black;
-  margin: 0 10px;
-  margin-bottom: 10px;
+   font-size: 35px;
+   border-bottom: 1px solid black;
+   margin: 0 10px;
+   margin-bottom: 10px;
 }
 /* 사이드바 끝 */
 
@@ -94,7 +89,6 @@ main table{
 	text-align: center;
 	border-collapse: collapse;
 	width: 55%;
-	height: 130px;
 }
 
 main thead {
@@ -103,13 +97,42 @@ main thead {
 	background-color: #34443E;
 }
 
-main table tbody tr td button{
+main table button{
 	background-color: #222222;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    width: 85%;
-    height: 25px;
-    cursor: pointer;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+   width: 85%;
+   height: 25px;
+   cursor: pointer;
 }
+
+
+/* 유정 시작 */
+
+
+main table td {
+   height: 50px;
+}
+
+main table th
+, main table td {
+   border: 1px solid #222222;
+}
+
+
+
+
+main table img {
+   width: 50px;
+   height: 50px;
+   object-fit: cover;
+   border-radius: 10px;
+}
+
+main [id^=perfumeImg] {
+
+}
+
+/* 유정 끝 */
