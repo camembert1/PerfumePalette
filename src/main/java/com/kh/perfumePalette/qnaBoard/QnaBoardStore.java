@@ -26,4 +26,13 @@ public interface QnaBoardStore {
 
 	List<QnaReply> selectAllReply(SqlSession session, Integer qnaNo);
 
+	void updateReplyStatus(SqlSession session, int repQnaNo, String replyStatus);
+
+	int deleteReply(SqlSession session, Integer replyNo);
+
+	int samepwd(SqlSession session, Integer qnaNo);
+
+	int updateReply(SqlSession session, QnaReply qnareply);
+
+
 }

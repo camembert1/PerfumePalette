@@ -10,7 +10,7 @@
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../../resources/adminCss/adMemberCss/amList.css">
+<link rel="stylesheet" href="../../../../resources/adminCss/adOrderCss/list.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon" href="../../../resources/img/common/favicon.png" />
@@ -30,7 +30,7 @@
 			<div id="hrefList">
 				<div id="hrefName">${sessionScope.member.memberName }님</div>
 				<span><a href="/perfume/mList">판매상품관리</a></span>
-				<span><a href="#">주문내역관리</a></span>
+				<span><a href="/admin/order/list">주문내역관리</a></span>
 				<span><a href="/admin/member/amList">회원관리</a></span>
 				<span><a href="/admin/qna/list">문의관리</a></span>
 				<span><a href="/admin/review/list">후기관리</a></span>
@@ -46,11 +46,13 @@
 						<th>주문 일자</th>
 						<th>구매자명</th>
 						<th>수취인</th>
-						<th>브랜드명</th>
 						
-						<th rowspan="2">주문상품수</th>
-						<th rowspan="2">주문 가격</th>
-						<th rowspan="2">주문 취소</th>
+						<th rowspan="2">브랜드명</th>
+						<th rowspan="2">주문 상품</th>
+						<th rowspan="2">상품 가격</th>
+						<th rowspan="2">주문 수량</th>
+						<th rowspan="2">총 결제금액</th>
+<!-- 						<th rowspan="2">주문 취소</th> -->
 						
 						<th rowspan="2">상세</th>
 					</tr>
@@ -59,18 +61,79 @@
 						<th>송장번호</th>
 						<th>구매자 번호</th>
 						<th>수취인 번호</th>
-						<th>상품명</th>
-		
 					</tr>
 				</thead>
 				<tbody>
-				
+					<c:forEach items="${oList }" var="order" varStatus="i">
+						<tr class="orderTrTag" style="background-color: ${i.index % 2 == 0 ? '#fff' : '#ccc'};">
+							<td class="orderNo${i.index}">${order.orderNo}</td>
+							<td class="orderDate${i.index }"><fmt:formatDate value="${order.orderDate }" pattern="yyyy-MM-dd" /></td>
+							<td class="memberName${i.index }">${order.memberName }</td>
+							<td class="recipientName${i.index }">${order.recipientName }</td>
+							<td id="perfumeBrand${i.index}" rowspan="2">
+							        ${order.perfumeBrand}
+							</td>
+							<td id="perfumeName${i.index}" rowspan="2">${order.perfumeName }</td>
+							<td id="perfumePrice${i.index}" rowspan="2"><fmt:formatNumber value="${order.perfumePrice}" pattern="#,##0"/></td>
+							<td id="orderQuantity${i.index}" rowspan="2">${order.orderQuantity }</td>
+							<td rowspan="2" id="paymentAmount${i.index }"><fmt:formatNumber value="${order.paymentAmount}" pattern="#,##0"/></td>
+<!-- 							주문 취소 자리 -->
+							<td id="showOrder${i.index}" rowspan="2"><button type="button" onclick="location.href='/admin/order/detail?orderNo=${order.orderNo}'">보 기</button></td>
+						</tr>
+						<tr class="orderTrTag" style="background-color: ${i.index % 2 == 0 ? '#fff' : '#ccc'};">
+							<td class="orderNo${i.index }">${order.orderStatus}</td>
+							<td class="orderDate${i.index }">${order.trackingNo }</td>
+							<td class="memberName${i.index }">${order.memberPhone.substring(0,3)}-${order.memberPhone.substring(3,7)}-${order.memberPhone.substring(7,11)}</td>
+							<td class="recipientName${i.index }">${order.recipientPhone.substring(0,3)}-${order.recipientPhone.substring(3,7)}-${order.recipientPhone.substring(7,11)}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 				<tfoot>
+					<tr class="paging">
+						<td colspan="10" class="line">
+					        <div id="paging">
+							<c:if test="${paging.totalCount ne null }">
+								<c:if test="${paging.currentPage != 1}">
+									<c:if test="${paging.startNavi != 1}">
+										<!-- 첫 페이지로 버튼 -->
+										<a href="/admin/order/list?page=1" class="move first">&lt;&lt;</a>
+									</c:if>	
+									<!-- 이전 페이지로 버튼 -->
+									<a href="/admin/order/list?page=${paging.currentPage-1}" class="move prev">&lt;</a>
+								</c:if>
+								
+								<c:forEach begin="${paging.startNavi}" end="${paging.endNavi}" var="i">
+									<c:choose>
+										<c:when test="${i == paging.currentPage}">
+											<span class="page current">${i}</span>
+										</c:when>
+										<c:otherwise>
+											<a href="/admin/order/list?page=${i}" class="page">${i}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 				
+								<c:if test="${paging.currentPage != paging.lastPage}">
+									<!-- 다음 페이지로 버튼 -->
+									<a href="/admin/order/list?page=${paging.currentPage+1}" class="move next">&gt;</a>
+									<c:if test="${paging.endNavi != paging.lastPage}">
+										<!-- 맨 끝 페이지로 버튼 -->
+										<a href="/admin/order/list?page=${paging.lastPage}" class="move last">&gt;&gt;</a>
+									</c:if>
+								</c:if>
+							</c:if>
+						</div>
+						</td>
+					</tr>
 				</tfoot>
 			</table>
 		</div>
 	</main>
+	<jsp:include page="../../common/footer.jsp" />
+	<script>
+	
+    
+
+	</script>
 </body>
 </html>

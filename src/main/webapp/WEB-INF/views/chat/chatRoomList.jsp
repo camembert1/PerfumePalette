@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="../../../resources/chatCss/chatRoomList.css">
 <!-- 채팅 관련 필요 -->
 <!-- Jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- sockjs  -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <!-- alertify 꾸미는 알림창-->
@@ -28,6 +29,7 @@
 
 <body>
 	<jsp:include page="../common/header.jsp" />
+
 	<main>
 		<div id="modal-bg"></div>
 		<iframe id="chat-iframe" src="" frameborder="0" style="display: none;"></iframe>
@@ -56,11 +58,7 @@
 													O
 												</c:if></td>
 							<td>
-								<%-- <button
-													onclick="location.href='/chat/room/${chatRoom.roomNo}'">선택</button>
-													--%>
-								<button type="button" onclick="goChatModal(${chatRoom.roomNo});">선택</button>
-								<input type="hidden" id="closeIframe" onclick="outChatModal(${chatRoom.roomNo});">
+								<button type="button" onclick="goChatModal(${chatRoom.roomNo});">선택</button> <input type="hidden" onclick="outChatModal(${chatRoom.roomNo});">
 							</td>
 						</tr>
 					</c:forEach>
@@ -68,24 +66,25 @@
 			</table>
 		</div>
 	</main>
+
 	<jsp:include page="../common/footer.jsp" />
 
-	
 	<script>
-		function goChatModal(roomNo) {
-			var url = "/chat/room/" + roomNo;
-		    document.getElementById("chat-iframe").src = url;
-		    $("#chat-iframe").css("display", "block");
-			$("#modal-bg").css("display", "block");
-			$("body").css("overflow", "hidden");
-		}
-		
-		function outChatModal(roomNo) {
-			$("#chat-iframe").attr("src", "");
-		    $("#chat-iframe").css("display", "none");
-		    $("#modal-bg").css("display", "none");
-		    $("body").css("overflow", "auto");
-		}
-		</script>
+						function goChatModal(roomNo) {
+							var url = "/chat/room/" + roomNo;
+							document.getElementById("chat-iframe").src = url;
+							$("#chat-iframe").css("display", "block");
+							$("#modal-bg").css("display", "block");
+							$("body").css("overflow", "hidden");
+						}
+
+						function outChatModal(roomNo) {
+							$("#chat-iframe").attr("src", "");
+							$("#chat-iframe").css("display", "none");
+							$("#modal-bg").css("display", "none");
+							$("body").css("overflow", "auto");
+						}
+					</script>
 </body>
+
 </html>

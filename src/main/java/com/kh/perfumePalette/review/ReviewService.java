@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.report.Report;
 
 public interface ReviewService {
@@ -96,6 +97,20 @@ public interface ReviewService {
 	int selectTotalCnt(Integer reviewNo);
 
 	int removeLike(Like like);
+
+	/**
+	 * 댓글 작성
+	 * @param rComment
+	 * @return
+	 */
+	int insertComment(ReviewComment rComment);
+
+	/**
+	 * 댓글 리스트 
+	 * @param reviewNo
+	 * @return
+	 */
+	List<ReviewComment> listComment(int reviewNo);
 
 	
 }

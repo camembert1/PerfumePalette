@@ -96,6 +96,32 @@ main th, td, tr {
 	border: none;
 }
 
+main tr:not(:first-child, :last-child) {
+	border: 1px dotted black;
+	border-left: none;
+	border-right: none;
+}
+
+main tbody tr:last-child {
+	border: 1px dotted black;
+	border-bottom: 1px solid black;
+	border-left: none;
+	border-right: none;
+}
+
+main tr td {
+	transition: transform 0.2s ease-in-out;
+}
+
+main tr:hover td {
+	transform: translate(2.5px, 2.5px);
+}
+
+main tr td {
+	transition-delay: 0.2s;
+	transform: translate
+}
+
 main #modal-bg {
 	position: fixed;
 	width: 100vw;
@@ -111,8 +137,8 @@ main #chat-iframe {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	height: 800px;
-	width: 600px;
+	height: 700px;
+	width: 500px;
 	z-index: 20;
 	border-radius: 35px;
 }

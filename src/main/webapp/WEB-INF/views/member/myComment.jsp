@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,37 +40,43 @@
         <h1>내가 작성한 댓글</h1>
         <table>
             <thead>
-                <!-- 테이블 헤더 -->
                 <tr>
-                    <th><input type="checkbox" class="allCheck" id="thCheck" ></th>
-                    <th>ㅇ?</th>
-                    <th>내용</th>
-                    <th>작성일</th>
-                    
+                    <th style="width:90px;">
+                    	<input type="checkbox" class="allCheck" id="thCheck" >
+                    </th>
+                    <th style="width:60px;">번호</th>
+                    <th style="width:250px;" >내용</th>
+                    <th style="width:200px;"></th>
+                    <th style="width:150px;">작성일</th>
                 </tr>
             </thead>
             <tbody>
-            <!-- 테이블 본문 -->
+           <c:forEach items="${myComment }" var="comment" varStatus="i">
             <tr>
-              <td><input type="checkbox" name=""></td>
-              <td>[디올] 옴므 코롱</td>
-              <td>향수 패키지가 정말 예쁘네용</td>
-              <td>2023-04-01</td>
+              <td>
+              	<input type="checkbox" class="check" id="tdCheck" value="${comment.commentNo}">
+              </td>
+              <td>${i.count }</td>
+              <td>
+              	<a href="/review/reviewDetail/${comment.reviewNo}">
+              		${comment.commentContent}
+              	</a>
+              </td>
+              <td>
+              	<a href="/perfume/detail/${comment.perfumeNo}" class="gray">
+              		[${comment.perfumeBrand }] ${comment.perfumeName }
+              	</a>
+              </td>
+              <td><fmt:formatDate value="${comment.commentDate }" pattern="yyyy-MM-dd" /></td>
             </tr>
-            
-            <tr>
-              <td><input type="checkbox" name=""></td>
-              <td>[디올] 옴므 코롱</td>
-              <td>뻥이에요</td>
-              <td>2023-04-01</td>
-            </tr>
+            </c:forEach>
           </tbody>
-        </table>
-        <tfoot>
+          <tfoot>
           	<tr style="border: none;">
           		<td><button type="button" id="del" style="margin-top: 30px;">선택삭제</button></td>
           	</tr>
           </tfoot>
+        </table>
       </div>
     </main>
     <jsp:include page="../common/footer.jsp" />
@@ -132,7 +141,7 @@
 		if(confirm("선택한 댓글을 삭제 하시겠습니까?")) {
 			// Ajax를 이용하여 서버에 선택한 체크박스의 value 값을 전송하여 삭제
 			$.ajax({
-				url:'/member/removeReview',
+				url:'/member/removeComment',
 				type : 'post',
 				dataType : 'json',
 				traditional : 'true',

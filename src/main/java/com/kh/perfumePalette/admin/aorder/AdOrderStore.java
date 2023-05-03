@@ -13,6 +13,8 @@ public interface AdOrderStore {
 
 	List<AdOrder> selectAdminOrderList(SqlSession session, PageInfo pi);
 
+	List<AdOrder> selectOneByNo(SqlSession session, long orderNo);
+
 
 
 }

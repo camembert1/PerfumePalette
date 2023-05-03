@@ -1,6 +1,8 @@
 package com.kh.perfumePalette.qnaBoard;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -69,5 +71,34 @@ public class QnaBoardStoreImpl implements QnaBoardStore {
 		List<QnaReply> qrlist = session.selectList("qnaBoardMapper.selectAllReply", qnaNo);
 		return qrlist;
 	}
+
+	@Override
+	public void updateReplyStatus(SqlSession session, int repQnaNo, String replyStatus) {
+		Map<String, Object> params = new HashMap<>();
+        params.put("repQnaNo", repQnaNo);
+        params.put("replyStatus", replyStatus);
+        session.update("qnaBoardMapper.updateReplyStatus", params);
+		
+	}
+
+	@Override
+	public int deleteReply(SqlSession session, Integer replyNo) {
+		int result = session.delete("qnaBoardMapper.deleteReply", replyNo);
+		return result;
+	}
+
+	@Override
+	public int samepwd(SqlSession session, Integer qnaNo) {
+		int result = session.selectOne("qnaBoardMapper.samepwd", qnaNo);
+		return result;
+	}
+
+	@Override
+	public int updateReply(SqlSession session, QnaReply qnareply) {
+		int result = session.update("qnaBoardMapper.updateReply", qnareply);
+		return result;
+	}
+
+	
 
 }

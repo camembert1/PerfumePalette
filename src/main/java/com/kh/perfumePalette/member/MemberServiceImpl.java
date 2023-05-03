@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.review.Review;
 
 @Service
@@ -113,6 +114,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int removeQna(int i) {
 		int result = mStore.removeQna(i);
+		return result;
+	}
+
+	@Override
+	public List<ReviewComment> getMyComment(int memberNo) {
+		List<ReviewComment> cList = mStore.myComment(memberNo);
+		return cList;
+	}
+
+	@Override
+	public int removeComment(int i) {
+		int result = mStore.removeComment(i);
 		return result;
 	}
 

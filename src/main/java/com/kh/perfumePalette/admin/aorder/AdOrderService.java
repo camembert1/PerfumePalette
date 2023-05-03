@@ -22,4 +22,11 @@ public interface AdOrderService {
 	 */
 	List<AdOrder> selectAdminOrderList(PageInfo pi);
 
+	/**
+	 * 주문내역 상세조회 Service
+	 * @param orderNo
+	 * @return List<AdOrder>
+	 */
+	List<AdOrder> selectOneByNo(long orderNo);
+
 }

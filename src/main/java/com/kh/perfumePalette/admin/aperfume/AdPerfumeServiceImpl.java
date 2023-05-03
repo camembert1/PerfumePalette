@@ -72,8 +72,8 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	}
 
 	@Override
-	public int getWishListCount() {
-		return pStore.getWishListCount(session);
+	public int getWishListCount(int perfumeNo) {
+		return pStore.getWishListCount(session, perfumeNo);
 	}
 
 	@Override
@@ -82,8 +82,8 @@ public class AdPerfumeServiceImpl implements AdPerfumeService{
 	}
 
 	@Override
-	public int getCartListCount() {
-		return pStore.getCartListCount(session);
+	public int getCartListCount(int perfumeNo) {
+		return pStore.getCartListCount(session, perfumeNo);
 	}
 
 	@Override
