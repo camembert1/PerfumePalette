@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.report.Report;
 
 @Service
@@ -105,11 +106,38 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 
+	@Override
+	public int selectCheckLike(Like like) {
+		int result = rStore.selectCheckLike(session, like);
+		return result;
+	}
+
 
 	@Override
-	public int removeLike(int likeNo) {
-		int result = rStore.removeLike(session, likeNo);
+	public int selectTotalCnt(Integer reviewNo) {
+		int result = rStore.selectTotalCnt(session, reviewNo);
 		return result;
+	}
+
+
+	@Override
+	public int removeLike(Like like) {
+		int result = rStore.removeLike(session, like);
+		return result;
+	}
+
+
+	@Override
+	public int insertComment(ReviewComment rComment) {
+		int result = rStore.insertComment(session, rComment);
+		return result;
+	}
+
+
+	@Override
+	public List<ReviewComment> listComment(int reviewNo) {
+		List<ReviewComment> rList = rStore.listComment(session, reviewNo);
+		return rList;
 	}
 
 

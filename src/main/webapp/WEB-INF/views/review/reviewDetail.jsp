@@ -58,13 +58,13 @@
 				</div>
 				<div class="productInfo">
 					<div id="like">
-						<c:if test="${likeNo ne null }">
-							<img alt="like_yes" src="../../../resources/img/wish/wish_yes.png" onclick="removeLike('${likeNo}')">
+						<c:if test="${likeNo ne 0 }">
+							<img alt="like_yes" src="../../../resources/img/wish/wish_yes.png" onclick="removeLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
-						<c:if test="${likeNo eq null }">
-							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike()">
+						<c:if test="${likeNo eq 0 }">
+							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
-						<span>좋아요[0]</span>
+						<span>좋아요[${totalNo }]</span>
 					</div>
 					<div id="report">
 						<button onclick="report()">🚨</button>
@@ -125,22 +125,92 @@
 			            <div class="replyHeader">
 			                <label>댓글(<span id="replyCount"></span>)</label>
 			            </div>
-			            <div class="replyTable">
-			                <!-- 댓글 리스트가 들어갈 부분 -->
-			                
-			            </div>
-			            <!-- 댓글 등록하기 -->
-			            <div class="replyForm">
-			                <div class="replyWriter">
-			                    <p>가나다라바사</p>
-			                </div>
-			                <div class="replyContents">
-			                    <input type="text">
-			                </div>
-			                <div class="replySubmit">
-			                    <button id="rSubmit">댓글작성</button>
-			                </div>
-			            </div>
+				            <div class="replyTable">
+				                <!-- 댓글 리스트가 들어갈 부분 -->
+				                <!-- 댓글 등록하기 -->
+					            <div class="replyForm" id="replyWriteForm">
+					                <div class="replyWriter">
+					                    <p>${member.memberNickname}</p>
+					                </div>
+					                <div class="replyContents">
+					                    <input type="text" id="replyContents">
+					                </div>
+					                <div class="replySubmit">
+					                    <button id="rSubmit" data-memberno = "${member.memberNo }" data-reviewno="${review.reviewNo }">댓글작성</button>
+					                </div>
+					            </div>
+
+								<div class="replyForm reviewHidden" id="replyListForm">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<p></p>
+									</div>
+									<div class="">
+										<p>2023-05-01 오후05:55</p>
+									</div>
+									<div class="">
+										<a onclick="replyComment(this)">답댓글</a>
+									</div>
+									<div class="">
+										<a>수정</a>
+									</div>
+									<div class="">
+										<a>삭제</a>
+									</div>
+								</div>
+
+								<div class="replyForm reviewHidden" id="commentListForm">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<p></p>
+									</div>
+									<div class="">
+										<p>2023-05-01 오후06:55</p>
+									</div>
+								</div>
+
+								<div class="replyForm" id="replycommentWrite">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<input type="text" id="commentContents">
+									</div>
+									 <div class="replySubmit">
+										<button id="commentBtn">대댓작성</button>
+									</div>
+								</div>
+
+					            <div id="replyListComment">
+						            
+					            
+						            <div class="replyForm">
+						                <div class="replyWriter">
+						                    <p></p>
+						                </div>
+						                <div class="replyContents">
+						                    <p></p>
+						                </div>
+						                <div class="">
+						                	<p></p>
+						                </div>
+						                <div class="">
+						                    <a>수정</a>
+						                </div>
+						                <div class="">
+						                    <a>삭제</a>
+						                </div>
+						            </div>
+					            
+					            
+						            
+					                
+					            </div>
+				            </div>
 			        </div>
 			</div>
 			
@@ -149,11 +219,32 @@
 		</div> 
 	</main>
 	<script>
+		replyCommentList();
 		  // 모달창
 		  function report() {
-		    $("#modal").css("display", "block");
-		    $("#modal-bg").css("display", "block");
-		    $("body").css("overflow", "hidden");
+			  
+			  
+			  if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+		    
+		    $.ajax({
+				url: "/review/reportCheck",
+				type: "POST",
+				data: {
+					'reviewNo' : '${review.reviewNo}',
+					'memberNo' : '${member.memberNo}',
+				},
+				success: function(result){
+					if(result > 0){
+						alert("이미 신고된 게시글 입니다");
+					} else{
+						$("#modal").css("display", "block");
+					    $("#modal-bg").css("display", "block");
+					    $("body").css("overflow", "hidden");
+					}
+				}
+		  	})
 		  }
 
 		  function modalClose() {
@@ -202,22 +293,21 @@
 					'reportContent' : reportContent
 				},
 				success: function(result){
-					if(result == -1){
-						alert("이미 신고한 게시글 입니다.");
-					} else{
+					if(result > 0){
 						$("#modal").css("display", "none");
 						$("#modal-bg").css("display", "none");
 						alert("신고 완료");
-					}
-				},
-				error: function(){
-					alert("로그인 후 이용해주세요.");
+					} 
 				}
 			});
 		}
 		  
 		  
 		function addLike() {
+			if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+			  
 			let reviewNo = '${review.reviewNo}';
 			let memberNo = '${member.memberNo}';
 
@@ -230,56 +320,145 @@
 				},
 				success : function(result) {
 					if (result === "success") {
-						 $("#like img").attr("src", "../../../resources/img/wish/wish_yes.png");
-						 $("#like img").attr("onclick", "removeLike('" + result.likeNo + "')"); // likeNo 값을 받아와 removeLike 함수에 전달
+						$("#like").load(location.href + " #like");
 					} else if(result === "fail"){
 						alert("좋아요 추가 실패!");
 					}
-				},
-				error : function() {
-					alert("로그인 후에 이용해주세요.");
 				}
+				
 			});
 		}
 
-		function removeLike(likeNo) { // likeNo 값을 인자로 받도록 변경
+		function removeLike(reviewNo, memberNo) { // likeNo 값을 인자로 받도록 변경
+			if(${member eq null}){
+				  alert("로그인이 필요한 서비스입니다.");
+			  }
+			  
 			$.ajax({
 				url : "/review/remove",
 				type : "POST",
 				data : {
-					likeNo : likeNo
+					reviewNo : reviewNo,
+					memberNo : memberNo
 				},
 				success : function(result) {
-					$("#like img").attr("src", "../../../resources/img/wish/wish_no.png");
-					 $("#like img").attr("onclick", "addLike()"); // 좋아요 취소 후에는 다시 addLike 함수를 실행할 수 있도록 onclick 속성 변경
-				},
-				error : function() {
-					alert("좋아요 취소 실패");
+					$("#like").load(location.href + " #like");
 				}
 			});
 		}
 		
-		// 댓글 작성하면 나오는 부분
-		getReplyList();
-		function getReplyList(){
-			const reviewNo = "${review.reviewNo}";
+		// 댓글 작성
+		document.getElementById("rSubmit").addEventListener('click', function(){
+			let replyContents = document.getElementById("replyContents").value;
+			let memberNo = document.getElementById("rSubmit").dataset.memberno;
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
 			$.ajax({
-				url : "/reply/list",
-				data : {"reviewNo" : reviewNo},
-				type : "get",
-				success : function(data){
-					$("#replyCount").text(data.length);
-					const replyList = $("#replyTable");
-					replyList.html("");
-					if(data.length > 0){
-						for(let i in data){
-							
-						}
+				url: "/review/replyComment",
+				type: "POST",
+				data : {
+					reviewNo : reviewNo,
+					memberNo : memberNo,
+					Contents : replyContents
+				},success : function(data){
+					if(data == "success"){
+						document.getElementById("replyContents").value = "";
+						replyCommentList();
 					}
+				}, error : function(){
+				
+				}
+			})
+			
+		})
+		
+
+		//댓글대댓글 리스트 
+		function replyCommentList(){
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
+			$.ajax({
+				url: "/review/replyCommentList",
+				type: "GET",
+				data : {
+					reviewNo : reviewNo
+				}, success : function(data){
+					let commentWriteBox = document.getElementById("replycommentWrite");
+					let replyList = document.querySelector("#replyListComment");
+					replyList.before(commentWriteBox);
+					commentWriteBox.style.display="none";
+					replyList.innerHTML = "";
+					
+					data.forEach(element => {
+						if(element.pcommentNo == 0){
+							let replyBox = document.querySelector("#replyListForm").cloneNode(true);
+							replyBox.classList.remove("reviewHidden");
+							let nickname = replyBox.children[0];
+							replyBox.dataset.replyno = element.commentNo;
+							// console.log(nickname);
+							nickname.innerHTML = element.memberNickname;
+							replyBox.children[1].innerHTML = element.commentContent;
+							replyBox.children[2].innerHTML = element.commentDate;
+							replyList.append(replyBox);
+						} else{
+							let replyBox = document.querySelector("#commentListForm").cloneNode(true);
+							replyBox.classList.remove("reviewHidden");
+							let nickname = replyBox.children[0];
+							// console.log(nickname);
+							nickname.innerHTML = "ㄴ"+ element.memberNickname;
+							replyBox.children[1].innerHTML = element.commentContent;
+							replyBox.children[2].innerHTML = element.commentDate;
+							replyBox.dataset.replyno = element.commentNo;
+							replyList.append(replyBox);
+						}
+						
+					});
+				}, error : function(){
+
 				}
 			})
 		}
+
+		function replyComment(btn){
+			const replyBoxes = btn.parentElement.parentElement;
+			let commentWriteBox = document.getElementById("replycommentWrite");
+			if(replyBoxes.nextSibling == commentWriteBox){
+				let replyList = document.querySelector("#replyListComment");
+					replyList.before(commentWriteBox);
+					commentWriteBox.style.display="none";
+			} else {
+				replyBoxes.after(commentWriteBox);
+				commentWriteBox.style.display = "block";
+			}
+			
+		}
 		
+		
+		//대댓 작성
+		document.querySelector("#commentBtn").addEventListener("click", function(e){
+			let pcommentNo = e.target.parentElement.parentElement.previousElementSibling.dataset.replyno;
+			let replyContents = document.getElementById("commentContents").value;
+			let memberNo = document.getElementById("rSubmit").dataset.memberno;
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
+			$.ajax({
+				url: "/review/commentReply",
+				type: "POST",
+				data : {
+					pcommentNo : pcommentNo,
+					reviewNo : reviewNo,
+					memberNo : memberNo,
+					Contents : replyContents
+				},success : function(data){
+					if(data == "success"){
+						document.getElementById("commentContents").value = "";
+						replyCommentList();
+					}
+				}, error : function(){
+				
+				}
+			})
+		})
+
+
+
 		//삭제하기 버튼 클릭 했을 때
 		function removeCheck(reviewNo){
 			if(confirm("정말 삭제하시겠습니까?")){

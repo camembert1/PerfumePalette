@@ -9,6 +9,7 @@ public class ReviewComment {
 	private int pcommentNo;
 	private String commentContent;
 	private Timestamp commentDate;
+	private String memberNickname;
 	
 	public ReviewComment() {}
 
@@ -70,11 +71,19 @@ public class ReviewComment {
 	public void setCommentDate(Timestamp commentDate) {
 		this.commentDate = commentDate;
 	}
+	
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
 
 	@Override
 	public String toString() {
 		return "ReviewComment [commentNo=" + commentNo + ", reviewNo=" + reviewNo + ", memberNo=" + memberNo
 				+ ", pcommentNo=" + pcommentNo + ", commentContent=" + commentContent + ", commentDate=" + commentDate
-				+ "]";
+				+ ", memberNickname=" + memberNickname + "]";
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.like.Like;
 import com.kh.perfumePalette.perfume.Perfume;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.report.Report;
 
 @Repository
@@ -100,9 +101,33 @@ public class ReviewStoreImpl implements ReviewStore{
 	}
 
 	@Override
-	public int removeLike(SqlSession session, int likeNo) {
-		int result = session.delete("ReviewMapper.removeLike", likeNo);
+	public int selectCheckLike(SqlSession session, Like like) {
+		int result = session.selectOne("ReviewMapper.selectLike", like);
 		return result;
+	}
+
+	@Override
+	public int selectTotalCnt(SqlSession session, Integer reviewNo) {
+		int result = session.selectOne("ReviewMapper.selectTotalCnt",reviewNo);
+		return result;
+	}
+
+	@Override
+	public int removeLike(SqlSession session, Like like) {
+		int result = session.delete("ReviewMapper.removeLike", like);
+		return result;
+	}
+
+	@Override
+	public int insertComment(SqlSession session, ReviewComment rComment) {
+		int result = session.insert("ReviewMapper.insertComment", rComment);
+		return result;
+	}
+
+	@Override
+	public List<ReviewComment> listComment(SqlSession session, int reviewNo) {
+		List<ReviewComment> rList = session.selectList("ReviewMapper.listComment", reviewNo);
+		return rList;
 	}
 
 	
