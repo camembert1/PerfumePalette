@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -111,6 +111,25 @@
 				list[i].checked = false;
 			}
 		}
+	}
+	
+	// 선택 박스 클릭
+	var list = document.querySelectorAll(".check");
+	for (var i = 0; i < list.length; i++) {
+	  list[i].addEventListener('click', function () {
+	    var isAllChecked = true;
+	    for (var j = 0; j < list.length; j++) {
+	      if (!list[j].checked) {
+	        isAllChecked = false;
+	        break;
+	      }
+	    }
+	    if (isAllChecked) {
+	      allCheck.checked = true;
+	    } else {
+	      allCheck.checked = false;
+	    }
+	  });
 	}
 	
 	

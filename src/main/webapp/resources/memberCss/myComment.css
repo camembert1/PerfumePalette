@@ -93,25 +93,33 @@ main h1{
 main table{
 	text-align: center;
 	border-collapse: collapse;
+	border-top: 1px solid black;
 	width: 55%;
-	height: 130px;
+	height: 250px;
 }
 
 main thead {
-	height: 50px;
 	color: white;
 	background-color: #34443E;
+	height: 50px;
 }
 
-main table tbody tr td button{
+main table tr {
+	border-bottom: 1px solid;
+	height: 50px;
+}
+
+main table tfoot tr td button {
+	padding: 0;
+	height: 45px;
+	width: 110%;
+	margin-bottom: 10px;
 	background-color: #222222;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    width: 85%;
-    height: 25px;
-    cursor: pointer;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
 }
 
 main .content{
@@ -119,4 +127,68 @@ main .content{
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-bottom: 20px;
 }
+
+/*체크 박스 디자인 */
+/*체크 안했을때 */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  background-color: #34443E;
+  border-radius: 10%;
+  transition: 0.2s all linear;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+main #tdCheck{
+	-webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #34443E;
+  background-color: #34443E;
+  border-radius: 10%;
+  transition: 0.2s all linear;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+	
+}
+
+/*체크했을때*/
+input[type="checkbox"]:checked:before {
+  content: "✔";
+  font-family: Arial;
+  display: block;
+  position: absolute;
+  font-size: 16px;
+  background-color: #34443E;
+  color: white;
+  width: 18px;
+  height: 4px;
+  text-align: center;
+}
+
+main table tbody tr td a:link{
+  text-decoration: none; 
+  color: black;
+}
+
+main table tbody tr td a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+main .gray, .gray:visited {
+  color: gray;
+}
+
+main table tbody tr td a:hover {
+  text-decoration: underline;
+}
+

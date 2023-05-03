@@ -2,6 +2,7 @@ package com.kh.perfumePalette.perfume;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -74,15 +76,32 @@ public class PerfumeController {
 	 * @return
 	 */
 	@GetMapping("/detail/{perfumeNo}")
-	public ModelAndView perfumeShopDetail(ModelAndView mv, @PathVariable Integer perfumeNo) {
+	public ModelAndView perfumeShopDetail(ModelAndView mv
+			, HttpSession session
+			, @PathVariable Integer perfumeNo) {
 		
 		try {
-			
+			int wishStatus = 0;
+			Member member = (Member) session.getAttribute("member");
+			if (member != null) {
+				 
+				// 로그인 상태라면 해당 향수 찜 여부 확인하기!
+				Wish wishInfo = new Wish();
+				wishInfo.setMemberId(member.getMemberId());
+				wishInfo.setPerfumeNo(perfumeNo);
+				
+				// 찜했다면 wishStatus값이 1이 됨
+				wishStatus = pService.checkWish(wishInfo);
+			}
 			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
 			int reviewCnt = pService.reviewCntByPerfumeNo(perfumeNo);
 			
 			if(perfume != null) {
-				mv.addObject("perfume", perfume).addObject("reviewCnt", reviewCnt).setViewName("perfumeShop/detail");
+				mv
+				.addObject("wishStatus", wishStatus)
+				.addObject("perfume", perfume)
+				.addObject("reviewCnt", reviewCnt)
+				.setViewName("perfumeShop/detail");
 			} else {
 				// 상품 번호를 통한 디테일 페이지 조회 실패 시
 			}

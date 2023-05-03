@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.rcomment.ReviewComment;
 import com.kh.perfumePalette.review.Review;
 
 @Controller
@@ -438,10 +439,50 @@ public class MemberController {
 
 	// 내가 작성한 댓글
 	@GetMapping("/myComment")
-	public ModelAndView myComment(ModelAndView mv) {
-		mv.setViewName("member/myComment");
+	public ModelAndView myComment(ModelAndView mv, HttpSession session) {
+		try {
+			Member member = (Member) session.getAttribute("member");
+			if (member == null) {
+				// member가 null인 경우 처리
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				int memberNo = member.getMemberNo();
+//			    // memberNo를 이용한 다른 처리
+//			    // memberNo에 해당하는 문의 목록 가져오기
+				List<ReviewComment> myComment = mService.getMyComment(memberNo);
+				
+//			    // JSP에서 사용할 cList에 myComment 설정
+				mv.addObject("myComment", myComment);
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
 		return mv;
 	}
+	
+	// 문의글 다중 삭제
+		@PostMapping("/removeComment")
+		@ResponseBody
+		public String removeComment(int[] arr, HttpServletRequest request) {
+			int result = 0;
+			try {
+				for (int i = 0; i < arr.length; i++) {
+					result = mService.removeComment(arr[i]);
+				}
+				if (result > 0) {
+					return "1";
+				} else {
+					return "0";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return e.getMessage();
+			}
+		}
+	
+	
 
 	// 회원탈퇴
 	@GetMapping("/bye")

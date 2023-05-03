@@ -169,6 +169,7 @@ main #section2-img-area .section2-img>div {
     /* 안에 임시 폰트 */
     color: white;
     font-size: 20pt;
+    font-weight: bold;
 
     /* 폰트 가운데 정렬 */
     display: flex;
@@ -184,19 +185,30 @@ main #section2-img-area .section2-img:hover div {
 
 
 main #section2-img-area .section2-img:nth-child(1) {
-    background-color: #343D44;
+   	background-image: url("../../resources/img/common/woody3.jpg");
+   	background-size: 100% 100%;
+   	opacity: 0.9;
 }
 main #section2-img-area .section2-img:nth-child(2) {
-    background-color: #383444;
+    background-image: url(../../resources/img/common/floral2.jpg);
+    background-size: 100% 100%;
+    opacity: 0.9;
+    
 }
 main #section2-img-area .section2-img:nth-child(3) {
-    background-color: #3E4434;
+    background-image: url(../../resources/img/common/fruity5.jpg);
+    background-size: 100% 100%;
+    opacity: 0.9;
 }
 main #section2-img-area .section2-img:nth-child(4) {
-    background-color: #443434;
+    background-image: url(../../resources/img/common/spicy2.jpg);
+    background-size: 100% 100%;
+    opacity: 0.9;
 }
 main #section2-img-area .section2-img:nth-child(5) {
-    background-color: #443F34;
+    background-image: url(../../resources/img/common/citrus1.jpg);
+    background-size: 100% 100%;
+    opacity: 0.9;
 }
 
 

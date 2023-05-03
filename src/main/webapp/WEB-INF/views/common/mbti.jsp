@@ -36,11 +36,11 @@
                         <div class="question">
                             <p>1. 내 마음에 쏙 든 향수를 발견했다! 계산하려는데 직원이 바쁜것 같다면?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/1-E.jpg" alt="">
                                 <input type="radio" name="q1" value="E">저기요! 계산 먼저해주세요!
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/1-I.jpg" alt="">
                                 <input type="radio" name="q1" value="I">직원이 카운터로 올때까지 딴청피우며 눈치본다.
                             </label>
                         </div>
@@ -48,11 +48,11 @@
                         <div class="question">
                             <p>2. 가게 직원이 따라다니면서 이것저것 추천해준다면?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/2-E.jpg" alt="">
                                 <input type="radio" name="q2" value="E">이건 기회야! 궁금했던 향수정보를 물어본다.
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/2-I.jpg" alt="">
                                 <input type="radio" name="q2" value="I">(제발 말걸지 말아주세요..) 아..감사합니다..
                             </label>
                         </div>
@@ -60,11 +60,11 @@
                         <div class="question">
                             <p>3. 이제 향수가게를 나와 밥을 먹으려한다. 어디로 갈까?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/3-E.jpg" alt="">
                                 <input type="radio" name="q3" value="E">평소 가고 싶었던 요즘 유행하는 핫플!
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/3-I.jpg" alt="">
                                 <input type="radio" name="q3" value="I">사람이 별로 없는 여유롭고 조용한 식사.
                             </label>
                         </div>
@@ -72,11 +72,11 @@
                         <div class="question">
                             <p>4. 식당에 들어온 순간 가장 먼저 보이는 것은?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/4-S.jpg" alt="">
                                 <input type="radio" name="q4" value="S">맛있는 음식들.
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/4-N.jpg" alt="">
                                 <input type="radio" name="q4" value="N">아기자기 예쁘게 꾸며둔 인테리어.
                             </label>
                         </div>
@@ -84,11 +84,11 @@
                         <div class="question">
                             <p>5. 딱 하나의 향수면 시향 할 수 있다면?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/5-S.jpg" alt="">
                                 <input type="radio" name="q5" value="S">평소 좋아하던 향기.
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/5-N.jpg" alt="">
                                 <input type="radio" name="q5" value="N">한번도 시도 안 해본 향기.
                             </label>
                         </div>
@@ -96,11 +96,11 @@
                         <div class="question">
                             <p>6. 집에 도착해 향수를 뜯어보았는데 패키지가 너무 예쁘다..어쩌지?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/6-S.jpg" alt="">
                                 <input type="radio" name="q6" value="S">어차피 쓰레긴데 그냥 버린다.
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/6-N.jpg" alt="">
                                 <input type="radio" name="q6" value="N">향수병 옆에 두면 너무 예쁘겠다!
                             </label>
                         </div>
@@ -108,11 +108,11 @@
                         <div class="question">
                             <p>7. 직원의 추천을 받은 향수! 냄새가 정말 너무 별로라면?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt=""><input type="radio"
-                                    name="q7" value="T">감사한데.. 제 취향은 아닌 것 같아요..
+                                <img src="../../../resources/bFileUploads/7-T.jpg" alt="">
+                                <input type="radio" name="q7" value="T">감사한데.. 제 취향은 아닌 것 같아요..
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt=""><input type="radio"
+                                <img src="../../../resources/bFileUploads/7-F.jpg" alt=""><input type="radio"
                                     name="q7" value="F">와.. 좋은 것 같아요! 혹시 다른 향도 추천해주시겠어요?
                             </label>
                         </div>
@@ -120,11 +120,11 @@
                         <div class="question">
                             <p>8. 직원이 실수로 진열장의 향수병을 전부 깨버렸다! 당신의 속마음은?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/8-T.jpg" alt="">
                                 <input type="radio" name="q8" value="T">'와 저게 다 얼마야..'
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/8-F.jpg" alt="">
                                 <input type="radio" name="q8" value="F">'헉..어떻게..안다치셨나?..속상하시겠다..'
                             </label>
                         </div>
@@ -132,23 +132,23 @@
                         <div class="question">
                             <p>9. 친구의 생일에 카톡으로 선물을 보냈는데 답이 없다면?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt=""><input type="radio"
-                                    name="q9" value="T">혹시 잘못보냈나? 생일이 아닌가?
+                                <img src="../../../resources/bFileUploads/9-F.jpg" alt=""><input type="radio"
+                                    name="q9" value="F">혹시 잘못보냈나? 생일이 아닌가?
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt=""><input type="radio"
-                                    name="q9" value="F">바쁜가보네
+                                <img src="../../../resources/bFileUploads/9-T.jpg" alt=""><input type="radio"
+                                    name="q9" value="T">바쁜가보네
                             </label>
                         </div>
 
                         <div class="question">
                             <p>10. 내일은 향수를 사러가는 날! 설레는 마음으로 침대에 누웠을때 드는 생각은?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/10-P.jpg" alt="">
                                 <input type="radio" name="q10" value="P">어떤 향수가 있을까? 혹시 다 마음에 들면 어쩌지..
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/10-J.jpg" alt="">
                                 <input type="radio" name="q10" value="J">오픈시간, 교통편 모두 확인했고.. 가기전에 한 번 더 확인해야겠다
                             </label>
                         </div>
@@ -156,11 +156,11 @@
                         <div class="question">
                             <p>11. 다음날 아침, 향수가게에 도착한 당신! 근데 문이 닫혀있다.</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/11-P.jpg" alt="">
                                 <input type="radio" name="q11" value="P">다른곳 구경하고 오면 열려있겠지~
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/11-J.jpg" alt="">
                                 <input type="radio" name="q11" value="J">이럴리가 없는데.. 가게 오픈시간을 확인해본다.
                             </label>
                         </div>
@@ -168,11 +168,11 @@
                         <div class="question">
                             <p>12. 이 향수 너무 맘에 든다! 곧 친구 생일인데.. 선물로 줘야겠다 언제사지?</p>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230331121541.png" alt="">
+                                <img src="../../../resources/bFileUploads/12-P.jpg" alt="">
                                 <input type="radio" name="q12" value="P">당일에 사면 되겠지? 무슨 향을 좋아하려나?
                             </label>
                             <label>
-                                <img src="../../../resources/bFileUploads/20230403122427.png" alt="">
+                                <img src="../../../resources/bFileUploads/12-J.jpg" alt="">
                                 <input type="radio" name="q12" value="J">일주일전에 미리 미리 준비해준다.
                             </label>
                         </div>

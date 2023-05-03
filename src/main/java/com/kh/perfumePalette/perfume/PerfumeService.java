@@ -2,7 +2,6 @@ package com.kh.perfumePalette.perfume;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 
 import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.wish.Wish;
