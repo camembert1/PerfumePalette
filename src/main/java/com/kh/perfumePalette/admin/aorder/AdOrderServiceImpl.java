@@ -29,6 +29,11 @@ public class AdOrderServiceImpl implements AdOrderService {
 		return oStore.selectAdminOrderList(session, pi);
 	}
 
+	@Override
+	public List<AdOrder> selectOneByNo(long orderNo) {
+		return oStore.selectOneByNo(session, orderNo);
+	}
+
 
 
 

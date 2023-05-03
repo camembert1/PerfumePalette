@@ -22,8 +22,8 @@
 }
 
 body {
-	height: 800px;
-	width: 600px;
+	height: 700px;
+	width: 500px;
 }
 
 #chat-modal {
@@ -136,7 +136,7 @@ body {
 	outline: none;
 	background-color: #F0F0F1;
 	font-size: 15px;
-	padding: 20px;
+	padding: 17px;
 	box-sizing: border-box;
 	font-family: '마포꽃섬';
 }

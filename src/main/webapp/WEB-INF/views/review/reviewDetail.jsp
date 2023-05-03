@@ -125,84 +125,92 @@
 			            <div class="replyHeader">
 			                <label>댓글(<span id="replyCount"></span>)</label>
 			            </div>
-			            <div class="replyTable">
-			                <!-- 댓글 리스트가 들어갈 부분 -->
-			                <!-- 댓글 등록하기 -->
-				            <div class="replyForm">
-				                <div class="replyWriter">
-				                    <p>나유현죽</p>
-				                </div>
-				                <div class="replyContents">
-				                    <input type="text">
-				                </div>
-				                <div class="replySubmit">
-				                    <button id="rSubmit">댓글작성</button>
-				                </div>
+				            <div class="replyTable">
+				                <!-- 댓글 리스트가 들어갈 부분 -->
+				                <!-- 댓글 등록하기 -->
+					            <div class="replyForm" id="replyWriteForm">
+					                <div class="replyWriter">
+					                    <p>${member.memberNickname}</p>
+					                </div>
+					                <div class="replyContents">
+					                    <input type="text" id="replyContents">
+					                </div>
+					                <div class="replySubmit">
+					                    <button id="rSubmit" data-memberno = "${member.memberNo }" data-reviewno="${review.reviewNo }">댓글작성</button>
+					                </div>
+					            </div>
+
+								<div class="replyForm reviewHidden" id="replyListForm">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<p></p>
+									</div>
+									<div class="">
+										<p>2023-05-01 오후05:55</p>
+									</div>
+									<div class="">
+										<a onclick="replyComment(this)">답댓글</a>
+									</div>
+									<div class="">
+										<a>수정</a>
+									</div>
+									<div class="">
+										<a>삭제</a>
+									</div>
+								</div>
+
+								<div class="replyForm reviewHidden" id="commentListForm">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<p></p>
+									</div>
+									<div class="">
+										<p>2023-05-01 오후06:55</p>
+									</div>
+								</div>
+
+								<div class="replyForm" id="replycommentWrite">
+									<div class="replyWriter">
+										<p>${member.memberNickname}</p>
+									</div>
+									<div class="replyContents">
+										<input type="text" id="commentContents">
+									</div>
+									 <div class="replySubmit">
+										<button id="commentBtn">대댓작성</button>
+									</div>
+								</div>
+
+					            <div id="replyListComment">
+						            
+					            
+						            <div class="replyForm">
+						                <div class="replyWriter">
+						                    <p></p>
+						                </div>
+						                <div class="replyContents">
+						                    <p></p>
+						                </div>
+						                <div class="">
+						                	<p></p>
+						                </div>
+						                <div class="">
+						                    <a>수정</a>
+						                </div>
+						                <div class="">
+						                    <a>삭제</a>
+						                </div>
+						            </div>
+					            
+					            
+						            
+					                
+					            </div>
 				            </div>
-				            <div class="replyForm">
-				                <div class="replyWriter">
-				                    <p>나유현죽</p>
-				                </div>
-				                <div class="replyContents">
-				                    <p>어쩌라고</p>
-				                </div>
-				                <div class="">
-				                	<p>2023-05-01 오후05:55</p>
-				                </div>
-				                <div class="">
-				                    <a>답댓글</a>
-				                </div>
-				                <div class="">
-				                    <a>수정</a>
-				                </div>
-				                <div class="">
-				                    <a>삭제</a>
-				                </div>
-				            </div>
-				            
-				            <div class="replyForm">
-				                <div class="replyWriter">
-				                    <p>ㄴ 가나다라마바사아</p>
-				                </div>
-				                <div class="replyContents">
-				                    <p>저쩌라고</p>
-				                </div>
-				                <div class="">
-				                	<p>2023-05-01 오후06:55</p>
-				                </div>
-				                <div class="">
-				                    <a>대댓글 달기</a>
-				                </div>
-				            </div>
-				            
-				            
-				            <div class="replyForm">
-				                <div class="replyWriter">
-				                    <p>나유현죽</p>
-				                </div>
-				                <div class="replyContents">
-				                    <input type="text">
-				                </div>
-				                 <div class="replySubmit">
-				                    <button id="rSubmit">대댓작성</button>
-				                </div>
-			                </div>
-			                <div class="replyForm">
-				                <div class="replyWriter">
-				                    <p>가나다라마바사아</p>
-				                </div>
-				                <div class="replyContents">
-				                    <p>저쩌라고</p>
-				                </div>
-				                <div class="">
-				                	<p>2023-05-01 오후06:55</p>
-				                </div>
-				                <div class="">
-				                    <a>대댓글 달기</a>
-				                </div>
-				            </div>
-			            </div>
-			            
 			        </div>
 			</div>
 			
@@ -211,6 +219,7 @@
 		</div> 
 	</main>
 	<script>
+		replyCommentList();
 		  // 모달창
 		  function report() {
 			  
@@ -338,27 +347,118 @@
 			});
 		}
 		
-		// 댓글 작성하면 나오는 부분
-		getReplyList();
-		function getReplyList(){
-			const reviewNo = "${review.reviewNo}";
+		// 댓글 작성
+		document.getElementById("rSubmit").addEventListener('click', function(){
+			let replyContents = document.getElementById("replyContents").value;
+			let memberNo = document.getElementById("rSubmit").dataset.memberno;
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
 			$.ajax({
-				url : "/reply/list",
-				data : {"reviewNo" : reviewNo},
-				type : "get",
-				success : function(data){
-					$("#replyCount").text(data.length);
-					const replyList = $("#replyTable");
-					replyList.html("");
-					if(data.length > 0){
-						for(let i in data){
-							
-						}
+				url: "/review/replyComment",
+				type: "POST",
+				data : {
+					reviewNo : reviewNo,
+					memberNo : memberNo,
+					Contents : replyContents
+				},success : function(data){
+					if(data == "success"){
+						document.getElementById("replyContents").value = "";
+						replyCommentList();
 					}
+				}, error : function(){
+				
+				}
+			})
+			
+		})
+		
+
+		//댓글대댓글 리스트 
+		function replyCommentList(){
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
+			$.ajax({
+				url: "/review/replyCommentList",
+				type: "GET",
+				data : {
+					reviewNo : reviewNo
+				}, success : function(data){
+					let commentWriteBox = document.getElementById("replycommentWrite");
+					let replyList = document.querySelector("#replyListComment");
+					replyList.before(commentWriteBox);
+					commentWriteBox.style.display="none";
+					replyList.innerHTML = "";
+					
+					data.forEach(element => {
+						if(element.pcommentNo == 0){
+							let replyBox = document.querySelector("#replyListForm").cloneNode(true);
+							replyBox.classList.remove("reviewHidden");
+							let nickname = replyBox.children[0];
+							replyBox.dataset.replyno = element.commentNo;
+							// console.log(nickname);
+							nickname.innerHTML = element.memberNickname;
+							replyBox.children[1].innerHTML = element.commentContent;
+							replyBox.children[2].innerHTML = element.commentDate;
+							replyList.append(replyBox);
+						} else{
+							let replyBox = document.querySelector("#commentListForm").cloneNode(true);
+							replyBox.classList.remove("reviewHidden");
+							let nickname = replyBox.children[0];
+							// console.log(nickname);
+							nickname.innerHTML = "ㄴ"+ element.memberNickname;
+							replyBox.children[1].innerHTML = element.commentContent;
+							replyBox.children[2].innerHTML = element.commentDate;
+							replyBox.dataset.replyno = element.commentNo;
+							replyList.append(replyBox);
+						}
+						
+					});
+				}, error : function(){
+
 				}
 			})
 		}
+
+		function replyComment(btn){
+			const replyBoxes = btn.parentElement.parentElement;
+			let commentWriteBox = document.getElementById("replycommentWrite");
+			if(replyBoxes.nextSibling == commentWriteBox){
+				let replyList = document.querySelector("#replyListComment");
+					replyList.before(commentWriteBox);
+					commentWriteBox.style.display="none";
+			} else {
+				replyBoxes.after(commentWriteBox);
+				commentWriteBox.style.display = "block";
+			}
+			
+		}
 		
+		
+		//대댓 작성
+		document.querySelector("#commentBtn").addEventListener("click", function(e){
+			let pcommentNo = e.target.parentElement.parentElement.previousElementSibling.dataset.replyno;
+			let replyContents = document.getElementById("commentContents").value;
+			let memberNo = document.getElementById("rSubmit").dataset.memberno;
+			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
+			$.ajax({
+				url: "/review/commentReply",
+				type: "POST",
+				data : {
+					pcommentNo : pcommentNo,
+					reviewNo : reviewNo,
+					memberNo : memberNo,
+					Contents : replyContents
+				},success : function(data){
+					if(data == "success"){
+						document.getElementById("commentContents").value = "";
+						replyCommentList();
+					}
+				}, error : function(){
+				
+				}
+			})
+		})
+
+
+
 		//삭제하기 버튼 클릭 했을 때
 		function removeCheck(reviewNo){
 			if(confirm("정말 삭제하시겠습니까?")){

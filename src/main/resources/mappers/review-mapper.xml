@@ -45,6 +45,16 @@
 		<result property="perfumeStatus" column="PERFUME_STATUS" />
 	</resultMap>
 	
+	<resultMap type="ReviewComment" id="rCommentResultMap">
+		<id property="commentNo" column="COMMENT_NO"></id>
+		<result property="reviewNo" column="REVIEW_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="pcommentNo" column="P_COMMENT_NO" />
+		<result property="commentContent" column="COMMENT_CONTENT" />
+		<result property="commentDate" column="COMMENT_DATE" />
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+	</resultMap>
+	
 	<select id="selectOneByPerfumeNo" resultMap="perfumeResultMap">
 		SELECT * FROM PERFUME_TBL WHERE PERFUME_NO = #{perfumeNo}
 	</select>
@@ -194,4 +204,20 @@
 	<select id="selectTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM LIKE_TBL WHERE REVIEW_NO=#{reviewNo}
 	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertComment">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENTNO.NEXTVAL, #{reviewNo}, #{memberNo}, #{pcommentNo}, #{commentContent}, DEFAULT)
+	</insert>
+	
+	<!-- 댓글 리스트 -->
+	<select id="listComment" resultMap="rCommentResultMap">
+		SELECT A.*, B.MEMBER_NICKNAME 
+		FROM COMMENT_TBL A
+		   JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO
+		WHERE REVIEW_NO = #{reviewNo}
+		    START WITH P_COMMENT_NO = 0 
+		    CONNECT BY P_COMMENT_NO = PRIOR COMMENT_NO
+	</select>
+	
 </mapper>

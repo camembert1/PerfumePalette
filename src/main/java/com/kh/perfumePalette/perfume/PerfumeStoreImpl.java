@@ -79,6 +79,19 @@ public class PerfumeStoreImpl implements PerfumeStore{
 		return result;
 	}
 	
+	// 디테일 - 재입고 알림 신청 by memberNo, perfumeNo StoreLogic
+	@Override
+	public int insertRestockAlert(SqlSession session, ShopAlert rAlert) {
+		int result = session.insert("PerfumeMapper.insertRestockAlert", rAlert);
+		return result;
+	}
+	
+	// 디테일 - 로그인한 회원의 재입고알림 신청 여부 조회 by memberNo, perfumeNo StoreLogic	
+	@Override
+	public int checkAlert(SqlSession session, ShopAlert rAlertInfo) {
+		return session.selectOne("PerfumeMapper.checkAlert", rAlertInfo);
+	}
+	
 	
 	// 주문서 - 구매 성공 시 재고 감소 by cartNo StoreLogic
 	@Override
@@ -86,5 +99,26 @@ public class PerfumeStoreImpl implements PerfumeStore{
 		int result = session.update("PerfumeMapper.minusStock", cartNo);
 		return result;
 	}
+
+	
+	// 헤더 알림창 - 안 읽은 알림 개수 by memberNo StoreLogic
+	@Override
+	public int selectUnclickAlertCnt(SqlSession session, int memberNo) {
+		return session.selectOne("PerfumeMapper.selectUnclickAlertCnt", memberNo);
+	}
+
+	// 헤더 알림창 - 안 읽은 알림 목록 by memberNo StoreLogic
+	@Override
+	public List<ShopAlert> selectUnclickAlert(SqlSession session, int memberNo) {
+		return session.selectList("PerfumeMapper.selectUnclickAlert", memberNo);
+	}
+
+	// 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo StoreLogic
+	@Override
+	public int clickAlert(SqlSession session, Integer alertNo) {
+		return session.update("PerfumeMapper.clickAlert", alertNo);
+	}
+	
+
 
 }

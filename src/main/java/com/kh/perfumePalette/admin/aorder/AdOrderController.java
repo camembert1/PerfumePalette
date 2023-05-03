@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.admin.aorder.domain.AdOrder;
-import com.kh.perfumePalette.admin.aperfume.AdPerfume;
 import com.kh.perfumePalette.member.Member;
 import com.siot.IamportRestClient.IamportClient;
 
@@ -50,6 +49,29 @@ public class AdOrderController {
 				mv.addObject("paging", pi);
 				mv.addObject("oList", oList);
 				mv.setViewName("admin/order/list");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	// 주문내역 상세 뷰
+	@GetMapping("/detail")
+	public ModelAndView adminOrderDetailView(ModelAndView mv
+			, @RequestParam("orderNo") long orderNo
+			, HttpSession session) {
+		System.out.println("주문번호:"+ orderNo);
+		try {
+			if (session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+				Alert alert = new Alert("/", "접근권한이 없습니다.");
+				mv.addObject("alert", alert).setViewName("common/alert");
+			} else {
+				List<AdOrder> orderList = oService.selectOneByNo(orderNo);
+				System.out.println(orderList);
+				mv.addObject("orderList", orderList);
+				mv.setViewName("admin/order/detail");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

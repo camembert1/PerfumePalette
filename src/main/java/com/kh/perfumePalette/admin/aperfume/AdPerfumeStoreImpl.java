@@ -80,8 +80,8 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	}
 
 	@Override
-	public int getWishListCount(SqlSession session) {
-		return session.selectOne("AdminMapper.getWishListCount");
+	public int getWishListCount(SqlSession session, int perfumeNo) {
+		return session.selectOne("AdminMapper.getWishListCount", perfumeNo);
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class AdPerfumeStoreImpl implements AdPerfumeStore{
 	}
 
 	@Override
-	public int getCartListCount(SqlSession session) {
-		return session.selectOne("AdminMapper.getCartListCount");
+	public int getCartListCount(SqlSession session, int perfumeNo) {
+		return session.selectOne("AdminMapper.getCartListCount", perfumeNo);
 	}
 
 	@Override

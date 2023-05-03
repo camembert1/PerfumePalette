@@ -23,7 +23,7 @@ public interface PerfumeService {
 	int reviewCntByPerfumeNo(Integer perfumeNo);
 
 	
-	// 목록 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo Service
+	// 목록, 디테일 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo Service
 	int checkWish(Wish wish);
 	
 	// 목록 - 해당 향수 찜 개수 조회 by perfumeNo Service
@@ -35,9 +35,28 @@ public interface PerfumeService {
 
 	// 디테일 - 로그인한 회원의 장바구니 여부 조회 by memberId, perfumeNo Service
 	int checkCart(Cart cart);
-
 	
+
+	// 디테일 - 재입고 알림 신청 by memberNo, perfumeNo Service
+	int insertRestockAlert(ShopAlert rAlert);
+	
+	// 디테일 - 로그인한 회원의 재입고알림 신청 여부 조회 by memberNo, perfumeNo Service
+	int checkAlert(ShopAlert rAlertInfo);
+	
+		
 	// 주문서 - 구매 성공 시 재고 감소 by cartNo Service
 	int minusStock(int cartNo);
+
+	
+	// 헤더 알림창 - 안 읽은 알림 개수 by memberNo Service
+	int selectUnclickAlertCnt(int memberNo);
+
+	// 헤더 알림창 - 안 읽은 알림 목록 by memberNo Service
+	List<ShopAlert> selectUnclickAlert(int memberNo);
+
+	// 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo Service
+	int clickAlert(Integer alertNo);
+
+
 	
 }

@@ -48,7 +48,7 @@
 							<%-- 2) 남(이름)이 보낸 메세지 --%>
 							<c:if test="${msg.memberId != member.memberId }">
 								<li><b>${msg.memberNickname}</b><br>
-									<p class="chat">${msg.chatContent}</p><span class="chatDate">${chatDate}</span></li>
+									<p class="chat">${msg.chatContent}</p> <span class="chatDate">${chatDate}</span></li>
 							</c:if>
 						</c:forEach>
 					</ul>

@@ -90,7 +90,8 @@
 			</c:when>
 			<c:otherwise>
 				<div>
-					<button>재입고알림</button>
+					<input type="hidden" id="rAlertStatus" value="${rAlertStatus}">
+					<button onclick="restockAlert()">재입고알림</button>
 				</div>
 			</c:otherwise>
 		</c:choose>		
@@ -162,6 +163,42 @@
 			// css작업할 때 modal뜨는 걸로 수정하기!
 			alert(msg);
 		}
+
+		// 재입고 알림 버튼
+		// 일단은 무한신청
+		// 신청 들어가는 거 확인ㄴ하고
+		// 재입고여부 확인하고 그런 예외 처리 해주기!
+		restockAlert = function() {
+
+			let perfumeNo = '${perfume.perfumeNo}';
+			let memberNo = '${sessionScope.member.memberNo }';
+
+			if (memberNo == '') {
+				alert('로그인부터 하시길!')
+			} else {
+				if ($('#rAlertStatus').val() == 1) {
+					alertModal('이미 재입고알림 신청함');
+				} else {
+					$.ajax({
+						url: '/perfume/restockAlert'
+						, type: 'POST'
+						, data: {
+							'memberNo': memberNo
+							, 'perfumeNo': perfumeNo
+						}
+					}).done(function(result) {
+						if (result == 1) {
+							$('#rAlertStatus').val(1);
+							alertModal('재입고 알림 신청 오나료!')
+						} else {
+							// 재입고 알림 신청 실패
+							alert(result);
+						}
+					});
+				}
+			}
+		}
+
 
 		// 현재 링크
 		const url = encodeURI(window.location.href);

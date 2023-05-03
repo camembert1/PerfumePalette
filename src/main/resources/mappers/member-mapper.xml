@@ -15,39 +15,53 @@
 		<result property="memberStatus" column="MEMBER_STATUS" />
 		<result property="memberType" column="MEMBER_TYPE" />
 	</resultMap>
-	
+
 	<resultMap type="Review" id="reviewResultMap">
-		<id property="reviewNo" column="REVIEW_NO"/>
-		<result property="perfumeNo" column="PERFUME_NO"/>
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="reviewContents" column="REVIEW_CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
-		<result property="reviewDate" column="REVIEW_DATE"/>
-		<result property="rViewcount" column="R_VIEW_COUNT"/>
-		<result property="rViewscore" column="REVIEW_SCORE"/>
-		<result property="memberNickname" column="MEMBER_NICKNAME"/>
-		<result property="perfumeBrand" column="PERFUME_BRAND"/>
-		<result property="perfumeName" column="PERFUME_NAME"/>
-		<result property="perfumePrice" column="PERFUME_PRICE"/>
-		<result property="pFilerename" column="P_FILERENAME"/>
+		<id property="reviewNo" column="REVIEW_NO" />
+		<result property="perfumeNo" column="PERFUME_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="reviewContents" column="REVIEW_CONTENTS"
+			jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewDate" column="REVIEW_DATE" />
+		<result property="rViewcount" column="R_VIEW_COUNT" />
+		<result property="rViewscore" column="REVIEW_SCORE" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeName" column="PERFUME_NAME" />
+		<result property="perfumePrice" column="PERFUME_PRICE" />
+		<result property="pFilerename" column="P_FILERENAME" />
 		<result property="pScentCategory" column="P_SCENT_CATEGORY" />
 	</resultMap>
-	
+
 	<resultMap type="QnaBoard" id="qnaBoardResultMap">
-      <id property="qnaNo" column="QNA_NO"></id>
-      <result property="perfumeNo" column="PERFUME_NO" />
-      <result property="qnaType" column="QNA_TYPE" />
-      <result property="qnaSubject" column="QNA_SUBJECT" />
-      <result property="qnaContents" column="QNA_CONTENTS"
-         jdbcType="CLOB" javaType="java.lang.String" />
-      <result property="qnaDate" column="QNA_DATE" />
-      <result property="memberNo" column="MEMBER_NO" />
-      <result property="qFilename" column="Q_FILENAME" />
-      <result property="qFilerename" column="Q_FILERENAME" />
-      <result property="qFilepath" column="Q_FILEPATH" />
-      <result property="qnaPassword" column="QNA_PASSWORD" />
-      <result property="qQnaNo" column="Q_QNA_NO" />
-      <result property="memberNickname" column="MEMBER_NICKNAME" />
-      </resultMap>
+		<id property="qnaNo" column="QNA_NO"></id>
+		<result property="perfumeNo" column="PERFUME_NO" />
+		<result property="qnaType" column="QNA_TYPE" />
+		<result property="qnaSubject" column="QNA_SUBJECT" />
+		<result property="qnaContents" column="QNA_CONTENTS"
+			jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="qnaDate" column="QNA_DATE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="qFilename" column="Q_FILENAME" />
+		<result property="qFilerename" column="Q_FILERENAME" />
+		<result property="qFilepath" column="Q_FILEPATH" />
+		<result property="qnaPassword" column="QNA_PASSWORD" />
+		<result property="qQnaNo" column="Q_QNA_NO" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+	</resultMap>
+
+	<resultMap type="ReviewComment" id="commentResultMap">
+		<id property="commentNo" column="COMMENT_NO"></id>
+		<result property="reviewNo" column="REVIEW_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="pcommentNo" column="P_COMMENT_NO" />
+		<result property="commentContent" column="COMMENT_CONTENT" />
+		<result property="commentDate" column="COMMENT_DATE" />
+		<result property="perfumeNo" column="PERFUME_NO" />
+		<result property="perfumeBrand" column="PERFUME_BRAND" />
+		<result property="perfumeName" column="PERFUME_NAME" />
+		
+	</resultMap>
 
 	<insert id="insertMember">
 		INSERT INTO MEMBER_TBL(MEMBER_NO, MEMBER_ID,
@@ -59,7 +73,8 @@
 	</insert>
 
 	<select id="login" resultMap="memberResultMap">
-		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE,
+		SELECT MEMBER_NO, MEMBER_ID,
+		MEMBER_NICKNAME, MEMBER_NAME, MEMBER_TYPE,
 		MEMBER_STATUS
 		FROM MEMBER_TBL
 		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
@@ -115,7 +130,8 @@
 	<update id="updatePw">
 		UPDATE MEMBER_TBL
 		SET MEMBER_PW = #{memberPw}
-		WHERE MEMBER_ID = #{memberId}
+		WHERE
+		MEMBER_ID = #{memberId}
 	</update>
 
 	<update id="modifyMember">
@@ -123,16 +139,18 @@
 		#{memberNickname}, MEMBER_PW = #{memberPw}, MEMBER_NAME =
 		#{memberName}, MEMBER_EMAIL = #{memberEmail}, MEMBER_PHONE =
 		#{memberPhone}, MEMBER_ADDR = #{memberAddr}
-		WHERE MEMBER_ID = #{memberId}
+		WHERE MEMBER_ID =
+		#{memberId}
 	</update>
 
 	<select id="checkPw" resultMap="memberResultMap">
-		SELECT * FROM MEMBER_TBL 
-		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw} AND MEMBER_STATUS = 1
+		SELECT * FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw} AND MEMBER_STATUS
+		= 1
 	</select>
 
 	<update id="bye">
-		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0 
+		UPDATE MEMBER_TBL SET MEMBER_STATUS = 0
 		WHERE MEMBER_ID = #{memberId} AND MEMBER_STATUS = 1
 	</update>
 
@@ -142,23 +160,36 @@
 		JOIN PERFUME_TBL USING(PERFUME_NO)
 		WHERE MEMBER_NO = #{memberNo }
 	</select>
-	
+
 	<delete id="removeReview">
-		DELETE FROM REVIEW_TBL 
+		DELETE FROM REVIEW_TBL
 		WHERE REVIEW_NO = #{reviewNo}
 	</delete>
-	
+
 	<select id="myQna" resultMap="qnaBoardResultMap">
-		SELECT * FROM MEMBER_TBL 
+		SELECT * FROM MEMBER_TBL
 		JOIN QNA_TBL USING(MEMBER_NO)
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
-	
+
 	<delete id="removeQna">
 		DELETE FROM QNA_TBL
 		WHERE QNA_NO = #{qnaNo}
 	</delete>
 
+	<select id="myComment" resultMap="commentResultMap">
+		SELECT c.* , p.*
+		FROM COMMENT_TBL c
+		JOIN REVIEW_TBL r ON c.REVIEW_NO = r.REVIEW_NO
+		JOIN PERFUME_TBL p ON r.PERFUME_NO = p.PERFUME_NO
+		WHERE c.MEMBER_NO = #{memberNo}
+	</select>
+
+	<delete id="removeComment">
+		DELETE FROM COMMENT_TBL
+		WHERE COMMENT_NO =
+		#{commentNo}
+	</delete>
 
 
 </mapper>

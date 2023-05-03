@@ -360,3 +360,11 @@ main #btn-box button{
 	font-size: 16px;
 	cursor: pointer;
 }
+
+.reviewHidden{
+	display: none;
+}
+
+#replycommentWrite{
+	display: none;
+}

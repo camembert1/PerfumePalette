@@ -10,6 +10,7 @@
 				<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 					integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 					crossorigin="anonymous"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 				<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 					rel="stylesheet">
 				<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -27,20 +28,23 @@
 					<!-- 본문 내용 가운데 정렬 위한 div -->
 					<div id="forCenter">
 						<div class="container">
-						<h1>문의 작성</h1>
-							<form action="/qnaboard/write" method="post" enctype="multipart/form-data">
+							<h1>문의 작성</h1>
+							<form action="/qnaboard/write" method="post">
+								<input type="hidden" name="id" value="${id }" id="id">
 								<select name="qnaType" id="qnaType" onchange="changeFn()" class="select">
-									<option name="qnaType" value="1">상품문의</option>
-									<option name="qnaType" value="2">배송문의</option>
-									<option name="qnaType" value="3">교환/환불</option>
-									<option name="qnaType" value="4">기타문의</option>
+									<option value="1">상품문의</option>
+									<option value="2">배송문의</option>
+									<option value="3">교환/환불</option>
+									<option value="4">기타문의</option>
 								</select>
-								<input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요">
+								<input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요"
+									required oninvalid="showAlert()">
 								<!-- 썸머노트 api -->
 								<div id="editorApi">
-									<textarea id="summernote" name="qnaContents"></textarea>
+									<textarea id="summernote" name="qnaContents" required
+										oninvalid="showAlert()"></textarea>
 								</div>
-								<br> <input type="file" name="uploadFile" onchange="loadImg(this);">
+								<br>
 								<br>
 								<br>
 								공개글 <input type="radio" name="postType" id="publicPost" checked>
@@ -51,7 +55,7 @@
 								<div id="hiddendiv" style="display:none">
 									<label for="passwordInput" class="password-label">비밀번호 : </label>
 									<input class="radius" type="password" name="qnaPassword" id="passwordInput"
-										placeholder="비밀번호를 입력해주세요">
+										placeholder="숫자만 입력가능합니다.">
 								</div>
 								<br> <input class="submit-btn" type="submit" value="등록">
 							</form>
@@ -59,6 +63,11 @@
 					</div>
 				</main>
 				<script>
+					function showAlert() {
+						alert("내용을 입력해주세요");
+					}
+
+
 					// summernote api
 					const fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'MapoFlowerIsland', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'];
 					$('#summernote').summernote({
@@ -69,7 +78,7 @@
 						lang: "ko-KR",
 						toolbar: [
 							['fontname', ['fontname']],
-							['fontsize', ['fontsize']],
+							['fontsize', ['fontsize']]
 							['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
 							['color', ['forecolor', 'color']],
 							['table', ['table']],
@@ -80,21 +89,37 @@
 						],
 						fontNames: fontList,
 						fontNamesIgnoreCheck: fontList,
-						fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
-					});
-					function loadImg(obj) {
-						if (obj.files.length != 0 && obj.files[0] != 0) {
-							let reader = new FileReader();
-							reader.readAsDataURL(obj.files[0]);
-							reader.onload = function (e) {
-								document.querySelector("#img-view").setAttribute("src",
-									e.target.result);
+						fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
+						callbacks: {
+							onImageUpload: function (files, editor, welEditable) {
+								for (let i = files.length - 1; i >= 0; i--) {
+									uploadSummernoteImageFile(files[i],
+										this);
+								}
 							}
-						} else {
-							// 					$("#img-view").attr("src", "");
-							document.querySelector("#img-view").setAttribute("src", "");
 						}
+					});
+
+					function uploadSummernoteImageFile(file, el) {
+						let data = new FormData();
+						let id = document.getElementById("id").value;
+						data.append("file", file);
+						data.append("id", id);
+						$.ajax({
+							data: data,
+							type: "POST",
+							url: "/qnaboard/ImgFileUpload",
+							contentType: false,
+							enctype: 'multipart/form-data',
+							processData: false,
+							success: function (data) {
+								$img = $('<img>').attr({ src: data.src });
+								$(el).summernote('insertNode', $img[0]);
+							}
+						});
 					}
+
+
 
 					// qnatype 값 저장 스크립트
 					function changeFn() {
@@ -122,6 +147,7 @@
 					// 	hiddendiv.style.display = 'none';
 					// });
 
+					// 	비밀글 라디오 버튼 토글
 					const publicPost = document.getElementById('publicPost');
 					const privatePost = document.getElementById('privatePost');
 					const hiddendiv = document.getElementById('hiddendiv');
@@ -133,6 +159,22 @@
 					publicPost.addEventListener('click', () => {
 						hiddendiv.style.display = 'none';
 					});
+
+					// 비밀글 유효성 검사
+					const passwordInput = document.getElementById("passwordInput");
+
+					passwordInput.addEventListener("input", function(event) {
+					  const input = event.target.value;
+					  const regex = /^[0-9]*$/;
+					  
+					  if (!regex.test(input)) {
+					    event.target.value = input.replace(/\D/g, "");
+					  }
+					});
+
+
+
+
 				</script>
 				<jsp:include page="../common/footer.jsp" />
 

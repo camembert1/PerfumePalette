@@ -33,10 +33,11 @@
 			<!-- 사이드바 -->
 			<div id="hrefList">
 				<div id="hrefName">${sessionScope.member.memberName }님</div>
-				<span><a href="/perfume/mList">판매상품관리</a></span> <span><a
-					href="#">주문내역관리</a></span> <span><a href="/admin/member/amList">회원관리</a></span>
-				<span><a href="/admin/qna/list">문의관리</a></span> <span><a
-					href="/admin/review/list">후기관리</a></span>
+				<span><a href="/perfume/mList">판매상품관리</a></span>
+				<span><a href="/admin/order/list">주문내역관리</a></span>
+				<span><a href="/admin/member/amList">회원관리</a></span>
+				<span><a href="/admin/qna/list">문의관리</a></span>
+				<span><a href="/admin/review/list">후기관리</a></span>
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
