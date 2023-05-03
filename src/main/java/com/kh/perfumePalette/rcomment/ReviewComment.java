@@ -9,6 +9,11 @@ public class ReviewComment {
 	private int pcommentNo;
 	private String commentContent;
 	private Timestamp commentDate;
+
+	// 작성한 댓글에 있는 제품정보 추가 
+	private int perfumeNo;
+	private String perfumeBrand;
+	private String perfumeName;
 	
 	public ReviewComment() {}
 
@@ -69,6 +74,31 @@ public class ReviewComment {
 
 	public void setCommentDate(Timestamp commentDate) {
 		this.commentDate = commentDate;
+	}
+	
+	// 추가 
+	public int getPerfumeNo() {
+		return perfumeNo;
+	}
+
+	public void setPerfumeNo(int perfumeNo) {
+		this.perfumeNo = perfumeNo;
+	}
+
+	public String getPerfumeBrand() {
+		return perfumeBrand;
+	}
+
+	public void setPerfumeBrand(String perfumeBrand) {
+		this.perfumeBrand = perfumeBrand;
+	}
+
+	public String getPerfumeName() {
+		return perfumeName;
+	}
+
+	public void setPerfumeName(String perfumeName) {
+		this.perfumeName = perfumeName;
 	}
 
 	@Override
