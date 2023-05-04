@@ -41,11 +41,11 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width:90px;">
+                    <th style="width:60px;">
                     	<input type="checkbox" class="allCheck" id="thCheck" >
                     </th>
                     <th style="width:60px;">번호</th>
-                    <th style="width:250px;" >내용</th>
+                    <th style="width:110px;" >내용</th>
                     <th style="width:200px;"></th>
                     <th style="width:150px;">작성일</th>
                 </tr>
@@ -160,6 +160,7 @@
 			});
 		}
 	});
+	
     </script>
 </body>
 </html>

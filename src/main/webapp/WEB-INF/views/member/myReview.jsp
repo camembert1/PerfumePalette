@@ -1,103 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>작성 후기</title>
 <link rel="stylesheet" href="../../../resources/memberCss/myReview.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <!-- favicon : 탭에 보이는 아이콘 -->
-    <link rel="icon" href="../../resources/img/common/favicon.png" />
-    <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>    
+<link rel="icon" href="../../resources/img/common/favicon.png" />
+<link rel="apple-touch-icon"
+	href="../../resources/img/common/favicon.png" />
 <style>
-	main table img{
-		height: 70px;
-	}
-	
+main table img {
+	height: 70px;
+}
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp" />
-    <main>
-      <!-- 헤더 부분 피하기 위한 div -->
-      <div id="forHeader"></div>
-      <!-- 본문 내용 가운데 정렬 위한 div -->
-      <div id="forCenter"></div>
-        <!-- 사이드바 -->
-        <div id="hrefList">
-          <div id="hrefName">${member.memberName }님</div>
-          <span><a href="/member/myPage">마이페이지</a></span>
-          <span><a href="/member/orderList">주문내역조회</a></span>
-          <span><a href="/member/myReview">작성후기</a></span>
-          <span><a href="/member/myQna">작성문의</a></span>
-          <span><a href="/member/myComment">작성댓글</a></span>
-          <span><a href="/member/bye">회원탈퇴</a></span>
-        </div>
+	<jsp:include page="../common/header.jsp" />
+	<main>
+		<!-- 헤더 부분 피하기 위한 div -->
+		<div id="forHeader"></div>
+		<!-- 본문 내용 가운데 정렬 위한 div -->
+		<div id="forCenter"></div>
+		<!-- 사이드바 -->
+		<div id="hrefList">
+			<div id="hrefName">${member.memberName }님</div>
+			<span><a href="/member/myPage">마이페이지</a></span> <span><a
+				href="/member/orderList">주문내역조회</a></span> <span><a
+				href="/member/myReview">작성후기</a></span> <span><a
+				href="/member/myQna">작성문의</a></span> <span><a
+				href="/member/myComment">작성댓글</a></span> <span><a href="/member/bye">회원탈퇴</a></span>
+		</div>
 
-        <!-- 여기부터 내용 입력하시면 됩니다! -->
+		<!-- 여기부터 내용 입력하시면 됩니다! -->
 
-<div class="content">
-        <h1>내가 작성한 후기</h1>
-        <table>
-            <thead>
-                <!-- 테이블 헤더 -->
-                <tr>
-                	<th style="width:105px;">
-                		<input type="checkbox" class="allCheck" id="thCheck" >
-                	</th>
-                	<th style="width:96px;">번호</th>
-                	<th style="width:60px;"></th>
-                    <th style="width:350px;">상품명</th>
-                    <th style="width:370px;">내용</th>
-                    <th style="width:150px;">작성일</th>
-                    <th style="width:150px;">조회수</th>
-                </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${myReviews }" var="review" varStatus="i">
-            	<tr>
-            	    <td>
-            	    	<input type="checkbox" class="check" id="tdCheck" value="${review.reviewNo}">
-            	    </td>
-            		<td>${i.count }</td>
-            		<td>
-            			<div>
-            			<a href="/perfume/detail/${review.perfumeNo}">
-            				<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="상품이미지">
-            			</a>
-            			</div>
-            		</td>
-            		<td>
-            			<a href="/perfume/detail/${review.perfumeNo}">
-            				[${review.perfumeBrand }] ${review.perfumeName }</td>
-            			</a>
-            		<td>
-            			<a href="/review/reviewDetail/${review.reviewNo}">
-            				<c:out value="${fn:substring(review.reviewContents, 0, 19)}${fn:length(review.reviewContents) > 19 ? '...' : ''}" />
-            			</a>
-            		</td>
-            		<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
-            		<td>${review.rViewcount }</td>
-            	</tr>
-            </c:forEach>            
-          </tbody>
-          <tfoot>
-          	<tr style="border: none;">
-          		<td><button type="button" id="del" style="margin-top: 30px;">선택삭제</button></td>
-          	</tr>
-          </tfoot>
-        </table>
-      </div>
-    </main>
-    <jsp:include page="../common/footer.jsp" />
-    
-    
-    <script>
+		<div class="content">
+			<h1>내가 작성한 후기</h1>
+			<table>
+				<thead>
+					<!-- 테이블 헤더 -->
+					<tr>
+						<th style="width: 105px;"><input type="checkbox"
+							class="allCheck" id="thCheck"></th>
+						<th style="width: 96px;">번호</th>
+						<th style="width: 60px;"></th>
+						<th style="width: 350px;">상품명</th>
+						<th style="width: 355px;">내용</th>
+						<th style="width: 150px;">작성일</th>
+						<th style="width: 150px;">조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${myReviews }" var="review" varStatus="i">
+						<tr>
+							<td><input type="checkbox" class="check" id="tdCheck"
+								value="${review.reviewNo}"></td>
+							<td>${i.count }</td>
+							<td>
+								<div>
+									<a href="/perfume/detail/${review.perfumeNo}"> <img
+										src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}"
+										alt="상품이미지">
+									</a>
+								</div>
+							</td>
+							<td><a href="/perfume/detail/${review.perfumeNo}">
+									[${review.perfumeBrand }] ${review.perfumeName }</td>
+							</a>
+							<td><a href="/review/reviewDetail/${review.reviewNo}"> <c:out
+										value="${fn:substring(review.reviewContents, 0, 19)}${fn:length(review.reviewContents) > 19 ? '...' : ''}" />
+							</a></td>
+							<td><fmt:formatDate value="${review.reviewDate }"
+									pattern="yyyy-MM-dd" /></td>
+							<td>${review.rViewcount }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+				<tfoot>
+					<tr style="border: none;">
+						<td><button type="button" id="del" style="margin-top: 30px;">선택삭제</button></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</main>
+	<jsp:include page="../common/footer.jsp" />
+
+
+	<script>
     // 전체 선택 박스   
 	var allCheck = document.querySelector(".allCheck");
 	var list = document.querySelectorAll(".check");
