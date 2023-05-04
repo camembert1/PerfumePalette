@@ -112,5 +112,12 @@ public interface ReviewService {
 	 */
 	List<ReviewComment> listComment(int reviewNo);
 
+	/**
+	 * 댓글 삭제
+	 * @param commentNo
+	 * @return int
+	 */
+	int deleteComment(int commentNo);
+
 	
 }

@@ -141,6 +141,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 
+	@Override
+	public int deleteComment(int commentNo) {
+		int result = rStore.deleteComment(session, commentNo);
+		return result;
+	}
+
+
 	
 
 }

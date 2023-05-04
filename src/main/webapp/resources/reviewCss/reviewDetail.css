@@ -143,10 +143,11 @@ main #productImgInfo img {
 }
 
 main #reviewContents{
+	padding: 80px;
 	border-top: 2px solid #28302d;
 	border-bottom: 2px solid #28302d;
 	/* border: 3px solid #28302d; */
-	height: 350px;
+	/* height: 350px; */
 	margin-top: 15px;
 	overflow: scroll;
 }
@@ -351,6 +352,7 @@ main #btn-box button{
 	font-size: 15px;
 }
 
+
 .replyForm .replySubmit button {
 	padding: 10px;
 	border: none;
@@ -360,6 +362,8 @@ main #btn-box button{
 	font-size: 16px;
 	cursor: pointer;
 }
+
+
 
 .reviewHidden{
 	display: none;

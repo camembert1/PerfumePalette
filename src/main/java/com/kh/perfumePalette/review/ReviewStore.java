@@ -126,4 +126,11 @@ public interface ReviewStore {
 	 */
 	List<ReviewComment> listComment(SqlSession session, int reviewNo);
 
+	/**
+	 * 댓글 삭제
+	 * @param commentNo
+	 * @return int
+	 */
+	int deleteComment(SqlSession session, int commentNo);
+
 }

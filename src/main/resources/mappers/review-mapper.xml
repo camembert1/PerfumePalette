@@ -220,4 +220,8 @@
 		    CONNECT BY P_COMMENT_NO = PRIOR COMMENT_NO
 	</select>
 	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment">
+		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
+	</delete>
 </mapper>

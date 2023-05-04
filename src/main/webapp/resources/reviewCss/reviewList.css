@@ -99,15 +99,18 @@ main th:nth-child(2) {
   width: 10%;
 }
 main th:nth-child(3) {
-  width: 30%;
-}
-main th:nth-child(4) {
   width: 20%;
 }
+main th:nth-child(4) {
+  width: 30%;
+}
 main th:nth-child(5) {
-  width: 15%;
+  width: 20%;
 }
 main th:nth-child(6) {
+  width: 15%;
+}
+main th:nth-child(7) {
   width: 15%;
 }
 
@@ -122,6 +125,11 @@ main tbody tr:last-child{
 	border-left: none;
 	border-right: none;
 }
+
+main .table-footer {
+  text-align: center;
+}
+
 
 main a{
 	text-decoration: none;
@@ -154,20 +162,32 @@ main .perfumeInfo strong {
 
 
 /* 페이징 CSS */
-main .page {
-    text-decoration: none;
-    color: black;
-    font-size: larger;
-    box-sizing: content-box;
-    width: 3px;
-    height: 3px;
+main #paging {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
-	.number:hover {
-	    background-color: rgba(200, 194, 194, 0.901);
-	    padding: 7px 17px;
-	    border-radius: 100%;
-	}
-	.number:not(.number:hover){
-	    margin: 7px 17px;
-	}
-	
+
+main #paging a,
+main #paging span {
+  display: inline-block;
+  padding: 8px 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main #paging a:hover {
+  background-color: #ddd;
+}
+
+main #paging .current {
+  font-weight: bold;
+  color: #fff;
+  background-color: #333;
+  border-color: #333;
+  cursor: default;
+}
