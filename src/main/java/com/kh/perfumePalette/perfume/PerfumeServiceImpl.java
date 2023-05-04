@@ -22,68 +22,95 @@ public class PerfumeServiceImpl implements PerfumeService{
 	// 향수 목록 조회 / 페이징 + 필터링 + STATUS1 ServiceImpl
 	@Override
 	public List<Perfume> selectAvailablePerfumes(PageAndFilter pageAndFilter) {
-		List<Perfume> pList = pStore.selectAvailablePerfumes(session, pageAndFilter);
-		return pList;
+		return pStore.selectAvailablePerfumes(session, pageAndFilter);
 	}
 
 	// 목록 - 향수 총 개수 / 페이징 + 필터링 + STATUS1 ServiceImpl
 	@Override
 	public int selectTotalPerfumeCount(PageAndFilter pageAndFilter) {
-		int totalCount = pStore.selectTotalPerfumeCount(session, pageAndFilter);
-		return totalCount;
+		return pStore.selectTotalPerfumeCount(session, pageAndFilter);
 	}
 	
 	
 	// 향수 디테일 조회 by perfumeNo ServiceImpl
 	@Override
 	public Perfume selectOneByPerfumeNo(Integer perfumeNo) {
-		Perfume perfume = pStore.selectOneByPerfumeNo(session, perfumeNo);
-		return perfume;
+		return pStore.selectOneByPerfumeNo(session, perfumeNo);
 	}
 
 	// 디테일 - 해당 향수에 달린 리뷰 수 by perfumeNo ServiceImpl
 	@Override
 	public int reviewCntByPerfumeNo(Integer perfumeNo) {
-		int reviewCnt = pStore.reviewCntByPerfumeNo(session, perfumeNo);
-		return reviewCnt;
+		return pStore.reviewCntByPerfumeNo(session, perfumeNo);
 	}
 	
 
 	// 목록 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo ServiceImpl
 	@Override
 	public int checkWish(Wish wish) {
-		int result = pStore.checkWish(session, wish);
-		return result;
+		return pStore.checkWish(session, wish);
 	}
 
 	// 목록 - 해당 향수 찜 개수 조회 by perfumeNo ServiceImpl
 	@Override
 	public int wishCnt(Wish wish) {
-		int wishCnt = pStore.wishCnt(session, wish);
-		return wishCnt;
+		return pStore.wishCnt(session, wish);
 	}
 	
 	// 목록 - 찜 취소를 위한 찜 번호 조회 by memberId, perfumeNo ServiceImpl
 	@Override
 	public int getWishNo(Wish wish) {
-		int wishNo = pStore.getWishNo(session, wish);
-		return wishNo;
+		return pStore.getWishNo(session, wish);
 	}
 
 	
 	// 디테일 - 로그인한 회원의 장바구니 여부 조회 by memberId, perfumeNo ServiceImpl
 	@Override
 	public int checkCart(Cart cart) {
-		int result = pStore.checkCart(session, cart);
-		return result;
+		return pStore.checkCart(session, cart);
 	}
-
+	
+	
+	// 디테일 - 재입고 알림 신청 by memberNo, perfumeNo ServiceImpl
+	@Override
+	public int insertRestockAlert(ShopAlert rAlert) {
+		return pStore.insertRestockAlert(session, rAlert);
+	}
+	
+	// 디테일 - 로그인한 회원의 재입고알림 신청 여부 조회 by memberNo, perfumeNo ServiceImpl
+	@Override
+	public int checkAlert(ShopAlert rAlertInfo) {
+		return pStore.checkAlert(session, rAlertInfo);
+	}
+	
+	
 	
 	// 주문서 - 구매 성공 시 재고 감소 by cartNo ServiceImpl
 	@Override
 	public int minusStock(int cartNo) {
-		int result = pStore.minusStock(session, cartNo);
-		return result;
+		return pStore.minusStock(session, cartNo);
 	}
+
+	
+	// 헤더 알림창 - 안 읽은 알림 개수 by memberNo ServiceImpl
+	@Override
+	public int selectUnclickAlertCnt(int memberNo) {
+		return pStore.selectUnclickAlertCnt(session, memberNo);
+	}
+
+	// 헤더 알림창 - 안 읽은 알림 목록 by memberNo ServiceImpl
+	@Override
+	public List<ShopAlert> selectUnclickAlert(int memberNo) {
+		return pStore.selectUnclickAlert(session, memberNo);
+	}
+
+	// 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo ServiceImpl
+	@Override
+	public int clickAlert(Integer alertNo) {
+		return pStore.clickAlert(session, alertNo);
+	}
+
+
+
 
 }

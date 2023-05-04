@@ -70,13 +70,9 @@
 
 				<!-- 관리자가 아니라면 마이페이지 -->
 				<c:if test="${member.memberId ne 'admin' }">
-					<div id="alert-hover-area">
+					<div onclick="location.href='/member/myPage'">
 						<img src="../../resources/img/common/user.png" alt="">
-
-						<div id="alert">
-							<div onclick="location.href='/member/myPage'">${member.memberNickname}님마이페이지</div>
-						</div>
-
+						<div class="menu-info">마이페이지</div>
 					</div>
 				</c:if>
 
@@ -92,14 +88,23 @@
 
 			</c:if>
 
-			<div>
-				<img src="../../resources/img/common/cart.png" alt="" onclick="location.href = '/cart/list'">
-				<div class="menu-info">장바구니</div>
-			</div>
-			<div>
-				<img src="../../resources/img/common/wish.png" alt="" onclick="location.href = '/wish/list'">
+			<div onclick="location.href = '/wish/list'">
+				<img src="../../resources/img/common/wish.png" alt="">
 				<div class="menu-info">찜</div>
 			</div>
+			<div onclick="location.href = '/cart/list'">
+				<img src="../../resources/img/common/cart.png" alt="">
+				<div class="menu-info">장바구니</div>
+			</div>
+			<c:if test="${sessionScope.member ne null }">
+				<div id="alert-hover-area">
+					<img src="../../resources/img/common/bell.png" alt="">
+					<div id="alertCnt"></div>
+					<div id="alert">
+						<!-- 여기에 알림 내용 들어감! -->
+					</div>
+				</div>
+			</c:if>
 
 		</div>
 	</div>
@@ -150,8 +155,79 @@
 </header>
 
 <script>
-					/* 여기 아래부터 채팅 관련 스크립트 절대 건들지 마시오! */
+	// 유정!! 여기부터 알림창 관련 스크립트 절대 건들지 마시오!
+	$(document).ready(function() {
+		getAlertCnt();
+	});
 
+	// 벨 아이콘 hover 할 때마다 알림 정보 불러옴
+	$('#alert-hover-area').mouseenter(function() {
+		getAlertCnt();
+		getAlertList();
+	});
+
+	// 안 읽은 알림 개수 return
+	getAlertCnt = function() {
+		$.ajax({
+			url: '/perfume/getAlertCnt'
+			, type: 'POST'
+			, data: {
+				'memberNo': '${member.memberNo }'
+			}
+		}).done(function(result) {
+			$('#alertCnt').html(result)
+		});
+	}
+
+	let str = '';
+	// 안 읽은 알림 List return
+	getAlertList = function() {
+		$.ajax({
+			url: '/perfume/getAlertList'
+			, type: 'POST'
+			, data: {
+				'memberNo': '${member.memberNo }'
+			}
+		}).done(function(aList) {
+			$('#alert').html('');
+			for(let i = 0; i < aList.length; i++) {
+				// str += aList[i].memberId + " : " + aList[i].memberPw + "<br>";
+				// console.log(aList[i].alertNo);
+				let aCategory = aList[i].alertCategory;
+
+				
+				str = '';
+				str += '<div id="alertOne">';
+				str += '<div id="alertCategoroyArea"><div>[</div>';
+				str += '<div class="alertCategory">' + aCategory + '</div>';
+				str += '<div>]</div></div>';
+
+				
+
+				switch (aCategory) {
+					case '재입고':
+						str += '<div>[' + aList[i].perfumeBrand + ']' + aList[i].perfumeName + '이(가) 재입고되었습니다.</div>';
+						break;
+					case '좋아요':
+						str += '<div>' + aList[i].reviewContents.substr(0, 5) + '...에 ' + aList[i].likeMemberNickname + ' 님이 좋아요를 눌렀습니다.</div>';
+						break;
+					case '댓글':
+						str += '<div>' + aList[i].reviewContents.substr(0, 5) + '...에 댓글이 달렸습니다.</div>';
+						break;
+					case '답댓글':
+						str += '<div>' + aList[i].pCommentContent.substr(0, 5) + '...에 답댓글이 달렸습니다.</div>';
+						break;
+				}
+
+				str += '</div>';
+				$('#alert').html($('#alert').html() + str);
+			}
+		});
+	}
+
+	// 유정!! 알림창 관련 스크립트 끝!
+
+	/* 여기 아래부터 채팅 관련 스크립트 절대 건들지 마시오! */
 					// Enter key를 누르면 send 버튼을 클릭하는 이벤트 핸들러
 					document.getElementById("inputChatting").addEventListener("keydown",
 						function (event) {

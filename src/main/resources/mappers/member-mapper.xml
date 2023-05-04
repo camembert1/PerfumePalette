@@ -187,8 +187,7 @@
 
 	<delete id="removeComment">
 		DELETE FROM COMMENT_TBL
-		WHERE COMMENT_NO =
-		#{commentNo}
+		WHERE COMMENT_NO = #{commentNo}
 	</delete>
 
 

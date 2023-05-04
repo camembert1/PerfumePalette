@@ -63,6 +63,7 @@
 					합계 금액 : <span id="totalPrice">0원</span>
 				</p>
 			</div>
+			
 
 
 			<form action="/order/orderSheet" method="post" id="orderForm"></form>
