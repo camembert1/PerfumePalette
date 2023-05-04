@@ -18,7 +18,7 @@ public interface AdReviewStore {
 
 	int getListCount(SqlSession session);
 
-	int getRListCount(SqlSession session);
+	int getRListCount(SqlSession session, int reviewNo);
 
 	List<AdReview> selectAllReport(SqlSession session, int reviewNo, PageInfo pi);
 

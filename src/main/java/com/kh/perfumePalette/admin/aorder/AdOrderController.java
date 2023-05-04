@@ -2,11 +2,14 @@ package com.kh.perfumePalette.admin.aorder;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +34,31 @@ public class AdOrderController {
 		// 토큰 발급
 		this.client = new IamportClient("4277187304487763", "lNYZWFOP2ClwCRWgcbvA87zCMWStJQn4ChyXvL0M4aojX3h8OayURuVM46qC9tQy2zvi7RDYF4v5sxFf");
 	}
+	
+	// 주문내역 수정
+	@PostMapping("/update")
+	public ModelAndView orderUpdate(
+			@ModelAttribute AdOrder order
+			, ModelAndView mv
+			, HttpServletRequest request) {
+		try {
+			int result = oService.updateOrder(order);
+			if(result > 0) {
+				Alert alert = new Alert("/admin/order/list", "주문상태가 수정되었습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				Alert alert = new Alert("/admin/order/detail?orderNo=" + order.getOrderNo(), "주문상태 변경이 완료되지 않았습니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
 	
 	// 주문내역 리스트
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

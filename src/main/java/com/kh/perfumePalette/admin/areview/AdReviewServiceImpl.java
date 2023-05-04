@@ -43,8 +43,8 @@ public class AdReviewServiceImpl implements AdReviewService{
 	}
 
 	@Override
-	public int getRListCount() {
-		return rStore.getRListCount(session);
+	public int getRListCount(int reviewNo) {
+		return rStore.getRListCount(session, reviewNo);
 	}
 
 	@Override

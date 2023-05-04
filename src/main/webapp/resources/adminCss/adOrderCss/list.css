@@ -94,6 +94,7 @@ main table{
 	text-align: center;
 	border-collapse: collapse;
 	width: 60%;
+	margin-bottom: 100px;
 }
 
 main thead {
@@ -111,6 +112,11 @@ main table button{
    width: 85%;
    height: 25px;
    cursor: pointer;
+}
+
+main .line {
+	border: none;
+	padding-top: 20px;
 }
 
 

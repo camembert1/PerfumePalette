@@ -93,7 +93,12 @@ main img {
 }
 
 main .continer {
-	width: 60%;
+	width: 65%;
+	padding-left: 130px;
+	text-align: center;
+}
+main .onclick {
+	cursor: pointer;
 }
 
 main h1 {
@@ -104,12 +109,20 @@ main table {
 	margin-top: 20px;
 	margin-bottom: 100px;
 	border-collapse:collapse;
+	table-layout: fixed;
 }
 main thead {
 	background-color: #34443E;
 	color: white;	
 	height: 40px;
 }
+
+main table .tdOver {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 
 main .del {
 /*	  버튼 색 */

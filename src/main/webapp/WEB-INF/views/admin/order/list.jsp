@@ -37,6 +37,7 @@
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
+			<div class="continer">
 			<h1>주문내역 관리</h1>
 			
 			<table>
@@ -58,7 +59,7 @@
 					</tr>
 					<tr>
 						<th>주문상태</th>
-						<th>송장번호</th>
+						<th>결제상태</th>
 						<th>구매자 번호</th>
 						<th>수취인 번호</th>
 					</tr>
@@ -82,7 +83,7 @@
 						</tr>
 						<tr class="orderTrTag" style="background-color: ${i.index % 2 == 0 ? '#fff' : '#ccc'};">
 							<td class="orderNo${i.index }">${order.orderStatus}</td>
-							<td class="orderDate${i.index }">${order.trackingNo }</td>
+							<td class="orderDate${i.index }">${order.paymentStatus }</td>
 							<td class="memberName${i.index }">${order.memberPhone.substring(0,3)}-${order.memberPhone.substring(3,7)}-${order.memberPhone.substring(7,11)}</td>
 							<td class="recipientName${i.index }">${order.recipientPhone.substring(0,3)}-${order.recipientPhone.substring(3,7)}-${order.recipientPhone.substring(7,11)}</td>
 						</tr>
@@ -127,6 +128,7 @@
 					</tr>
 				</tfoot>
 			</table>
+			</div>
 		</div>
 	</main>
 	<jsp:include page="../../common/footer.jsp" />

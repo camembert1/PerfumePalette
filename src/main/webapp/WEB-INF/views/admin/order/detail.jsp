@@ -66,7 +66,9 @@
 					<th class="perfume_info">주문번호</th>
 					<td class="perfume_detail">${orderList[0].orderNo }</td>
 					<th class="perfume_info">주문일자</th>
-					<td class="perfume_detail">${orderList[0].orderDate }</td>
+					<td class="perfume_detail">
+						<fmt:formatDate value="${orderList[0].orderDate }" pattern="yyyy-MM-dd" />
+					</td>
 				</tr>
 				<tr>
 					<th class="perfume_info">주문자</th>
@@ -83,8 +85,27 @@
 				<tr>
 					<th class="perfume_info">입금계좌</th>
 					<td class="perfume_detail">${orderList[0].vBankNo }</td>					
+					<th class="perfume_info">결제 상태</th>
+					<td class="perfume_detail">${orderList[0].paymentStatus }</td>					
+				</tr>
+				<tr>
+					<th class="perfume_info"></th>
+					<td class="perfume_detail"></td>					
 					<th class="perfume_info">주문 상태</th>
-					<td class="perfume_detail">${orderList[0].orderStatus }</td>					
+					<td class="perfume_detail">
+						<form id="updateOrderForm" action="/admin/order/update" method="post">
+							<input type="hidden" name="orderNo" value="${orderList[0].orderNo }">
+							<select id="orderStatusSelect" name="orderStatus" class="oStatusSelect" onchange="">
+								<option id="notPay" value="입금전" ${orderList[0].orderStatus == "입금전" ? 'selected' : ''}>입금전</option>
+								<option id="okPay" value="결제완료" ${orderList[0].orderStatus == "결제완료" ? 'selected' : ''}>결제완료</option>
+								<option id="redyCar" value="배송준비중" ${orderList[0].orderStatus == "배송준비중" ? 'selected' : ''}>배송준비중</option>
+								<option id="ingCar" value="배송중" ${orderList[0].orderStatus == "배송중" ? 'selected' : ''}>배송중</option>
+								<option id="okCar" value="배송완료" ${orderList[0].orderStatus == "배송완료" ? 'selected' : ''}>배송완료</option>
+								<option id="cancel" value="취소" ${orderList[0].orderStatus == "취소" ? 'selected' : ''}>취소</option>
+							</select>
+						</form>
+<%-- 						${orderList[0].orderStatus } --%>
+					</td>					
 				</tr>
 			</table>
 				
@@ -110,5 +131,36 @@
 		</div>
 	</main>
 	<jsp:include page="../../common/footer.jsp" />
+	<script>
+// 		$(document).ready(function() {
+// 			$('#orderStatusSelect').change(function() {
+// 				var form = $('#updateOrderForm');
+// 				$.ajax({
+// 					type: form.attr('post'),
+// 					url: form.attr('/admin/order/update'),
+// 					data: form.serialize(),
+// 					success: function(data) {
+// 						location.reload();
+// 					}
+// 				});
+// 			});
+// 		});
+		$(document).ready(function() {
+			$('#orderStatusSelect').change(function() {
+		  		var form = $('#updateOrderForm');
+		    	$.ajax({
+		      		type: form.attr('method'),
+		      		url: form.attr('action'),
+		      		data: {
+		        		orderStatus: form.find('select[name="orderStatus"]').val(),
+		        		orderNo: form.find('input[name="orderNo"]').val()
+		      		},
+		      		success: function(data) {
+		        		location.reload();
+		      		}
+		    	});
+		  	});
+		});
+	</script>
 </body>
 </html>

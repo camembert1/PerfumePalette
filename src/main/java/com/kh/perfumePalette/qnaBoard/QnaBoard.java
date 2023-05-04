@@ -17,7 +17,7 @@ public class QnaBoard {
 	private Integer qnaPassword; // 게시글 비밀번호
 	private String qQnaNo; // NULL이면 질문, 값이 있으먄 답변
 	private String memberNickname; // 작성자(닉네임)
-	private String replyStatus;
+	private String replyStatus; // 답변 여부
 	
 	public QnaBoard() {}
 

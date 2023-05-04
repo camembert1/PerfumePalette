@@ -41,9 +41,10 @@ public interface AdReviewService {
 
 	/**
 	 * 신고 페이징 Service
+	 * @param reviewNo 
 	 * @return int
 	 */
-	int getRListCount();
+	int getRListCount(int reviewNo);
 
 	/**
 	 * 신고 리스트 Service

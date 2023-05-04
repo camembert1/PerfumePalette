@@ -29,4 +29,11 @@ public interface AdOrderService {
 	 */
 	List<AdOrder> selectOneByNo(long orderNo);
 
+	/**
+	 * 주문 상태 수정 Service
+	 * @param order
+	 * @return int
+	 */
+	int updateOrder(AdOrder order);
+
 }

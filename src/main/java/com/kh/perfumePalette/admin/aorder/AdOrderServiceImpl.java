@@ -34,6 +34,11 @@ public class AdOrderServiceImpl implements AdOrderService {
 		return oStore.selectOneByNo(session, orderNo);
 	}
 
+	@Override
+	public int updateOrder(AdOrder order) {
+		return oStore.updateOrder(session, order);
+	}
+
 
 
 

@@ -54,19 +54,19 @@
 			<table class="table">
 				<thead>
 	                <tr>
-	                	<th><input type="checkbox" class="allCheck"></th>
-	                    <th>구분</th>
-	                    <th>제목</th>
-	                    <th>작성자</th>
-	                    <th>작성일</th>
-	                    <th>상태</th>
+	                	<th id="one"><input type="checkbox" class="allCheck"></th>
+	                    <th id="two">구분</th>
+	                    <th id="three">제목</th>
+	                    <th id="four">작성자</th>
+	                    <th id="five">작성일</th>
+	                    <th id="six">상태</th>
 	                </tr>
                 </thead>
                 <tbody>
 	                <c:forEach items="${qList }" var="qnaboard" varStatus="i">
 	                    <tr>
 	                    	<td><input type="checkbox" class="check" value="${qnaboard.qnaNo }"></td>
-	                        <td>
+	                        <td class="tdOver">
 	                            <c:if test="${qnaboard.qnaType == 1 }">상품문의</c:if>
 	                            <c:if test="${qnaboard.qnaType == 2 }">배송문의</c:if>
 	                            <c:if test="${qnaboard.qnaType == 3 }">교환/환불</c:if>
@@ -75,13 +75,18 @@
 	                        <%-- <c:url var="qDetail" value="/qnaboard/detail">
 	                            <c:param name="qnaNo" value="${qnaboard.qnaNo }"></c:param>
 	                            </c:url> --%>
-	                            <td><a href="/qnaboard/detail?qnaNo=${qna.qnaNo}">${qnaboard.qnaSubject }</a>
+	                            <td class="cursor tdOver" onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
+	                            	${qnaboard.qnaSubject }
 	                            </td>
-	                            <td>${qnaboard.memberNickname }</td>
-	                            <td>${qnaboard.qnaDate }</td>
-	                            <td>
-	                                <c:if test="${qnaboard.qQnaNo eq null}">답변대기</c:if>
-	                                <c:if test="${qnaboard.qQnaNo ne null}">답변완료</c:if>
+	                            <td class="cursor tdOver" onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
+	                            	${qnaboard.memberNickname }
+                            	</td>
+	                            <td class="tdOver">
+	                            	<fmt:formatDate value="${qnaboard.qnaDate }" pattern="yyyy-MM-dd" />
+                            	</td>
+	                            <td class="tdOver">
+	                                <c:if test="${qnaboard.replyStatus != 'Y'}">답변대기</c:if>
+	                                <c:if test="${qnaboard.replyStatus == 'Y'}">답변완료</c:if>
 	                            </td>
 	                    </tr>
 	                </c:forEach>
@@ -132,6 +137,7 @@
             </div>
 		</div>
 	</main>
+	<jsp:include page="../../common/footer.jsp" />
 	<script>
 		// 전체 선택 박스
 		var allCheck = document.querySelector(".allCheck");

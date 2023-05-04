@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,13 +41,14 @@
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<div id="subject"></div>
+			<div class="continer">
 			<h1>REVIEW</h1>
 			<div id="search">
 				<form action="/admin/review/search">
 	         		<select name="searchOder" id="sortby-select">
-					    <option name="Date" value="Date">최신순</option>
-					    <option name="Popul" value="Popul">조회순</option>
-					    <option name="Star" value="Star">별점순</option>
+					    <option name="" value="Date">최신순</option>
+					    <option name="" value="Popul">조회순</option>
+					    <option name="" value="Star">별점순</option>
 					</select>
 					<select name="searchIncense" id="perfume-select">
 					    <option name ="" value="All">향종류</option>
@@ -60,18 +62,18 @@
 					<button type="submit" class="small_button">검 색</button>
 				</form>
 			</div>
-			<div class="continer">
 			<table>
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>별점</th>
-						<th>이미지</th>
-						<th>[브랜드] 이름</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
-						<th>신고수</th>
+						<th style="width: 30px;"><input type="checkbox" class="allCheck"></th>
+						<th style="width: 100px;">별 점</th>
+						<th style="width: 100px;">이미지</th>
+						<th style="width: 130px;">상 품</th>
+						<th style="width: 150px;">내 용</th>
+						<th style="width: 70px;">작성자</th>
+						<th style="width: 100px">작성일</th>
+						<th style="width: 60px;">조회수</th>
+						<th style="width: 60px;">신고수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,11 +90,14 @@
 									<input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 								</div>
 							</td>
-							<td onclick="window.location.href='/perfume/detail/${review.perfumeNo}';">
+							<td class="onclick" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">
 								<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 							</td>
-							<td onclick="window.location.href='/perfume/detail/${review.perfumeNo}';"><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
-							<td onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">${review.memberNickname }</td>
+							<td class="onclick tdOver" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';"><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
+							<td class="onclick tdOver" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">
+	            				<c:out value="${fn:substring(review.reviewContents, 0, 19)}${fn:length(review.reviewContents) > 19 ? '...' : ''}" />
+		            		</td>
+							<td class="onclick tdOver" style="width: 100px;" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">${review.memberNickname }</td>
 							<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
 							<td>${review.rViewcount }</td>
 							<td>
@@ -109,7 +114,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="7"></td>
-						<td><button type="button" class="del">삭제하기</button></td>
+						<td colspan="2"><button type="button" class="del">삭제하기</button></td>
 					</tr>
 			        <tr>
 						<td colspan="8" class="line">

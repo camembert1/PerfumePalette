@@ -15,6 +15,8 @@ public interface AdOrderStore {
 
 	List<AdOrder> selectOneByNo(SqlSession session, long orderNo);
 
+	int updateOrder(SqlSession session, AdOrder order);
+
 
 
 }

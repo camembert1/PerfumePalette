@@ -95,6 +95,7 @@
       <result property="qnaPassword" column="QNA_PASSWORD" />
       <result property="qQnaNo" column="Q_QNA_NO" />
       <result property="memberNickname" column="MEMBER_NICKNAME" />
+      <result property="replyStatus" column="REPLY_STATUS"/>
    </resultMap>
    
 <!--    Order-Mapper -->
@@ -403,7 +404,7 @@
 		INNER JOIN MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO 
 		INNER JOIN PERFUME_TBL P ON R.PERFUME_NO = P.PERFUME_NO
 		<where>
-			P.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+			P.PERFUME_NAME LIKE '%' || #{searchValue} || '%' OR P.PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
 			<if test="searchIncense eq 'All'">
 				AND (P_SCENT_CATEGORY = 'Woody'
 				OR P_SCENT_CATEGORY = 'Floral'
@@ -443,7 +444,7 @@
 		SELECT COUNT(*) FROM REVIEW_TBL
 		JOIN MEMBER_TBL USING(MEMBER_NO)
 		JOIN PERFUME_TBL USING(PERFUME_NO)
-		WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		WHERE (PERFUME_NAME LIKE '%' || #{searchValue} || '%' OR PERFUME_BRAND LIKE '%' || #{searchValue} || '%')
 		<choose>
 			<when test="searchIncense == 'All'">
 				AND (P_SCENT_CATEGORY = 'Woody'
@@ -492,10 +493,10 @@
 		DELETE FROM QNA_TBL WHERE QNA_NO = #{qnaNo}
 	</delete>
 	<select id="selectAdQnaList" resultMap="qnaBoardResultMap">
-		SELECT Q.*, M.MEMBER_NICKNAME
+		SELECT Q.*, M.MEMBER_NICKNAME, R.REPLY_STATUS
       	FROM QNA_TBL Q
-      	LEFT OUTER JOIN MEMBER_TBL M
-      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	LEFT OUTER JOIN MEMBER_TBL M ON Q.MEMBER_NO = M.MEMBER_NO
+      	LEFT OUTER JOIN Q_REPLY_TBL R ON Q.QNA_NO = R.REP_QNA_NO
       	ORDER BY Q.QNA_DATE DESC
 	</select>
 	<select id="getQListCount" resultType="_int">
@@ -503,8 +504,8 @@
 	</select>
 	<select id="getSearchQListCount" resultType="_int">
 		SELECT COUNT(*) FROM QNA_TBL Q
-      	LEFT OUTER JOIN MEMBER_TBL M
-      	ON Q.MEMBER_NO = M.MEMBER_NO
+      	LEFT OUTER JOIN MEMBER_TBL M ON Q.MEMBER_NO = M.MEMBER_NO
+      	LEFT OUTER JOIN Q_REPLY_TBL R ON Q.QNA_NO = R.REP_QNA_NO
 		<choose>
 			<when test="searchCondition == 'All'">
 				WHERE QNA_SUBJECT LIKE '%' || #{searchValue} || '%'
@@ -540,6 +541,12 @@
 <!-- 문의 끝 -->
 
 <!-- 주문내역 시작 -->
+	<update id="updateOrderStatus">
+		UPDATE ORDER_TBL 
+		SET ORDER_STATUS = #{orderStatus} 
+		WHERE ORDER_NO = #{orderNo}
+	</update>
+	
 	<select id="getOrderListCount" resultType="_int">
 		SELECT COUNT(*) FROM ORDER_TBL O
 		LEFT OUTER JOIN MEMBER_TBL M ON O.MEMBER_NO = M.MEMBER_NO
