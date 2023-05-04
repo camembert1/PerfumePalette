@@ -69,9 +69,9 @@ margin: auto;
 	
 				<br><br>
 	
-				<h2>SNS 로그인</h2>
+				<h2 style="display: none;">SNS 로그인</h2>
 	
-				<div class="input-btn">
+				<div style="display: none;" class="input-btn">
 					<div class="kakaoBtn">
 						<a href="https://kauth.kakao.com/oauth/authorize?client_id=59c4b66fb0ac37a154ec85db3a5e6f99&redirect_uri=	
 http://localhost:8080/kakaoLogin&response_type=code">

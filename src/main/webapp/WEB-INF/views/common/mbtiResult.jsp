@@ -8,7 +8,7 @@
         <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆 - 𝑴𝑩𝑻𝑰</title>
 
         <link rel="stylesheet" href="../../../resources/commonCss/mbtiResult.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 
         <!-- favicon : 탭에 보이는 아이콘 -->
         <link rel="icon" href="../../../resources/img/common/favicon.png" />
@@ -24,14 +24,17 @@
             <!-- 본문 내용 가운데 정렬 위한 div -->
             <div id="forCenter">
                 <!-- 여기부터 내용 입력하시면 됩니다! -->
-                <h1>${sessionScope.member.memberNickname }</h1>
-                <h1>${sessionScope.member.memberId }</h1>
+                <h1>${member.memberNickname }</h1>
+                <h1>${member.memberId }</h1>
                 <!-- 비로그인상태라면 -->
                 <c:if test="${sessionScope.member eq null }"></c:if>
 
                 <!-- 로그인상태라면 -->
                 <c:if test="${sessionScope.member ne null }">
-                    <h1>${sessionScope.member.memberNickname }님의 MBTI는 ${mbtiResult }입니다.!</h1>
+                    <h1>${member.memberNickname }님의 MBTI는 ${mbtiResult }입니다.!</h1>
+                    <div>${perfume.perfumeNo }</div>
+                    <div>${perfume.perfumeName }</div>
+                    <div>${perfume.perfumeBrand }</div>
                     <a href="/mbti/mbti">다시검사하기</a>
                 </c:if>
 

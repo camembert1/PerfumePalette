@@ -372,6 +372,18 @@
 		})
 		
 
+		getCommentDate = function(commentDate) {
+			let date = new Date(commentDate);
+			dateYear = date.getFullYear();
+			dateMonth = String(date.getMonth() + 1).padStart(2, '0');
+			dateDate = String(date.getDate()).padStart(2, '0');
+	
+			dateHours = String(date.getHours()).padStart(2, '0');
+			dateMinutes = String(date.getMinutes()).padStart(2, '0');
+								
+			let commentDateStr = dateYear + '-' + dateMonth + '-'  + dateDate + ' ' + dateHours + ':'  + dateMinutes;
+			return commentDateStr;
+		}
 		//댓글대댓글 리스트 
 		function replyCommentList(){
 			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
@@ -388,6 +400,7 @@
 					replyList.innerHTML = "";
 					
 					data.forEach(element => {
+						let commentDate = getCommentDate(element.commentDate);
 						if(element.pcommentNo == 0){
 							let replyBox = document.querySelector("#replyListForm").cloneNode(true);
 							replyBox.classList.remove("reviewHidden");
@@ -396,7 +409,7 @@
 							// console.log(nickname);
 							nickname.innerHTML = element.memberNickname;
 							replyBox.children[1].innerHTML = element.commentContent;
-							replyBox.children[2].innerHTML = element.commentDate;
+							replyBox.children[2].innerHTML = commentDate;
 							replyList.append(replyBox);
 						} else{
 							let replyBox = document.querySelector("#commentListForm").cloneNode(true);
@@ -405,7 +418,7 @@
 							// console.log(nickname);
 							nickname.innerHTML = "ㄴ"+ element.memberNickname;
 							replyBox.children[1].innerHTML = element.commentContent;
-							replyBox.children[2].innerHTML = element.commentDate;
+							replyBox.children[2].innerHTML = commentDate;
 							replyBox.dataset.replyno = element.commentNo;
 							replyList.append(replyBox);
 						}
