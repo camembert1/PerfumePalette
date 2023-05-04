@@ -37,4 +37,10 @@ public class CartServiceImpl implements CartService {
 		return list;
 	}
 
+	// 주문 성공 시 재고 감소를 위해 cartNo 가져오기 by perfumeNo, cartQuantity, memberId ServiceImpl
+	@Override
+	public int getCartNo(Cart cart) {
+		return cStore.getCartNo(cart);
+	}
+
 }

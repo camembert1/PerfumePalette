@@ -10,7 +10,7 @@
 	<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
 	<link rel="stylesheet" href="../../../resources/perfumeShopCss/detail.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 
 	<!-- favicon : 탭에 보이는 아이콘 -->
 	<link rel="icon" href="../../resources/img/common/favicon.png" />
@@ -54,7 +54,7 @@
 				<div>품절</div>
 			</c:when>
 			<c:otherwise>
-				<div>재고만아 어어</div>
+				<div>재고만아 어어 ${perfume.perfumeQuantity }</div>
 			</c:otherwise>
 		</c:choose>
 
@@ -165,9 +165,6 @@
 		}
 
 		// 재입고 알림 버튼
-		// 일단은 무한신청
-		// 신청 들어가는 거 확인ㄴ하고
-		// 재입고여부 확인하고 그런 예외 처리 해주기!
 		restockAlert = function() {
 
 			let perfumeNo = '${perfume.perfumeNo}';
@@ -271,7 +268,7 @@
 				} else {
 					// 찜을 누른 상태라면 찜 취소
 					// 근데 찜 취소가 wishNo를 이용해서 여기서 처리할 수가 없음
-					// 임시로 wishNo 가져오겟슴 일단
+					// wishNo 가져오기
 					$.ajax({
 						url: '/perfume/getWishNo',
 						type:'POST',
@@ -305,8 +302,24 @@
 
 		// 모달 - 구매하기 (구매 submit버튼)
 		order = function() {
-			$('[name=cartQuantity]').val($("#perfumeQuantity").val());
-			$('#orderForm').submit();
+
+			// 장바구니 추가해서 submit하기
+			$.ajax({
+				url: "/cart/add",
+				type: "POST",
+				data: {
+					memberId: '${member.memberId }',
+					cartQuantity: $("#perfumeQuantity").val(),
+					perfumeNo: $("#perfumeNo").val(),
+				},
+				success: function (result) {
+					$('[name=cartQuantity]').val($("#perfumeQuantity").val());
+					$('#orderForm').submit();
+				},
+				error: function () {
+					alert("서버 처리 실패");
+				}
+			});	
 		}
 
 		// 디테일 - 구매하기 (모달 띄우는 버튼)
@@ -405,9 +418,17 @@
 		const input = document.getElementById("perfumeQuantity");
 		const upBtn = document.querySelector(".up");
 		const downBtn = document.querySelector(".down");
+
+		const perfumeQuantity = '${perfume.perfumeQuantity }';
 		
 		upBtn.addEventListener("click", () => {
-			input.stepUp();
+			console.log('재고 : ' + perfumeQuantity);
+			console.log('구매수량 : ' + input.value);
+			if (perfumeQuantity == input.value) {
+				alert("해당 재고가 부족합니다.");
+			} else {
+				input.stepUp();
+			}
 		});
 
 		downBtn.addEventListener("click", () => {

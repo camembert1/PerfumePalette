@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../../resources/commonCss/header.css">
 <!-- 채팅 관련 필요 -->
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- sockjs  -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <!-- alertify 꾸미는 알림창-->
@@ -160,10 +162,25 @@
 	});
 
 	// 벨 아이콘 hover 할 때마다 알림 정보 불러옴
-	$('#alert-hover-area').mouseenter(function() {
-		getAlertCnt();
-		getAlertList();
-	});
+
+	$('#alert-hover-area').hover(
+		function() { // 마우스를 올렸을 때
+			getAlertCnt();
+			getAlertList();
+			$('#alert').stop().animate({
+				opacity: 1,
+				marginLeft: "-280px"
+			}, 300);
+		}, function() { // 마우스를 내렸을 때
+			setTimeout(function() {
+				$('#alert').stop().animate({
+					opacity: 0,
+					marginLeft: "150px"
+				}, 300);
+			}, 2000);
+		}
+	);
+
 
 	// 안 읽은 알림 개수 return
 	getAlertCnt = function() {
@@ -196,7 +213,7 @@
 
 				
 				str = '';
-				str += '<div id="alertOne">';
+				str += '<div class="alertOne" onclick="clickAlert(' + aList[i].alertNo + ', this)">';
 				str += '<div id="alertCategoroyArea"><div>[</div>';
 				str += '<div class="alertCategory">' + aCategory + '</div>';
 				str += '<div>]</div></div>';
@@ -205,21 +222,44 @@
 
 				switch (aCategory) {
 					case '재입고':
-						str += '<div>[' + aList[i].perfumeBrand + ']' + aList[i].perfumeName + '이(가) 재입고되었습니다.</div>';
+						str += '<input type="hidden" class="perfumeNo" value="' + aList[i].perfumeNo + '"><div>[' + aList[i].perfumeBrand + ']' + aList[i].perfumeName + '이(가) 재입고되었습니다.</div>';
 						break;
 					case '좋아요':
-						str += '<div>' + aList[i].reviewContents.substr(0, 5) + '...에 ' + aList[i].likeMemberNickname + ' 님이 좋아요를 눌렀습니다.</div>';
+						str += '<input type="hidden" class="reviewNo" value="' + aList[i].reviewNo + '"><div>' + aList[i].reviewContents.substr(0, 5) + '...에 ' + aList[i].likeMemberNickname + ' 님이 좋아요를 눌렀습니다.</div>';
 						break;
 					case '댓글':
-						str += '<div>' + aList[i].reviewContents.substr(0, 5) + '...에 댓글이 달렸습니다.</div>';
+						str += '<input type="hidden" class="reviewNo" value="' + aList[i].reviewNo + '"><div>' + aList[i].reviewContents.substr(0, 5) + '...에 댓글이 달렸습니다.</div>';
 						break;
 					case '답댓글':
-						str += '<div>' + aList[i].pCommentContent.substr(0, 5) + '...에 답댓글이 달렸습니다.</div>';
+						str += '<input type="hidden" class="reviewNo" value="' + aList[i].reviewNo + '"><div>' + aList[i].pCommentContent.substr(0, 5) + '...에 답댓글이 달렸습니다.</div>';
 						break;
 				}
 
 				str += '</div>';
 				$('#alert').html($('#alert').html() + str);
+			}
+		});
+	}
+
+	clickAlert = function(alertNo, tag) {
+		$.ajax({
+			url: '/perfume/clickAlert'
+			, type: 'POST'
+			, data: {
+				'alertNo': alertNo
+			}
+		}).done(function(result) {
+			if(result == 1) {
+				
+				$(tag).fadeOut(200);
+				$('#alertCnt').html(parseInt($('#alertCnt').html()) - 1);
+
+				let alertCategory = $(tag).find('.alertCategory').html();
+				if (alertCategory == '재입고') {
+					location.href = '/perfume/detail/' + $(tag).find('.perfumeNo').val();
+				} else {
+					location.href = '/review/reviewDetail/' + $(tag).find('.reviewNo').val();
+				}                        
 			}
 		});
 	}

@@ -1,6 +1,5 @@
 package com.kh.perfumePalette.perfume;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -21,7 +20,6 @@ import com.google.gson.Gson;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.member.Member;
-import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -391,6 +389,8 @@ public class PerfumeController {
 	@PostMapping("/clickAlert")
 	public int clickAlert(Integer alertNo) {
 		try {
+			System.out.println("dddddd");
+			System.out.println(alertNo);
 			int result = pService.clickAlert(alertNo);
 			return result;
 		} catch (Exception e) {

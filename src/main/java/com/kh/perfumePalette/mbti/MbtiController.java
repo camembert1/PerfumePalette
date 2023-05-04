@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.perfumePalette.perfume.Perfume;
+
 
 @Controller
 @RequestMapping("/mbti")
 public class MbtiController {
+	
+	@Autowired
+	private MbtiService mService;
 
-	//@Autowired
-	//private MemberService mService;
 
 	// MBTI테스트 화면 출력
 	@GetMapping("/mbti")
@@ -36,10 +39,16 @@ public class MbtiController {
 	@GetMapping("/mbtiResult")
 	public ModelAndView mbtiResultView(ModelAndView mv, HttpSession session) {
 
-		String mbtiResult = session.getAttribute("mbtiResult") + "";
-		
-		
-		mv.setViewName("common/mbtiResult");
+		try {
+			String mbtiResult = session.getAttribute("mbtiResult") + "";
+			Perfume perfume = mService.getPerfumeByMbti(mbtiResult);
+			mv
+			.addObject("perfume", perfume)
+			.setViewName("common/mbtiResult");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}	
 		return mv;
 	}
 

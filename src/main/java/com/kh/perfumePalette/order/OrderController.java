@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.cart.CartService;
 import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.member.MemberService;
 import com.kh.perfumePalette.order.domain.AllOrderInfo;
@@ -50,6 +51,9 @@ public class OrderController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private CartService cService;
 	
 	
 	
@@ -204,13 +208,21 @@ public class OrderController {
 			, int[] cartNoArr
 			, Integer totalPrice) {
 		
+		
+		Member orderer = mService.selectMemberById(((Member)session.getAttribute("member")).getMemberId());
 		List<Cart> cList = new ArrayList<Cart>();
 		
-		if(cart.getPerfumeNo() != 0) {		
+		if(cart.getPerfumeNo() != 0) {	
+			
 			// detail에서 주문하기로 넘어갔다면
 			// cart에 들은 정보  : 
-			// cartQuantity(구매수량), perfumeNo, perfumePrice, perfumeName,pFilerename
-			// 나중에 카트에 추가해서 주문 진행하는 방식으로 바꾸기...
+			// cartQuantity(구매수량), perfumeNo, perfumePrice, perfumeName, pFilerename
+			
+			// 주문 성공 시 재고 감소를 위해 cartNo를 이용하기 때문에
+			// perfumeNo, cartQuantity, memberId로 cartNo조회해서 가져오기
+			cart.setMemberId(orderer.getMemberId());
+			cart.setCartNo(cService.getCartNo(cart));
+			
 			cList.add(cart);
 			totalPrice = cart.getPerfumePrice()*cart.getCartQuantity();
 		} else {	
@@ -221,7 +233,7 @@ public class OrderController {
 			}
 		}
 		
-		Member orderer = mService.selectMemberById(((Member)session.getAttribute("member")).getMemberId());
+		
 		
 		mv.addObject("cList", cList)
 		.addObject("orderer", orderer)

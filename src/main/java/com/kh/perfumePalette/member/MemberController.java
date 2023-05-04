@@ -128,7 +128,17 @@ public class MemberController {
 
 	// 로그인
 	@GetMapping("/login")
-	public ModelAndView login(ModelAndView mv) {
+	public ModelAndView login(ModelAndView mv, HttpSession session) {
+		
+		// 세션에 저장된 회원 정보를 가져오기 
+        Member loginUser = (Member) session.getAttribute("member");
+        if (loginUser != null) {
+            // 이미 로그인된 상태인 경우
+            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+            mv.addObject("alert", alert).setViewName("common/alert");
+            return mv; // 홈으로 이동
+        }
+        
 		mv.setViewName("member/login");
 		return mv;
 	}
@@ -139,17 +149,9 @@ public class MemberController {
 			, ModelAndView mv
 			, HttpSession session) {
 		try {
-			// 세션에 저장된 회원 정보를 가져오기 
-	        Member loginUser = (Member) session.getAttribute("member");
-	        if (loginUser != null) {
-	            // 이미 로그인된 상태인 경우
-	            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
-	            mv.addObject("alert", alert).setViewName("common/alert");
-	            return mv; // 홈으로 이동
-	        }
 			
 	        // 로그인 처리
-			loginUser = mService.login(member);
+	        Member loginUser = mService.login(member);
 			if (loginUser != null) {
 				// member_status = 1인 사람만 로그인 가능
 				if (loginUser.getMemberStatus() == 1) {

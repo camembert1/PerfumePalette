@@ -38,4 +38,10 @@ public class CartStoreImpl implements CartStore {
 		return list;
 	}
 
+	// 주문 성공 시 재고 감소를 위해 cartNo 가져오기 by perfumeNo, cartQuantity, memberId StoreLogic
+	@Override
+	public int getCartNo(Cart cart) {
+		return session.selectOne("cartMapper.getCartNo", cart);
+	}
+
 }

@@ -49,5 +49,18 @@
 		ORDER BY
 		C.CART_DATE DESC
 	</select>
+	
+	<select id="getCartNo" resultType="_int">
+		SELECT *
+		FROM (
+		    SELECT  CART_NO
+		    FROM    CART_TBL
+		    WHERE   PERFUME_NO = #{perfumeNo }
+		        AND CART_QUANTITY = #{cartQuantity }
+		        AND MEMBER_ID = #{memberId }
+		    ORDER BY CART_DATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
 
 </mapper>
