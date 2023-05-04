@@ -159,7 +159,9 @@
 <script>
 	// 유정!! 여기부터 알림창 관련 스크립트 절대 건들지 마시오!
 	$(document).ready(function() {
-		getAlertCnt();
+		if('${member.memberId }' != '') {
+			getAlertCnt();
+		}
 	});
 
 	// 벨 아이콘 hover 할 때마다 알림 정보 불러옴
