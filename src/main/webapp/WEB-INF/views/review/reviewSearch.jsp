@@ -46,6 +46,7 @@
             <tr>
             	<th>번호</th>
                 <th>별점</th>
+                <th>이미지</th>
                 <th>내용</th>
                 <th>작성자</th>
                 <th>작성일</th>
@@ -74,8 +75,12 @@
                 </td>
                 <td>
                 	<div class="perfumeInfo">
+                		<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
+                	</div>
+                </td>
+                <td>
+                	<div class="perfumeInfo">
                 		<a href="/review/reviewDetail/${review.reviewNo }">
-						<img src="../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 	                    <strong>[${review.perfumeBrand }] ${review.perfumeName }</strong>
 	                    </a>
                     </div>
@@ -88,7 +93,7 @@
         </tbody>
         <tfoot>
 	        <tr>
-		        <td colspan="6" class="line">
+		        <td colspan="7" class="line">
 			        <div id="paging">
 					<c:if test="${paging.totalCount ne null }">
 						<c:if test="${paging.currentPage != 1}">

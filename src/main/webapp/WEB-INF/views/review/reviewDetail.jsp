@@ -59,7 +59,7 @@
 				<div class="productInfo">
 					<div id="like">
 						<c:if test="${likeNo ne 0 }">
-							<img alt="like_yes" src="../../../resources/img/wish/wish_yes.png" onclick="removeLike('${review.reviewNo}','${member.memberNo}')">
+							<img alt="like_yes" src="../../../resources/img/common/wish-1.png" onclick="removeLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
 						<c:if test="${likeNo eq 0 }">
 							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike('${review.reviewNo}','${member.memberNo}')">
@@ -108,15 +108,17 @@
 						<a href="/review/reviewList">
 							<input type="button" value="목록으로">
 						</a>
-				        <c:url var="rModify" value="/review/reviewModify">
-				        	<c:param name="reviewNo" value="${review.reviewNo }"></c:param>
-				        </c:url>
-				        <a href="${rModify }">
-				        	<input type="submit" value="수정하기">
-				        </a>
-				        <a href="javascript:void(0);" onclick="removeCheck(${review.reviewNo});">
-				        	<input type="button" value="삭제하기">
-				        </a>
+						<c:if test="${member.memberNo == review.memberNo }">
+					        <c:url var="rModify" value="/review/reviewModify">
+					        	<c:param name="reviewNo" value="${review.reviewNo }"></c:param>
+					        </c:url>
+					        <a href="${rModify }">
+					        	<input type="submit" value="수정하기">
+					        </a>
+					        <a href="javascript:void(0);" onclick="removeCheck(${review.reviewNo});">
+					        	<input type="button" value="삭제하기">
+					        </a>
+				        </c:if>
 					</div>
 					
 					<!-- 댓글 영역 -->
@@ -140,6 +142,7 @@
 					                </div>
 					            </div>
 
+								<!-- 댓글 출력 -->
 								<div class="replyForm reviewHidden" id="replyListForm">
 									<div class="replyWriter">
 										<p>${member.memberNickname}</p>
@@ -148,7 +151,7 @@
 										<p></p>
 									</div>
 									<div class="">
-										<p>2023-05-01 오후05:55</p>
+										<p>시간...</p>
 									</div>
 									<div class="">
 										<a onclick="replyComment(this)">답댓글</a>
@@ -157,7 +160,7 @@
 										<a>수정</a>
 									</div>
 									<div class="">
-										<a>삭제</a>
+										<a class="removeComment" onclick="removeComment(this)">삭제</a>
 									</div>
 								</div>
 
@@ -169,7 +172,7 @@
 										<p></p>
 									</div>
 									<div class="">
-										<p>2023-05-01 오후06:55</p>
+										<p></p>
 									</div>
 								</div>
 
@@ -186,8 +189,6 @@
 								</div>
 
 					            <div id="replyListComment">
-						            
-					            
 						            <div class="replyForm">
 						                <div class="replyWriter">
 						                    <p></p>
@@ -205,25 +206,17 @@
 						                    <a>삭제</a>
 						                </div>
 						            </div>
-					            
-					            
-						            
-					                
 					            </div>
 				            </div>
 			        </div>
 			</div>
-			
-			
-			
 		</div> 
 	</main>
 	<script>
 		replyCommentList();
+		
 		  // 모달창
 		  function report() {
-			  
-			  
 			  if(${member eq null}){
 				  alert("로그인이 필요한 서비스입니다.");
 			  }
@@ -296,6 +289,7 @@
 					if(result > 0){
 						$("#modal").css("display", "none");
 						$("#modal-bg").css("display", "none");
+						$("body").css("overflow", "visible");
 						alert("신고 완료");
 					} 
 				}
@@ -381,6 +375,7 @@
 				data : {
 					reviewNo : reviewNo
 				}, success : function(data){
+					$("#replyCount").text(data.length);
 					let commentWriteBox = document.getElementById("replycommentWrite");
 					let replyList = document.querySelector("#replyListComment");
 					replyList.before(commentWriteBox);
@@ -403,7 +398,7 @@
 							replyBox.classList.remove("reviewHidden");
 							let nickname = replyBox.children[0];
 							// console.log(nickname);
-							nickname.innerHTML = "ㄴ"+ element.memberNickname;
+							nickname.innerHTML = "┖ "+ element.memberNickname;
 							replyBox.children[1].innerHTML = element.commentContent;
 							replyBox.children[2].innerHTML = element.commentDate;
 							replyBox.dataset.replyno = element.commentNo;
@@ -459,12 +454,33 @@
 
 
 
-		//삭제하기 버튼 클릭 했을 때
+		//후기 게시글 삭제하기 버튼 클릭 했을 때
 		function removeCheck(reviewNo){
 			if(confirm("정말 삭제하시겠습니까?")){
 				location.href="/review/reviewRemove?reviewNo="+reviewNo;
 			}
 		}
+
+
+		function removeComment(removeBtnTag){
+			if(confirm("정말 삭제하시겠습니까?")){
+				let commentNo = removeBtnTag.closest('.replyForm').getAttribute('data-replyno');
+				$.ajax({
+					url: "/review/deleteComment",
+					type : "get",
+					data : {
+						commentNo : commentNo
+					}, 
+					success : function(result){
+						alert(result);
+						replyCommentList();
+					},
+					error : function(){
+						alert("AJAX 처리 실패!!");
+					}
+				});
+			}
+		}	
 	</script>
 	<jsp:include page="../common/footer.jsp" />
 </body>

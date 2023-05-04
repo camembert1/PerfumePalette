@@ -130,6 +130,12 @@ public class ReviewStoreImpl implements ReviewStore{
 		return rList;
 	}
 
+	@Override
+	public int deleteComment(SqlSession session,int commentNo) {
+		int result = session.delete("ReviewMapper.deleteComment", commentNo);
+		return result;
+	}
+
 	
 
 }
