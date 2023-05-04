@@ -151,7 +151,6 @@ public class AdPerfumeController {
 				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage()).setViewName("common/error");
 		}

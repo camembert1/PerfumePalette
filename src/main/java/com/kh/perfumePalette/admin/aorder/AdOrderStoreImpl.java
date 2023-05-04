@@ -33,6 +33,11 @@ public class AdOrderStoreImpl implements AdOrderStore {
 		return session.selectList("AdminMapper.selectAdminOrderDetail", orderNo);
 	}
 
+	@Override
+	public int updateOrder(SqlSession session, AdOrder order) {
+		return session.update("AdminMapper.updateOrderStatus", order);
+	}
+
 
 
 

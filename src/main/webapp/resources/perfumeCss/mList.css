@@ -106,7 +106,14 @@ main .allCheck:checked {
 
 
 main .perfumeList {
-	width: 60%;
+	width: 75%;
+	padding-left: 130px;
+	text-align: center;
+}
+main table .tdOver {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 main .top_category {
@@ -182,10 +189,13 @@ main .td {
 main img {
 	height:100px;
 }
+
 main table {
+	width: 100%;
 	margin-top: 20px;
 	margin-bottom: 100px;
 	border-collapse:collapse;
+	table-layout: fixed;
 }
 main thead {
 	background-color: #34443E;

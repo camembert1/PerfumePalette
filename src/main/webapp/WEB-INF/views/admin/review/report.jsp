@@ -57,18 +57,18 @@
 					<c:forEach items="${rrList }" var="review" varStatus="i">
 						<tr>
 							<td>${i.count }</td>
-							<td>
+							<td class="tdOver">
 								<c:choose>
 									<c:when test="${review.reportType eq 0}">욕설/혐오/차별적 표현</c:when>
 									<c:when test="${review.reportType eq 1}">부정절한 내용</c:when>
 									<c:when test="${review.reportType eq 2}">기타</c:when>
 								</c:choose>
 							</td>
-							<td>
+							<td class="tdOver">
 								<button class="modal_btn" data-target="#modal${i.index }">${review.reportContent }</button>
 							</td>
-							<td>${review.memberNickName }</td>
-							<td><fmt:formatDate value="${review.reportDate }"
+							<td class="tdOver">${review.memberNickName }</td>
+							<td class="tdOver"><fmt:formatDate value="${review.reportDate }"
 									pattern="yyyy-MM-dd" /></td>
 						</tr>
 <!-- 						모달 시작 -->
@@ -100,7 +100,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="4" class="line paging">
+						<td colspan="5" class="line paging">
 							<div id="paging">
 								<c:if test="${paging.totalCount ne null }">
 									<c:if test="${paging.currentPage != 1}">

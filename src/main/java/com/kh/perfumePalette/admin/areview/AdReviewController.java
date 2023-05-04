@@ -122,7 +122,7 @@ public class AdReviewController {
 				Alert alert = new Alert("/", "접근권한이 없습니다.");
 				mv.addObject("alert", alert).setViewName("common/alert");
 			} else {
-				int totalCount = rService.getRListCount();
+				int totalCount = rService.getRListCount(reviewNo);
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
 				List<AdReview> rrList = rService.selectAllReport(reviewNo, pi);
 				mv.addObject("paging", pi).addObject("rrList", rrList).setViewName("admin/review/report");

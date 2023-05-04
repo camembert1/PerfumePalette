@@ -84,8 +84,30 @@ main #hrefName {
 }
 /* 사이드바 끝 */
 
+main table {
+	table-layout: fixed;
+	width: 60%;
+}
+main select {
+	height: 28px;
+}
 
+main table {
+	width: 60%;
+	margin-top: 20px;
+	margin-bottom: 100px;
+	border-collapse:collapse;
+}
+main table .tdOver {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 
+main td {
+	text-align: center;
+	padding: 5px 0px;
+}
 
 
 

@@ -113,8 +113,26 @@ main thead {
 	color: white;	
 	height: 40px;
 }
+main table tbody tr:hover {
+	background-color: #ccc;
+}
 main table tr td {
 	height: 50px;
+}
+main .cursor {
+	cursor: pointer;
+}
+main #one { width: 5%; }
+main #two { width: 15%; }
+main #three { width: 30%; }
+main #four { width: 20%; }
+main #five { width: 20%; }
+main #six { width: 10%; }
+
+main table .tdOver {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 main .del {

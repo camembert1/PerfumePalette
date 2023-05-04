@@ -46,8 +46,8 @@ public class AdReviewStoreImpl implements AdReviewStore{
 	}
 
 	@Override
-	public int getRListCount(SqlSession session) {
-		return session.selectOne("AdminMapper.getReportListCount");
+	public int getRListCount(SqlSession session, int reviewNo) {
+		return session.selectOne("AdminMapper.getReportListCount", reviewNo);
 	}
 
 	@Override

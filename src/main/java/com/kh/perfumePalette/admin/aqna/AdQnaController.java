@@ -56,6 +56,7 @@ public class AdQnaController {
 		
 	}
 	
+	
 	// 문의 리스트
 	@GetMapping("/list")
 	public ModelAndView viewAdminQnaList(ModelAndView mv

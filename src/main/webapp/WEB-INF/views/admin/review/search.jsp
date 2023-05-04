@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,14 +65,15 @@
 			<table>
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="allCheck"></th>
-						<th>별점</th>
-						<th>이미지</th>
-						<th>[브랜드] 이름</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
-						<th>신고수</th>
+						<th style="width: 25px;"><input type="checkbox" class="allCheck"></th>
+						<th style="width: 100px;">별 점</th>
+						<th style="width: 100px;">이미지</th>
+						<th style="width: 130px;">상 품</th>
+						<th style="width: 150px;">내 용</th>
+						<th style="width: 70px;">작성자</th>
+						<th style="width: 100px">작성일</th>
+						<th style="width: 50px;">조회수</th>
+						<th style="width: 50px;">신고수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,15 +90,14 @@
 									<input type="hidden" name="rViewscore" class="rating-value" value="${review.rViewscore }">
 								</div>
 							</td>
-							<td>
-								<div>
-			                		<a href="">
-									<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
-				                    </a>
-			                    </div>
+							<td class="onclick" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">
+								<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 							</td>
-							<td><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
-							<td>${review.memberNickname }</td>
+							<td class="onclick tdOver" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';"><strong>[${review.perfumeBrand }] ${review.perfumeName }</strong></td>
+							<td class="onclick tdOver" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}'">
+	            				<c:out value="${fn:substring(review.reviewContents, 0, 19)}${fn:length(review.reviewContents) > 19 ? '...' : ''}" />
+		            		</td>
+							<td class="onclick tdOver" style="width: 100px;" onclick="window.location.href='/review/reviewDetail/${review.reviewNo}';">${review.memberNickname }</td>
 							<td><fmt:formatDate value="${review.reviewDate }" pattern="yyyy-MM-dd" /></td>
 							<td>${review.rViewcount }</td>
 							<td>
@@ -112,11 +113,11 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="7"></td>
+						<td colspan="8"></td>
 						<td><button type="button" class="del">삭제하기</button></td>
 					</tr>
 			        <tr>
-						<td colspan="8" class="line">
+						<td colspan="9" class="line">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
