@@ -31,8 +31,23 @@ public class MemberController {
 
 	// 회원가입
 	@GetMapping("/enroll")
-	public ModelAndView enroll(ModelAndView mv) {
+	public ModelAndView enroll(ModelAndView mv, HttpSession session) {
 		mv.setViewName("member/enroll");
+		
+		// 세션에 저장된 회원 정보를 가져오기 
+        Member loginUser = (Member) session.getAttribute("member");
+        
+        // 이미 로그인된 상태인 경우
+        if (loginUser != null) {
+        	// 홈으로 이동하도록 알림창 띄우고,  알림창을 표시하는 뷰 반환 
+            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+            mv.addObject("alert", alert).setViewName("common/alert");
+            return mv; // 홈으로 이동
+        }
+        
+     // 로그인되지 않은 상태인 경우, 알림창을 띄우고 로그인 페이지로 이동 
+        Alert alert = new Alert("/member/login", "로그인이 필요한 서비스 입니다.");
+        mv.addObject("alert", alert).setViewName("common/alert");
 		return mv;
 	}
 
@@ -132,13 +147,15 @@ public class MemberController {
 		
 		// 세션에 저장된 회원 정보를 가져오기 
         Member loginUser = (Member) session.getAttribute("member");
+        
+        // 이미 로그인된 상태인 경우
         if (loginUser != null) {
-            // 이미 로그인된 상태인 경우
+        	// 홈으로 이동하도록 알림창 띄우고,  알림창을 표시하는 뷰 반환 
             Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
             mv.addObject("alert", alert).setViewName("common/alert");
             return mv; // 홈으로 이동
         }
-        
+     // 로그인되지 않은 상태인 경우, 로그인 페이지로 이동 
 		mv.setViewName("member/login");
 		return mv;
 	}
@@ -151,7 +168,7 @@ public class MemberController {
 		try {
 			
 	        // 로그인 처리
-	        Member loginUser = mService.login(member);
+			Member loginUser = mService.login(member);
 			if (loginUser != null) {
 				// member_status = 1인 사람만 로그인 가능
 				if (loginUser.getMemberStatus() == 1) {
@@ -245,9 +262,25 @@ public class MemberController {
 
 	// 아이디 찾기
 	@GetMapping("findId")
-	public ModelAndView findId(ModelAndView mv) {
+	public ModelAndView findId(ModelAndView mv, HttpSession session) {
 		mv.setViewName("member/findId");
+		
+		// 세션에 저장된 회원 정보를 가져오기 
+        Member loginUser = (Member) session.getAttribute("member");
+        
+        // 이미 로그인된 상태인 경우
+        if (loginUser != null) {
+        	// 홈으로 이동하도록 알림창 띄우고,  알림창을 표시하는 뷰 반환 
+            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+            mv.addObject("alert", alert).setViewName("common/alert");
+            return mv; // 홈으로 이동
+        }
+        
+     // 로그인되지 않은 상태인 경우, 알림창을 띄우고 로그인 페이지로 이동 
+        Alert alert = new Alert("/member/login", "로그인이 필요한 서비스 입니다.");
+        mv.addObject("alert", alert).setViewName("common/alert");
 		return mv;
+		
 	}
 
 	@PostMapping("/findId")
@@ -272,8 +305,23 @@ public class MemberController {
 
 	// 비밀번호 찾기
 	@GetMapping("findPw")
-	public ModelAndView findPw(ModelAndView mv) {
+	public ModelAndView findPw(ModelAndView mv, HttpSession session) {
 		mv.setViewName("member/findPw");
+		
+		// 세션에 저장된 회원 정보를 가져오기 
+        Member loginUser = (Member) session.getAttribute("member");
+        
+        // 이미 로그인된 상태인 경우
+        if (loginUser != null) {
+        	// 홈으로 이동하도록 알림창 띄우고,  알림창을 표시하는 뷰 반환 
+            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+            mv.addObject("alert", alert).setViewName("common/alert");
+            return mv; // 홈으로 이동
+        }
+        
+     // 로그인되지 않은 상태인 경우, 로그인 페이지로 이동 
+        Alert alert = new Alert("/member/login", "로그인이 필요한 서비스 입니다.");
+        mv.addObject("alert", alert).setViewName("common/alert");
 		return mv;
 	}
 
@@ -373,7 +421,7 @@ public class MemberController {
 		return mv;
 	}
 
-	// 후기 다중 삭제
+	// 후기글 삭제
 	@PostMapping("/removeReview")
 	@ResponseBody
 	public String removeReview(int[] arr, HttpServletRequest request) {
@@ -418,7 +466,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	// 문의글 다중 삭제
+	// 문의글 삭제
 	@PostMapping("/removeQna")
 	@ResponseBody
 	public String removeQna(int[] arr, HttpServletRequest request) {
@@ -464,7 +512,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	// 문의글 다중 삭제
+	// 댓글 삭제
 		@PostMapping("/removeComment")
 		@ResponseBody
 		public String removeComment(int[] arr, HttpServletRequest request) {
@@ -488,9 +536,25 @@ public class MemberController {
 
 	// 회원탈퇴
 	@GetMapping("/bye")
-	public ModelAndView bye(ModelAndView mv) {
+	public ModelAndView bye(ModelAndView mv, HttpSession session) {
 		mv.setViewName("member/bye");
+		
+		// 세션에 저장된 회원 정보를 가져오기 
+        Member loginUser = (Member) session.getAttribute("member");
+        
+        // 이미 로그인된 상태인 경우
+        if (loginUser != null) {
+        	// 홈으로 이동하도록 알림창 띄우고,  알림창을 표시하는 뷰 반환 
+            Alert alert = new Alert("/", "이미 로그인된 상태입니다.");
+            mv.addObject("alert", alert).setViewName("common/alert");
+            return mv; // 홈으로 이동
+        }
+        
+     // 로그인되지 않은 상태인 경우, 알림창을 띄우고 로그인 페이지로 이동 
+        Alert alert = new Alert("/member/login", "로그인이 필요한 서비스 입니다.");
+        mv.addObject("alert", alert).setViewName("common/alert");
 		return mv;
+		
 	}
 
 	@PostMapping("/bye")
