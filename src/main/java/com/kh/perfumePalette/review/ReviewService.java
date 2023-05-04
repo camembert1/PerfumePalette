@@ -108,6 +108,7 @@ public interface ReviewService {
 	/**
 	 * 댓글 리스트 
 	 * @param reviewNo
+	 * @param commentNo 
 	 * @return
 	 */
 	List<ReviewComment> listComment(int reviewNo);

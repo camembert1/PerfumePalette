@@ -99,7 +99,8 @@
 		INNER JOIN MEMBER_TBL B ON A.MEMBER_NO = B.MEMBER_NO
 		INNER JOIN PERFUME_TBL C ON A.PERFUME_NO = C.PERFUME_NO
 		<where>
-			C.PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		(C.PERFUME_NAME LIKE '%' || #{searchValue} || '%' OR C.PERFUME_BRAND LIKE '%' || #{searchValue} || '%')
+			<!-- C.PERFUME_NAME LIKE '%' || #{searchValue} || '%' -->
 			<if test="searchPerfume eq 'All'">
 				AND (P_SCENT_CATEGORY = 'Woody'
 				OR P_SCENT_CATEGORY = 'Floral'
@@ -140,7 +141,8 @@
 		SELECT COUNT(*) FROM REVIEW_TBL
 		JOIN MEMBER_TBL USING(MEMBER_NO)
 		JOIN PERFUME_TBL USING(PERFUME_NO)
-		WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+		WHERE (PERFUME_NAME LIKE '%' || #{searchValue} || '%' OR PERFUME_BRAND LIKE '%' || #{searchValue} || '%')
+		<!-- WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%' -->
 		<choose>
 			<when test="searchPerfume == 'All'">
 				AND (P_SCENT_CATEGORY = 'Woody'

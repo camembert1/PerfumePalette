@@ -9,7 +9,6 @@
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="../../../resources/reviewCss/reviewDetail.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon"
@@ -151,17 +150,17 @@
 										<p></p>
 									</div>
 									<div class="">
-										<p>시간...</p>
+										<p></p>
 									</div>
 									<div class="">
 										<a onclick="replyComment(this)">답댓글</a>
 									</div>
-									<div class="">
-										<a>수정</a>
-									</div>
-									<div class="">
-										<a class="removeComment" onclick="removeComment(this)">삭제</a>
-									</div>
+										<div class="">
+											<a>수정</a>
+										</div>
+										<div class="">
+											<a class="removeComment" onclick="removeComment(this)">삭제</a>
+										</div>
 								</div>
 
 								<div class="replyForm reviewHidden" id="commentListForm">
@@ -364,6 +363,19 @@
 			})
 			
 		})
+		
+		getCommentDate = function(commentDate) {
+         let date = new Date(commentDate);
+         dateYear = date.getFullYear();
+         dateMonth = String(date.getMonth() + 1).padStart(2, '0');
+         dateDate = String(date.getDate()).padStart(2, '0');
+   
+         dateHours = String(date.getHours()).padStart(2, '0');
+         dateMinutes = String(date.getMinutes()).padStart(2, '0');
+                        
+         let commentDateStr = dateYear + '-' + dateMonth + '-'  + dateDate + ' ' + dateHours + ':'  + dateMinutes;
+         return commentDateStr;
+      }
 		
 
 		getCommentDate = function(commentDate) {
