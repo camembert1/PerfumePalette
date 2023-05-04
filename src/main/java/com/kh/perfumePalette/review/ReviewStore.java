@@ -122,6 +122,7 @@ public interface ReviewStore {
 	 * 댓글 리스트 
 	 * @param session
 	 * @param reviewNo
+	 * @param commentNo 
 	 * @return
 	 */
 	List<ReviewComment> listComment(SqlSession session, int reviewNo);
