@@ -531,9 +531,9 @@ public class MemberController {
 				return e.getMessage();
 			}
 		}
-	
-	
 
+		
+		
 	// 회원탈퇴
 	@GetMapping("/bye")
 	public ModelAndView bye(ModelAndView mv, HttpSession session) {

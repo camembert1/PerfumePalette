@@ -13,4 +13,6 @@ public interface ChatService {
 	public List<Chat> joinChatRoom(ChatRoom join);
 
 	public int exitChatRoom(Chat join);
+
+//	public Chat getFirstMessage(int roomNo);
 }

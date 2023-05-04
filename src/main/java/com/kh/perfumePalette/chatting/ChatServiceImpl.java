@@ -67,4 +67,9 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 
+//	@Override
+//	public Chat getFirstMessage(int roomNo) {
+//		return cStore.selectFirstMessage(sqlSession, roomNo);
+//	}
+
 }

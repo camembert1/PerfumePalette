@@ -141,10 +141,6 @@ body {
 	font-family: '마포꽃섬';
 }
 
-.chatting-area li {
-	margin-bottom: 5px;
-}
-
 .chatting-area #send {
 	width: 10%;
 	border-radius: 0px 0px 35px 0px;

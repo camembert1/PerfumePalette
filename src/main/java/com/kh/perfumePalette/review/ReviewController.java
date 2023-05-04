@@ -531,4 +531,20 @@ public class ReviewController {
 			int result = rService.insertComment(rComment);
 			return "success";
 		}
+		
+		//댓글 삭제 
+		@GetMapping("/deleteComment")
+		@ResponseBody
+		public String deleteComment(int commentNo) {
+			try {
+				int result = rService.deleteComment(commentNo);
+				if(result > 0) {
+					return "1";
+				} else {
+					return "0";
+				}
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}
 }
