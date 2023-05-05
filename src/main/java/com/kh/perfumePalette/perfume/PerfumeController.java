@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.qnaBoard.QnaBoard;
+import com.kh.perfumePalette.qnaBoard.QnaBoardService;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -28,6 +30,9 @@ public class PerfumeController {
 
 	@Autowired
 	private PerfumeService pService;
+	
+	@Autowired
+	private QnaBoardService qbService;
 
 	
 	/**
@@ -116,6 +121,13 @@ public class PerfumeController {
 				.setViewName("perfumeShop/detail");
 			} else {
 				// 상품 번호를 통한 디테일 페이지 조회 실패 시
+			}
+			
+			List<QnaBoard> qbList = qbService.selectAllQnaBoardPerfume(perfumeNo);
+			if(qbList != null) {
+				mv
+				.addObject("qnaList", qbList)
+				.setViewName("perfumeShop/detail");
 			}
 			
 		} catch (Exception e) {

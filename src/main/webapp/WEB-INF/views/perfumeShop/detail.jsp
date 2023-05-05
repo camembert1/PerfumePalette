@@ -148,6 +148,46 @@
 			<input type="hidden" name="pFilerename" value="${perfume.pFilerename }">
 			<input type="hidden" name="cartQuantity" value="">
 		</form>
+		
+		<!-- 테스트 -->
+		<hr style="width: 100%; color: red; margin-top: 100px">
+		<div style="width: 75%;">
+			<h2>QnA<sub> 상품 문의<b>(총 n개)</b></sub></h2>
+			<c:if test="${qnaList ne null }">
+				<table style="text-align: center; width: 100%">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>답변여부</th>
+							<th>구분</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>등록일자</th>
+						</tr>
+					</thead>
+					<tbody>
+					${qnaList }
+						<c:forEach items="${qnaList }" var="qna" varStatus="status">
+							<fmt:formatDate var="qnaDate" value="${qna.qnaDate }" pattern="yyyy-MM-dd" />
+							<tr>
+								<td>${status.count }</td>
+								<td>
+									<c:if test="${qna.replyStatus == 'Y'}">답변완료</c:if> <c:if test="${qna.replyStatus != 'Y'}">답변대기</c:if>
+								</td>
+								<td>
+									<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
+								</td>
+								<td>${qna.qnaSubject }</td>
+								<td>${qna.memberNickname }</td>
+								<td>${qnaDate }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</c:if>
+			<button type="button" onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
+		</div>
+		
 
 
 	</div>

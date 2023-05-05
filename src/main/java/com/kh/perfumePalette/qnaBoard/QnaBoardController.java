@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,102 @@ public class QnaBoardController {
 	@Autowired
 	@Qualifier("qnafileUtil")
 	private QnaFileUtil qnafileUtil;
+	
+	// 나 신희채 추가 시작
+	
+	// 문의 게시판 글쓰기 + 향수 번호 가지고
+	@RequestMapping(value = "/write/{perfumeNo}", method = RequestMethod.GET)
+	public ModelAndView qnaBoardWritePerfume(ModelAndView mv, HttpServletRequest request, @PathVariable("perfumeNo") int perfumeNo) {
+		try {
+			HttpSession session = request.getSession();
+			if ((Member) session.getAttribute("member") == null) {
+				Alert alert = new Alert("/member/login", "로그인이 필요합니다.");
+				mv.addObject("alert", alert);
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("id", UUID.randomUUID()).addObject("perfumeNo", perfumeNo);
+				mv.setViewName("qnaBoard/qnaBoardWrite2");
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 에러 출력
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/write/{perfumeNo}", method = RequestMethod.POST)
+	public ModelAndView qnaBoardInsertPerfumeNo(ModelAndView mv, HttpServletRequest request, @ModelAttribute QnaBoard qnaboard,
+			HttpSession session, @RequestParam(name = "qnaPassword", required = false) Integer qnaPassword,
+			@RequestParam("id") String id, @PathVariable("perfumeNo") int perfumeNo) {
+		try {
+			Integer UserNo = ((Member) session.getAttribute("member")).getMemberNo();
+			qnaboard.setMemberNo(UserNo);
+			qnaboard.setQnaPassword(qnaPassword); // 비밀번호 설정
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String code = qnaboard.getMemberNo() + sdf.format(new Date(System.currentTimeMillis()));
+			String content = qnaboard.getQnaContents();
+			qnaboard.setQnaContents(content.replaceAll(id, "" + code));
+			qnaboard.setqFilename(code);
+			qnaboard.setPerfumeNo(perfumeNo);
+
+			int result = qbService.writeQnaBoard(qnaboard);
+			String[] sList = content.split("\"");
+			List<String> fileList = new ArrayList<String>();
+			for (String aa : sList) {
+				if (aa.startsWith(".")) {
+					fileList.add(aa);
+				}
+			}
+			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
+			String savePath = wasRoot + "\\" + "qnaFileUploads\\";
+			File diretory = new File(savePath + id);
+			File folder = new File(savePath + code);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+
+			if (!diretory.exists()) {
+				diretory.mkdirs();
+			}
+			if (diretory.exists()) { // 파일존재여부확인
+				if (diretory.isDirectory()) { // 파일이 디렉토리인지 확인
+					File[] files = diretory.listFiles();
+					for (int i = 0; i < files.length; i++) {
+						for (String fileName : fileList) {
+							if (("../../../resources/img/qnaFileUploads/" + id + "/" + files[i].getName())
+									.equals(fileName)) {
+								files[i].renameTo(new File(savePath + code + "\\" + files[i].getName()));
+							}
+						}
+						if (files[i].delete()) {
+							// 폴더 안 파일 삭제 성공시
+						} else {
+							// 삭제 실패시
+						}
+					}
+				}
+				if (diretory.delete()) {
+					// 폴더 삭제시
+				} else {
+					// 폴더 삭제 실패시
+				}
+			} else {
+				// 임시 폴더가 없을 시
+			}
+
+			if (result > 0) {
+				mv.setViewName("redirect:/qnaboard/list");
+			} else {
+				mv.addObject("msg", "글 등록에 실패하였습니다.").setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); // 콘솔창에 오류메시지 보여줌
+			mv.addObject("msg", e.getMessage()).setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	// 나 신희채 추가 끝
 
 	// 문의 게시판 글쓰기
 	@RequestMapping(value = "/write", method = RequestMethod.GET)

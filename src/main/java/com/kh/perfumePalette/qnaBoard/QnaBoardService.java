@@ -69,6 +69,8 @@ public interface QnaBoardService {
 
 	int updateReply(QnaReply qnareply);
 
+	List<QnaBoard> selectAllQnaBoardPerfume(Integer perfumeNo);
+
 
 	
 
