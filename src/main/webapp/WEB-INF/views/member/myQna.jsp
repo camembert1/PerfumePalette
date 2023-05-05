@@ -39,14 +39,14 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width:100px;">
+                    <th style="width:50px;">
                     	<input type="checkbox" class="allCheck" id="thCheck">
                     </th>
-                    <th>번호</th>
-                    <th>분류</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                    <th>답변 상태</th>
+                    <th style="width:50px;">번호</th>
+                    <th style="width:65px;">분류</th>
+                    <th style="width:100px;">제목</th>
+                    <th style="width:85px;">작성일</th>
+                    <th style="width:60px;">답변 상태</th>
                 </tr>
             </thead>
             <tbody>
