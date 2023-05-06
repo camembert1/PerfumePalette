@@ -123,10 +123,13 @@ public class PerfumeController {
 				// 상품 번호를 통한 디테일 페이지 조회 실패 시
 			}
 			
+			// 문의 관련
 			List<QnaBoard> qbList = qbService.selectAllQnaBoardPerfume(perfumeNo);
+			int cnt = qbService.selectAllQnaBoardPerfumeCnt(perfumeNo);
 			if(qbList != null) {
 				mv
 				.addObject("qnaList", qbList)
+				.addObject("cnt", cnt)
 				.setViewName("perfumeShop/detail");
 			}
 			

@@ -71,6 +71,8 @@ public interface QnaBoardService {
 
 	List<QnaBoard> selectAllQnaBoardPerfume(Integer perfumeNo);
 
+	int selectAllQnaBoardPerfumeCnt(Integer perfumeNo);
+
 
 	
 

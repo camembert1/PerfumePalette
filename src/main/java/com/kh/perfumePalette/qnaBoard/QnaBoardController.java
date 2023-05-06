@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +45,7 @@ public class QnaBoardController {
 	// 나 신희채 추가 시작
 	
 	// 문의 게시판 글쓰기 + 향수 번호 가지고
-	@RequestMapping(value = "/write/{perfumeNo}", method = RequestMethod.GET)
+	@GetMapping("/write/{perfumeNo}")
 	public ModelAndView qnaBoardWritePerfume(ModelAndView mv, HttpServletRequest request, @PathVariable("perfumeNo") int perfumeNo) {
 		try {
 			HttpSession session = request.getSession();
@@ -63,7 +64,7 @@ public class QnaBoardController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/write/{perfumeNo}", method = RequestMethod.POST)
+	@PostMapping("/write/{perfumeNo}")
 	public ModelAndView qnaBoardInsertPerfumeNo(ModelAndView mv, HttpServletRequest request, @ModelAttribute QnaBoard qnaboard,
 			HttpSession session, @RequestParam(name = "qnaPassword", required = false) Integer qnaPassword,
 			@RequestParam("id") String id, @PathVariable("perfumeNo") int perfumeNo) {
@@ -124,7 +125,7 @@ public class QnaBoardController {
 			}
 
 			if (result > 0) {
-				mv.setViewName("redirect:/qnaboard/list");
+				mv.setViewName("redirect:/perfume/detail/"+perfumeNo);
 			} else {
 				mv.addObject("msg", "글 등록에 실패하였습니다.").setViewName("common/error");
 			}

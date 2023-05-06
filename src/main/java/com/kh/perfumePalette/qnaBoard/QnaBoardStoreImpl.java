@@ -105,6 +105,12 @@ public class QnaBoardStoreImpl implements QnaBoardStore {
 		return qbList;
 	}
 
+	@Override
+	public int selectAllQnaBoardPerfumeCnt(SqlSession session, Integer perfumeNo) {
+		int result = session.selectOne("qnaBoardMapper.selectAllQnaBoardPerfumeCnt", perfumeNo);
+		return result;
+	}
+
 	
 
 }

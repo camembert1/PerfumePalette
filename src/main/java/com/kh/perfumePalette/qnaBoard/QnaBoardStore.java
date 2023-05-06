@@ -36,5 +36,7 @@ public interface QnaBoardStore {
 
 	List<QnaBoard> selectAllQnaBoardPerfume(SqlSession session, Integer perfumeNo);
 
+	int selectAllQnaBoardPerfumeCnt(SqlSession session, Integer perfumeNo);
+
 
 }

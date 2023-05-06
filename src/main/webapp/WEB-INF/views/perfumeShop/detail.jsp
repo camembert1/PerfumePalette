@@ -10,7 +10,7 @@
 	<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
 	<link rel="stylesheet" href="../../../resources/perfumeShopCss/detail.css">
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 	<!-- favicon : 탭에 보이는 아이콘 -->
 	<link rel="icon" href="../../resources/img/common/favicon.png" />
@@ -24,6 +24,9 @@
 
 	<!-- 카카오 SDK(Software Development Kit) -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	
+	<!-- 자물쇠 이모티콘 -->
+	<script src="https://kit.fontawesome.com/092e4e45af.js" crossorigin="anonymous"></script>
 
 	
 </head>
@@ -152,9 +155,9 @@
 		<!-- 테스트 -->
 		<hr style="width: 100%; color: red; margin-top: 100px">
 		<div style="width: 75%;">
-			<h2>QnA<sub> 상품 문의<b>(총 n개)</b></sub></h2>
+			<h2>QnA<sub> 상품 문의<b>(총 ${cnt }개)</b></sub></h2>
 			<c:if test="${qnaList ne null }">
-				<table style="text-align: center; width: 100%">
+				<table style="text-align: center; width: 100%; table-layout: fixed;">
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -166,21 +169,59 @@
 						</tr>
 					</thead>
 					<tbody>
-					${qnaList }
 						<c:forEach items="${qnaList }" var="qna" varStatus="status">
 							<fmt:formatDate var="qnaDate" value="${qna.qnaDate }" pattern="yyyy-MM-dd" />
-							<tr>
-								<td>${status.count }</td>
-								<td>
-									<c:if test="${qna.replyStatus == 'Y'}">답변완료</c:if> <c:if test="${qna.replyStatus != 'Y'}">답변대기</c:if>
-								</td>
-								<td>
-									<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
-								</td>
-								<td>${qna.qnaSubject }</td>
-								<td>${qna.memberNickname }</td>
-								<td>${qnaDate }</td>
-							</tr>
+							<fmt:formatDate var="repDate" value="${qna.repDate }" pattern="yyyy-MM-dd" />
+							<c:if test="${member eq null }">
+								<tr onclick="alert('로그인이 필요한 서비스입니다.')" style="cursor: pointer;">
+									<td>${status.count }</td>
+									<td>
+										<c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if>
+									</td>
+									<td>
+										<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
+									</td>
+									<c:if test="${qna.qnaPassword ne null }">
+										<td style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
+									</c:if>
+									<c:if test="${qna.qnaPassword eq null }">
+										<td style="cursor: pointer;">${qna.qnaSubject }</td>
+									</c:if>
+									<td>${qna.memberNickname }</td>
+									<td>${qnaDate }</td>
+								</tr>
+							</c:if>
+							<c:if test="${member ne null }">
+								<tr>
+									<td>${status.count }</td>
+									<td>
+										<c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if>
+									</td>
+									<td>
+										<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
+									</td>
+									<c:if test="${qna.qnaPassword ne null }">
+										<c:if test="${member.memberId eq 'admin' }">
+											<td onclick="detail(${status.count})" style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
+										</c:if>
+										<c:if test="${member.memberId ne 'admin' }">
+											<td onclick="detailPrivate(${status.count}, ${member.memberNo }, ${qna.memberNo })" style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
+										</c:if>
+									</c:if>
+									<c:if test="${qna.qnaPassword eq null }">
+										<td onclick="detail(${status.count})" style="cursor: pointer;">${qna.qnaSubject }</td>
+									</c:if>
+									<td>${qna.memberNickname }</td>
+									<td>${qnaDate }</td>
+								</tr>
+								<tr onclick="detailOut(${status.count})" class="showDetail${status.count}" style="display: none">
+									<td colspan="6" style="cursor: pointer;">${qna.qnaContents }</td>
+								</tr>
+								<tr onclick="detailOut(${status.count})" class="showDetail${status.count}" style="display: none">
+									<td colspan="5" style="cursor: pointer;">${qna.replyContents }</td>
+									<td colspan="1" style="cursor: pointer;">${repDate }</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -504,6 +545,27 @@
 			if (confirm("로그인이 필요한 서비스입니다.")) {
 				location.href="/member/login";
 			}
+		}
+		
+		/* 문의관련 스크립트 */
+		
+		/* 비밀글 NO */
+		function detail(index) {
+			$(".showDetail"+index).css("display", "table-row");
+		}
+		
+		/* 비밀글 YES */
+		function detailPrivate(index, memberNo, qnaMemberNo) {
+			if(memberNo === qnaMemberNo){
+				detail(index);
+			} else {
+				alert("비밀글로 작성자만 볼 수 있습니다.");
+			}
+		}
+		
+		/* 질문, 답변 가리기 */
+		function detailOut(no) {
+			$(".showDetail"+no).css("display", "none");
 		}
 
 	</script>
