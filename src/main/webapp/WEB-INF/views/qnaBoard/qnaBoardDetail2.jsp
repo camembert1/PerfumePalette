@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="../../../../resources/qnaCss/qnaBoardDetail2.css">
+	href="../../../../resources/qnaCss/qnaBoardDetail.css">
 <!-- favicon : 탭에 보이는 아이콘-->
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon"
@@ -28,9 +28,12 @@
 </head>
 
 <body>
-	<div id="qna-modal-bg">
-		<div id="qna-modal">
-			<span id="qna-modal-close-btn">×</span>
+	<jsp:include page="../common/header.jsp" />
+	<main>
+		<!-- 헤더 부분 피하기 위한 div -->
+		<div id="forHeader"></div>
+		<!-- 본문 내용 가운데 정렬 위한 div -->
+		<div id="forCenter">
 			<div class="container">
 				<form action="/qnaboard/detail" method="get"
 					enctype="multipart/form-data">
@@ -78,6 +81,11 @@
 								onclick="location.href='/qnaboard/list'">
 						</c:if>
 					</div>
+					
+					<c:if test="${qnaboard.replyStatus != 'Y' }">
+						<h2 style="text-align: center">답변이 없어요 ㅜ</h2>
+					</c:if>
+					
 					<c:if test="${member.memberNo == '2' }">
 
 						<!-- <input type="button" value="답변하기"> -->
@@ -122,7 +130,9 @@
 
 			</div>
 		</div>
-	</div>
+	</main>
+	<jsp:include page="../common/footer.jsp" />
+	
 	<script>
 
 
@@ -164,46 +174,7 @@
 					})
 				});
 
-				//  				// 댓글 목록 ajax
-				// 				// 댓글 목록을 가져오는 함수
-				// 				 function getReplyList() {
-				// 					const qnaNo = "${qnaboard.qnaNo}"; // Q&A 게시물 번호
-				// 					$.ajax({
-				// 						url: "/qnaboard/reply/list", // 댓글 목록을 가져오는 URL
-				// 						data: { "qnaNo": qnaNo },
-				// 						type: "GET",
-				// 						success: function (data) {
-				// 							$("#replyCount").text("댓글 (" + data.length + ")");
-				// 							const tableBody = $("#replyTable tbody");
-				// 							tableBody.html("");
-				// 							console.log(data);
-				// 							let tr, rWriter, rContent, repDate, btnArea;
-				// 							if (data.length > 0) {
-				// 								for (let i in data) {
-				// 									tr = $("<tr>");
-				// 									rWriter = $("<td width='100'>").text("admin");
-				// 									rContent = $("<td>").text(data[i].replyContents);
-				// 									repDate = $("<td width='100'>").text(data[i].repDate);
-				// 									btnArea = $("<td width='80'>").append(
-				// 										$("<a href='javascript:void(0)' onclick='modifyReply(this, \"" + data[i].repDate + "\", " + data[i].replyNo + ");'>수정</a>")
-				// 									).append(
-				// 										$("<a href='javascript:void(0)' onclick='removeReply(" + data[i].replyNo + ");'>삭제</a>")
-				// 									);
-				// 									tr.append(rWriter);
-				// 									tr.append(rContent);
-				// 									tr.append(repDate);
-				// 									tr.append(btnArea);
-				// 									tableBody.append(tr);
-				// 								}
-				// 							}
-				// 						},
-				// 						error: function () {
-				// 							alert("AJAX 처리 실패! 관리자 문의 요망");
-				// 						}
-				// 					});
-				// 				}
-
-								// 댓글 목록을 가져오는 함수
+				// 댓글 목록을 가져오는 함수
 				function getReplyList() {
 				  const qnaNo = "${qnaboard.qnaNo}"; // Q&A 게시물 번호
 				  $.ajax({

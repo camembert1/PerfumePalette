@@ -50,7 +50,7 @@ public class QnaBoardController {
 		try {
 			HttpSession session = request.getSession();
 			if ((Member) session.getAttribute("member") == null) {
-				Alert alert = new Alert("/member/login", "로그인이 필요합니다.");
+				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert);
 				mv.setViewName("common/alert");
 			} else {

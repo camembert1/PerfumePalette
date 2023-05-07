@@ -157,11 +157,11 @@ public class PerfumeController {
 			
 			// 문의 관련
 			List<QnaBoard> qbList = qbService.selectAllQnaBoardPerfume(perfumeNo);
-			int cnt = qbService.selectAllQnaBoardPerfumeCnt(perfumeNo);
+			int qnaCnt = qbService.selectAllQnaBoardPerfumeCnt(perfumeNo);
 			if(qbList != null) {
 				mv
 				.addObject("qnaList", qbList)
-				.addObject("cnt", cnt)
+				.addObject("qnaCnt", qnaCnt)
 				.setViewName("perfumeShop/detail");
 			}
 			

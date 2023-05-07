@@ -124,26 +124,6 @@
 						var value = (qnaType.options[qnaType.selectedIndex].value);
 					}
 
-					// 비밀글 토글
-					// const publicPost = document.getElementById('publicPost');
-					// const privatePost = document.getElementById('privatePost');
-					// const passwordInput = document.getElementById('passwordInput');
-					// const passwordLabel = document.querySelector('.password-label');
-
-					// privatePost.addEventListener('click', () => {
-					// 	if (passwordInput.style.display === 'none') {
-					// 		passwordInput.style.display = 'block';
-					// 		passwordLabel.style.display = 'block';
-					// 	}
-					// 	hiddendiv.style.display = 'block';
-					// });
-
-					// publicPost.addEventListener('click', () => {
-					// 	passwordInput.style.display = 'none';
-					// 	passwordLabel.style.display = 'none';
-					// 	hiddendiv.style.display = 'none';
-					// });
-
 					// 	비밀글 라디오 버튼 토글
 					const publicPost = document.getElementById('publicPost');
 					const privatePost = document.getElementById('privatePost');
