@@ -45,50 +45,145 @@ main>div[id=forCenter] {
 
 }
 
-main h1 {
-	margin-bottom: 20px;
+
+
+
+
+
+
+
+
+
+
+
+
+main #subject {
+
+    /* background-color: red; */
+    width: 900px;
+    margin-left: 20px;
+
+    color: #222;
+    font-size: 30pt;
+    font-weight: bold;
+    /* text-align: center; */
+    /* margin-bottom: 25px; */
+    font-style: italic;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+main #back-btn-area {
+    width: 900px;
+    height: 50px;
+    /* background-color: red; */
+    display: flex;
+    justify-content: end;
+}
+
+main #back-btn {
+
+    cursor: pointer;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: lighter;
+
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    
+    background-color: #222;
+    color: white;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+/* 폼태그 */
+main #mbtiTest {
+    width: 900px;
+    margin-bottom: 200px;
+    /* background-color: red; */
+}
+
+
+
+
 
 main img {
-    width: 300px;
-    height: 300px;
+
+    width: 430px;
+    height: 430px;
     object-fit: cover;
-    border-radius: 70px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
+
+    /* border-radius: 30px; */
+
     cursor: pointer;
-}
-
-main p, main label {
-    font-size: 15pt;
-    margin-bottom: 35px;
-    text-align: center;
-}
-
-main .question {
-    /* 모든 질문은 안 보이도록 처리함 */
-    display: none;
     margin-bottom: 10px;
+
 }
 
-main .question.current {
-    /* 질문 중에 class="current" 속성이 있는 질문만 보이도록 함 */
-    display: block;
-}
 
+/* 모든 질문은 안 보이도록 처리함 */
+main .question {
+    display: none;
+}
 main input,
 main button {
     display: none;
+}
+
+/* 질문 중에 class="current" 속성이 있는 질문만 보이도록 함 */
+main .question.current {
+    display: block;
+}
+
+main .question>p {
+    font-size: 15pt;
+    margin-bottom: 10px;
+}
+main .question>p>span {
+    font-size: 30pt;
+    font-weight: bolder;
+    /* font-family: 'ghana'; */
+    font-style: italic;
+}
+
+main .question>div {
+    /* background-color: red; */
+    width: 100%;
+    height: 800px;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 main label {
     display: flex;
     flex-direction: column;
     float: left;
-    margin-right: 20px;
+
+    font-size: 15pt;
 }
 
-main #back-btn {
-    cursor: pointer;
+main label>div {
+
+    width: 430px;
+    height: 200px;
+
+    /* background-color: red; */
+    border: 1px dashed #222;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
 }
+
+

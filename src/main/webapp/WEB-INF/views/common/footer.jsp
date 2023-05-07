@@ -37,10 +37,15 @@
 
 		<div id="footer-right-up">
 			<div id="footer-menu">
-				<div>SHOP <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
-				<div>RECOMMEND <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
-				<div>REVIEW <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
-				<div>Q&A <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<div onclick="location.href='/perfume/list'">SHOP <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<c:if test="${sessionScope.mbtiResult eq null }">
+					<div onclick="location.href='/mbti/mbti'">RECOMMEND <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				</c:if>
+				<c:if test="${sessionScope.mbtiResult ne null }">
+					<div onclick="location.href='/mbti/mbtiResult'">RECOMMEND <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				</c:if>
+				<div onclick="location.href='/review/reviewList'">REVIEW <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
+				<div onclick="location.href='/qnaboard/list'">Q&A <img src="../../../resources/img/common/shortcut-arrow.png" alt=""></div>
 			</div>
 			<div id="footer-sns">
 				<div>

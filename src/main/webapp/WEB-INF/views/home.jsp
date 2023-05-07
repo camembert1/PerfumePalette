@@ -56,17 +56,24 @@
                <section id="section-1">
                   <div id="background-img">
                      <div id="black">
+                        <div>
+                           <img src="../../resources/img/common/orderResult-perfume.png" alt="">
+                        </div>
                         <c:if test="${sessionScope.mbtiResult eq null }">
                            <div onclick="location.href='/mbti/mbti'">
-                              <div style="font-size: 15pt; color: rgba(255, 255, 255, 0.5);">버튼수정예정</div>
-                              <div style="font-size: 40pt;">MBTI</div>
-                              <div style="font-size: 45pt;">퍼스널 향기</div>
-                              <div style="font-size: 45pt;">테스트</div>
-                              <div style="font-size: 20pt;">나의 퍼스널 향기 알아보기 > </div>
+                              <div id="personal-text">Personal</div>
+                              <div id="mbti-text">MBTI</div>
+                              <div id="fragranceTest-text">fragrance test</div>
+                              <div id="myPersonalFragrance-text"">나의 퍼스널 향기 알아보기 > </div>
                            </div>
                         </c:if>
                         <c:if test="${sessionScope.mbtiResult ne null }">
-                           <div onclick="location.href='/mbti/mbtiResult'">MBTI</div>
+                           <div onclick="location.href='/mbti/mbtiResult'">
+                              <div id="personal-text">Personal</div>
+                              <div id="mbti-text">MBTI</div>
+                              <div id="fragranceTest-text">fragrance test</div>
+                              <div id="myPersonalFragrance-text"">나의 퍼스널 향기 알아보기 > </div>
+                           </div>
                         </c:if>
                      </div>
                   </div>

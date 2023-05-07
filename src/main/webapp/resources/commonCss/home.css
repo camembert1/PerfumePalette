@@ -66,15 +66,55 @@ main #section-1>#background-img>#black {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* mbti 글씨 관련 */
-	color: rgba(0, 0, 0, 0.8);
-	font-size: 80pt;
-	font-family: 'ghana';
+
 }
 
-main #section-1>#background-img>#black>div {
-	cursor: pointer;
+main #black img {
+    opacity: 0.9;
 }
+main #black>div:nth-child(2) {
+    position: absolute;
+    margin-top: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* mbti검사 글씨 관련 */
+main #black>div:nth-child(2) div {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+}
+main #personal-text
+, main #fragranceTest-text {
+    font-size: 20pt;
+    font-weight: lighter;
+}
+main #mbti-text {
+    font-style: normal;
+    font-family: 'ghana';
+    font-size: 70pt;
+
+    margin-left: -10px;
+
+    margin-block: -20px;
+    margin-bottom: -30px;
+
+    text-shadow: 5px 5px 5px #000000;
+}
+main #myPersonalFragrance-text {
+    margin-top: 60px;
+    font-size: 15pt;
+}
+
+
+
+
+
 /* section1 끝 */
 
 

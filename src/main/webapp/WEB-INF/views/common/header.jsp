@@ -25,7 +25,12 @@
 					<div style="width: 150px; background-color: rgba(255, 255, 255, 0);"></div>
 					<div class="nav-left-detail">
 						<div onclick="location.href='/perfume/list'">Shop</div>
-						<div>Recommend</div>
+						<c:if test="${sessionScope.mbtiResult eq null }">
+							<div onclick="location.href='/mbti/mbti'">Recommend</div>
+                        </c:if>
+                        <c:if test="${sessionScope.mbtiResult ne null }">
+							<div onclick="location.href='/mbti/mbtiResult'">Recommend</div>
+                        </c:if>
 					</div>
 				</div>
 			</div>
@@ -154,7 +159,6 @@
 	});
 
 	// 벨 아이콘 hover 할 때마다 알림 정보 불러옴
-
 	$('#alert-hover-area').hover(
 		function() { // 마우스를 올렸을 때
 			getAlertCnt();
@@ -169,9 +173,13 @@
 					opacity: 0,
 					marginLeft: "150px"
 				}, 300);
-			}, 2000);
+			}, 1000);
 		}
 	);
+	// $('#alert-hover-area').hover(function() {
+	// 	getAlertCnt();
+	// 	getAlertList();
+	// });
 
 
 	// 안 읽은 알림 개수 return

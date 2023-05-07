@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="../../../resources/reviewCss/reviewDetail.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
