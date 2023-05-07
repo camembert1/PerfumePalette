@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 public interface PerfumeStore {
@@ -22,6 +23,9 @@ public interface PerfumeStore {
 
 	// 디테일 - 해당 향수에 달린 리뷰 수 by perfumeNo Store
 	int reviewCntByPerfumeNo(SqlSession session, Integer perfumeNo);
+	
+	// 디테일 - 해당 향수에 달린 리뷰 List by perfumeNo Store
+	List<Review> reviewListByPerfumeNo(SqlSession session, Integer perfumeNo);
 
 	
 	// 목록 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo Store
@@ -55,6 +59,8 @@ public interface PerfumeStore {
 
 	// 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo Store
 	int clickAlert(SqlSession session, Integer alertNo);
+
+	
 
 
 

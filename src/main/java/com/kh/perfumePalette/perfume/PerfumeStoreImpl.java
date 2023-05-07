@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 
@@ -29,60 +30,58 @@ public class PerfumeStoreImpl implements PerfumeStore{
 	// 목록 - 향수 총 개수 / 페이징 + 필터링 + STATUS1 StoreLogic
 	@Override
 	public int selectTotalPerfumeCount(SqlSession session, PageAndFilter pageAndFilter) {
-		int totalCount = session.selectOne("PerfumeMapper.selectTotalPerfumeCount", pageAndFilter);
-		return totalCount;
+		return session.selectOne("PerfumeMapper.selectTotalPerfumeCount", pageAndFilter);
 	}
 	
 	
 	// 향수 디테일 조회 by perfumeNo StoreLogic
 	@Override
 	public Perfume selectOneByPerfumeNo(SqlSession session, Integer perfumeNo) {
-		Perfume perfume = session.selectOne("PerfumeMapper.selectOneByPerfumeNo", perfumeNo);
-		return perfume;
+		return session.selectOne("PerfumeMapper.selectOneByPerfumeNo", perfumeNo);
 	}
 
 	// 디테일 - 해당 향수에 달린 리뷰 수 by perfumeNo StoreLogic
 	@Override
 	public int reviewCntByPerfumeNo(SqlSession session, Integer perfumeNo) {
-		int reviewCnt = session.selectOne("PerfumeMapper.reviewCnt", perfumeNo);
-		return reviewCnt;
+		return session.selectOne("PerfumeMapper.reviewCnt", perfumeNo);
+	}
+	
+	// 디테일 - 해당 향수에 달린 리뷰 List by perfumeNo StoreLogic
+	@Override
+	public List<Review> reviewListByPerfumeNo(SqlSession session, Integer perfumeNo) {
+		return session.selectList("PerfumeMapper.reviewListByPerfumeNo", perfumeNo);
 	}
 
 	
 	// 목록 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo StoreLogic
 	@Override
 	public int checkWish(SqlSession session, Wish wish) {
-		int result = session.selectOne("PerfumeMapper.checkWish", wish);
-		return result;
+		return session.selectOne("PerfumeMapper.checkWish", wish);
 	}
 
 	// 목록 - 해당 향수 찜 개수 조회 by perfumeNo StoreLogic
 	@Override
 	public int wishCnt(SqlSession session, Wish wish) {
-		int wishCnt = session.selectOne("PerfumeMapper.wishCnt", wish);
-		return wishCnt;
+		return session.selectOne("PerfumeMapper.wishCnt", wish);
 	}
 	
 	// 목록 - 찜 취소를 위한 찜 번호 조회 by memberId, perfumeNo StoreLogic
 	@Override
 	public int getWishNo(SqlSession session, Wish wish) {
-		int wishNo = session.selectOne("PerfumeMapper.getWishNo", wish);
-		return wishNo;
+		return session.selectOne("PerfumeMapper.getWishNo", wish);
 	}
 
 	
 	// 디테일 - 로그인한 회원의 장바구니 여부 조회 by memberId, perfumeNo StoreLogic
 	@Override
 	public int checkCart(SqlSession session, Cart cart) {
-		int result = session.selectOne("PerfumeMapper.checkCart", cart);
-		return result;
+		return session.selectOne("PerfumeMapper.checkCart", cart);
 	}
 	
 	// 디테일 - 재입고 알림 신청 by memberNo, perfumeNo StoreLogic
 	@Override
 	public int insertRestockAlert(SqlSession session, ShopAlert rAlert) {
-		int result = session.insert("PerfumeMapper.insertRestockAlert", rAlert);
-		return result;
+		return session.insert("PerfumeMapper.insertRestockAlert", rAlert);
 	}
 	
 	// 디테일 - 로그인한 회원의 재입고알림 신청 여부 조회 by memberNo, perfumeNo StoreLogic	
@@ -95,8 +94,7 @@ public class PerfumeStoreImpl implements PerfumeStore{
 	// 주문서 - 구매 성공 시 재고 감소 by cartNo StoreLogic
 	@Override
 	public int minusStock(SqlSession session, int cartNo) {
-		int result = session.update("PerfumeMapper.minusStock", cartNo);
-		return result;
+		return session.update("PerfumeMapper.minusStock", cartNo);
 	}
 
 	
@@ -117,6 +115,8 @@ public class PerfumeStoreImpl implements PerfumeStore{
 	public int clickAlert(SqlSession session, Integer alertNo) {
 		return session.update("PerfumeMapper.clickAlert", alertNo);
 	}
+
+	
 	
 
 
