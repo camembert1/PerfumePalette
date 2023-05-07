@@ -82,10 +82,6 @@
 						</c:if>
 					</div>
 					
-					<c:if test="${qnaboard.replyStatus != 'Y' }">
-						<h2 style="text-align: center">답변이 없어요 ㅜ</h2>
-					</c:if>
-					
 					<c:if test="${member.memberNo == '2' }">
 
 						<!-- <input type="button" value="답변하기"> -->

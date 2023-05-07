@@ -343,7 +343,7 @@
 													<td colspan="6">
 														<form onsubmit="validatePassword(event, ${status.count })">
 														  <div class="hidden-password">
-														    비밀번호 : <input type="password" name="qnaPassword" id="qnaPassword${status.count }" class="hidden"> <input type="hidden" name="qnaNo" id="qnaNo${status.count }" value="${qna.qnaNo}">
+														    비밀번호 : <input type="password" name="qnaPassword" id="qnaPassword${status.count }" class="hidden" placeholder="숫자만 입력가능합니다." oninput="chkPw(${status.count })"> <input type="hidden" name="qnaNo" id="qnaNo${status.count }" value="${qna.qnaNo}">
 														    <button type="submit" class="pwChk">확인</button>
 														  </div>
 														</form>
@@ -355,7 +355,7 @@
 								</tbody>
 							</table>
 						</c:if>
-						<button type="button" onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
+						<button type="button" id="qnaSubBtn"onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
 					</div>
 					
 					
@@ -927,6 +927,20 @@
             // 폼 전송 방지
             return false;
         }
+        
+     // 비밀글 유효성 검사
+     function chkPw(no) {
+		  const passwordInput = document.getElementById("qnaPassword"+no);
+		  
+		    const input = passwordInput.value;
+		    const regex = /^[0-9]*$/;
+		    
+		    if (!regex.test(input)) {
+		      alert("숫자만 입력가능합니다.");
+		      passwordInput.value = "";
+		    }
+	}
+     
 
 	</script>
 

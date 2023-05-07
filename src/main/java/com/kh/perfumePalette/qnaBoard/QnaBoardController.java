@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.perfume.PerfumeService;
 
 @Controller
 @RequestMapping("/qnaboard")
@@ -36,7 +37,7 @@ public class QnaBoardController {
 
 	@Autowired
 	private QnaBoardService qbService;
-
+	
 	@Autowired
 	@Qualifier("qnafileUtil")
 	private QnaFileUtil qnafileUtil;
@@ -51,10 +52,11 @@ public class QnaBoardController {
 			HttpSession session = request.getSession();
 			if ((Member) session.getAttribute("member") == null) {
 				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
-				mv.addObject("alert", alert);
+				mv.addObject("alert", alert).addObject("perfumeNo", perfumeNo);
 				mv.setViewName("common/alert");
+				
 			} else {
-				mv.addObject("id", UUID.randomUUID()).addObject("perfumeNo", perfumeNo);
+				mv.addObject("id", UUID.randomUUID());
 				mv.setViewName("qnaBoard/qnaBoardWrite2");
 			}
 		} catch (Exception e) {
@@ -305,7 +307,7 @@ public class QnaBoardController {
 //      return mv;
 //   }
 
-// 문의 게시판 목록
+	// 문의 게시판 목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView viewQnaBoardList(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int currentPage, HttpSession session,
