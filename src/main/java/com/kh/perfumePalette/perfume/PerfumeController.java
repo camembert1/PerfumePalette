@@ -22,6 +22,7 @@ import com.kh.perfumePalette.cart.Cart;
 import com.kh.perfumePalette.member.Member;
 import com.kh.perfumePalette.qnaBoard.QnaBoard;
 import com.kh.perfumePalette.qnaBoard.QnaBoardService;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 @Controller
@@ -109,18 +110,49 @@ public class PerfumeController {
 				rAlertStatus = pService.checkAlert(rAlertInfo);
 				
 			}
+			
+			// 디테일 해당 향수 객체
 			Perfume perfume = pService.selectOneByPerfumeNo(perfumeNo);
+			
+			// 해당 향수에 달린 리뷰 수
 			int reviewCnt = pService.reviewCntByPerfumeNo(perfumeNo);
+			
+			// 해당 향수에 달린 리뷰 List
+			List<Review> rList = pService.reviewListByPerfumeNo(perfumeNo);
+			if (!rList.isEmpty()) {
+				
+				// 리뷰 내용 html태그 제거
+				for (Review review : rList) {
+					if (review.getReviewContents() != null) {
+						String outputString = review.getReviewContents().replaceAll("<[^>]*>", "");
+						review.setReviewContents(outputString);
+					}
+				}
+							
+				// 해당 향수에 달린 리뷰 Score 평균
+				double sum = 0;
+				for (Review review : rList) {
+					sum += review.getrViewscore();
+				}
+				double scoreAvg = sum / rList.size();
+				mv.addObject("scoreAvg", scoreAvg);
+			}
+			
 			
 			if(perfume != null) {
 				mv
 				.addObject("rAlertStatus", rAlertStatus)
 				.addObject("wishStatus", wishStatus)
+				
 				.addObject("perfume", perfume)
+				
 				.addObject("reviewCnt", reviewCnt)
+				
+				.addObject("rList", rList)
 				.setViewName("perfumeShop/detail");
 			} else {
 				// 상품 번호를 통한 디테일 페이지 조회 실패 시
+				mv.addObject("msg", "상품 조회 실패!").setViewName("common/error");
 			}
 			
 			// 문의 관련
@@ -219,6 +251,53 @@ public class PerfumeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
+		}
+	}
+	
+	/**
+	 * 목록 - 해당 향수 리뷰 개수 조회 by perfumeNo
+	 * @param perfumeNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/reviewCnt")
+	public String reviewCnt(Integer perfumeNo) {
+		try {
+			int reviewCnt = pService.reviewCntByPerfumeNo(perfumeNo);
+			return reviewCnt + "";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // 에러 발생
+		}
+	}
+	
+	/**
+	 * 목록 - 해당 향수 리뷰 평점 조회 by perfumeNo
+	 * @param perfumeNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/reviewAvg")
+	public String reviewAvg(Integer perfumeNo) {
+		try {
+			
+			double reviewAvg = 0;
+			
+			// 해당 향수에 달린 리뷰 List
+			List<Review> rList = pService.reviewListByPerfumeNo(perfumeNo);
+			if (!rList.isEmpty()) {
+				
+				// 해당 향수에 달린 리뷰 Score 평균
+				double sum = 0;
+				for (Review review : rList) {
+					sum += review.getrViewscore();
+				}
+				reviewAvg = sum / rList.size();
+			}
+			return reviewAvg + "";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // 에러 발생
 		}
 	}
 	

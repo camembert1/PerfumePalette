@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 public interface PerfumeService {
@@ -21,6 +22,9 @@ public interface PerfumeService {
 	
 	// 디테일 - 해당 향수에 달린 리뷰 수 by perfumeNo Service
 	int reviewCntByPerfumeNo(Integer perfumeNo);
+	
+	// 디테일 - 해당 향수에 달린 리뷰 List by perfumeNo Service
+	List<Review> reviewListByPerfumeNo(Integer perfumeNo);
 
 	
 	// 목록, 디테일 - 로그인한 회원의 찜 여부 조회 by memberId, perfumeNo Service
@@ -56,6 +60,8 @@ public interface PerfumeService {
 
 	// 헤더 알림창 - 알림 클릭 시 읽음 처리 by alertNo Service
 	int clickAlert(Integer alertNo);
+
+	
 
 
 	

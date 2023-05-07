@@ -53,13 +53,16 @@ main>div[id=forCenter] {
 /* 여기부터 공통XX */
 
 main #main-content {
-    --background-color: red;
+    /* background-color: red; */
+
+    /* 향수 표 등 메인 내용 가운데 정렬 위함 */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 main .perfumeImg {
+
     /* 향수 이미지 */
     width: 150px;
     height: 150px;
@@ -73,6 +76,7 @@ main .perfumeImg {
     justify-content: center;
 
 }
+
 main #addWish {
     /* 향수 이미지 hover 시 나올 찜 */
     width: 100%;
@@ -86,7 +90,9 @@ main #addWish {
 
     opacity: 0;
 }
+
 main .wishImg {
+    /* 찜 이미지 */
     background-image: url(../img/common/wish-0.png);
     width: 50px;
     height: 50px;
@@ -103,26 +109,139 @@ main .perfumeImg:hover #addWish {
 
 
 
+main #pList {
 
+    /* 향수테이블 */
+    border-collapse: collapse;
+
+}
+main #pList td {
+
+    /* 테이블 border */
+    /* border: 1px solid #222222; */
+
+    /* 한 칸 당 크기 */
+    width: 250px;
+    height: 350px;
+
+}
+
+
+
+main #pList td>div {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main #pList td>div>div {
+    /* 향수 디테일, 비교함 추가 버튼 커서*/
+    /* background-color: blue; */
+    cursor: pointer;
+}
+
+main .review-stars img {
+
+    /* 별점 아이콘 크기 */
+    width: 15px;
+	height: 15px;
+	object-fit: cover;
+}
+
+
+main #scent-category-box {
+
+    /* 향 카테고리 공간 크기 */
+    width: 100%;
+    height: 200px;
+    /* background-color: lightblue; */
+
+    /* 상품 리스트 테이블과 여백 */
+    margin-bottom: 30px;
+
+    
+}
+main #scent-area {
+
+    /* 향 카테고리 - 필터 요소인데 #scent-category-box에 띄우기 위함 */
+    /* #filter-area 위치 조절하면 얘도 위치 바뀜ㅋ */
+    position: absolute;
+	top: 100px;
+
+    left: 50vw;
+    transform: translateX(-54%);
+    /* background-color: red; */
+
+    /* all, citrus 아래 줄 */
+    border-bottom: 1px dashed grey;
+
+    /* 글자랑 줄 사이 여백 */
+    padding-bottom: 10px;
+
+    /* transform: translateY(-50%); */
+    /* background-color: red; */
+
+    /* all, citrus 등의 요소들 가로정렬 */
+    display: flex;
+}
+
+main .scent-category {
+
+    /* all, citrus 등 txt */
+    cursor: pointer;
+    font-size: 15pt;
+    /* 색은 자스 pScentText()에서 바꿔야됨 */
+    color: #d3d3d3;
+    
+    /* 영역 크기 */
+    /* background-color: rgb(132, 255, 0); */
+    width: 80px;
+    height: 30px;
+
+    /* 서로 간 여백 */
+    margin-inline: 10px;
+
+    /* 내부 요소 - txt 가운데 정렬 위함 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 필터 관련 요소 시작! */
 main #filter-area {
     /* 필터 위치 */
     position: absolute;
     top: 300px; /* 목록이 시작되는 위치로 수정 예정 */
     left: 30px;
 }
-
-
-
-main #pList {
-    /* 향수 List테이블 크기 */
-    width: 800px;
-    --height: 1200px;
-}
-main #pList td>div {
-    /* 향수 디테일, 비교함 커서*/
-    cursor: pointer;
-}
-
 
 /* 가격 슬라이더 시작*/
 main .ui-slider {
@@ -154,11 +273,28 @@ main .ui-slider-horizontal {
 }
 /* 가격 슬라이더 끝 */
 
-main .scent-category {
-    width: 70px;
-}
+/* 필터 관련 요소 끝! */
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 비교함 관련 요소 시작! */
 /* 비교함 버튼 */
 main .pCompareBtn {
 
@@ -333,10 +469,5 @@ main #compare-real-info>table th
 main #compare-real-info>table th:nth-child(1) {
     width: 16%;
 }
-
-
-
-/* 비교함 모달 끝 */
-
-/* 비교함 끝 */
+/* 비교함 관련 요소 끝! */
 

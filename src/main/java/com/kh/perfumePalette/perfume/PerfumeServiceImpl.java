@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.perfumePalette.cart.Cart;
+import com.kh.perfumePalette.review.Review;
 import com.kh.perfumePalette.wish.Wish;
 
 @Service
@@ -42,6 +43,12 @@ public class PerfumeServiceImpl implements PerfumeService{
 	@Override
 	public int reviewCntByPerfumeNo(Integer perfumeNo) {
 		return pStore.reviewCntByPerfumeNo(session, perfumeNo);
+	}
+	
+	// 디테일 - 해당 향수에 달린 리뷰 List by perfumeNo ServiceImpl
+	@Override
+	public List<Review> reviewListByPerfumeNo(Integer perfumeNo) {
+		return pStore.reviewListByPerfumeNo(session, perfumeNo);
 	}
 	
 
@@ -109,6 +116,7 @@ public class PerfumeServiceImpl implements PerfumeService{
 	public int clickAlert(Integer alertNo) {
 		return pStore.clickAlert(session, alertNo);
 	}
+	
 
 
 
