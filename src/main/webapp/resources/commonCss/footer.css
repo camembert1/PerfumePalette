@@ -15,6 +15,10 @@
 
 footer {
 
+    /* 푸터zindex조절 위함(쇼핑몰 목록 필터보다 위에 있도록) */
+    position: relative;
+    z-index: 1;
+
     /* 푸터 크기 벗어난 부분은 crop하기 위함 */
     overflow: hidden;
 
