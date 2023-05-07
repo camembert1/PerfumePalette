@@ -39,7 +39,7 @@
 			</div>
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
-			<div id="subject"></div>
+			<div class="continer">
 			<h1>문의 관리</h1>
 			<form action="/admin/qna/search" method="get">
 				<select name="searchCondition">
@@ -50,7 +50,6 @@
 				<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
 				<button type="submit" class="small_btn">검 색</button>
 			</form>
-			<div class="continer">
 			<table class="table">
 				<thead>
 	                <tr>
@@ -72,14 +71,15 @@
 	                            <c:if test="${qnaboard.qnaType == 3 }">교환/환불</c:if>
 	                            <c:if test="${qnaboard.qnaType == 4 }">기타문의</c:if>
 	                        </td>
-	                        <%-- <c:url var="qDetail" value="/qnaboard/detail">
-	                            <c:param name="qnaNo" value="${qnaboard.qnaNo }"></c:param>
-	                            </c:url> --%>
-	                            <td class="cursor tdOver" onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
-	                            	${qnaboard.qnaSubject }
+	                            <td class="tdOver">
+	                            	<a href="/qnaboard/detail?qnaNo=${qnaboard.qnaNo}">
+	                            		${qnaboard.qnaSubject }
+	                            	</a>
 	                            </td>
-	                            <td class="cursor tdOver" onclick="location.href='/qnaboard/detail?qnaNo=${qnaboard.qnaNo}'">
-	                            	${qnaboard.memberNickname }
+	                            <td class="tdOver">
+	                            	<a href="/admin/member/search?searchCondition=All&searchValue=${qnaboard.memberNickname }">
+	                            		${qnaboard.memberNickname }
+	                            	</a>
                             	</td>
 	                            <td class="tdOver">
 	                            	<fmt:formatDate value="${qnaboard.qnaDate }" pattern="yyyy-MM-dd" />
@@ -141,18 +141,50 @@
 	<script>
 		// 전체 선택 박스
 		var allCheck = document.querySelector(".allCheck");
-		var list = document.querySelectorAll(".check");
 		allCheck.onclick = () => {
-			if(allCheck.checked) {
-				for(var i = 0; i < list.length; i++) {
+			if (allCheck.checked) {
+				for (var i = 0; i < list.length; i++) {
 					list[i].checked = true;
 				}
 			} else {
-				for(var i = 0; i < list.length; i++) {
+				for (var i = 0; i < list.length; i++) {
 					list[i].checked = false;
 				}
 			}
 		}
+		
+		// 선택 박스 클릭
+		var list = document.querySelectorAll(".check");
+		for (var i = 0; i < list.length; i++) {
+		  list[i].addEventListener('click', function () {
+		    var isAllChecked = true;
+		    for (var j = 0; j < list.length; j++) {
+		      if (!list[j].checked) {
+		        isAllChecked = false;
+		        break;
+		      }
+		    }
+		    if (isAllChecked) {
+		      allCheck.checked = true;
+		    } else {
+		      allCheck.checked = false;
+		    }
+		  });
+		}
+// 		// 전체 선택 박스
+// 		var allCheck = document.querySelector(".allCheck");
+// 		var list = document.querySelectorAll(".check");
+// 		allCheck.onclick = () => {
+// 			if(allCheck.checked) {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = true;
+// 				}
+// 			} else {
+// 				for(var i = 0; i < list.length; i++) {
+// 					list[i].checked = false;
+// 				}
+// 			}
+// 		}
 		
 		// 선택 삭제 
 		document.querySelector(".del").addEventListener('click', function() {

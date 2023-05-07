@@ -84,6 +84,17 @@ main #hrefName {
 }
 /* 사이드바 끝 */
 
+main .continer {
+	width: 80%;
+	padding-left: 130px;
+	text-align: center;
+}
+main table .tdOver {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 
 main h1{
 	margin-bottom: 25px;
@@ -93,7 +104,7 @@ main h1{
 main table{
 	text-align: center;
 	border-collapse: collapse;
-	width: 60%;
+	width: 100%;
 	margin-bottom: 100px;
 }
 
@@ -119,6 +130,14 @@ main .line {
 	padding-top: 20px;
 }
 
+main table a {
+	text-decoration: none;
+	color: black;
+}
+main table a:hover {
+	text-decoration: underline;
+	color: blue;
+}
 
 
 /* 유정 시작 */

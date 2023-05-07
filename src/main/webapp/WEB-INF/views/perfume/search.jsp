@@ -58,11 +58,11 @@
 					</select>
 					<select name="searchIncense">
 						<option value="All" class="New" <c:if test="${search.searchIncense == 'All' }">selected</c:if>>향 분류</option>
-						<option value="Citrus" class="New" <c:if test="${search.searchIncense == 'Citrus' }">selected</c:if>>Citrus</option>
-						<option value="Fruity" class="New" <c:if test="${search.searchIncense == 'Fruity' }">selected</c:if>>Fruity</option>
-						<option value="Floral" class="New" <c:if test="${search.searchIncense == 'Floral' }">selected</c:if>>Floral</option>
-						<option value="Spicy" class="New" <c:if test="${search.searchIncense == 'Spicy' }">selected</c:if>>Spicy</option>
 						<option value="Woody" class="New" <c:if test="${search.searchIncense == 'Woody' }">selected</c:if>>Woody</option>
+						<option value="Floral" class="New" <c:if test="${search.searchIncense == 'Floral' }">selected</c:if>>Floral</option>
+						<option value="Fruity" class="New" <c:if test="${search.searchIncense == 'Fruity' }">selected</c:if>>Fruity</option>
+						<option value="Spicy" class="New" <c:if test="${search.searchIncense == 'Spicy' }">selected</c:if>>Spicy</option>
+						<option value="Citrus" class="New" <c:if test="${search.searchIncense == 'Citrus' }">selected</c:if>>Citrus</option>
 					</select>
 					
 					<select name="searchCondition">
@@ -70,7 +70,7 @@
 						<option value="Brand" <c:if test="${search.searchCondition == 'Brand' }">selected</c:if>>Brand</option>
 						<option value="perfumeName" <c:if test="${search.searchCondition == 'perfumeName' }">selected</c:if>>perfumeName</option>
 					</select> 
-					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
+					<input type="text" name="searchValue" value="${search.searchValue }" placeholder="검색어를 입력해주세요.">
 					<button type="submit" class="small_btn">검 색</button>
 				</form>
 			</div>

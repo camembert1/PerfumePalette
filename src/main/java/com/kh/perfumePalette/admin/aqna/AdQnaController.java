@@ -100,7 +100,7 @@ public class AdQnaController {
 					model.addAttribute("sList", searchList);
 					return "admin/qna/search";
 				}else {
-					Alert alert = new Alert("/admin/review/search", "존재하지 않는 상품입니다.");
+					Alert alert = new Alert("/admin/qna/search", "존재하지 않는 상품입니다.");
 					model.addAttribute("alert", alert);
 					return "common/alert";
 				}
