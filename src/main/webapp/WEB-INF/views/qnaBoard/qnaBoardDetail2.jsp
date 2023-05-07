@@ -78,7 +78,7 @@
 							<input type="button" id="qnaboardDelete" value="삭제"
 								onclick="removeCheck(${qnaboard.qnaNo});">
 							<input type="button" value="목록"
-								onclick="location.href='/qnaboard/list'">
+								onclick="location.href='/perfume/detail/${qnaboard.perfumeNo}'">
 						</c:if>
 					</div>
 					
