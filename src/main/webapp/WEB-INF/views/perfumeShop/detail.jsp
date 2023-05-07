@@ -10,7 +10,7 @@
 	<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
 	<link rel="stylesheet" href="../../../resources/perfumeShopCss/detail.css">
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 	<!-- favicon : 탭에 보이는 아이콘 -->
 	<link rel="icon" href="../../resources/img/common/favicon.png" />
@@ -39,74 +39,368 @@
 		
 		<!-- 여기부터 내용 입력하시면 됩니다! -->
 
-		<div>
-			<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
-		</div>
-
-		<div>perfumeBrand : ${perfume.perfumeBrand }</div>
-		<div>perfumeName : ${perfume.perfumeName }</div>
-
-		<c:choose>
-			<c:when test="${perfume.perfumeQuantity > 0 and perfume.perfumeQuantity <=5}">
-				<div>품절임박 | 잔여 ${perfume.perfumeQuantity }개</div>
-			</c:when>
-			<c:when test="${perfume.perfumeQuantity == 0}">
-				<div>품절</div>
-			</c:when>
-			<c:otherwise>
-				<div>재고만아 어어 ${perfume.perfumeQuantity }</div>
-			</c:otherwise>
-		</c:choose>
-
-
-		<div>perfumeVolume : ${perfume.perfumeVolume }</div>
-		<div>perfumePrice : ${perfume.perfumePrice }</div>
-
-		<div>
-			<button class="share" id="copy">링크복사</button>
-			<button class="share" id="kakao">카카오톡</button>
-			<button class="share" id="twitter">트위터</button>
-			<button class="share" id="facebook">페이스북</button>
-		</div>
-
-
-		<div>
-			<input type="hidden" id="wishStatus" value="${wishStatus}">
-			<button onclick="wish()" id="wishBtn">
-				<c:if test="${wishStatus == 1}">
-					❤️
-				</c:if>
-				<c:if test="${wishStatus == 0}">
-					🤍
-				</c:if>
-			</button>
-		</div>
-
-		<c:choose>
-			<c:when test="${perfume.perfumeQuantity > 0}">
-				<div>
-					<button onclick="buy()">구매하기</button>
+		<section id="section-main">
+			<section id="section-top">
+				
+				<div id="img-area">
+					<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
 				</div>
-			</c:when>
-			<c:otherwise>
-				<div>
-					<input type="hidden" id="rAlertStatus" value="${rAlertStatus}">
-					<button onclick="restockAlert()">재입고알림</button>
+
+				<div id="info-area">
+					<div id="for-marign">
+
+						
+						<div id="nameAndshare-area">
+
+							<div>
+								<div id="perfumeBrand-txt">
+									${perfume.perfumeBrand }
+								</div>
+	
+								<div id="perfumeName-txt">
+									${perfume.perfumeName }
+								</div>
+							</div>
+
+							<div>
+								<div id="sns-share-btn" title="공유하기">
+									<img src="../../../resources/img/common/sharing.png" alt="">
+								</div>
+								<div id="share-box">
+
+									<div id="ktf-btn">
+										<div class="share" id="kakao">
+											<img src="../../../resources/img/common/detail-kakao.png" alt="">
+										</div>
+										<div class="share" id="twitter">
+											<img src="../../../resources/img/common/detail-twitter.png" alt="">
+										</div>
+										<div class="share" id="facebook">
+											<img src="../../../resources/img/common/detail-facebook.png" alt="">
+										</div>
+									</div>
+
+									<div id="url-and-btn">
+										<input type="text" id="url-area" readonly>
+										<div class="share" id="copy">
+											<img src="../../../resources/img/common/duplication.png" alt="">
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+	
+						<div id="reviewScore-txt">
+							<div id="stars">
+								<img src="../../../resources/img/common/star-0.png" alt="">
+								<img src="../../../resources/img/common/star-0.png" alt="">
+								<img src="../../../resources/img/common/star-0.png" alt="">
+								<img src="../../../resources/img/common/star-0.png" alt="">
+								<img src="../../../resources/img/common/star-0.png" alt="">
+							</div>
+							(${reviewCnt })
+						</div>
+	
+						<c:choose>
+							<c:when test="${perfume.perfumeQuantity > 0 and perfume.perfumeQuantity <=5}">
+								<div id="perfumeQuantity-txt">품절임박 | 잔여 ${perfume.perfumeQuantity }개</div>
+							</c:when>
+							<c:when test="${perfume.perfumeQuantity == 0}">
+								<div id="perfumeQuantity-txt">품절</div>
+							</c:when>
+							<c:otherwise>
+								<!-- <div>재고 : ${perfume.perfumeQuantity }</div> -->
+							</c:otherwise>
+						</c:choose>
+
+						<div id="perfumePrice-txt">
+							<fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,##0"/>원
+						</div>
+						
+						<div id="perfumeVol-area">
+							<div data-perfumeVol="50">50ml</div>
+							<div data-perfumeVol="75">75ml</div>
+							<div data-perfumeVol="100">100ml</div>
+						</div>
+
+						<div id="btn-area">
+
+							<div id="wish-btn" onclick="wish()">
+								<input type="hidden" id="wishStatus" value="${wishStatus}">
+								<c:if test="${wishStatus == 1}">
+									<img id="wishIcon" src="../../../resources/img/common/wish-1.png" alt="">
+								</c:if>
+								<c:if test="${wishStatus == 0}">
+									<img id="wishIcon" src="../../../resources/img/common/wish-0-0.png" alt="">
+								</c:if>
+								<div id="wishCnt">0</div>
+							</div>
+
+							<div id="cart-btn" onclick="cart()">
+								<div>장바구니</div>
+							</div>
+					
+							<c:choose>
+								<c:when test="${perfume.perfumeQuantity > 0}">
+									<div id="buy-btn" onclick="buy()">
+										<div>바로 구매하기</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div id="restock-btn" onclick="restockAlert()">
+										<input type="hidden" id="rAlertStatus" value="${rAlertStatus}">
+										<div>재입고 알림</div>
+									</div>
+								</c:otherwise>
+							</c:choose>		
+							
+
+						</div>
+
+
+
+
+					</div>
 				</div>
-			</c:otherwise>
-		</c:choose>		
+
+			</section>
+
+
+
+
+			<section id="section-bot">
+				<div id="tab-area">
+					<div class="tab" id="detail-tab">상품상세</div>
+					<div class="tab" id="review-tab">상품후기(${reviewCnt })</div>
+					<div class="tab" id="qna-tab">상품문의</div>
+					<div class="tab" id="deliveryInfo-tab">배송/교환/반품 안내</div>
+				</div>
+				<div id="tab-contents-box">
+
+					<div class="tab-contents" id="detail-box">
+						<div>
+							<div id="contentsBox-img-area">
+								<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
+							</div>
+							<h3>상품 정보 고시</h3>
+							<div class="line"></div>
+							<div> 
+								품명 : ${perfume.perfumeName } <br>
+								전성분 : 에탄올, 향료, 정제수, 리모넨, 하이드록시시트로넬알, 에칠헥실메톡시산나메이트, 시트로넬올, <br>
+								헥실신남알, 리날룰, 에칠헥실살리실레이트, 비에이치티, 부틸메톡시디벤조일메탄, 참나무이끼추출물, <br>
+								제라니올, 시트랄, 파네솔, 벤질벤조에이트 <br>
+								* 제공된 성분은 동일 제품이라도 경우에 따라 변경될 수 있습니다. <br>
+								* 최신정보는 제품 포장의 성분을 참고하시기 바랍니다. <br>
+								
+								<br>
+
+								용량 : ${perfume.perfumeVolume }ml <br>
+								제품 주요 사항 : 모든 피부 타입 <br>
+								사용방법 : 맥박이 뛰는 부위에 분사하여 사용합니다. <br>
+								사용기한 : 개봉 후 3년 <br>
+								제조자 : ${perfume.perfumeBrand } <br>
+								제조국 :프랑스 <br>
+
+								<br>
+								
+								사용할 때의 주의사항 : <br>
+								1. 화장품 사용 시 또는 사용 후 직사광선에 의하여 사용부위가 붉은 반점, <br>
+								부어오름 또는 가려움증 등의 이상 증상이나 부작용이 있는 경우 <br>
+								전문의 등과 상담할 것 <br>
+								2. 상처가 있는 부위 등에는 사용을 자제할 것 <br>
+								3. 보관 및 취급 시의 주의사항 <br>
+								1) 어린이의 손이 닿지 않는 곳에 보관할 것 <br>
+								2) 직사광선을 피해서 보관할 것 <br>
+								4. 눈에 들어가지 않도록 주의하고 눈에 들어간 때에는 즉시 씻어 낼 것 <br>
+								5.민감성 피부 보유자는 귓볼 등에 사전 패치 테스트 후 사용할 것 <br>
+								품질보증기준 : 본 제품에 이상이 있을 경우, <br>
+								공정거래위원회 고시 소비자분쟁해결기준에 의해 보상해 드립니다. <br>
+								
+								<br>
+
+								화장품책임판매업자 : 주식회사 Perfume Palette / 서울시 중구 남대문로120 3층 Perfume Palette <br>
+								고객센터 :070-7424-1253
+							</div>
+
+							<br><br><br><br><br>
+							<h3>상품 결제 정보</h3>
+							<div class="line"></div>
+							<div>
+								- 고액결제의 경우 안전을 위해 카드사에서 확인전화를 드릴 수도 있습니다. <br>
+								- 확인과정에서 도난 카드의 사용이나 타인 명의의 주문 등 정상적인 주문이 아니라고 판단될 경우 <br>
+								임의로 주문을 보류 또는 취소할 수 있습니다. <br>
+								- 무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다. <br>
+									
+								※ 주문시 입력한 입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, <br>
+								3일이내로 입금되지 않은 주문은 자동취소 됩니다. <br>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="tab-contents" id="review-box">
+
+						<c:if test="${reviewCnt eq 0}">
+							<div>등록된 후기가 아직 없습니다.</div>
+						</c:if>
+
+						<c:if test="${reviewCnt ne 0}">
+
+							<div id="scoreAvg-area">
+								<img src="../../../resources/img/common/star-1.png" alt="">
+								<fmt:formatNumber value="${scoreAvg }" pattern="#.#" />
+							</div>
+
+							<table>
+								<tr>
+									<th>번호</th>
+									<th>별점</th>
+									<th>내용</th>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>조회수</th>
+								</tr>
+								<c:forEach items="${rList}" var="review" varStatus="i">
+									<tr onclick="location.href='/review/reviewDetail/${review.reviewNo }'">
+	
+										<td>${i.count }</td>
+
+										<td>
+											<div class="review-stars" data-score="${review.rViewscore }">
+												<img src="../../../resources/img/common/star-0.png" alt="">
+												<img src="../../../resources/img/common/star-0.png" alt="">
+												<img src="../../../resources/img/common/star-0.png" alt="">
+												<img src="../../../resources/img/common/star-0.png" alt="">
+												<img src="../../../resources/img/common/star-0.png" alt="">
+											</div>
+											<!-- ${review.rViewscore} -->
+										</td>
+	
+										<td>
+											<c:if test="${fn:length(review.reviewContents) > 30}">
+												${fn:substring(review.reviewContents, 0, 30)}...
+											</c:if>
+											<c:if test="${fn:length(review.reviewContents) <= 30}">
+												${review.reviewContents }
+											</c:if>
+										</td>
+	
+										<td>${review.memberNickname }</td>
+	
+										<td>
+											${fn:substring(review.reviewDate, 0, 10)}
+										</td>
+	
+										<td>${review.rViewcount }</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</c:if>
+					</div>
+
+					<div class="tab-contents" id="qna-box">
+						QnA 박스
+					</div>
+					
+					<div class="tab-contents" id="deliveryInfo-box">
+
+						<h3>배송 정보</h3>
+						<div class="line"></div>
+						<div>
+							배송 방법 : CJ대한통운 <br>
+							배송 지역 : 전국지역 <br>
+							배송 비용 : 무료 <br>
+							배송 기간 : 2일 ~ 5일 <br>
+							배송 안내 : <br>
+							- 향수만 구매하시거나 선물포장 옵션 선택 시 쇼핑백은 제공되지 않습니다. <br>
+							　※ 쇼핑백은 "추가구성상품" 내에서 별도로 구매가 필요합니다 ※ <br>
+							- 주말 동안의 주문량이 많을 경우, 월요일 오후 2시 이전 주문건은 다음날 출고될 수 있습니다. <br>
+							- 당일발송 재고가 소진되었을 경우 출고가 지연될 수 있습니다. <br>
+							- 모든 국내 배송 상품은 'CJ대한통운' 통해 출고되며, 타 택배사 이용시 고객 부담의 별도 비용이 발생될 수 있습니다. <br>
+							- 도서산간 지역은 별도의 추가금액을 지불하셔야 하는 경우가 있습니다. <br>
+							고객님께서 주문하신 상품은 입금 확인후 배송해 드리며, 상품종류에 따라서 상품의 배송이 다소 지연될 수 있습니다. <br>
+						</div>
+
+						<br><br><br><br><br>
+						<h3>교환 및 반품 정보</h3>
+						<div class="line"></div>
+						<div>
+							※교환 및 반품 전 필수 참고사항※ <br>
+							- 새상품의 향기 이상, 지속력 등의 주관적인 사유는 제품 불량에 해당하지 않습니다. <br>
+							- 향수는 알코올 80%로 구성되어 있으며, 여러 향료와 성분을 배합하고 섞어 제조 됩니다. <br>
+
+							<br>
+
+							배송 중 흔들림이 강하게 지속적으로 이뤄질 경우 향수의 배합이 깨져 처음 사용 시 알코올 성분이 가장 분사 되면서 <br>
+							시린 향으로 인해 향기에 이상을 느끼거나 지속력이 짧게 느껴지기도 합니다.  <br>
+
+							<br>
+
+							이는 정상적인 반응으로 시간이 지날수록 향수의 안정화가 진행되면서 점차 본연의 향기를 되찾아가고, <br>
+							분사할수록 향료의 비중이 높아지면서 사용할수록 더욱 진하고 풍부한 향기를 느낄 수 있습니다. <br>
+							
+							<br>
+
+							※교환 및 반품이 가능한 경우※ <br>
+							- 상품 배송 완료일 기준으로 14일 이내 <br>
+							(단, 향수 제품 특성상 포장을 개봉하였거나, 제품 사용 시 교환/반품 불가) <br>
+							- 상품의 파손, 불량, 오배송의 사유 <br>
+							(*본품 박스 파손 등의 불량의 경우, 제품 개봉 시 교환/반품 불가) <br>
+							- 공급 받으신 상품 및 용역의 내용이 표시.광고 내용과 다르거나 다르게 이행된 경우에는 공급받은 날로부터 3개월 이내, <br>
+							그 사실을 알게 된 날로부터 30일 이내 <br>
+							
+							<br>
+							
+							※교환 및 반품이 불가능한 경우※ <br>
+							
+							- 향수 제품 특성상 포장을 개봉하였거나, 제품을 사용(분사) 및 훼손하여 상품가치가 상실된 경우 교환/반품이 불가능합니다. <br>
+							(검수 후 상품 가치가 상실되어 처리가 불가 할 경우 고객님 부담의 추가 반송비가 발생됩니다.) <br>
+							- 향수 본품 개봉 및 사용에 의하여 상품의 가치가 현저히 감소한 경우 교환/반품이 불가능합니다. <br>
+							(본품 박스 파손 등의 불량의 경우, 개봉 및 분사 시 사용으로 간주되어 처리 불가 합니다.) <br>
+							- 시간의 경과에 의하여 재 판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우 교환/반품이 불가능합니다. <br>
+							
+							<br>
+							
+							※ 배송중 처리된 주문건의 경우, 오후 4시 이후에는 이미 출고 대기중으로 반품배송비가 발생될 수 있습니다. <br>
+							※ 고객님의 단순 변심으로 교환/반품을 하실 경우, 상품반송 비용은 고객님 부담으로 처리됩니다. <br>
+							　*도서산간 지역은 별도의 추가금액을 지불하셔야 하는 경우가 있습니다* <br>
+							※ 고객님께서 직접 반송하실 경우, 택배비는 선불로 지불하셔야 하며 초기배송비용 2,500원이 부과됩니다. <br>
+							(*국내 무료배송 상품에 한하며, 교환시에는 5,500원 부과됩니다.) <br>
+
+							<br>
+
+							- 제품 구매 시 무료배송을 받으신 경우 : 5,500원 <br>
+							- 제품 구매 시 배송비 2,500원을 결제한 경우 : 3,000원 ( 교환시 5,500원 ) <br>
+							- 해외배송상품 : 15,000원 (항공운임료 등 포함) <br>
+							
+							<br>
+							
+							더 자세한 내용은 고객센터 Q&A 게시판 내 공지통해 확인 가능합니다.
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+
+
+		</section>
 		
-		<div>
-			<button onclick="cart()">장바구니</button>
-		</div>
+
+
 		
-		<div>
-			<div>상품상세</div>
-			<div>상품후기(${reviewCnt })</div>
-			<div>상품문의</div>
-			<div>배송/교환/반품 안내</div>
-		</div>
-		<div>이거는 쿠팡 참고할거 어어 ㅋ</div>
+
+
+		
+
+		
+
+
+		
+		
+		
 
 
 
@@ -124,7 +418,7 @@
 					</div>
 					<div id="updown">
 						<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1">
-						<span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
+						<span style="margin: 0 5px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
 					</div>
 				</div>
 			</div>
@@ -158,6 +452,78 @@
 
 
 	<script>
+		// 현재 링크
+		const url = encodeURI(window.location.href);
+
+		// 별점 평균만큼 별 칠하기
+		$('#stars img:lt(' + Math.round('${scoreAvg}') + ')').attr('src', '../../../resources/img/common/star-1.png');
+
+		// 상품 후기 영역에서 각자 후기 별점 칠하기
+		$('.review-stars').each(function(index, element) {
+			$(element).find('img').each(function(i, img) {
+				if (i < $(element).data('score')) {
+					$(img).attr('src', '../../../resources/img/common/star-1.png');
+				}
+			});
+		});
+
+		// wish 개수
+		updateWishCnt = function() {
+			$.ajax({
+				url: '/perfume/wishCnt',
+				type: 'POST',
+				data: {
+					"perfumeNo": '${perfume.perfumeNo }'
+				},
+				success: function(wishCnt) {
+					$('#wishCnt').html(wishCnt);
+				},
+				error: function(result) {
+					alert(result);
+				}
+			});
+		}
+		// 페이지 열리자마자 업데이트
+		updateWishCnt();
+
+
+		// 선택한 탭 효과 + 박스 노출
+		$('.tab').each(function(index, element) {
+			$(element).click(function() {
+				selected(index);
+			});
+		});
+		// n번째 탭, 박스 효과 적용 함수
+		selected = function(index) {
+			//  탭 클릭 시 탭 관련 css 적용
+			$('.tab').removeClass('selectedTab');
+			$('.tab').eq(index).addClass('selectedTab').css({ opacity: 0 }).animate({ opacity: 1 }, 200);
+			
+			// 탭 contents 관련 css 적용
+			$('.tab-contents').removeClass('selectedBox');
+			$('.tab-contents').eq(index).addClass('selectedBox').css({ opacity: 0 }).animate({ opacity: 1 }, 200);
+		}
+		// 페이지 시작시 무조건 0번째 = 상품상세 노출
+		selected(0);
+
+
+		// sns 공유 버튼 - 공유 box 생겼다 사라졌다
+		$('#sns-share-btn').click(function() {
+			if ($('#share-box').css('display') === 'none') {
+				$('#share-box').fadeIn(100);
+			} else {
+				$('#share-box').fadeOut(100);
+			}
+		});
+		// 현재 링크 sns공유 박스에 띄워주기
+		$('#url-area').val(url);
+
+		// 해당 용량 박스만 css주기 위함
+		$('#perfumeVol-area').find('div').each(function(index, element) {
+			if ('${perfume.perfumeVolume }' == $(element).data('perfumevol')) {
+				$(element).addClass('real-vol')
+			}
+		});
 
 		alertModal = function(msg) {
 			// css작업할 때 modal뜨는 걸로 수정하기!
@@ -197,8 +563,7 @@
 		}
 
 
-		// 현재 링크
-		const url = encodeURI(window.location.href);
+		
 
 		// 상품 디테일 페이지 링크 복사
 		$('#copy').click(function() {
@@ -259,8 +624,9 @@
 							"memberId": memberId
 						},
 						success: function(result) {
-							$('#wishBtn').html('❤️');
+							$('#wishIcon').attr('src', '../../../resources/img/common/wish-1.png');
 							$('#wishStatus').val(1);
+							updateWishCnt();
 						},
 						error: function(result) {
 						}
@@ -284,8 +650,9 @@
 									"wishNo": wishNo,
 								},
 								success: function(result) {
-									$('#wishBtn').html('🤍');
+									$('#wishIcon').attr('src', '../../../resources/img/common/wish-0-0.png');
 									$('#wishStatus').val(0);
+									updateWishCnt();
 								},
 								error: function(result) {
 								}

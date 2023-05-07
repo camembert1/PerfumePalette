@@ -10,7 +10,7 @@
 		<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
 		<link rel="stylesheet" href="../../../resources/perfumeShopCss/list.css">
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 		
 		<!-- favicon : 탭에 보이는 아이콘 -->
 		<link rel="icon" href="../../resources/img/common/favicon.png" />
@@ -33,167 +33,86 @@
 
 			<!-- 여기부터 내용 입력하시면 됩니다! -->
 			<div id="main-content">
-				
-				<form id="filter-area" method="post">
+					
 
-					<!-- 향 -->
-					<div id="scent-area">
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">All</div>
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">Citrus</div>
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">Fruity</div>
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">Floral</div>
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">Spicy</div>
-						<div class="scent-category" onclick="pScentCategoryFunc(this)">Woody</div>
-					</div>
-	
-					<!-- 정렬 순서 -->
-					<div id="sort-by-area">
-						<select onchange="perfumeSortFunc(this)">
-							<option value="">정렬</option>
-							<option value="new" <c:if test="${filtering.perfumeSort eq 'new'}">selected</c:if>>신상품</option>
-							<option value="hot" <c:if test="${filtering.perfumeSort eq 'hot'}">selected</c:if>>인기판매</option>
-							<option value="review" <c:if test="${filtering.perfumeSort eq 'review'}">selected</c:if>>후기</option>
-							<option value="highPrice" <c:if test="${filtering.perfumeSort eq 'highPrice'}">selected</c:if>>높은가격</option>
-							<option value="lowPrice" <c:if test="${filtering.perfumeSort eq 'lowPrice'}">selected</c:if>>낮은가격</option>
-						</select>
-					</div>
-	
-					<!-- 가격 -->
-					<div id="price-area">
-						<div>가격</div>
-						<div id="price-slider-area">
-							<div id="slider-range"></div>
-							<p id="slider-values">
-								<span id="min-value">0</span>
-								~
-								<span id="max-value">∞</span>
-							</p>
-						</div>
-					</div>
+				<!-- <div style="height: 200px; width: 100%; background-color: rgba(0, 0, 255, 0);">
+					리뷰 테이블 조인해서 별점 높은 거 준 향수랑 비슷한 거 랜덤 추천?
+				</div> -->
 
-					<!-- 이름 검색 -->
-					<div id="search-area">
-						<div>검색</div>
-						<input type="text" oninput="perfumeSearchFunc(this)" value="<c:if test='${filtering.perfumeSearch ne null}'>${filtering.perfumeSearch}</c:if>">
-					</div>
-						
-
-					<input type="hidden" name="page">
-
-					<input type="hidden" name="pScentCategory" value="${filtering.pScentCategory }">
-					<input type="hidden" name="perfumeSort" value="${filtering.perfumeSort }">
-					<input type="hidden" name="startPerfumePrice" value="${filtering.startPerfumePrice }">
-					<input type="hidden" name="endPerfumePrice" value="${filtering.endPerfumePrice }">
-					<input type="hidden" name="perfumeSearch" value="${filtering.perfumeSearch }">
-
-					<input type="hidden" name="perfumeNo1" value="${filtering.perfumeNo1 }">
-					<input type="hidden" name="perfumeNo2" value="${filtering.perfumeNo2 }">
-					<input type="hidden" name="perfumeNo3" value="${filtering.perfumeNo3 }">
-					<input type="hidden" name="compareCnt" value="${filtering.compareCnt }" id="compare-cnt">
-
-				</form>
-
-				<div id="compare-area" onclick="compareModal()">
-					<div>비교함</div>
-					<div><span>${filtering.compareCnt }</span>개</div>
-				</div>
-
-				<div id="compare-modal-bg">
-					<div id="compare-modal">
-						<div id="compare-modal-close-btn" onclick="compareModal()">×</div>
-						<div id="compare-real">
-							<div id="compare-real-title">향수 비교하기 <span>비교는 최대 3개까지 가능합니다.</span></div>
-							<div id="compare-real-info">
-								<table>
-									<tr id="compare-img">
-										<th>이미지</th> 		<td class="compare-1">안녕</td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-brand">
-										<th>브랜드</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-name">
-										<th>제품명</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-scent">
-										<th>향</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-volume">
-										<th>용량</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-price">
-										<th>가격</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-25price">
-										<th>25ml당 가격</th> 	<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-									<tr id="compare-detailBtn">
-										<th>상세버튼</th>		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 필터링 및 비교 모달 끝! -->
-
-				<div style="height: 200px; width: 100%; background-color: rgba(0, 0, 255, 0);">
-					향수추천공간입니다
-					<input type="checkbox">
-				</div>
-
-				<div style="height: 100px; width: 100%; background-color: rgba(255, 217, 0, 0);">
-					pScentCategory공간입니다
+				<div id="scent-category-box">
+					<!-- 여기에 All, Citrus 등 들어감! -->
 				</div>
 
 				<table id="pList">
-					<div>${msg}</div>
+
+					<c:if test="${empty pList}">
+						<tr>
+							<td>해당하는 상품이 없습니다.</td>
+						</tr>
+					</c:if>
+
 					<c:forEach items="${pList }" var="perfume" varStatus="status">
-	
+
 						<c:if test="${status.index % 4 == 0}">
 							<tr>
 						</c:if>
 	
 						<td>
-							<div onclick="location.href='/perfume/detail/${perfume.perfumeNo }'">
-								<div>
-									<!-- <img class="perfumeImg" src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="향수이미지"> -->
-									<div class="perfumeImg" style="background-image: url('../../../resources/img/perfumeFileUploads/${perfume.pFilerename }');">
-										<div id="addWish">
-											<div class="wishImg" id="${perfume.perfumeNo }" onclick="wish(event, this)" title="찜하기" data-status="0"></div>
+							<div>
+								<div onclick="location.href='/perfume/detail/${perfume.perfumeNo }'">
+	
+									<div>
+										<div class="perfumeImg" style="background-image: url('../../../resources/img/perfumeFileUploads/${perfume.pFilerename }');">
+											<div id="addWish">
+												<div class="wishImg" id="${perfume.perfumeNo }" onclick="wish(event, this)" title="찜하기" data-status="0"></div>
+											</div>
 										</div>
 									</div>
-									
-								</div>
-								<div>
-									<!-- 품절이라면 품절 표시-->
-									<c:if test="${perfume.perfumeQuantity eq 0}">
-										품절
-									</c:if>
-									
-									<!-- 잘렸을 경우 ...처리해주기!! -->
-									<c:set var="perfumeBrand" value="${fn:substring(perfume.perfumeBrand, 0, 5)}" />
-									<div>${perfumeBrand }</div>
 	
-									<c:set var="perfumeName" value="${fn:substring(perfume.perfumeName, 0, 10)}" />
-									<div>${perfumeName}</div>
-									<div><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,##0"/>원</div>
+									<div>
+										<!-- 잘렸을 경우 ...처리해주기!! -->
+										<c:set var="perfumeBrand" value="${fn:substring(perfume.perfumeBrand, 0, 5)}" />
+										<div>${perfumeBrand }</div>
+		
+										<c:set var="perfumeName" value="${fn:substring(perfume.perfumeName, 0, 10)}" />
+										<div>${perfumeName}</div>
+	
+										<!-- 품절이라면 품절 표시-->
+										<c:if test="${perfume.perfumeQuantity eq 0}">
+											<div>품절</div>
+										</c:if>
+										<!-- 품절이 아니라면 가격 표시 -->
+										<c:if test="${perfume.perfumeQuantity ne 0}">
+											<div><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,##0"/>원</div>
+										</c:if>
+									</div>
 								</div>
+	
+								<!-- 비교함에 넣을 정보 -->
+								<div class="pCompareBtn" onclick="compare(this)">
+										<c:choose>
+											<c:when test="${perfume.perfumeNo ne filtering.perfumeNo1 && perfume.perfumeNo ne filtering.perfumeNo2 && perfume.perfumeNo ne filtering.perfumeNo3}">
+												<span class="compareStatus" data-status="0">비교함추가</span>
+											</c:when>
+											<c:otherwise>
+												<span class="compareStatus" data-status="1">비교함삭제</span>
+											</c:otherwise>
+										</c:choose>
+									<input type="hidden" 	class="comparePerfumeNo" 	value="${perfume.perfumeNo }">
+								</div>
+	
+								<div class="review-stars">
+									<img src="../../../resources/img/common/star-0.png" alt="">
+									<img src="../../../resources/img/common/star-0.png" alt="">
+									<img src="../../../resources/img/common/star-0.png" alt="">
+									<img src="../../../resources/img/common/star-0.png" alt="">
+									<img src="../../../resources/img/common/star-0.png" alt="">
+									<span>
+										(<span class="reviewCnt">0</span>)
+									</span>
+								</div>
+								<input style="border: 0;" type="text" class="wishCnt" value="">
 							</div>
-
-							<!-- 비교함에 넣을 정보 -->
-							<div class="pCompareBtn" onclick="compare(this)">
-									<c:choose>
-										<c:when test="${perfume.perfumeNo ne filtering.perfumeNo1 && perfume.perfumeNo ne filtering.perfumeNo2 && perfume.perfumeNo ne filtering.perfumeNo3}">
-											<span class="compareStatus" data-status="0">비교함추가</span>
-										</c:when>
-										<c:otherwise>
-											<span class="compareStatus" data-status="1">비교함삭제</span>
-										</c:otherwise>
-									</c:choose>
-								<input type="hidden" 	class="comparePerfumeNo" 	value="${perfume.perfumeNo }">
-							</div>
-
-							<input style="border: 0;" type="text" class="wishCnt" value="">
 						</td>
 	
 						<c:if test="${status.index % 4 == 3 || status.last}">
@@ -235,6 +154,125 @@
 						</c:if>
 					</c:if>
 				</div>
+
+
+				<!-- 필터링 공간 시작! -->
+				<form id="filter-area" method="post">
+
+					<!-- 향 -->
+					<div id="scent-area">
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">All</div>
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">Citrus</div>
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">Fruity</div>
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">Floral</div>
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">Spicy</div>
+						<div class="scent-category" onclick="pScentCategoryFunc(this)">Woody</div>
+					</div>
+	
+					<!-- 정렬 순서 -->
+					<div id="sort-by-area">
+						<select onchange="perfumeSortFunc(this)">
+							<option value="">정렬</option>
+							<option value="new" <c:if test="${filtering.perfumeSort eq 'new'}">selected</c:if>>신상품</option>
+							<option value="hot" <c:if test="${filtering.perfumeSort eq 'hot'}">selected</c:if>>인기판매</option>
+							<option value="review" <c:if test="${filtering.perfumeSort eq 'review'}">selected</c:if>>리뷰수</option>
+							<option value="highPrice" <c:if test="${filtering.perfumeSort eq 'highPrice'}">selected</c:if>>높은가격</option>
+							<option value="lowPrice" <c:if test="${filtering.perfumeSort eq 'lowPrice'}">selected</c:if>>낮은가격</option>
+						</select>
+					</div>
+	
+					<!-- 가격 -->
+					<div id="price-area">
+						<div>가격</div>
+						<div id="price-slider-area">
+							<div id="slider-range"></div>
+							<p id="slider-values">
+								<span id="min-value">0</span>
+								~
+								<span id="max-value">∞</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- 이름 검색 -->
+					<div id="search-area">
+						<div>검색</div>
+						<input type="text" oninput="perfumeSearchFunc(this)" value="<c:if test='${filtering.perfumeSearch ne null}'>${filtering.perfumeSearch}</c:if>">
+					</div>
+						
+
+					<input type="hidden" name="page">
+
+					<!-- 향 카테고리 없으면 무조건 all -->
+					<input type="hidden" name="pScentCategory" 
+						<c:if test="${filtering.pScentCategory eq null}">
+							value="All"
+						</c:if>
+						<c:if test="${filtering.pScentCategory ne null}">
+							value="${filtering.pScentCategory }"
+						</c:if>
+					>
+					<input type="hidden" name="perfumeSort" value="${filtering.perfumeSort }">
+					<input type="hidden" name="startPerfumePrice" value="${filtering.startPerfumePrice }">
+					<input type="hidden" name="endPerfumePrice" value="${filtering.endPerfumePrice }">
+					<input type="hidden" name="perfumeSearch" value="${filtering.perfumeSearch }">
+
+					<input type="hidden" name="perfumeNo1" value="${filtering.perfumeNo1 }">
+					<input type="hidden" name="perfumeNo2" value="${filtering.perfumeNo2 }">
+					<input type="hidden" name="perfumeNo3" value="${filtering.perfumeNo3 }">
+					<input type="hidden" name="compareCnt" value="${filtering.compareCnt }" id="compare-cnt">
+
+				</form>
+				<!-- 필터링 공간 끝! -->
+
+
+
+				<!-- 비교함 버튼 , 모달 시작! -->
+				<div id="compare-area" onclick="compareModal()">
+					<div>비교함</div>
+					<div><span>${filtering.compareCnt }</span>개</div>
+				</div>
+
+				<div id="compare-modal-bg">
+					<div id="compare-modal">
+						<div id="compare-modal-close-btn" onclick="compareModal()">×</div>
+						<div id="compare-real">
+							<div id="compare-real-title">향수 비교하기 <span>비교는 최대 3개까지 가능합니다.</span></div>
+							<div id="compare-real-info">
+								<table>
+									<tr id="compare-img">
+										<th>이미지</th> 		<td class="compare-1">안녕</td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-brand">
+										<th>브랜드</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-name">
+										<th>제품명</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-scent">
+										<th>향</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-volume">
+										<th>용량</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-price">
+										<th>가격</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-25price">
+										<th>25ml당 가격</th> 	<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+									<tr id="compare-detailBtn">
+										<th>상세버튼</th>		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 비교함 버튼 , 모달 끝! -->
+
+
+
 			</div>
 		</div>
 		</main>
@@ -401,13 +439,13 @@
 			pScentText = function() {
 				$('.scent-category').filter(function() {
 					if ($(this).html() === $('[name=pScentCategory]').val()) {
-						$(this).css({
-							"color": "red"
-						});
+						$(this).animate({
+							'color' : '#222222'
+						}, 300);
 					} else {
-						$(this).css({
-							"color": "black"
-						});
+						$(this).animate({
+							'color': '#d3d3d3'
+						}, 300);
 					}
 				});
 			}
@@ -492,8 +530,10 @@
 							$("#pList").html(pList);
 							$("#paging").html(paging);
 
-							// 위시 정보 업데이트
+							// 위시, 리뷰 정보 업데이트
 							checkWish();
+							checkScoreAvg();
+							checkReview();
 						}
 					});
 				}
@@ -618,6 +658,59 @@
 				});
 			}
 			checkWish();
+
+			// review 전체 개수
+			checkReview = function() {
+				$('.wishImg').filter(function() {
+					let perfumeNo = $(this).attr('id');
+					let wishTag = $(this);
+					
+					$.ajax({
+						url: '/perfume/reviewCnt',
+						type: 'POST',
+						data: {
+							"perfumeNo": perfumeNo
+						},
+						success: function(reviewCnt) {
+							$(wishTag).closest('td').find('.reviewCnt').html(parseInt(reviewCnt));
+						},
+						error: function(result) {
+							alert(result);
+						}
+					}); 
+					
+				});
+			}
+			checkReview();
+
+
+			// review 평균 점수
+			checkScoreAvg = function() {
+				$('.wishImg').filter(function() {
+					let perfumeNo = $(this).attr('id');
+					let wishTag = $(this);
+					
+					$.ajax({
+						url: '/perfume/reviewAvg',
+						type: 'POST',
+						data: {
+							"perfumeNo": perfumeNo
+						},
+						success: function(reviewAvg) {
+							$(wishTag).closest('td').find('.review-stars').find('img').each(function(i, img) {
+								if (i < reviewAvg) {
+									$(img).attr('src', '../../../resources/img/common/star-1.png');
+								}
+							});
+						},
+						error: function(result) {
+							alert(result);
+						}
+					}); 
+					
+				});
+			}
+			checkScoreAvg();
 
 			
 
