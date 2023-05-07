@@ -9,7 +9,7 @@
         <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
         <link rel="stylesheet" href="../../../resources/perfumeShopCss/order.css">
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
         <!-- favicon : 탭에 보이는 아이콘 -->
         <link rel="icon" href="../../resources/img/common/favicon.png" />
@@ -33,10 +33,14 @@
             
             <!-- 여기부터 내용 입력하시면 됩니다! -->
 
-            <h1 style="font-family: '궁서체'; font-weight: 900;">주문서</h1>
-            <br>
+            <div id="subject">Order Sheet</div>
+            <div style="width: 900px; height: 1px; border-bottom: 1px dashed #222; margin-top: 10px; margin-bottom: 40px;"></div>
 
-            <table>
+
+
+
+            <div class="sub-title">주문 상품</div>
+            <table id="orderList-tbl">
                 <c:forEach items="${cList }" var="cart" varStatus="i">
                     <c:if test="${i.index eq 0 }">
                         <c:choose>
@@ -66,12 +70,11 @@
                 </tr>
             </table>
 
-            <br>
 
-            <table>
-                <tr>
-                    <td colspan="2">주문자 정보</td>
-                </tr>
+
+
+            <div class="sub-title">주문자 정보</div>
+            <table id="orderer-tbl">
                 <tr>
                     <td>주문자명</td>
                     <td>${orderer.memberName }</td>
@@ -86,12 +89,13 @@
                 </tr>
             </table>
 
-            <br>
 
-            <table>
+
+
+            <div class="sub-title">배송 정보</div>
+            <table id="deliveryInfo-tbl">
                 <tr>
                     <td colspan="2">
-                        배송 정보
                         <input type="checkbox" id="same" onclick="same(this)">
                         <label for="same">주문자와 동일</label>
                     </td>
@@ -99,77 +103,96 @@
                 <tr>
                     <td>수취인</td>
                     <td>
-                        <input type="text" style="border: 0; width: 100%;" placeholder="수취인을 입력해주세요." id="recipientName">
+                        <div>
+                            <input type="text" placeholder="수취인을 입력해주세요." id="recipientName">
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>전화번호</td>
                     <td>
-                        <input type="text" style="border: 0; width: 30%;" placeholder="전화번호를 입력해주세요." id="recipientPhone" onblur="checkPhone(this)">
+                        <input style="width: 300px;" type="text" placeholder="전화번호를 입력해주세요." id="recipientPhone" onblur="checkPhone(this)">
                         <span style="color: #6A82FB; font-size: 10pt;" id="recipientPhoneStatus"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>배송지</td>
                     <td>
-                        <input type="text" style="border: 0; width: 30%;" placeholder="우편번호" id="postcode" readonly>
-                        <button onclick="addrSearch()">주소검색</button>
-                        <input type="text" style="border: 0; width: 100%;" placeholder="주소를 검색해주세요." id="address" readonly>
-                        <input type="text" style="border: 0; width: 100%;" placeholder="상세주소를 입력해주세요." id="detailAddress">
+                        <div id="postcode-btn-area">
+                            <input type="text" placeholder="우편번호" id="postcode" readonly>
+                            <span id="addrSearchBtn" onclick="addrSearch()">주소 검색</span>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="주소를 검색해주세요." id="address" readonly>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="상세주소를 입력해주세요." id="detailAddress">
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>배송메모</td>
                     <td>
-                        <input type="text" style="border: 0; width: 100%;" placeholder="배송매세지를 입력해주세요." id="deliveryMsg">
+                        <input type="text" placeholder="배송매세지를 입력해주세요." id="deliveryMsg">
                     </td>
                 </tr>
             </table>
 
-            <br>
-
-            <table>
+        
+            
+            <div class="sub-title">결제 수단</div>
+            <table id="payment-tbl">
                 <tr>
                     <td>
-                        <label for="kakaopay">카카오페이</label>
-                        <input type="radio" id="kakaopay" value="kakaopay" name="paymentMethod">
-                    </td>
-                    <td>
-                        <label for="naverpay">네이버페이</label>
-                        <input type="radio" id="naverpay" value="naverpay" name="paymentMethod">
-                    </td>
-                    <td>
-                        <label for="samsung">삼성페이</label>
-                        <input type="radio" id="samsung" value="samsung" name="paymentMethod">
-                    </td>
-                    <td>
-                        <label for="card">신용카드</label>
+                        <label for="card">
+                            <div>신용카드</div>
+                        </label>
                         <input type="radio" id="card" value="card" name="paymentMethod">
                     </td>
                     <td>
-                        <label for="vbank">가상계좌</label>
+                        <label for="vbank">
+                            <div>가상계좌</div>
+                        </label>
                         <input type="radio" id="vbank" value="vbank" name="paymentMethod">
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <label for="kakaopay">
+                            <div>카카오페이</div>
+                        </label>
+                        <input type="radio" id="kakaopay" value="kakaopay" name="paymentMethod">
+                    </td>
+                    <td>
+                        <label for="naverpay">
+                            <div>네이버페이</div>
+                        </label>
+                        <input type="radio" id="naverpay" value="naverpay" name="paymentMethod">
+                    </td>
+                    <td>
+                        <label for="samsung">
+                            <div>삼성페이</div>
+                        </label>
+                        <input type="radio" id="samsung" value="samsung" name="paymentMethod">
+                    </td>
+                </tr>
+                
             </table>
 
-            <br>
-
-            <table>
-                <tr>
-                    <td colspan="2">개인정보 수집/제공</td>
-                </tr>
+            
+            <div class="sub-title">개인정보 제공 동의</div>
+            <table id="agreement-tbl">
                 <tr>
                     <td>개인정보 수집·이용 및 처리 동의</td>
-                    <td><a href="">보기</a></td>
+                    <td style="cursor: pointer; text-decoration:underline; color: grey;">보기</td>
                 </tr>
                 <tr>
                     <td>결제대행 서비스 약관 동의</td>
-                    <td><a href="">보기</a></td>
+                    <td style="cursor: pointer; text-decoration:underline; color: grey;">보기</td>
                 </tr>
                 <tr>
                     <td>전자지급 결제대행 서비스 이용약관 동의</td>
-                    <td><a href="">보기</a></td>
+                    <td style="cursor: pointer; text-decoration:underline; color: grey;">보기</td>
                 </tr>
                 <tr>
                     <td>위 내용을 확인 하였으며 결제에 동의합니다.</td>
@@ -177,9 +200,8 @@
                 </tr>
             </table>
 
-            <br>
-
-            <button style="margin-bottom: 300px;" onclick="if(checkOrderSheet()){ payment(); }"><fmt:formatNumber value="${totalPrice}" pattern="#,##0"/>원 결제하기</button>
+            <div style="width: 900px; height: 1px; border-bottom: 1px dashed #222; margin-bottom: 30px; margin-top: 80px;"></div>
+            <div id="payment-btn" onclick="if(checkOrderSheet()){ payment(); }"><fmt:formatNumber value="${totalPrice}" pattern="#,##0"/>원 결제하기</d>
     
         </div>
         </main>
@@ -283,6 +305,9 @@
                     if(paymentMethod == 'vbank')  {
                         orderStatus = '입금전';
                     }
+
+                    $('#payment-tbl').find('td').find('div').removeClass('selectedPayment');
+                    $(this).closest('td').find('div').addClass('selectedPayment');
                 });
             });
 

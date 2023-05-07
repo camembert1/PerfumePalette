@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 <link rel="stylesheet" href="../../../resources/memberCss/orderList.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon"
@@ -39,7 +41,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th>결제상태</th>
+						<!-- <th>결제상태</th> -->
 						<th>주문번호</th>
 						<th>주문상품</th>
 						<th>상품가격</th>
@@ -52,7 +54,7 @@
 				<tbody>
 					<c:forEach items="${orderList}" var="order" varStatus="i">
 						<tr class="orderTrTag">
-							<td onclick="updatePayment('${order.orderNo}')">${order.paymentStatus}</td>
+							<!-- <td onclick="updatePayment('${order.orderNo}')">${order.paymentStatus}</td> -->
 							<td id="orderNo${i.index}"><a href="">${order.orderNo}</td>
 							<!-- <td id="perfumeImg${i.index}"><img src="../../../resources/img/perfumeFileUploads/${order.pFilerename}" alt=""></td> -->
 							<td id="perfumeName${i.index}"><a

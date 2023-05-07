@@ -38,7 +38,7 @@
 				<!-- <div style="height: 200px; width: 100%; background-color: rgba(0, 0, 255, 0);">
 					리뷰 테이블 조인해서 별점 높은 거 준 향수랑 비슷한 거 랜덤 추천?
 				</div> -->
-
+				<div id="subject">Perfume Palette</div>
 				<div id="scent-category-box">
 					<!-- 여기에 All, Citrus 등 들어감! -->
 				</div>
@@ -61,6 +61,8 @@
 							<div>
 								<div onclick="location.href='/perfume/detail/${perfume.perfumeNo }'">
 	
+
+									<!-- 1. 이미지 -->
 									<div>
 										<div class="perfumeImg" style="background-image: url('../../../resources/img/perfumeFileUploads/${perfume.pFilerename }');">
 											<div id="addWish">
@@ -69,14 +71,27 @@
 										</div>
 									</div>
 	
+
+									<!-- 2. 브랜드, 이름, 가격 -->
 									<div>
 										<!-- 잘렸을 경우 ...처리해주기!! -->
-										<c:set var="perfumeBrand" value="${fn:substring(perfume.perfumeBrand, 0, 5)}" />
-										<div>${perfumeBrand }</div>
-		
-										<c:set var="perfumeName" value="${fn:substring(perfume.perfumeName, 0, 10)}" />
-										<div>${perfumeName}</div>
-	
+
+										<!-- 브랜드 -->
+										<c:if test="${fn:length(perfume.perfumeBrand) > 5}">
+											<div>${fn:substring(perfume.perfumeBrand, 0, 5)}...</div>
+										</c:if>
+										<c:if test="${fn:length(perfume.perfumeBrand) <= 5}">
+											<div>${perfume.perfumeBrand }</div>
+										</c:if>
+
+										<!-- 이름 -->
+										<c:if test="${fn:length(perfume.perfumeName) > 8}">
+											<div>${fn:substring(perfume.perfumeName, 0, 8)}...</div>
+										</c:if>
+										<c:if test="${fn:length(perfume.perfumeName) <= 8}">
+											<div>${perfume.perfumeName }</div>
+										</c:if>
+
 										<!-- 품절이라면 품절 표시-->
 										<c:if test="${perfume.perfumeQuantity eq 0}">
 											<div>품절</div>
@@ -86,32 +101,43 @@
 											<div><fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,##0"/>원</div>
 										</c:if>
 									</div>
+
+
+									<!-- 3. 별점평균 및 개수 -->
+									<div class="review-stars">
+										<img src="../../../resources/img/common/star-0.png" alt="">
+										<img src="../../../resources/img/common/star-0.png" alt="">
+										<img src="../../../resources/img/common/star-0.png" alt="">
+										<img src="../../../resources/img/common/star-0.png" alt="">
+										<img src="../../../resources/img/common/star-0.png" alt="">
+										<span>
+											(<span class="reviewCnt">0</span>)
+										</span>
+									</div>
+
+
+									<!-- 4. 위시 개수 -->
+									<div class="wish-cnt-area">
+										<img src="../../../resources/img/common/wish-1.png" alt="">
+										<span class="wishCnt"></span>
+									</div>
+
+
+									<!-- 5. 비교함추가삭제 비교함에 넣을 정보 -->
+									<div class="pCompareBtn" onclick="compare(event, this)">
+											<c:choose>
+												<c:when test="${perfume.perfumeNo ne filtering.perfumeNo1 && perfume.perfumeNo ne filtering.perfumeNo2 && perfume.perfumeNo ne filtering.perfumeNo3}">
+													<span class="compareStatus" data-status="0">+ 비교함</span>
+												</c:when>
+												<c:otherwise>
+													<span class="compareStatus" data-status="1">- 비교함</span>
+												</c:otherwise>
+											</c:choose>
+										<input type="hidden" 	class="comparePerfumeNo" 	value="${perfume.perfumeNo }">
+									</div>
+
+
 								</div>
-	
-								<!-- 비교함에 넣을 정보 -->
-								<div class="pCompareBtn" onclick="compare(this)">
-										<c:choose>
-											<c:when test="${perfume.perfumeNo ne filtering.perfumeNo1 && perfume.perfumeNo ne filtering.perfumeNo2 && perfume.perfumeNo ne filtering.perfumeNo3}">
-												<span class="compareStatus" data-status="0">비교함추가</span>
-											</c:when>
-											<c:otherwise>
-												<span class="compareStatus" data-status="1">비교함삭제</span>
-											</c:otherwise>
-										</c:choose>
-									<input type="hidden" 	class="comparePerfumeNo" 	value="${perfume.perfumeNo }">
-								</div>
-	
-								<div class="review-stars">
-									<img src="../../../resources/img/common/star-0.png" alt="">
-									<img src="../../../resources/img/common/star-0.png" alt="">
-									<img src="../../../resources/img/common/star-0.png" alt="">
-									<img src="../../../resources/img/common/star-0.png" alt="">
-									<img src="../../../resources/img/common/star-0.png" alt="">
-									<span>
-										(<span class="reviewCnt">0</span>)
-									</span>
-								</div>
-								<input style="border: 0;" type="text" class="wishCnt" value="">
 							</div>
 						</td>
 	
@@ -122,6 +148,8 @@
 					</c:forEach>
 				</table>
 	
+
+				<!-- 페이징 -->
 				<div id="paging">
 					<c:if test="${paging.totalCount ne null }">
 						<c:if test="${paging.currentPage != 1}">
@@ -168,41 +196,45 @@
 						<div class="scent-category" onclick="pScentCategoryFunc(this)">Spicy</div>
 						<div class="scent-category" onclick="pScentCategoryFunc(this)">Woody</div>
 					</div>
+
+					<div id="real-filter-area">
+						<!-- 정렬 순서 -->
+						<div id="sort-by-area">
+							<select onchange="perfumeSortFunc(this)">
+								<option value="">정렬</option>
+								<option value="new" <c:if test="${filtering.perfumeSort eq 'new'}">selected</c:if>>신상품</option>
+								<option value="hot" <c:if test="${filtering.perfumeSort eq 'hot'}">selected</c:if>>인기판매</option>
+								<option value="review" <c:if test="${filtering.perfumeSort eq 'review'}">selected</c:if>>리뷰수</option>
+								<option value="highPrice" <c:if test="${filtering.perfumeSort eq 'highPrice'}">selected</c:if>>높은가격</option>
+								<option value="lowPrice" <c:if test="${filtering.perfumeSort eq 'lowPrice'}">selected</c:if>>낮은가격</option>
+							</select>
+						</div>
+		
+						<!-- 가격 -->
+						<div id="price-area">
+							<div>가격</div>
+							<div id="price-slider-area">
+								<div id="slider-range"></div>
+								<p id="slider-values">
+									<span id="min-value">0</span>
+									~
+									<span id="max-value">∞</span>
+								</p>
+							</div>
+						</div>
 	
-					<!-- 정렬 순서 -->
-					<div id="sort-by-area">
-						<select onchange="perfumeSortFunc(this)">
-							<option value="">정렬</option>
-							<option value="new" <c:if test="${filtering.perfumeSort eq 'new'}">selected</c:if>>신상품</option>
-							<option value="hot" <c:if test="${filtering.perfumeSort eq 'hot'}">selected</c:if>>인기판매</option>
-							<option value="review" <c:if test="${filtering.perfumeSort eq 'review'}">selected</c:if>>리뷰수</option>
-							<option value="highPrice" <c:if test="${filtering.perfumeSort eq 'highPrice'}">selected</c:if>>높은가격</option>
-							<option value="lowPrice" <c:if test="${filtering.perfumeSort eq 'lowPrice'}">selected</c:if>>낮은가격</option>
-						</select>
-					</div>
-	
-					<!-- 가격 -->
-					<div id="price-area">
-						<div>가격</div>
-						<div id="price-slider-area">
-							<div id="slider-range"></div>
-							<p id="slider-values">
-								<span id="min-value">0</span>
-								~
-								<span id="max-value">∞</span>
-							</p>
+						<!-- 이름 검색 -->
+						<div id="search-area">
+							<div>
+								<!-- 검색 -->
+								<img src="../../../resources/img/common/search.png" alt="">
+							</div>
+							<input type="text" oninput="perfumeSearchFunc(this)" value="<c:if test='${filtering.perfumeSearch ne null}'>${filtering.perfumeSearch}</c:if>">
 						</div>
 					</div>
-
-					<!-- 이름 검색 -->
-					<div id="search-area">
-						<div>검색</div>
-						<input type="text" oninput="perfumeSearchFunc(this)" value="<c:if test='${filtering.perfumeSearch ne null}'>${filtering.perfumeSearch}</c:if>">
-					</div>
-						
-
+					
+					
 					<input type="hidden" name="page">
-
 					<!-- 향 카테고리 없으면 무조건 all -->
 					<input type="hidden" name="pScentCategory" 
 						<c:if test="${filtering.pScentCategory eq null}">
@@ -239,9 +271,10 @@
 						<div id="compare-real">
 							<div id="compare-real-title">향수 비교하기 <span>비교는 최대 3개까지 가능합니다.</span></div>
 							<div id="compare-real-info">
+
 								<table>
 									<tr id="compare-img">
-										<th>이미지</th> 		<td class="compare-1">안녕</td> <td class="compare-2"></td> <td class="compare-3"></td>
+										<th>이미지</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
 									</tr>
 									<tr id="compare-brand">
 										<th>브랜드</th> 		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
@@ -259,12 +292,13 @@
 										<th>가격</th> 			<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
 									</tr>
 									<tr id="compare-25price">
-										<th>25ml당 가격</th> 	<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+										<th>가격/25ml</th> 	<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
 									</tr>
 									<tr id="compare-detailBtn">
-										<th>상세버튼</th>		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
+										<th>-</th>		<td class="compare-1"></td> <td class="compare-2"></td> <td class="compare-3"></td>
 									</tr>
 								</table>
+								
 							</div>
 						</div>
 					</div>
@@ -297,10 +331,10 @@
 						$('#compare-brand .compare-' + modalIndex).html(perfume.perfumeBrand);
 						$('#compare-name .compare-' + modalIndex).html(perfume.perfumeName);
 						$('#compare-scent .compare-' + modalIndex).html(perfume.pScentCategory);
-						$('#compare-volume .compare-' + modalIndex).html(perfume.perfumeVolume);
-						$('#compare-price .compare-' + modalIndex).html(perfume.perfumePrice);
-						$('#compare-25price .compare-' + modalIndex).html('25ㅇㄴㄻㄹ');
-						$('#compare-detailBtn .compare-' + modalIndex).html('상세버튼');
+						$('#compare-volume .compare-' + modalIndex).html(perfume.perfumeVolume + 'ml');
+						$('#compare-price .compare-' + modalIndex).html(new Intl.NumberFormat().format(perfume.perfumePrice));
+						$('#compare-25price .compare-' + modalIndex).html(new Intl.NumberFormat().format(perfume.perfumePrice/perfume.perfumeVolume*25));
+						$('#compare-detailBtn .compare-' + modalIndex).html('<div class="modal-detail-btn" onclick="location.href=\'/perfume/detail/' + perfume.perfumeNo + '\'">상세보기</div>');
 
 					},
 					error: function() {
@@ -339,8 +373,10 @@
 			});
 
 			// 비교함 추가 삭제
-			compare = function(tag) {
-				
+			compare = function(e, tag) {
+
+				e.stopPropagation(); // 비교하기 경우 detail로 이동 방지
+
 				let perfumeNo = $(tag).find('.comparePerfumeNo').val();	
 
 				$(tag).filter(function() {
@@ -366,17 +402,31 @@
 
 								// 2. 해당 향수 .compareStatus span태그의 data-status값 + innerHTML값 바꿔주기 
 								$(tag).find('.compareStatus').data('status', 1);
-								$(tag).find('.compareStatus').html('비교함삭제');
+								$(tag).find('.compareStatus').html('- 비교함');
 
 								// 3. 비교함 모달창 내 perfumeNo1, 2, 3에 각각 향수 정보 입력해주기
 								addCompareModal(perfumeNo, modalIndex)
 
 								// 4. 비교함 N개 버튼 정보 업로드
 								$('#compare-area span').html(parseInt($('#compare-cnt').val()));
+
+								// alert
+								alert("해당 제품이 비교함에 추가되었습니다!")
 								break;
 
 							case '3':
-								alert("비교함이 꽉 찼습니다!")
+								if (confirm("비교함이 꽉 찼습니다!\n비교함을 비우시겠습니까?")) {
+									$('#compare-cnt').val(0);
+									$('[name^=perfumeNo]').each(function() {
+										$(this).val(0);
+									});
+									$('.compareStatus').data('status',0);
+									$('.compareStatus').html('+ 비교함');
+									removeCompareModal(0,1);
+									removeCompareModal(0,2);
+									removeCompareModal(0,3);
+									$('#compare-area span').html(parseInt($('#compare-cnt').val()));
+								}
 								break;
 						}
 					} else {
@@ -396,13 +446,16 @@
 
 						// 2. 해당 향수 .compareStatus span태그의 data-status값 + innerHTML값 바꿔주기
 						$(tag).find('.compareStatus').data('status',0);
-						$(tag).find('.compareStatus').html('비교함추가');
+						$(tag).find('.compareStatus').html('+ 비교함');
 
 						// 3. 비교함 모달창 내 perfumeNo에 해당하는 향수 찾아서 지우기
 						removeCompareModal(perfumeNo, modalIndex)
 
 						// 4. 비교함 N개 버튼 정보 업로드
 						$('#compare-area span').html(parseInt($('#compare-cnt').val()));
+
+						// alert
+						alert("해당 제품이 비교함에서 삭제되었습니다!")
 						
 					}
 				});
@@ -477,11 +530,13 @@
 					$('[name=startPerfumePrice]').val(ui.values[0]);
 					$('[name=endPerfumePrice]').val(ui.values[1]);
 
-					$('#min-value').text(ui.values[0]);
+					// $('#min-value').text(ui.values[0]);
+					$('#min-value').text(new Intl.NumberFormat().format(ui.values[0]));
 					if (ui.values[1] === 600000) {
 						$('#max-value').text('∞');
 					} else {
-						$('#max-value').text(ui.values[1]);
+						// $('#max-value').text(ui.values[1]);
+						$('#max-value').text(new Intl.NumberFormat().format(ui.values[1]));
 					}
 
 				}
@@ -618,7 +673,7 @@
 							"perfumeNo": perfumeNo
 						},
 						success: function(wishCnt) {
-							$(wishTag).closest('td').find('.wishCnt').val('❤️' + parseInt(wishCnt));
+							$(wishTag).closest('td').find('.wishCnt').html(parseInt(wishCnt));
 						},
 						error: function(result) {
 							alert(result);

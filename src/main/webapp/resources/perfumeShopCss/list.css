@@ -51,6 +51,15 @@ main>div[id=forCenter] {
 
 
 /* 여기부터 공통XX */
+main #subject {
+    /* 𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆 */
+    color: #222;
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    font-style: italic;
+}
 
 main #main-content {
     /* background-color: red; */
@@ -121,7 +130,7 @@ main #pList td {
     /* border: 1px solid #222222; */
 
     /* 한 칸 당 크기 */
-    width: 250px;
+    width: 220px;
     height: 350px;
 
 }
@@ -135,27 +144,67 @@ main #pList td>div {
     align-items: center;
     justify-content: center;
 }
-
 main #pList td>div>div {
     /* 향수 디테일, 비교함 추가 버튼 커서*/
     /* background-color: blue; */
     cursor: pointer;
 }
+main .review-stars {
+    /* width: 100%; */
+    display: flex;
+    justify-content: left;
+}
 
-main .review-stars img {
+main .review-stars img, main .wish-cnt-area img {
 
-    /* 별점 아이콘 크기 */
+    /* 별점 아이콘, 위시 개수 하트 아이콘 크기 */
     width: 15px;
 	height: 15px;
 	object-fit: cover;
+
+    /* 우측 여백 */
+    margin-right: 3px;
 }
+
+main .wish-cnt-area {
+
+    /* 위시 하트, 개수 세로기준 가운데정렬 위함 */
+    display: flex;
+    align-items: center;
+
+}
+
+main .pCompareBtn {
+    /* 비교함 버튼  - 비교함 관련 요소지만 table에 노출되니까 */
+
+    /* txt관련 */
+    color: #222222;
+    /* color: white; */
+    font-weight: lighter;
+
+    /* 버튼 색상 및 크기 */
+    /* background-color: #222222; */
+    border: 1px solid #222222;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+
+    /* 버튼 위치 */
+    margin-top: 10px;
+
+    /* 버튼 내부 요소 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 
 main #scent-category-box {
 
     /* 향 카테고리 공간 크기 */
     width: 100%;
-    height: 200px;
+    height: 100px;
     /* background-color: lightblue; */
 
     /* 상품 리스트 테이블과 여백 */
@@ -237,25 +286,95 @@ main .scent-category {
 
 /* 필터 관련 요소 시작! */
 main #filter-area {
+
     /* 필터 위치 */
     position: absolute;
     top: 300px; /* 목록이 시작되는 위치로 수정 예정 */
     left: 30px;
 }
+main #real-filter-area {
+
+    /* 필터 찐 위치 */
+    position: fixed;
+    top: 400px; /* 목록이 시작되는 위치로 수정 예정 */
+    left: 5vw;
+
+    /* 필터링 공간 크기 및 디자인 */
+    width: 200px;
+    /* height: 300px; */
+    border: 1px dashed #222222;
+    border-radius: 10px;
+    background-color: white;
+    /* box-shadow: 5px 5px 10px #2222225d; */
+    
+    font-size: 15pt;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+main #real-filter-area>div {
+
+    width: 80%;
+    padding-block: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-bottom: 1px dashed lightgrey;
+}
+main #real-filter-area>div:nth-child(3) {
+    border-bottom: 0;
+}
+
+/* 정렬 selectbox 관련 */
+main select::-ms-expand{
+    display:none;/*for IE10,11*/
+}
+main select {
+    -webkit-appearance:none; /* for chrome */
+    -moz-appearance:none; /*for firefox*/
+    appearance:none;
+
+    background-image: url(../img/common/Arrow.png);
+    background-repeat: no-repeat;
+    background-position: 90% center;
+    background-size: 15px auto;
+    
+    /* width: 150px; */
+    height: 35px;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    font-size: 15pt;
+
+    padding-left: 10px;
+}
+
+
+
+
 
 /* 가격 슬라이더 시작*/
+
+main #slider-range {
+    /* 슬라이더 위아래로 여백 */
+    margin-block: 10px;
+}
 main .ui-slider {
     /* 슬라이더 배경색 변경 */
     background-color: #eee;
 }
 
 main .ui-slider-handle {
-    /* 슬라이더 바 (핸들) 색상 변경 */
+    /* 슬라이더 바 - 핸들 색상 변경 */
     
     background-color: rgb(255, 0, 0); /* 이거 안 먹는듯? */
     border: none; /* 테두리 제거 */
-    width: 10px !important; /* 너비 변경 */
-    height: 10px !important; /* 높이 변경 */
+    width: 15px !important; /* 너비 변경 */
+    height: 15px !important; /* 높이 변경 */
     border-radius: 100%;
 } main .ui-slider-handle:active {
     /* 핸들 클릭했을 때 색상 */
@@ -264,14 +383,41 @@ main .ui-slider-handle {
 
 main .ui-slider-range {
     /* 슬라이더 선택 영역 색상 변경 */
-    background-color: rgb(158, 158, 158); /* 파란색 */
+    background-color: #222;
 }
 
 main .ui-slider-horizontal {
     width: 150px; /* 슬라이더 길이 변경 */
     height: 5px;
 }
+
+main #slider-values {
+
+    /* 금액 범위 txt */
+    font-size: 12pt;
+    font-weight: lighter;
+    color: grey;
+}
 /* 가격 슬라이더 끝 */
+
+
+/* 검색 관련 */
+main #search-area {
+
+}
+main #search-area img {
+    width: 15px;
+	height: 15px;
+	object-fit: cover;
+}
+main #search-area input {
+    height: 30px;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    font-size: 15pt;
+
+    padding-left: 10px;
+}
 
 /* 필터 관련 요소 끝! */
 
@@ -295,40 +441,34 @@ main .ui-slider-horizontal {
 
 
 /* 비교함 관련 요소 시작! */
-/* 비교함 버튼 */
-main .pCompareBtn {
 
-    /* 버튼 색상 및 크기 */
-    background-color: grey;
-    width: 80px;
-    height: 20px;
-
-    /* 버튼 내부 요소 가운데 정렬 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 /* 비교함 시작 */
 main #compare-area {
 
     /* 비교함 위치 */
-    position: absolute;
-    top: 600px;
-    left: 30px;
+    position: fixed;
+    top: 695px;
+    left: 5vw;
 
-    /* 비교함 노랑버튼 크기 */
-    width: 70px;
+    /* 비교함 크기 및 디자인 */
+    width: 200px;
     height: 70px;
-
+    background-color: #222222;
+    border: 1px solid #222222;
+    border-radius: 10px;
+    
     /* 비교함 내부 요소 가운데 정렬 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    
+    color: white;
+    font-size: 15pt;
 
-    background-color: gold;
 }
 
 /* 비교함 모달 시작 */
@@ -454,20 +594,95 @@ main #compare-real-info {
 }
 
 main #compare-real-info>table {
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-block: 1px solid #222;
     border-collapse: collapse;
 
     width: 100%;
+    height: 400px
 
 }
 main #compare-real-info>table th
 , main #compare-real-info>table td {
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-block: 1px dashed lightgrey;
     width: 28%;
+
+    text-align: center;
 }
 
 main #compare-real-info>table th:nth-child(1) {
     width: 16%;
 }
+main #compare-detailBtn td {
+    
+}
+main .modal-detail-btn {
+
+    /* 상세보기 버튼 */
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #222;
+
+    color: white;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 auto;
+}
 /* 비교함 관련 요소 끝! */
 
+
+
+
+
+
+
+
+
+
+
+
+/* 페이징 CSS */
+main #paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+main #paging a,
+main #paging span {
+
+    display: inline-block;
+    /* padding: 8px 16px; */
+    width: 30px;
+    height: 30px;
+
+    color: #222;
+    background-color: #fff;
+    border: 1px solid #ddd;
+
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main #paging a:hover {
+    background-color: #ddd;
+}
+
+main #paging .current {
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    border-color: #333;
+    cursor: default;
+}
