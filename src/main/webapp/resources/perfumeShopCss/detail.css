@@ -175,3 +175,25 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	text-align: end;
 }
 /* 모달 끝 */
+
+#qna-modal {
+	height: 100%;
+	width: 100%;
+}
+
+#qna-modal-bg {
+	height: 100%;
+	width: 100%;
+	background: #F0F0F1;
+}
+
+main #qna-iframe {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 700px;
+	width: 500px;
+	z-index: 20;
+	border-radius: 35px;
+}

@@ -237,7 +237,7 @@
 				          btnArea = $("<td>");
 				
 				          // memberNo가 2인 경우에만 수정 및 삭제 버튼을 보여줌
-				          if (${ member.memberNo } == '2') {
+				          if ('${ member.memberNo }' == '2') {
 				            btnArea.append(
 				              $("<a href='javascript:void(0)' onclick='modifyReply(this, \"" + data[i].replyContents + "\", " + data[i].replyNo + ");'>수정</a>")
 				            ).append(

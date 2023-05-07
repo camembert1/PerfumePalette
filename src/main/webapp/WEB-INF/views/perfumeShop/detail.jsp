@@ -1,241 +1,219 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
+<meta charset="UTF-8">
+<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
 
-	<link rel="stylesheet" href="../../../resources/perfumeShopCss/detail.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="../../../resources/perfumeShopCss/detail.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-	<!-- favicon : 탭에 보이는 아이콘 -->
-	<link rel="icon" href="../../resources/img/common/favicon.png" />
-	<link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
+<!-- favicon : 탭에 보이는 아이콘 -->
+<link rel="icon" href="../../resources/img/common/favicon.png" />
+<link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
 
-	<!-- 포트원 결제 -->
-	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<!-- 포트원 결제 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
-	<!-- 부트스트랩인가?? 그 모달창에 버튼 위아래 아이콘인듯! -->
-	<script src="https://kit.fontawesome.com/972e551b53.js"></script>
+<!-- 부트스트랩인가?? 그 모달창에 버튼 위아래 아이콘인듯! -->
+<script src="https://kit.fontawesome.com/972e551b53.js"></script>
 
-	<!-- 카카오 SDK(Software Development Kit) -->
-	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-	
-	<!-- 자물쇠 이모티콘 -->
-	<script src="https://kit.fontawesome.com/092e4e45af.js" crossorigin="anonymous"></script>
+<!-- 카카오 SDK(Software Development Kit) -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-	
+<!-- 자물쇠 이모티콘 -->
+<script src="https://kit.fontawesome.com/092e4e45af.js" crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
 	<jsp:include page="../common/header.jsp" />
 	<main>
-	<!-- 헤더 부분 피하기 위한 div -->
-	<div id="forHeader"></div>
+		<div id="modal-bg"></div>
+		<iframe id="qna-iframe" src="" frameborder="0" style="display: none;"></iframe>
+		<!-- 헤더 부분 피하기 위한 div -->
+		<div id="forHeader"></div>
 
-	<!-- 본문 내용 가운데 정렬 위한 div -->
-	<div id="forCenter">
-		
-		<!-- 여기부터 내용 입력하시면 됩니다! -->
+		<!-- 본문 내용 가운데 정렬 위한 div -->
+		<div id="forCenter">
 
-		<div>
-			<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
-		</div>
+			<!-- 여기부터 내용 입력하시면 됩니다! -->
 
-		<div>perfumeBrand : ${perfume.perfumeBrand }</div>
-		<div>perfumeName : ${perfume.perfumeName }</div>
+			<div>
+				<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="">
+			</div>
 
-		<c:choose>
-			<c:when test="${perfume.perfumeQuantity > 0 and perfume.perfumeQuantity <=5}">
-				<div>품절임박 | 잔여 ${perfume.perfumeQuantity }개</div>
-			</c:when>
-			<c:when test="${perfume.perfumeQuantity == 0}">
-				<div>품절</div>
-			</c:when>
-			<c:otherwise>
-				<div>재고만아 어어 ${perfume.perfumeQuantity }</div>
-			</c:otherwise>
-		</c:choose>
+			<div>perfumeBrand : ${perfume.perfumeBrand }</div>
+			<div>perfumeName : ${perfume.perfumeName }</div>
 
-
-		<div>perfumeVolume : ${perfume.perfumeVolume }</div>
-		<div>perfumePrice : ${perfume.perfumePrice }</div>
-
-		<div>
-			<button class="share" id="copy">링크복사</button>
-			<button class="share" id="kakao">카카오톡</button>
-			<button class="share" id="twitter">트위터</button>
-			<button class="share" id="facebook">페이스북</button>
-		</div>
+			<c:choose>
+				<c:when test="${perfume.perfumeQuantity > 0 and perfume.perfumeQuantity <=5}">
+					<div>품절임박 | 잔여 ${perfume.perfumeQuantity }개</div>
+				</c:when>
+				<c:when test="${perfume.perfumeQuantity == 0}">
+					<div>품절</div>
+				</c:when>
+				<c:otherwise>
+					<div>재고만아 어어 ${perfume.perfumeQuantity }</div>
+				</c:otherwise>
+			</c:choose>
 
 
-		<div>
-			<input type="hidden" id="wishStatus" value="${wishStatus}">
-			<button onclick="wish()" id="wishBtn">
-				<c:if test="${wishStatus == 1}">
+			<div>perfumeVolume : ${perfume.perfumeVolume }</div>
+			<div>perfumePrice : ${perfume.perfumePrice }</div>
+
+			<div>
+				<button class="share" id="copy">링크복사</button>
+				<button class="share" id="kakao">카카오톡</button>
+				<button class="share" id="twitter">트위터</button>
+				<button class="share" id="facebook">페이스북</button>
+			</div>
+
+
+			<div>
+				<input type="hidden" id="wishStatus" value="${wishStatus}">
+				<button onclick="wish()" id="wishBtn">
+					<c:if test="${wishStatus == 1}">
 					❤️
 				</c:if>
-				<c:if test="${wishStatus == 0}">
+					<c:if test="${wishStatus == 0}">
 					🤍
 				</c:if>
-			</button>
-		</div>
-
-		<c:choose>
-			<c:when test="${perfume.perfumeQuantity > 0}">
-				<div>
-					<button onclick="buy()">구매하기</button>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div>
-					<input type="hidden" id="rAlertStatus" value="${rAlertStatus}">
-					<button onclick="restockAlert()">재입고알림</button>
-				</div>
-			</c:otherwise>
-		</c:choose>		
-		
-		<div>
-			<button onclick="cart()">장바구니</button>
-		</div>
-		
-		<div>
-			<div>상품상세</div>
-			<div>상품후기(${reviewCnt })</div>
-			<div>상품문의</div>
-			<div>배송/교환/반품 안내</div>
-		</div>
-		<div>이거는 쿠팡 참고할거 어어 ㅋ</div>
-
-
-
-		<!-- 모달창 -->
-		<div id="modal-bg"></div>
-		<div id="modal">
-			<div id="explain">
-				<div id="name">
-					<span id="perfumeBrand">[${perfume.perfumeBrand }]</span> <span id="perfumeName">[${perfume.perfumeName }]</span>
-					<input type="hidden" id="perfumeNo" value="${perfume.perfumeNo }">
-				</div>
-				<div id="other-name">
-					<div>
-						<span id="perfumePrice">[가격]</span>
-					</div>
-					<div id="updown">
-						<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1">
-						<span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
-					</div>
-				</div>
-			</div>
-			<div id="money">
-				<p>합계</p>
-				<div>
-					<span id="perfumeTotalPrice">[합계금액]</span>
-				</div>
-			</div>
-			<div id="btn-box">
-				<button type="button" onclick="modalClose()">
-					<span>취소</span>
 				</button>
 			</div>
-		</div>
 
-		<form action="/order/orderSheet" method="post" id="orderForm">
-			<input type="hidden" name="perfumeNo" value="${perfume.perfumeNo }">
-			<input type="hidden" name="perfumePrice" value="${perfume.perfumePrice }">
-			<input type="hidden" name="perfumeName" value="${perfume.perfumeName }">
-			<input type="hidden" name="pFilerename" value="${perfume.pFilerename }">
-			<input type="hidden" name="cartQuantity" value="">
-		</form>
-		
-		<!-- 테스트 -->
-		<hr style="width: 100%; color: red; margin-top: 100px">
-		<div style="width: 75%;">
-			<h2>QnA<sub> 상품 문의<b>(총 ${cnt }개)</b></sub></h2>
-			<c:if test="${qnaList ne null }">
-				<table style="text-align: center; width: 100%; table-layout: fixed;">
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>답변여부</th>
-							<th>구분</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일자</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${qnaList }" var="qna" varStatus="status">
-							<fmt:formatDate var="qnaDate" value="${qna.qnaDate }" pattern="yyyy-MM-dd" />
-							<fmt:formatDate var="repDate" value="${qna.repDate }" pattern="yyyy-MM-dd" />
-							<c:if test="${member eq null }">
-								<tr onclick="alert('로그인이 필요한 서비스입니다.')" style="cursor: pointer;">
-									<td>${status.count }</td>
-									<td>
-										<c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if>
-									</td>
-									<td>
-										<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
-									</td>
-									<c:if test="${qna.qnaPassword ne null }">
-										<td style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
-									</c:if>
-									<c:if test="${qna.qnaPassword eq null }">
-										<td style="cursor: pointer;">${qna.qnaSubject }</td>
-									</c:if>
-									<td>${qna.memberNickname }</td>
-									<td>${qnaDate }</td>
-								</tr>
-							</c:if>
-							<c:if test="${member ne null }">
+			<c:choose>
+				<c:when test="${perfume.perfumeQuantity > 0}">
+					<div>
+						<button onclick="buy()">구매하기</button>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div>
+						<input type="hidden" id="rAlertStatus" value="${rAlertStatus}">
+						<button onclick="restockAlert()">재입고알림</button>
+					</div>
+				</c:otherwise>
+			</c:choose>
+
+			<div>
+				<button onclick="cart()">장바구니</button>
+			</div>
+
+			<div>
+				<div>상품상세</div>
+				<div>상품후기(${reviewCnt })</div>
+				<div>상품문의</div>
+				<div>배송/교환/반품 안내</div>
+			</div>
+			<div>이거는 쿠팡 참고할거 어어 ㅋ</div>
+
+
+
+			<!-- 모달창 -->
+			<div id="modal-bg"></div>
+			<div id="modal">
+				<div id="explain">
+					<div id="name">
+						<span id="perfumeBrand">[${perfume.perfumeBrand }]</span> <span id="perfumeName">[${perfume.perfumeName }]</span> <input type="hidden" id="perfumeNo" value="${perfume.perfumeNo }">
+					</div>
+					<div id="other-name">
+						<div>
+							<span id="perfumePrice">[가격]</span>
+						</div>
+						<div id="updown">
+							<input type="number" id="perfumeQuantity" value="1" min="1" max="100" size="1"> <span style="margin: 0 10px;"><i class="fas fa-lg fa-arrow-alt-circle-up up"></i></span> <span><i class="fas fa-lg fa-arrow-alt-circle-down down"></i></span>
+						</div>
+					</div>
+				</div>
+				<div id="money">
+					<p>합계</p>
+					<div>
+						<span id="perfumeTotalPrice">[합계금액]</span>
+					</div>
+				</div>
+				<div id="btn-box">
+					<button type="button" onclick="modalClose()">
+						<span>취소</span>
+					</button>
+				</div>
+			</div>
+
+			<form action="/order/orderSheet" method="post" id="orderForm">
+				<input type="hidden" name="perfumeNo" value="${perfume.perfumeNo }"> <input type="hidden" name="perfumePrice" value="${perfume.perfumePrice }"> <input type="hidden" name="perfumeName" value="${perfume.perfumeName }"> <input type="hidden" name="pFilerename" value="${perfume.pFilerename }"> <input type="hidden" name="cartQuantity" value="">
+			</form>
+
+			<!-- 테스트 -->
+			<hr style="width: 100%; color: red; margin-top: 100px">
+			<div style="width: 75%;">
+				<h2>
+					QnA<sub> 상품 문의<b>(총 ${cnt }개)</b></sub>
+				</h2>
+				<c:if test="${qnaList ne null }">
+					<table style="text-align: center; width: 100%; table-layout: fixed;">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>답변여부</th>
+								<th>구분</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>등록일자</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${qnaList }" var="qna" varStatus="status">
+								<fmt:formatDate var="qnaDate" value="${qna.qnaDate }" pattern="yyyy-MM-dd" />
+								<fmt:formatDate var="repDate" value="${qna.repDate }" pattern="yyyy-MM-dd" />
 								<tr>
 									<td>${status.count }</td>
-									<td>
-										<c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if>
-									</td>
-									<td>
-										<c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if>
-									</td>
-									<c:if test="${qna.qnaPassword ne null }">
-										<c:if test="${member.memberId eq 'admin' }">
-											<td onclick="detail(${status.count})" style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
-										</c:if>
-										<c:if test="${member.memberId ne 'admin' }">
-											<td onclick="detailPrivate(${status.count}, ${member.memberNo }, ${qna.memberNo })" style="cursor: pointer;">${qna.qnaSubject }<i class="fa-solid fa-lock" style="color: darkgreen;"></i></td>
-										</c:if>
-									</c:if>
-									<c:if test="${qna.qnaPassword eq null }">
-										<td onclick="detail(${status.count})" style="cursor: pointer;">${qna.qnaSubject }</td>
-									</c:if>
+									<td><c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if></td>
+									<td><c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if></td>
+									<c:choose>
+										<c:when test="${not empty qna.qnaPassword and member.memberNo != '2'}">
+											<td onclick='lock(this)'>${qna.qnaSubject}<i class="fa-solid fa-lock"></i></td>
+										</c:when>
+										<c:otherwise>
+											<td><a onclick="goQnaModal(${qna.qnaNo})">${qna.qnaSubject}</a></td>
+										</c:otherwise>
+									</c:choose>
 									<td>${qna.memberNickname }</td>
 									<td>${qnaDate }</td>
 								</tr>
-								<tr onclick="detailOut(${status.count})" class="showDetail${status.count}" style="display: none">
-									<td colspan="6" style="cursor: pointer;">${qna.qnaContents }</td>
-								</tr>
-								<tr onclick="detailOut(${status.count})" class="showDetail${status.count}" style="display: none">
-									<td colspan="5" style="cursor: pointer;">${qna.replyContents }</td>
-									<td colspan="1" style="cursor: pointer;">${repDate }</td>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</tbody>
-				</table>
-			</c:if>
-			<button type="button" onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
+								<c:choose>
+									<c:when test="${not empty qna.qnaPassword}">
+										<tr style="display: none;" class="hiddenTr">
+											<td colspan="2"></td>
+											<td>
+												<form onsubmit="validatePassword(event, ${status.count })">
+												  <div class="hidden-password">
+												    비밀번호 : <input type="password" name="qnaPassword" id="qnaPassword${status.count }" class="hidden"> <input type="hidden" name="qnaNo" id="qnaNo${status.count }" value="${qna.qnaNo}">
+												    <button type="submit" class="pwChk">확인</button>
+												  </div>
+												</form>
+											</td>
+										</tr>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:if>
+				<button type="button" onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
+			</div>
+
+
+
 		</div>
-		
-
-
-	</div>
 	</main>
 	<jsp:include page="../common/footer.jsp" />
 
-	
+
 
 
 	<script>
@@ -549,23 +527,58 @@
 		
 		/* 문의관련 스크립트 */
 		
-		/* 비밀글 NO */
-		function detail(index) {
-			$(".showDetail"+index).css("display", "table-row");
+		function lock(target) {
+			$(target).parent().next(".hiddenTr").toggle();
 		}
 		
-		/* 비밀글 YES */
-		function detailPrivate(index, memberNo, qnaMemberNo) {
-			if(memberNo === qnaMemberNo){
-				detail(index);
-			} else {
-				alert("비밀글로 작성자만 볼 수 있습니다.");
-			}
+		// Ajax 요청을 통해 비밀번호 검증 및 페이지 이동 또는 알림창 표시
+		function validatePassword(event, status) {
+			event.preventDefault();
+			
+			let qnaNo = $("#qnaNo"+status).val();
+			let password = $("#qnaPassword"+status).val();
+
+			// 비밀번호 검증 Ajax 요청
+			$.ajax({
+				type : "POST",
+				url : "/qnaboard/samepwd",
+				data : {
+					"qnaNo" : qnaNo,
+					"inputPw" : password
+				},
+				success : function(response) {
+					if (response === "1") {
+						// 비밀번호가 맞을 경우 모달창
+						// return 미지정 -> return true;
+						goQnaModal(qnaNo);
+					} else {
+						// return false;
+						alert("비밀번호가 일치하지 않습니다");	
+					}
+				}
+			});
+
+			// 폼 전송 방지
+			return false;
 		}
 		
-		/* 질문, 답변 가리기 */
-		function detailOut(no) {
-			$(".showDetail"+no).css("display", "none");
+		function goQnaModal(qnaNum) {
+			var url = "/qnaboard/qnaDetail/" + qnaNum;
+			document.getElementById("qna-iframe").src = url;
+			$("#qna-iframe").css("display", "block");
+			$("#modal-bg").css("display", "block");
+			$("body").css("overflow", "hidden");
+		}
+
+		function outQnaModal() {
+			/* 비밀번호 입력창 제거하고 값 초기화 */
+			$(".hidden").val("");
+			$(".hiddenTr").css("display", "none");
+			/* 모달 초기화 */
+			$("#chat-iframe").attr("src", "");
+			$("#qna-iframe").css("display", "none");
+			$("#modal-bg").css("display", "none");
+			$("body").css("overflow", "auto");
 		}
 
 	</script>
