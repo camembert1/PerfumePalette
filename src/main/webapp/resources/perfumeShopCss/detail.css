@@ -414,6 +414,7 @@ main #tab-contents-box>div {
 	/* 탭이랑 내용박스 사이 여백 */
 	margin-top: 100px;
 }
+
 main .line {
 	/* contents 박스 구분선 */
 	width: 1000px;
@@ -470,7 +471,7 @@ main #scoreAvg-area img {
 	/* 아이콘이랑 숫자 사이 여백 */
 	margin-right: 10px;
 }
-main #review-box table {
+main #review-box table, main #qna-box table {
 
 	/* 후기 리스트 너비 */
 	width: 1100px;
@@ -480,7 +481,7 @@ main #review-box table {
 	font-size: 12pt;
 }
 
-main #review-box td {
+main #review-box td, main #qna-box td {
 
 	/* 표 내용 가운데 정렬 */
 	text-align: center;
@@ -488,12 +489,13 @@ main #review-box td {
 	/* 후기 리스트 칸 높이 */
 	height: 50px;
 }
+
 main #review-box td:nth-child(3) {
 	/* 내용만 좌측 정렬 */
 	text-align: left;
 }
 
-main #review-box th, main #review-box td {
+main #review-box th, main #review-box td, main #qna-box th, main #qna-box td{
 
 	/* 후기 리스트 border */
 	border-block: 1px solid #222222;
@@ -503,21 +505,43 @@ main #review-box th, main #review-box td {
 	padding: 10px;
 }
 
-main #review-box tr:not(:first-child) {
+main #review-box tr:not(:first-child), main #qna-box tbody tr td:nth-child(4) {
 	/* 상품 후기 리스트 커서 */
 	cursor: pointer;
 }
 
-main #review-box tr:not(:first-child):hover {
+main #review-box tr:not(:first-child):hover, main #qna-box tbody tr:hover {
 
 	/* 후기 hover했을 경우 */
 	transition-duration: 0.3s;
 	background-color: rgba(211, 211, 211, 0.4);
 }
 
-main #review-box tr:first-child {
+main #review-box tr:first-child, main #qna-box thead tr {
 	background-color: #28302d;
 	color: white;
+}
+
+main #qna-box button {
+	padding: 3px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+main #qna-box #qnaSubBtn {
+	height: 50px;
+	width: 125px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+	margin-top: 10px;
+	float: right;
 }
 
 

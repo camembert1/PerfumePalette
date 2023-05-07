@@ -18,12 +18,14 @@ public class QnaBoard {
 	private String qQnaNo; // NULL이면 질문, 값이 있으먄 답변
 	private String memberNickname; // 작성자(닉네임)
 	private String replyStatus; // 답변 여부
+	private String replyContents;
+	private Timestamp repDate;
 	
 	public QnaBoard() {}
 
 	public QnaBoard(int qnaNo, int perfumeNo, String qnaType, String qnaSubject, String qnaContents, Timestamp qnaDate,
 			int memberNo, String qFilename, String qFilerename, String qFilepath, Integer qnaPassword, String qQnaNo,
-			String memberNickname, String replyStatus) {
+			String memberNickname, String replyStatus, String replyContents, Timestamp repDate) {
 		super();
 		this.qnaNo = qnaNo;
 		this.perfumeNo = perfumeNo;
@@ -39,6 +41,8 @@ public class QnaBoard {
 		this.qQnaNo = qQnaNo;
 		this.memberNickname = memberNickname;
 		this.replyStatus = replyStatus;
+		this.replyContents = replyContents;
+		this.repDate = repDate;
 	}
 
 	public int getQnaNo() {
@@ -152,6 +156,23 @@ public class QnaBoard {
 	public void setReplyStatus(String replyStatus) {
 		this.replyStatus = replyStatus;
 	}
+	
+
+	public String getReplyContents() {
+		return replyContents;
+	}
+
+	public void setReplyContents(String replyContents) {
+		this.replyContents = replyContents;
+	}
+	
+	public Timestamp getRepDate() {
+		return repDate;
+	}
+
+	public void setRepDate(Timestamp repDate) {
+		this.repDate = repDate;
+	}
 
 	@Override
 	public String toString() {
@@ -159,45 +180,7 @@ public class QnaBoard {
 				+ qnaSubject + ", qnaContents=" + qnaContents + ", qnaDate=" + qnaDate + ", memberNo=" + memberNo
 				+ ", qFilename=" + qFilename + ", qFilerename=" + qFilerename + ", qFilepath=" + qFilepath
 				+ ", qnaPassword=" + qnaPassword + ", qQnaNo=" + qQnaNo + ", memberNickname=" + memberNickname
-				+ ", replyStatus=" + replyStatus + "]";
+				+ ", replyStatus=" + replyStatus + ", replyContents=" + replyContents + ", repDate=" + repDate + "]";
 	}
 
-	
-
-	
-
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -34,6 +34,7 @@ body {
 #chat-modal-bg {
 	height: 100%;
 	width: 100%;
+	background: #F0F0F1;
 }
 
 #chat-modal-close-btn {
@@ -58,6 +59,7 @@ body {
 #helloMsg #pBox {
 	height: 10%;
 	width: 100%;
+	background-color: #F0F0F1;
 }
 
 .display-chatting p.chat {
@@ -163,4 +165,8 @@ body {
 
 .chatting-area .chatDate {
 	font-size: 10px;
+}
+
+ul li {
+	margin-bottom: 5px;
 }

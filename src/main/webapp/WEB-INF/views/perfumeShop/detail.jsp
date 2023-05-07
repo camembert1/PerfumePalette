@@ -19,11 +19,11 @@
 	<!-- 포트원 결제 -->
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
-	<!-- 부트스트랩인가?? 그 모달창에 버튼 위아래 아이콘인듯! -->
-	<script src="https://kit.fontawesome.com/972e551b53.js"></script>
-
 	<!-- 카카오 SDK(Software Development Kit) -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	
+	<!-- 폰트어섬 아이콘 -->
+	<script src="https://kit.fontawesome.com/092e4e45af.js" crossorigin="anonymous"></script>
 
 	
 </head>
@@ -38,7 +38,7 @@
 	<div id="forCenter">
 		
 		<!-- 여기부터 내용 입력하시면 됩니다! -->
-
+		
 		<section id="section-main">
 			<section id="section-top">
 				
@@ -174,7 +174,7 @@
 				<div id="tab-area">
 					<div class="tab" id="detail-tab">상품상세</div>
 					<div class="tab" id="review-tab">상품후기(${reviewCnt })</div>
-					<div class="tab" id="qna-tab">상품문의</div>
+					<div class="tab" id="qna-tab">상품문의(${qnaCnt })</div>
 					<div class="tab" id="deliveryInfo-tab">배송/교환/반품 안내</div>
 				</div>
 				<div id="tab-contents-box">
@@ -301,8 +301,63 @@
 					</div>
 
 					<div class="tab-contents" id="qna-box">
-						QnA 박스
+						<c:if test="${qnaCnt eq 0}">
+							<div>등록된 문의가 아직 없습니다.</div>
+						</c:if>
+						
+						<c:if test="${qnaCnt ne 0}">
+						
+							<table>
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>답변여부</th>
+										<th>구분</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>등록일자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${qnaList }" var="qna" varStatus="status">
+										<fmt:formatDate var="qnaDate" value="${qna.qnaDate }" pattern="yyyy-MM-dd" />
+										<fmt:formatDate var="repDate" value="${qna.repDate }" pattern="yyyy-MM-dd" />
+										<tr>
+											<td>${status.count }</td>
+											<td><c:if test="${qna.replyContents ne null}">답변완료</c:if> <c:if test="${qna.replyContents eq null}">답변대기</c:if></td>
+											<td><c:if test="${qna.qnaType == 1 }">상품문의</c:if> <c:if test="${qna.qnaType == 2 }">배송문의</c:if> <c:if test="${qna.qnaType == 3 }">교환/환불</c:if> <c:if test="${qna.qnaType == 4 }">기타문의</c:if></td>
+											<c:choose>
+												<c:when test="${not empty qna.qnaPassword and member.memberNo != '2'}">
+													<td onclick='lock(this)'>${qna.qnaSubject}<i class="fa-solid fa-key" style="color: #ffd43b; margin-left: 5px;"></i></td>
+												</c:when>
+												<c:otherwise>
+													<td><a onclick="location.href='/qnaboard/qnaDetail/${qna.qnaNo}'">${qna.qnaSubject}</a></td>
+												</c:otherwise>
+											</c:choose>
+											<td>${qna.memberNickname }</td>
+											<td>${qnaDate }</td>
+										</tr>
+										<c:choose>
+											<c:when test="${not empty qna.qnaPassword}">
+												<tr style="display: none;" class="hiddenTr">
+													<td colspan="6">
+														<form onsubmit="validatePassword(event, ${status.count })">
+														  <div class="hidden-password">
+														    비밀번호 : <input type="password" name="qnaPassword" id="qnaPassword${status.count }" class="hidden" placeholder="숫자만 입력가능합니다." oninput="chkPw(${status.count })"> <input type="hidden" name="qnaNo" id="qnaNo${status.count }" value="${qna.qnaNo}">
+														    <button type="submit" class="pwChk">확인</button>
+														  </div>
+														</form>
+													</td>
+												</tr>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
+						<button type="button" id="qnaSubBtn"onclick="location.href = '/qnaboard/write/${perfume.perfumeNo }'">문의작성</button>
 					</div>
+					
 					
 					<div class="tab-contents" id="deliveryInfo-box">
 
@@ -832,6 +887,60 @@
 				location.href="/member/login";
 			}
 		}
+		
+		/////////////////////////////////////////////////////////////////////////////////
+		
+		
+		/* 문의관련 스크립트 */
+
+        function lock(target) {
+            $(target).parent().next(".hiddenTr").toggle();
+        }
+
+        // Ajax 요청을 통해 비밀번호 검증 및 페이지 이동 또는 알림창 표시
+        function validatePassword(event, status) {
+            event.preventDefault();
+
+            let qnaNo = $("#qnaNo" + status).val();
+            let password = $("#qnaPassword" + status).val();
+
+            // 비밀번호 검증 Ajax 요청
+            $.ajax({
+                type: "POST",
+                url: "/qnaboard/samepwd",
+                data: {
+                    "qnaNo": qnaNo,
+                    "inputPw": password
+                },
+                success: function (response) {
+                    if (response === "1") {
+                        // 비밀번호가 맞을 경우 모달창
+                        // return 미지정 -> return true;
+                        location.href = "/qnaboard/qnaDetail/"+qnaNo;
+                    } else {
+                        // return false;
+                        alert("비밀번호가 일치하지 않습니다");
+                    }
+                }
+            });
+
+            // 폼 전송 방지
+            return false;
+        }
+        
+     // 비밀글 유효성 검사
+     function chkPw(no) {
+		  const passwordInput = document.getElementById("qnaPassword"+no);
+		  
+		    const input = passwordInput.value;
+		    const regex = /^[0-9]*$/;
+		    
+		    if (!regex.test(input)) {
+		      alert("숫자만 입력가능합니다.");
+		      passwordInput.value = "";
+		    }
+	}
+     
 
 	</script>
 

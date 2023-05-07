@@ -83,24 +83,31 @@ public class ChattingController {
 	@PostMapping("/chat/openChatRoom2")
 	@ResponseBody
 	public int openChatRoomAjax(Model model, ChatRoom room, RedirectAttributes ra, HttpSession session) {
-		Member member = (Member) session.getAttribute("member");
+	    Member member = (Member) session.getAttribute("member");
 
-		room.setMemberId(member.getMemberId());
+	    room.setMemberId(member.getMemberId());
 
-		int chatRoomNo = cService.openChatRoom(room);
-		// pk값을 반환 받기 위해 객체이름을 chatRoomNo으로 작성
+	    // 해당 세션에 이미 방이 있는지 확인
+	    Integer sessionRoomNo = (Integer) session.getAttribute("roomNo");
+	    if (sessionRoomNo != null) {
+	        return sessionRoomNo; // 기존 방으로 이동
+	    }
 
-		// 채팅방 개설 첫 메세지 설정
-		Chat chat = new Chat();
-		chat.setChatContent("안녕하세요. 𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆입니다.");
-		chat.setRoomNo(chatRoomNo);
-		chat.setMemberId("admin");
-		cService.insertMessage(chat);
+	    int chatRoomNo = cService.openChatRoom(room);
+	    // pk값을 반환 받기 위해 객체이름을 chatRoomNo으로 작성
 
-		session.setAttribute("roomNo", chatRoomNo);
+	    // 채팅방 개설 첫 메세지 설정
+	    Chat chat = new Chat();
+	    chat.setChatContent("안녕하세요. 𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆입니다.");
+	    chat.setRoomNo(chatRoomNo);
+	    chat.setMemberId("admin");
+	    cService.insertMessage(chat);
 
-		return chatRoomNo;
+	    session.setAttribute("roomNo", chatRoomNo);
+
+	    return chatRoomNo;
 	}
+
 
 	// 관리자가 입장할때
 	// 채팅방 입장
@@ -127,12 +134,14 @@ public class ChattingController {
 	public void joinChatRoomAjax(Model model, @PathVariable("roomNo") int roomNo, ChatRoom join, RedirectAttributes ra,
 			HttpSession session) {
 		Member member = (Member) session.getAttribute("member");
-		join.setMemberId(member.getMemberId());
-		List<Chat> list = cService.joinChatRoom(join);
+		if(member != null) {
+			join.setMemberId(member.getMemberId());
+			List<Chat> list = cService.joinChatRoom(join);
 
-		session.setAttribute("list", list);
-//		model.addAttribute("list", list);
-//		model.addAttribute("roomNo", roomNo); // session스코프에 roomNo저장됨.
+			session.setAttribute("list", list);
+//			model.addAttribute("list", list);
+//			model.addAttribute("roomNo", roomNo); // session스코프에 roomNo저장됨.
+		}
 
 	}
 
