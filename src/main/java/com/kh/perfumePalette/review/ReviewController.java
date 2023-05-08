@@ -123,7 +123,7 @@ public class ReviewController {
 			    }
 			}
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "reviewFileUploads\\" ;
+			String savePath = wasRoot + File.separator + "reviewFileUploads" + File.separator ;
 			File diretory = new File(savePath + id);
 			File folder = new File(savePath + code);
 			if(!folder.exists()){
@@ -139,7 +139,7 @@ public class ReviewController {
 			        for(int i = 0; i < files.length; i++){
 			            for(String fileName : fileList) {
 			                if (("../../../resources/img/reviewFileUploads/"+id + "/" + files[i].getName()).equals(fileName)) {
-			                    files[i].renameTo(new File(savePath + code +"\\" +files[i].getName()));
+			                    files[i].renameTo(new File(savePath + code + File.separator +files[i].getName()));
 			                }
 			            }
 			            if (files[i].delete()) {
@@ -183,7 +183,7 @@ public class ReviewController {
 			,HttpServletRequest request) {
 		JsonObject jsonObject = new JsonObject();
 		String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-		String savePath = wasRoot + "\\" + "reviewFileUploads\\" + id;
+		String savePath = wasRoot + File.separator + "reviewFileUploads" + File.separator + id;
 		// 폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 		File folder = new File(savePath);
 		if (!folder.exists()) {
@@ -195,7 +195,7 @@ public class ReviewController {
 			/* SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); */
 			String FileName = UUID.randomUUID() + "."
 					+ originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-			String filePath = savePath + "\\" + FileName;
+			String filePath = savePath + File.separator + FileName;
 			File file = new File(filePath);
 			multipartFile.transferTo(file);
 			filePath = "../../../resources/img/reviewFileUploads/" + id +"/" + FileName;
@@ -315,7 +315,7 @@ public class ReviewController {
 			review.setReviewContents(content.replaceAll(id , ""+code));
 			int result = rService.updateReview(review);
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "reviewFileUploads\\" ;
+			String savePath = wasRoot + File.separator + "reviewFileUploads" + File.separator ;
 			File diretory = new File(savePath + id);
 			File folder = new File(savePath + code);	
 			if(!diretory.exists()){
@@ -371,7 +371,7 @@ public class ReviewController {
 			        for(int i = 0; i < files.length; i++){
 			            for(String fileName : fileList) {
 			                if (("../../../resources/img/reviewFileUploads/"+id + "/" + files[i].getName()).equals(fileName)) {
-			                    files[i].renameTo(new File(savePath + code +"\\" +files[i].getName()));
+			                    files[i].renameTo(new File(savePath + code +File.separator +files[i].getName()));
 			                }
 			            }
 			            if (files[i].delete()) {
@@ -417,7 +417,7 @@ public class ReviewController {
 	        if (review != null) {
 	            // 해당 게시물에 업로드된 이미지 파일 삭제
 	            String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-	            String savePath = wasRoot + "\\" + "reviewFileUploads\\" + review.getrFilename();
+	            String savePath = wasRoot + File.separator + "reviewFileUploads" + File.separator + review.getrFilename();
 	            File folder = new File(savePath);
 	            if (folder.exists() && folder.isDirectory()) {
 	                File[] files = folder.listFiles();
