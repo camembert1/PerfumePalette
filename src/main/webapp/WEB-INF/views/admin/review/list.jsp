@@ -68,12 +68,12 @@
 						<th style="width: 30px;"><input type="checkbox" class="allCheck"></th>
 						<th style="width: 100px;">별 점</th>
 						<th style="width: 100px;">이미지</th>
-						<th style="width: 130px;">상 품</th>
-						<th style="width: 150px;">내 용</th>
-						<th style="width: 70px;">작성자</th>
+						<th style="width: 150px;">상 품</th>
+						<th style="width: 100px;">작성자</th>
 						<th style="width: 100px">작성일</th>
 						<th style="width: 60px;">조회수</th>
 						<th style="width: 60px;">신고수</th>
+						<th style="width: 60px;">후기상세</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -96,11 +96,12 @@
 							<td class="onclick tdOver">
 							<a href="/perfume/detail/${review.perfumeNo}">[${review.perfumeBrand }] ${review.perfumeName }</a>
 							</td>
-							<td class="onclick tdOver">
-	            				<a href="/review/reviewDetail/${review.reviewNo}">
-									<c:out value="${fn:substring(review.reviewContents, 0, 19)}${fn:length(review.reviewContents) > 19 ? '...' : ''}" />
-								</a>
-		            		</td>
+<!-- 							<td class="onclick tdOver"> -->
+<%-- 	            				<a href="/review/reviewDetail/${review.reviewNo}"> --%>
+<%-- 									<c:out value="${fn:substring(review.reviewContents, 0, 10)}${fn:length(review.reviewContents) > 10 ? '...' : ''}" escapeXml="false"/> --%>
+<%-- 									<c:out value="${fn:substring(review.reviewContents, 0, 19)}" escapeXml="false"/> --%>
+<!-- 								</a> -->
+<!-- 		            		</td> -->
 							<td class="onclick tdOver" style="width: 100px;">
 								<a href="/admin/member/search?searchCondition=All&searchValue=${review.memberNickname }">${review.memberNickname }</a>
 							</td>
@@ -113,6 +114,11 @@
 								<c:if test="${review.reportCount == 0 }">
 									${review.reportCount }
 								</c:if>
+							</td>
+							<td>
+								<button class="rDetail_btn" type="button" onclick="location.href='/review/reviewDetail/${review.reviewNo}'">
+									상 세
+								</button>
 							</td>
 						</tr>
 					</c:forEach>

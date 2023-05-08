@@ -96,8 +96,10 @@
 										</c:choose>
 									</div>
 									<div>
-										<input type="text" name="reportContent" class="modal_input"
-											value="${review.reportContent }" readonly="readonly">
+<!-- 										<input type="text" name="reportContent" class="modal_input" -->
+<%-- 											value="${review.reportContent }" readonly="readonly"> --%>
+										<textarea name="reportContent" rows="10" cols="50" class="modal_input"
+											readonly="readonly" style="text-align: center; padding-top: 20px;">${review.reportContent }</textarea>
 									</div>
 								</div>
 									<div>

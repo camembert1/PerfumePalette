@@ -90,9 +90,9 @@ main .continer {
 	text-align: center;
 }
 main table .tdOver {
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	white-space: nowrap;
 }
 
 
@@ -100,13 +100,18 @@ main h1{
 	margin-bottom: 25px;
 	color: black;
 }
-
-main table{
+main table {
+	table-layout: fixed;
 	text-align: center;
 	border-collapse: collapse;
 	width: 100%;
 	margin-bottom: 100px;
 }
+/* main table{ */
+/* 	text-align: center; */
+/* 	border-collapse: collapse; */
+/* 	width: 100%; */
+/* } */
 
 main thead {
 	height: 100px;

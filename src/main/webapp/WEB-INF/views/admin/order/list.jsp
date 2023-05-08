@@ -45,11 +45,11 @@
 					<tr>
 						<th colspan="1" style="width: 120px;">주문번호</th>
 						<th style="width: 100px;">주문 일자</th>
-						<th style="width: 120px;">구매자명</th>
-						<th style="width: 120px;">수취인</th>
+						<th style="width: 110px;">구매자명</th>
+						<th style="width: 110px;">수취인</th>
 						
-						<th rowspan="2" style="width: 60px;">브랜드명</th>
-						<th rowspan="2" style="width: 130px;">주문 상품</th>
+						<th rowspan="2" style="width: 120px;">브랜드명</th>
+						<th rowspan="2" style="width: 150px;">주문 상품</th>
 						<th rowspan="2" style="width: 100px;">상품 가격</th>
 						<th rowspan="2" style="width: 100px;">주문 수량</th>
 						<th rowspan="2" style="width: 100px;">총 결제금액</th>
