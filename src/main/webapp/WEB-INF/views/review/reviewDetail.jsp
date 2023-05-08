@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="../../../resources/reviewCss/reviewDetail.css">
 <!-- favicon : 탭에 보이는 아이콘 -->
@@ -63,7 +64,7 @@
 						<c:if test="${likeNo eq 0 }">
 							<img alt="like_no" src="../../../resources/img/wish/wish_no.png" onclick="addLike('${review.reviewNo}','${member.memberNo}')">
 						</c:if>
-						<span>좋아요[${totalNo }]</span>
+						<span>[${totalNo }]</span>
 					</div>
 					<div id="report">
 						<button onclick="report()">🚨</button>
@@ -123,91 +124,92 @@
 					<!-- 댓글 영역 -->
 					<!-- 댓글이 출력되는 영역 -->
 					<div id="replyList">
-			            <div class="replyHeader">
-			                <label>댓글(<span id="replyCount"></span>)</label>
-			            </div>
-				            <div class="replyTable">
-				                <!-- 댓글 리스트가 들어갈 부분 -->
-				                <!-- 댓글 등록하기 -->
-					            <div class="replyForm" id="replyWriteForm">
-					                <div class="replyWriter">
-					                    <p>${member.memberNickname}</p>
-					                </div>
-					                <div class="replyContents">
-					                    <input type="text" id="replyContents">
-					                </div>
-					                <div class="replySubmit">
-					                    <button id="rSubmit" data-memberno = "${member.memberNo }" data-reviewno="${review.reviewNo }">댓글작성</button>
-					                </div>
-					            </div>
+						<div class="replyHeader">
+							<label>댓글(<span id="replyCount"></span>)</label>
+						</div>
+					<div class="replyTable">
+						<!-- 댓글 리스트가 들어갈 부분 -->
+						<!-- 댓글 등록하기 -->
+						<div class="replyForm" id="replyWriteForm">
+							<div class="replyWriter">
+								<p>${member.memberNickname}</p>
+							</div>
+							<div class="replyContents">
+								<input type="text" id="replyContents">
+							</div>
+							<div class="replySubmit">
+								<button id="rSubmit" data-memberno="${member.memberNo }"
+									data-reviewno="${review.reviewNo }">댓글작성</button>
+							</div>
+						</div>
 
-								<!-- 댓글 출력 -->
-								<div class="replyForm reviewHidden" id="replyListForm">
-									<div class="replyWriter">
-										<p>${member.memberNickname}</p>
-									</div>
-									<div class="replyContents">
-										<p></p>
-									</div>
-									<div class="">
-										<p></p>
-									</div>
-									<div class="">
-										<a onclick="replyComment(this)">답댓글</a>
-									</div>
-										<div class="">
-											<a>수정</a>
-										</div>
-										<div class="">
-											<a class="removeComment" onclick="removeComment(this)">삭제</a>
-										</div>
+						<!-- 댓글 출력 -->
+						<div class="replyForm reviewHidden" id="replyListForm">
+							<div class="replyWriter">
+								<p>${member.memberNickname}</p>
+							</div>
+							<div class="replyContents">
+								
+							</div>
+							<div class="replyDate">
+								
+							</div>
+							<div class="replyCom">
+								<a onclick="replyComment(this)">답댓글</a>
+							</div>
+							<div class="modify">
+								<a>수정</a>
+							</div>
+							<div class="delete">
+								<a class="removeComment" onclick="removeComment(this)">삭제</a>
+							</div>
+						</div>
+
+						<div class="replyForm reviewHidden" id="commentListForm">
+							<div class="replyWriter">
+								<p>${member.memberNickname}</p>
+							</div>
+							<div class="replyContents">
+								<p></p>
+							</div>
+							<div class="">
+								<p></p>
+							</div>
+						</div>
+
+						<div class="replyForm" id="replycommentWrite">
+							<div class="replyWriter">
+								<p>${member.memberNickname}</p>
+							</div>
+							<div class="replyContents">
+								<input type="text" id="commentContents">
+							</div>
+							<div class="replySubmit">
+								<button id="commentBtn">대댓작성</button>
+							</div>
+						</div>
+
+						<div id="replyListComment">
+							<div class="replyForm">
+								<div class="replyWriter">
+									<p></p>
 								</div>
-
-								<div class="replyForm reviewHidden" id="commentListForm">
-									<div class="replyWriter">
-										<p>${member.memberNickname}</p>
-									</div>
-									<div class="replyContents">
-										<p></p>
-									</div>
-									<div class="">
-										<p></p>
-									</div>
+								<div class="replyContents">
+									<p></p>
 								</div>
-
-								<div class="replyForm" id="replycommentWrite">
-									<div class="replyWriter">
-										<p>${member.memberNickname}</p>
-									</div>
-									<div class="replyContents">
-										<input type="text" id="commentContents">
-									</div>
-									 <div class="replySubmit">
-										<button id="commentBtn">대댓작성</button>
-									</div>
+								<div class="">
+									<p></p>
 								</div>
-
-					            <div id="replyListComment">
-						            <div class="replyForm">
-						                <div class="replyWriter">
-						                    <p></p>
-						                </div>
-						                <div class="replyContents">
-						                    <p></p>
-						                </div>
-						                <div class="">
-						                	<p></p>
-						                </div>
-						                <div class="">
-						                    <a>수정</a>
-						                </div>
-						                <div class="">
-						                    <a>삭제</a>
-						                </div>
-						            </div>
-					            </div>
-				            </div>
-			        </div>
+								<div class="">
+									<a>수정</a>
+								</div>
+								<div class="">
+									<a>삭제</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div> 
 	</main>
@@ -345,6 +347,7 @@
 			let replyContents = document.getElementById("replyContents").value;
 			let memberNo = document.getElementById("rSubmit").dataset.memberno;
 			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
+			
 			$.ajax({
 				url: "/review/replyComment",
 				type: "POST",
@@ -377,19 +380,6 @@
          return commentDateStr;
       }
 		
-
-		getCommentDate = function(commentDate) {
-			let date = new Date(commentDate);
-			dateYear = date.getFullYear();
-			dateMonth = String(date.getMonth() + 1).padStart(2, '0');
-			dateDate = String(date.getDate()).padStart(2, '0');
-	
-			dateHours = String(date.getHours()).padStart(2, '0');
-			dateMinutes = String(date.getMinutes()).padStart(2, '0');
-								
-			let commentDateStr = dateYear + '-' + dateMonth + '-'  + dateDate + ' ' + dateHours + ':'  + dateMinutes;
-			return commentDateStr;
-		}
 		//댓글대댓글 리스트 
 		function replyCommentList(){
 			let reviewNo = document.getElementById("rSubmit").dataset.reviewno;
@@ -409,20 +399,26 @@
 					data.forEach(element => {
 						let commentDate = getCommentDate(element.commentDate);
 						if(element.pcommentNo == 0){
+							//댓글
 							let replyBox = document.querySelector("#replyListForm").cloneNode(true);
+							let memberNo = document.querySelector("#rSubmit").dataset.memberno;
+							
+							if(memberNo != element.memberNo){
+								replyBox.querySelector(".modify").remove();
+								replyBox.querySelector(".delete").remove();
+							}
 							replyBox.classList.remove("reviewHidden");
 							let nickname = replyBox.children[0];
 							replyBox.dataset.replyno = element.commentNo;
-							// console.log(nickname);
 							nickname.innerHTML = element.memberNickname;
 							replyBox.children[1].innerHTML = element.commentContent;
 							replyBox.children[2].innerHTML = commentDate;
 							replyList.append(replyBox);
 						} else{
+							//대댓글
 							let replyBox = document.querySelector("#commentListForm").cloneNode(true);
 							replyBox.classList.remove("reviewHidden");
 							let nickname = replyBox.children[0];
-							// console.log(nickname);
 							nickname.innerHTML = "┖ "+ element.memberNickname;
 							replyBox.children[1].innerHTML = element.commentContent;
 							replyBox.children[2].innerHTML = commentDate;
@@ -497,7 +493,7 @@
 						commentNo : commentNo
 					}, 
 					success : function(result){
-						alert(result);
+						alert("삭제되었습니다.");
 						replyCommentList();
 					},
 					error : function(){

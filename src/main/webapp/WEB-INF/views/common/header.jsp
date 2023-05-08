@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../resources/commonCss/header.css">
 <!-- 채팅 관련 필요 -->
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 <!-- sockjs  -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <!-- alertify 꾸미는 알림창-->

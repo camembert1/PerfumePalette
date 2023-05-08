@@ -539,9 +539,9 @@ public class ReviewController {
 			try {
 				int result = rService.deleteComment(commentNo);
 				if(result > 0) {
-					return "1";
+					return "１";
 				} else {
-					return "0";
+					return "０";
 				}
 			} catch (Exception e) {
 				return e.getMessage();

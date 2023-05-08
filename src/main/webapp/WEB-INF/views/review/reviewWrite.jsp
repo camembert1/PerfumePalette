@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -75,11 +75,11 @@
                   </div>
                </div>
                <div id="editorapi">
-                  <textarea id="summernote" name="reviewContents"></textarea>
+                  <textarea id="summernote" name="reviewContents" required="required"></textarea>
                </div>
                <div class="input-btn">
                   <input type="submit" value="등록하기">
-                     <input type="reset" value="취소하기">
+                  <input type="reset" value="취소하기" onclick="cancel()">
                </div>
             </div>
          </form>
@@ -153,6 +153,13 @@
                 }
             });
         }
+        
+        function cancel() {
+        	  if (confirm("정말 취소하시겠습니까?")) {
+        	    location.href="/review/reviewList"
+        	  }
+        	}
+        
    </script>
    
 <jsp:include page="../common/footer.jsp" />
