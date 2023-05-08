@@ -216,6 +216,11 @@ main #like {
 	display: flex;
 	align-items: center;
 }
+
+main #like span{
+	font-size: 18px;
+	font-weight: bold;
+}
 main .productInfo #like img {
 	width: 35px;
 	height: 35px;
@@ -234,7 +239,7 @@ main #report button {
   /* text-align: center; */
   /* text-decoration: none; */
   /* display: inline-block; */
-  font-size: 20px;
+  font-size: 25px;
   border-radius: 5px;
   cursor: pointer;
   /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); */
@@ -317,7 +322,11 @@ main #btn-box button{
 }
 
 /* 댓글 영역 */
-.replyTable {
+main .replyHeader label{
+	font-size: 15px;
+	font-weight: bold;
+}
+main .replyTable {
 	margin-top: 10px;
 	border: 1px solid #ddd;
 	padding: 10px;
@@ -342,7 +351,9 @@ main #btn-box button{
 .replyForm .replyContents {
 	flex: 1;
 	margin: 0 10px;
+	width: 100%;
 }
+
 
 .replyForm .replyContents input[type="text"] {
 	width: 95%;
@@ -363,12 +374,14 @@ main #btn-box button{
 	cursor: pointer;
 }
 
-
-
 .reviewHidden{
 	display: none;
 }
 
+main .replyDate ,.replyCom ,.modify ,.delete{
+	margin-left: 5px;
+	cursor: pointer;
+}
 #replycommentWrite{
 	display: none;
 }
