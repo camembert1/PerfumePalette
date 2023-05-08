@@ -94,6 +94,18 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		return result;
 	}
 
+	@Override
+	public List<QnaBoard> selectAllQnaBoardPerfume(Integer perfumeNo) {
+		List<QnaBoard> qbList =  qbStore.selectAllQnaBoardPerfume(session, perfumeNo);
+		return qbList;
+	}
+
+	@Override
+	public int selectAllQnaBoardPerfumeCnt(Integer perfumeNo) {
+		int result = qbStore.selectAllQnaBoardPerfumeCnt(session, perfumeNo);
+		return result;
+	}
+
 	
 		
 	

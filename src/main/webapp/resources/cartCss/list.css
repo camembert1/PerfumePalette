@@ -212,3 +212,7 @@ main tr td {
 	transition-delay: 0.2s;
 	transform: translate
 }
+
+main td[onclick] {
+	cursor: pointer;
+}

@@ -10,7 +10,7 @@
 <!-- favicon : 탭에 보이는 아이콘 -->
 <link rel="icon" href="../../resources/img/common/favicon.png" />
 <link rel="apple-touch-icon" href="../../resources/img/common/favicon.png" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../../../resources/cartCss/list.css">
 </head>
 

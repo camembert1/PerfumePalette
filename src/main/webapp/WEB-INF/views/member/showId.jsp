@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>아이디 출력 페이지</title>
 <link rel="stylesheet" href="../../../resources/memberCss/showId.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />

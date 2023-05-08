@@ -18,6 +18,9 @@ public class Perfume {
 	private Timestamp perfumeDate;	// 등록일
 	private int perfumeStatus;		// 노출 여부
 	
+	private int reviewCnt;			// 리뷰 수
+	private int orderCnt;			// 주문 수
+	
 	public Perfume() {
 		super();
 	}
@@ -145,13 +148,34 @@ public class Perfume {
 		this.perfumeStatus = perfumeStatus;
 	}
 
+	public int getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(int reviewCnt) {
+		this.reviewCnt = reviewCnt;
+	}
+
+	public int getOrderCnt() {
+		return orderCnt;
+	}
+
+	public void setOrderCnt(int orderCnt) {
+		this.orderCnt = orderCnt;
+	}
+
 	@Override
 	public String toString() {
 		return "Perfume [perfumeNo=" + perfumeNo + ", perfumeName=" + perfumeName + ", perfumeBrand=" + perfumeBrand
 				+ ", perfumeVolume=" + perfumeVolume + ", perfumePrice=" + perfumePrice + ", perfumeQuantity="
 				+ perfumeQuantity + ", pScentCategory=" + pScentCategory + ", pImageCategory=" + pImageCategory
 				+ ", pFilename=" + pFilename + ", pFilerename=" + pFilerename + ", pFilepath=" + pFilepath
-				+ ", perfumeDate=" + perfumeDate + ", perfumeStatus=" + perfumeStatus + "]";
+				+ ", perfumeDate=" + perfumeDate + ", perfumeStatus=" + perfumeStatus + ", reviewCnt=" + reviewCnt
+				+ ", orderCnt=" + orderCnt + "]";
 	}
+	
+	
+
+	
 	
 }

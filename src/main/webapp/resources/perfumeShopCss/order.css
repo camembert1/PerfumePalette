@@ -43,6 +43,8 @@ main>div[id=forCenter] {
     flex-direction: column;
     align-items: center;
 
+    margin-bottom: 300px;
+
 }
 
 
@@ -53,11 +55,286 @@ main img {
     border-radius: 10px;
 }
 
-main tr, th, td {
-    border: 1px solid black;
-}
-
 main table {
     border-collapse: collapse;
-    width: 700px;
+    width: 900px;
+
+    border-block: 1px solid lightgrey;
+    /* margin-block: 20px; */
 }
+main th, td {
+    /* border: 1px solid black; */
+    border-block: 1px dashed lightgrey;
+    height: 50px;
+    vertical-align: middle;
+
+}
+
+
+
+
+/* 여기부터 공통x! */
+main #subject {
+    /* Order Sheet */
+    color: #222;
+    font-size: 50px;
+    font-weight: bold;
+    /* margin-bottom: 25px; */
+    text-align: center;
+    font-style: italic;
+}
+
+main .sub-title {
+    /* background-color: red; */
+    width: 900px;
+    height: 40px;
+    padding-left: 20px;
+    /* border-bottom: 1px solid lightgrey; */
+
+    
+    
+    /* 서브타이틀 txt */
+    color: #222;
+    font-size: 17pt;
+    font-weight: bold;
+    /* font-style: italic; */
+
+    /* 텍스트 세로 기준 가운데정렬 */
+    display: flex;
+    align-items: center;
+
+    /* 윗 테이블과 여백 */
+    margin-top: 80px;
+
+    /* 해당테이블이랑 서브타이틀 사이 여백 */
+    margin-bottom: 5px;
+}
+
+/* 주문 상품 목록 테이블 */
+main #orderList-tbl td {
+    text-align: center;
+    height: 120px;
+}
+main #orderList-tbl tr:last-child {
+    border-block: 1px solid lightgrey;
+}
+main #orderList-tbl td:last-child {
+    height: 50px;
+}
+
+
+
+
+
+
+/* 주문자 정보 테이블 */
+main #orderer-tbl tr td:first-child {
+    width: 100px;
+}
+main #orderer-tbl tr td {
+    padding-left: 20px;
+}
+
+
+
+
+
+
+
+
+/* 배송 정보 테이블 */
+main #deliveryInfo-tbl tr td:first-child {
+    width: 100px;
+}
+main #deliveryInfo-tbl tr td {
+    padding-left: 20px;
+}
+
+/* 인풋 태그 들은 div */
+main #deliveryInfo-tbl tr td div {
+    width: 300px;
+    /* background-color: red; */
+}
+
+main #deliveryInfo-tbl input[type="text"] {
+    height: 30px;
+    width: 100%;
+    border: 0;
+}
+
+/* 배송지 칸 높이 */
+main #deliveryInfo-tbl tr:nth-child(4) {
+    height: 150px;
+}
+/* 배송지 인풋태그들 */
+main #deliveryInfo-tbl tr:nth-child(4) input {
+    border-bottom: 1px solid lightgrey;
+}
+/* 우편번호 인풋태그만 좁아야됨 */
+main #deliveryInfo-tbl tr:nth-child(4) #postcode {
+    width: 100px;
+}
+
+
+main #postcode-btn-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 주소찾기 버튼 */
+main #addrSearchBtn {
+
+    cursor: pointer;
+    padding: 5px;
+
+    background-color: #222;
+    border-radius: 5px;
+
+    font-size: 10pt;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+/* 결제 정보 테이블 */
+main #payment-tbl td{
+    /* border: 1px solid black; */
+    height: 80px;
+}
+main #payment-tbl input[type=radio] {
+    display: none;
+}
+
+main #payment-tbl label>div {
+
+    width: 230px;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid #222;
+    /* background-color: red; */
+    
+    vertical-align: middle;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #222;
+    background-color: white;
+}
+main #payment-tbl label>div.selectedPayment {
+    color: white;
+    background-color: #222;
+    font-weight: bolder;
+} 
+main #payment-tbl label[for=kakaopay]>div.selectedPayment {
+    color: #000000;
+    background-color: #FFEB00;
+    border: 1px solid #FFEB00;
+    font-weight: bolder;
+} 
+main #payment-tbl label[for=naverpay]>div.selectedPayment {
+    color: #FFFFFF;
+    background-color: #3EC62A;
+    border: 1px solid #3EC62A;
+    font-weight: bolder;
+} 
+main #payment-tbl label[for=samsung]>div.selectedPayment {
+    color: #FFFFFF;
+    background-color: #024CA1;
+    border: 1px solid #024CA1;
+    font-weight: bolder;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 개인정보제공 동의 테이블 */
+main #agreement-tbl tr td:first-child {
+    width: 600px;
+    padding-left: 20px;
+}
+main #agreement-tbl tr td:nth-child(2) {
+    text-align: center;
+}
+main #agreement-tbl tr:last-child td {
+    border-block: 1px solid lightgrey;
+}
+
+
+
+
+/* 결제버튼 */
+main #payment-btn {
+    cursor: pointer;
+    padding: 15px;
+    padding-inline: 35px;
+
+    background-color: #222;
+    border-radius: 5px;
+
+    font-size: 16pt;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+/* 공통 체크박스 */
+/*체크 안했을때 */
+input[type="checkbox"] {
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+
+    border: 1px solid #34443E;
+    border-radius: 2px;
+
+    transition: 0.1s all linear;
+    
+    text-align: center;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/*체크했을때*/
+input[type="checkbox"]:checked {
+    background-color: #34443E;
+}
+input[type="checkbox"]:checked:before {
+    content: "✔";
+    font-size: 10pt;
+    color: white;
+    line-height: 1;
+}
+

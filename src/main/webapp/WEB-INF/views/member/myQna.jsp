@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>작성 문의</title>
 <link rel="stylesheet" href="../../../resources/memberCss/myQna.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <!-- favicon : 탭에 보이는 아이콘 -->
     <link rel="icon" href="../../resources/img/common/favicon.png" />

@@ -7,10 +7,7 @@
 			<head>
 				<meta charset="UTF-8">
 				<title>𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆</title>
-				<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-					integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-					crossorigin="anonymous"></script>
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 				<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 					rel="stylesheet">
 				<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -126,26 +123,6 @@
 						var qnaType = document.getElementById("qnaType");
 						var value = (qnaType.options[qnaType.selectedIndex].value);
 					}
-
-					// 비밀글 토글
-					// const publicPost = document.getElementById('publicPost');
-					// const privatePost = document.getElementById('privatePost');
-					// const passwordInput = document.getElementById('passwordInput');
-					// const passwordLabel = document.querySelector('.password-label');
-
-					// privatePost.addEventListener('click', () => {
-					// 	if (passwordInput.style.display === 'none') {
-					// 		passwordInput.style.display = 'block';
-					// 		passwordLabel.style.display = 'block';
-					// 	}
-					// 	hiddendiv.style.display = 'block';
-					// });
-
-					// publicPost.addEventListener('click', () => {
-					// 	passwordInput.style.display = 'none';
-					// 	passwordLabel.style.display = 'none';
-					// 	hiddendiv.style.display = 'none';
-					// });
 
 					// 	비밀글 라디오 버튼 토글
 					const publicPost = document.getElementById('publicPost');

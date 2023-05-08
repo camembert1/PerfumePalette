@@ -34,5 +34,9 @@ public interface QnaBoardStore {
 
 	int updateReply(SqlSession session, QnaReply qnareply);
 
+	List<QnaBoard> selectAllQnaBoardPerfume(SqlSession session, Integer perfumeNo);
+
+	int selectAllQnaBoardPerfumeCnt(SqlSession session, Integer perfumeNo);
+
 
 }

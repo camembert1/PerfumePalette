@@ -43,43 +43,586 @@ main>div[id=forCenter] {
     flex-direction: column;
     align-items: center;
 
+	/* 푸터와 여백 주기 위함 */
+	margin-bottom: 200px;
+
 }
 
 
-/* 여기부터! */
-main img {
-    width: 150px;
-    height: 150px;
+/* 여기부터 본문!*/
+main #section-main>section {
+	/* 본문 내용 너비 */
+	width: 1200px
+}
+
+main #section-top {
+	/* background-color: red; */
+
+	/* img-area와 info-area 가로 정렬 */
+	display: flex;
+
+	/* 윗부분이랑 아래 탭들 사이 여백 */
+	margin-bottom: 100px;
+} 
+
+main #section-top>div {
+	
+	/* 메인 내용 - 윗부분 - 사진&정보 각각 width 반씩 차지하기 위함 */
+	width: 50%;
+}
+
+main #img-area {
+	/* background-color: green; */
+
+	/* 이미지 우측 정렬 위함 */
+	display: flex;
+	justify-content: flex-end;
+}
+main #img-area img {
+
+	/* section-top 가운데에서 여백 주기 위함 */
+	margin-right: 80px;
+
+	/* 상품 이미지 관련 */
+	width: 380px;
+    height: 380px;
     object-fit: cover;
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
+
+main #info-area {
+	/* background-color: rgb(10, 143, 52); */
+}
+main #info-area #for-marign {
+	/* section-top 가운데에서 여백 주기 위함 */
+	margin-left: 50px;
+}
+
+main #nameAndshare-area {
+	
+	/* 브랜드+이름이랑 sns공유 버튼 가로 정렬 */
+	display: flex;
+	justify-content: space-between;
+	
+}
+main #sns-share-btn {
+
+	/* 공유 버튼 크기 및 디자인 */
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+
+	/* border: 1px solid #222222; */
+	background-color: #222222;
+	border-radius: 100%;
+
+
+	/* 내부 요소 가운데 정렬 위함 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* 우측 여백 */
+	margin-right: 80px;
+
+}
+main #sns-share-btn>img {
+
+	/* 공유 아이콘 크기 */
+	width: 45%;
+	margin-right: 2px;
+}
+
+main #share-box {
+	
+	/* 공유 box 크기 및 배경 등*/
+	display: none;
+	padding: 20px;
+
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: 5px 5px 10px #2222225d;
+
+
+	/* 공유 box 위치 */
+	position: absolute;
+	margin-top: 20px;
+	margin-left: -200px;
+
+}
+main #ktf-btn {
+
+	/* 카카오 트위터 페북 */
+	display: flex;
+
+	/* ㅋㅌㅍ버튼이랑 링크 사이 여백 */
+	margin-bottom: 10px;
+
+}
+main #ktf-btn img {
+
+	/* 카톡 틧터 페북 아이콘 */
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+	cursor: pointer;
+}
+main .share {
+	margin-right: 10px;
+}
+main #url-and-btn {
+	/* 주소 + 복사버튼 */
+	display: flex;
+	align-items: center;
+}
+main #url-area {
+
+	/* 주소 들은 input태그 */
+	height: 20px;
+	border: 1px solid #222222;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding-left: 5px;
+}
+main #copy {
+
+	/* 복사아이콘 들은 네모칸 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 20px;
+	height: 20px;
+	background-color: #222222;
+	border: 1px solid #222222;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+main #url-and-btn img {
+
+	/* 복사아이콘 */
+	width: 100%;
+	object-fit: cover;
+	cursor: pointer;
+	
+	margin-top: -2px;
+	margin-left: -2px;
+}
+
+main #perfumeBrand-txt {
+
+	/* 향수 브랜드 txt 관련 */
+	color: grey;
+	font-weight: lighter;
+}
+main #perfumeName-txt {
+
+	/* 향수 이름 txt 관련 */
+	font-weight: bolder;
+	font-size: 20pt;
+}
+main #reviewScore-txt {
+	/* background-color: red; */
+
+	/* 향수 별점 txt 관련 */
+	/* 별 이미지 및 txt 가운데 정렬 */
+	display: flex;
+	align-items: center;
+
+
+	/* 별점 가격 사이 여백 */
+	margin-bottom: 50px;
+}
+main #stars {
+	display: flex;
+	align-items: center;
+}
+main #stars img {
+	width: 20px;
+	height: 20px;
+	object-fit: cover;
+
+	margin-right: 3px;
+}
+main #perfumeQuantity-txt {
+
+	/* 품절 및 품절 임박 txt 관련 */
+	color: red;
+	font-size: 12pt;
+}
+main #perfumePrice-txt {
+
+	/* 향수 가격 txt 관련 */
+	font-weight: lighter;
+	font-size: 27pt;
+
+	/* 가격 용량 사이 여백 */
+	margin-bottom: 50px;
+}
+main #perfumeVol-area {
+
+	/* 향수 용량 부분 가로정렬 */
+	display: flex;
+
+	/* 용량 / 아래 구매하기장바찜 버튼 사이 간격 */
+	/* margin-bottom: 40px; */
+}
+main #perfumeVol-area>div {
+
+	/* 향수 용량 공간 크기 */
+	width: 100px;
+	height: 40px;
+
+	/* 향수 용량 공간 서로간 여백 */
+	margin-right: 20px;
+
+	/* 향수 용량 공간 용량txt 가운데정렬 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* 향수 용량 box 관련 속성 */
+	border: 1px dashed lightgrey;
+	color: lightgrey;
+	border-radius: 5px;
+
+
+	/* 용량 장바구매버튼 사이 여백 */
+	margin-bottom: 50px;
+}
+
+/* 해당 용량 공간만 효과 주기 */
+main #perfumeVol-area .real-vol {
+	background-color: #222222;
+	color: rgb(255, 255, 255);
+	border: 1px solid #222222;
+	cursor: pointer;
+	
+}
+
+
+main #btn-area {
+
+	/* 찜, 구매, 장바 버튼 가로 정렬 위함 */
+	display: flex;
+
+}
+
+main #wish-btn, main #buy-btn, main #restock-btn, main #cart-btn {
+
+	/* 찜 버튼 크기 및 디자인 */
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+
+	border: 1px solid #222222;
+	border-radius: 5px;
+
+	/* background-color: red; */
+
+	/* 내부 요소 가운데 정렬 위함 */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	/* 버튼 간격 */
+	margin-right: 10px;
+}
+main #wish-btn>img {
+
+	/* 위시 하트 크기 */
+	width: 45%;
+}
+main #wish-btn #wishCnt {
+
+	/* 위시 수 txt 관련 */
+	font-size: 8pt;
+	color: #222222;
+	margin-top: 3px;
+}
+
+main #buy-btn, main #restock-btn, main #cart-btn {
+
+	/* 구매하기, 재입고, 장바구니 버튼 크기 */
+	width: 200px;
+}
+main #buy-btn {
+	
+	/* 구매하기 버튼 디자인 */
+	background-color: #222222;
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* section-bot */
+main #section-bot {
+
+	/* background-color: blue; */
+
+	/* 아래 영역 가로 가운데 정렬 + 세로 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+main #tab-area {
+
+	/* 탭 영역 너비 */
+	width: 1100px;
+
+	/* 탭 가로 + 가운데 정렬 */
+	display: flex;
+	justify-content: center;
+
+	border-bottom: 1px solid #222222;
+	
+}
+main #tab-area>div {
+	
+	/* 상품상세, 후기, qna, 배송정보 탭 버튼 크기 */
+	width: 25%;
+	height: 50px;
+
+	/* 탭 커서 */
+	cursor: pointer;
+
+	/* 내부 요소 가운데 정렬 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+main #tab-contents-box>div {
+
+	/* 탭한 내용 박스들 속성 - 일단 안 보임, 최소 높이 */
+	display: none;
+	min-height: 100vh;
+
+	/* 탭이랑 내용박스 사이 여백 */
+	margin-top: 100px;
+}
+
+main .line {
+	/* contents 박스 구분선 */
+	width: 1000px;
+	height: 1px;
+	background-color: lightgrey;
+	margin-block: 20px;
+}
+main #detail-box, main #deliveryInfo-box {
+
+	/* 상품상세 및 배송정보 줄간격 */
+	line-height: 2;
+}
+
+main #contentsBox-img-area {
+
+	/* 제품 상세 이미지 공간 */
+	display: flex;
+	justify-content: center;
+
+	/* 이미지랑 아래 본문 글씨 사이 여백 */
+	margin-bottom: 100px;
+}
+main #contentsBox-img-area img{
+	
+	/* 제품 상세 이미지 */
+	width: 500px;
+	height: 500px;
+	object-fit: cover;
+}
+
+
+main #review-box {
+
+	/* 상품 리뷰 박스 */
+}
+main #scoreAvg-area {
+
+	/* 평균별점 */
+	display: flex;
+	align-items: end;
+
+	font-size: 30pt;
+	font-weight: 900;
+
+	/* 평균별점이랑 표 사이 여백 */
+	margin-bottom: 10px;
+}
+main #scoreAvg-area img {
+	/* 평균별점 별 아이콘 */
+	width: 60px;
+	height: 60px;
+	object-fit: cover;
+
+	/* 아이콘이랑 숫자 사이 여백 */
+	margin-right: 10px;
+}
+main #review-box table, main #qna-box table {
+
+	/* 후기 리스트 너비 */
+	width: 1100px;
+
+	/* 후기 리스트 */
+	border-collapse: collapse;
+	font-size: 12pt;
+}
+
+main #review-box td, main #qna-box td {
+
+	/* 표 내용 가운데 정렬 */
+	text-align: center;
+
+	/* 후기 리스트 칸 높이 */
+	height: 50px;
+}
+
+main #review-box td:nth-child(3) {
+	/* 내용만 좌측 정렬 */
+	text-align: left;
+}
+
+main #review-box th, main #review-box td, main #qna-box th, main #qna-box td{
+
+	/* 후기 리스트 border */
+	border-block: 1px solid #222222;
+
+
+	/* 후기 리스트 칸 내부여백 */
+	padding: 10px;
+}
+
+main #review-box tr:not(:first-child), main #qna-box tbody tr td:nth-child(4) {
+	/* 상품 후기 리스트 커서 */
+	cursor: pointer;
+}
+
+main #review-box tr:not(:first-child):hover, main #qna-box tbody tr:hover {
+
+	/* 후기 hover했을 경우 */
+	transition-duration: 0.3s;
+	background-color: rgba(211, 211, 211, 0.4);
+}
+
+main #review-box tr:first-child, main #qna-box thead tr {
+	background-color: #28302d;
+	color: white;
+}
+
+main #qna-box {
+	text-align: center;
+}
+
+main #qna-box #qnaSubBtn {
+	height: 50px;
+	width: 125px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+	margin-top: 10px;
+	float: right;
+}
+
+main #qna-box #qnaSubBtn2 {
+	height: 50px;
+	width: 125px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+	margin-top: 10px;
+	float: none;
+}
+
+
+main .review-stars img{
+
+	/* 상품 후기 부분 별점 */
+	width: 15px;
+	height: 15px;
+	object-fit: cover;
+
+	/* margin-right: 3px; */
+}
+
+
+
+/* 이건 선택된 탭에 먹일 속성 */
+main #tab-area>div.selectedTab {
+	background-color: #222222;
+	color: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+main #tab-contents-box>div.selectedBox {
+	display: block;
+}
+
+/* 여기까지 본문 끝!*/
+
+
+
+
+
+
+
+
 
 
 /* 모달 시작 */
 #modal-bg {
 	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
 	width: 100vw;
 	height: 100vh;
+
 	background-color: rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(3px);
+
 	display: none;
 }
 
 #modal {
-	height: 400px;
-	width: 650px;
-	border-radius: 25px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border-radius: 20px;
+	z-index: 11;
+
+	width: 500px;
+	height: 200px;
+
+	border-radius: 10px;
+
 	background-color: white;
 	display: none;
+
+	padding-block: 20px;
 }
 
 #explain {
-	height: 45%;
+	height: 50%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -92,8 +635,7 @@ main img {
 }
 
 #name {
-	text-align: center;
-	font-size: 30px;
+	font-size: 18pt;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -103,19 +645,11 @@ main img {
 	margin-right: 5px;
 }
 
-#brand {
-	text-align: center;
-	font-size: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 #other-name {
+	font-size: 15pt;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 25px;
 }
 
 #other-name div {
@@ -127,20 +661,20 @@ main img {
 }
 
 #money {
+	font-size: 15pt;
 	height: 25%;
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	font-size: 25px;
 }
 
 #updown input {
-	font-size: 25px;
+	font-size: 15pt;
 }
 
 #btn-box {
-	height: 30%;
+	height: 25%;
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
@@ -148,20 +682,14 @@ main img {
 }
 
 #btn-box button {
-	height: 75%;
+	height: 100%;
 	width: 40%;
 	background-color: #222222;
 	color: white;
 	border: none;
 	border-radius: 5px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-	font-size: 20px;
-}
-
-#cnt {
-	border: none;
-	font-size: 20px;
-	text-align: center;
+	font-size: 15pt;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
