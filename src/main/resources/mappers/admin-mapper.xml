@@ -325,10 +325,10 @@
 				OR PERFUME_NAME LIKE '%' || #{searchValue} || '%')
 			</if>
 			<if test="searchCondition == 'Brand'">
-				WHERE PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
+				PERFUME_BRAND LIKE '%' || #{searchValue} || '%'
 			</if>
 			<if test="searchCondition == 'perfumeName'">
-				WHERE PERFUME_NAME LIKE '%' || #{searchValue} || '%'
+				PERFUME_NAME LIKE '%' || #{searchValue} || '%'
 			</if>
 			<if test="searchIncense == 'All'">
 				AND (P_SCENT_CATEGORY = 'Citrus'
