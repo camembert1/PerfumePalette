@@ -28,7 +28,7 @@
 
 			<div class="container">
 				<h1>문의 작성</h1>
-				<form action="/qnaboard/write/${perfume.perfumeNo }" method="post" onsubmit="return chkPw();">
+				<form action="/qnaboard/write/${perfumeNo }" method="post" onsubmit="return chkPw();">
 					<input type="hidden" name="perfumeNo" value="${perfumeNo }"> <input type="hidden" name="id" value="${id }" id="id"> <select name="qnaType" id="qnaType" onchange="changeFn()" class="select">
 						<option value="1">상품문의</option>
 						<option value="2">배송문의</option>
@@ -144,10 +144,18 @@
 		    const input = passwordInput.value;
 		    const regex = /^[0-9]*$/;
 		    
+		    if ($("#publicPost").is(":checked")) {
+		    	  return true;
+	    	}
+		   
 		    if (!regex.test(input)) {
 		      alert("숫자만 입력가능합니다.");
 		      passwordInput.value = "";
 		      return false;
+		    }
+		    
+		    if(regex.test(input) && input != ""){
+		    	return true;
 		    }
 		    
 		    if (input == ""){
@@ -155,9 +163,6 @@
 		    	return false;
 		    }
 		    
-		    if(regex.test(input) && input != ""){
-		    	return true;
-		    }
   		}
 
 	</script>

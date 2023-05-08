@@ -47,81 +47,75 @@
 
 						<input class="radius title" name="qnaSubject" value="${qnaboard.qnaSubject}" type="text"
 							placeholder="제목을 입력해 주세요">
-						<div id="imgtext" style="overflow: auto;">
-							<c:if test="${not empty qnaboard.qFilerename}">
-								<div id="photo">
-									<img src="../../../resources/img/qnaFileUploads/${qnaboard.qFilerename}" alt="#">
-								</div>
-							</c:if>
-							<div id="textarea" style="padding: 10px;">${qnaboard.qnaContents }</div>
-						</div>
-
-						<div class="submit-btn">
-							<!-- 작성자와 일치 or 관리자 -->
-							<c:if test="${member.memberNo == qnaboard.memberNo || member.memberId == 'admin'}">
-								<input type="button" value="수정"
-									onclick="location.href='/qnaboard/modify?qnaNo=' + ${qnaboard.qnaNo}">
-								<input type="button" id="qnaboardDelete" value="삭제"
-									onclick="removeCheck(${qnaboard.qnaNo});">
-								<input type="button" value="목록"
-									onclick="location.href='/perfume/detail/${qnaboard.perfumeNo}'">
-							</c:if>
-							<!-- 작성자와 다르면서 관리자가 아닌 경우 -->
-							<c:if test="${member.memberNo != qnaboard.memberNo && member.memberId != 'admin'}">
-								<input type="button" value="목록"
-									onclick="location.href='/perfume/detail/${qnaboard.perfumeNo}'">
-							</c:if>
-						</div>
-
-						<c:if test="${member.memberId == 'admin'}">
-							<!-- 답변이 안달렸을때 -->
-							<!-- 댓글 등록 -->
-							<c:if test="${qnaboard.replyStatus != 'Y' }">
-								<table id="replyWriteBox">
-									<tr>
-										<td colspan="3">${member.memberNickname}</td>
-									</tr>
-									<tr>
-										<td colspan="3"><textarea name="replyContents" id="replyContents"
-												maxlength="666" cols="55" rows="10" placeholder="내용을 입력해주세요"></textarea>
-										</td>
-										<td><button id="rsubmit">등록하기</button></td>
-									</tr>
-								</table>
-							</c:if>
-						</c:if>
-
-						<c:if test="${member.memberId != 'admin'}">
-							<!-- 답변이 안달렸을때 -->
-							<!-- 댓글 등록 -->
-							<c:if test="${qnaboard.replyStatus != 'Y' }">
-								<div id="repInput">
-									등록된 답변이 존재하지 않습니다.
-								</div>
-							</c:if>
-						</c:if>
-
-						<!-- 댓글 목록 -->
-						<table id="replyTable">
-							<thead>
-								<tr>
-									<!-- 댓글 갯수 -->
-									<!-- <td colspan="4"><b id="replyCount"></b></td> -->
-								</tr>
-							</thead>
-							<tbody>
-
-							</tbody>
-						</table>
-
+						<div id="textarea" style="padding: 10px;">${qnaboard.qnaContents }</div>
 					</div>
+
+					<div class="submit-btn">
+						<!-- 작성자와 일치 or 관리자 -->
+						<c:if test="${member.memberNo == qnaboard.memberNo || member.memberId == 'admin'}">
+							<input type="button" value="수정"
+								onclick="location.href='/qnaboard/modify2/${qnaboard.qnaNo}'">
+							<input type="button" id="qnaboardDelete" value="삭제"
+								onclick="removeCheck(${qnaboard.qnaNo});">
+							<input type="button" value="목록"
+								onclick="location.href='/perfume/detail/${qnaboard.perfumeNo}'">
+						</c:if>
+						<!-- 작성자와 다르면서 관리자가 아닌 경우 -->
+						<c:if test="${member.memberNo != qnaboard.memberNo && member.memberId != 'admin'}">
+							<input type="button" value="목록"
+								onclick="location.href='/perfume/detail/${qnaboard.perfumeNo}'">
+						</c:if>
+					</div>
+
+					<c:if test="${member.memberId == 'admin'}">
+						<!-- 답변이 안달렸을때 -->
+						<!-- 댓글 등록 -->
+						<c:if test="${qnaboard.replyStatus != 'Y' }">
+							<table id="replyWriteBox">
+								<tr>
+									<td colspan="3">${member.memberNickname}</td>
+								</tr>
+								<tr>
+									<td colspan="3"><textarea class="contentsinput" id="replyContents" maxlength="666"
+											rows="6" cols="111" style="resize: none;"></textarea>
+									</td>
+									<td><button id="rsubmit">등록하기</button></td>
+								</tr>
+							</table>
+						</c:if>
+					</c:if>
+
+					<c:if test="${member.memberId != 'admin'}">
+						<!-- 답변이 안달렸을때 -->
+						<!-- 댓글 등록 -->
+						<c:if test="${qnaboard.replyStatus != 'Y' }">
+							<div id="repInput">
+								등록된 답변이 존재하지 않습니다.
+							</div>
+						</c:if>
+					</c:if>
+
+					<!-- 댓글 목록 -->
+					<table id="replyTable">
+						<thead>
+							<tr>
+								<!-- 댓글 갯수 -->
+								<!-- <td colspan="4"><b id="replyCount"></b></td> -->
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+
 				</div>
+
 			</main>
 			<jsp:include page="../common/footer.jsp" />
 
 			<script>
 				// detail textarea 높이 자동 조절
-				/* function resize() {
+				function resize() {
 					let textarea = document.getElementById("textarea");
 
 					textarea.style.height = "400px";
@@ -135,7 +129,7 @@
 				}
 
 				window.addEventListener("load", resize);
-				window.onresize = resize; */
+				window.onresize = resize;
 
 				// 삭제버튼 클릭한 경우 한번 더 묻는 팝업창 생성, 확인 시 삭제완료
 				function removeCheck(qnaNo) {
@@ -198,7 +192,7 @@
 									tableBody.append(tr);
 
 									tr = $("<tr>");
-									rContent = $("<td colspan='3'>").text(data[i].replyContents);
+									rContent = $("<td colspan='3'>").html(data[i].replyContents.replace(/\n/g, "<br>"));
 									btnArea = $("<td>");
 
 									// memberNo가 2인 경우에만 수정 및 삭제 버튼을 보여줌
@@ -256,8 +250,10 @@
 
 				// 댓글 수정 ajax
 				function modifyReply(obj, replyContents, replyNo) {
+					$(obj).closest('tr').next().remove();
+
 					let trModify = $("<tr>");
-					trModify.append("<td colspan='3'><input class='contentsinput' id='modifyContent' style='height: 100%; width: 100%;>" + replyContents + "'></td>");
+					trModify.append("<td colspan='3'><textarea class='contentsinput' id='modifyContent' maxlength='666' rows='6' cols='111' style='resize: none;'>" + replyContents + "</textarea></td>");
 					trModify.append("<td><button class='modifybtn' type='button' onclick='modifyReplyContents(" + replyNo + ");'>수정완료</button></td>");
 					$(obj).closest('tr').after(trModify);
 				}

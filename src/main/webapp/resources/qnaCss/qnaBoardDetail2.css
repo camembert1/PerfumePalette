@@ -70,19 +70,24 @@ main .submit-btn {
 
 .contentsinput {
 	border: none;
+	font-size: 16px;
+	height: 100%;
+	width: 100%;
 }
 
 .modifybtn {
 	background-color: #222222;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-	padding: 5px 6px;
-	/* margin-left: 382px; */
-	margin: 0px 33px 0px auto;
-	float: right;
-	text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    text-decoration: none;
+    margin: 10px 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 16px;
 }
 
 #golist {
@@ -132,7 +137,7 @@ main #textarea {
     margin: 10px 0;
     text-align: center;
     display: block;
-    width: 100%;
+    width: 85%;
 }
 
 main input[type=submit], input[type=button], input[type=reset] {
@@ -207,7 +212,7 @@ form span[aria-hidden="true"] {
 }
 
 #replyWriteBox {
-	width: 100%;
+	width: 767px;
 	border: 1px solid #ccc;
 	border-collapse: collapse;
 	margin-bottom: 30px;
@@ -240,8 +245,10 @@ form span[aria-hidden="true"] {
 	width: 767px;
 	border: 1px solid #ccc;
 	border-collapse: collapse;
-	margin-bottom: 30px;
 	margin: auto;
+	margin-bottom: 30px;
+	/* 테이블 강제 고정 */
+	table-layout: fixed;
 }
 
 #replyTable thead {
@@ -252,6 +259,7 @@ form span[aria-hidden="true"] {
 	padding: 10px;
 	border: 1px solid #ccc;
 	width: 80%;
+	word-wrap : break-word;
 }
 
 #replyTable .nickname-column {
@@ -275,7 +283,7 @@ form span[aria-hidden="true"] {
 }
 
 main #repInput {
-	width: 100%;
+	width: 767px;
 	min-height: 100px;
 	border-radius: 15px;
 	background-color: #eee;
