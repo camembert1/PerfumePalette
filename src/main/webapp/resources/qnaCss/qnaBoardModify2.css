@@ -184,6 +184,7 @@ main #perfumeInfo #infoBox {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	margin-left: 15px;
 }
 
 #summernote img {
