@@ -522,13 +522,8 @@ main #review-box tr:first-child, main #qna-box thead tr {
 	color: white;
 }
 
-main #qna-box button {
-	padding: 3px;
-	background-color: #222222;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+main #qna-box {
+	text-align: center;
 }
 
 main #qna-box #qnaSubBtn {
@@ -542,6 +537,19 @@ main #qna-box #qnaSubBtn {
 	font-size: 20px;
 	margin-top: 10px;
 	float: right;
+}
+
+main #qna-box #qnaSubBtn2 {
+	height: 50px;
+	width: 125px;
+	background-color: #222222;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 20px;
+	margin-top: 10px;
+	float: none;
 }
 
 
