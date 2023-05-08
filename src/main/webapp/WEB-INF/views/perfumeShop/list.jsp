@@ -338,7 +338,7 @@
 
 					},
 					error: function() {
-						console.log("아작스실패!");
+						console.log("처리 실패");
 					}
 				});
 				
@@ -411,11 +411,11 @@
 								$('#compare-area span').html(parseInt($('#compare-cnt').val()));
 
 								// alert
-								alert("해당 제품이 비교함에 추가되었습니다!")
+								alert("해당 제품이 비교함에 추가되었습니다.")
 								break;
 
 							case '3':
-								if (confirm("비교함이 꽉 찼습니다!\n비교함을 비우시겠습니까?")) {
+								if (confirm("비교함이 꽉 찼습니다.\n비교함을 비우시겠습니까?")) {
 									$('#compare-cnt').val(0);
 									$('[name^=perfumeNo]').each(function() {
 										$(this).val(0);
@@ -455,7 +455,7 @@
 						$('#compare-area span').html(parseInt($('#compare-cnt').val()));
 
 						// alert
-						alert("해당 제품이 비교함에서 삭제되었습니다!")
+						alert("해당 제품이 비교함에서 삭제되었습니다.")
 						
 					}
 				});
@@ -594,6 +594,12 @@
 				}
 			}
 
+			function goLogin() {
+				if (confirm("로그인이 필요한 서비스입니다.")) {
+					location.href="/member/login";
+				}
+			}
+
 			
 			// Wish 하트 클릭
 			wish = function(e, tag) {
@@ -604,7 +610,7 @@
 				let memberId = '${sessionScope.member.memberId }';
 
 				if (memberId == '') {
-					alert('로그인부터 하시길!')
+					goLogin();
 				} else {
 					if($(tag).data('status') == 0) {
 						// 찜을 안 누른 상태라면 찜

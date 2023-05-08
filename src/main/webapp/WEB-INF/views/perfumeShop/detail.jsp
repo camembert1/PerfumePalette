@@ -595,7 +595,7 @@
 				alert('로그인부터 하시길!')
 			} else {
 				if ($('#rAlertStatus').val() == 1) {
-					alertModal('이미 재입고알림 신청함');
+					alertModal('이미 재입고 알림을 신청하셨습니다.');
 				} else {
 					$.ajax({
 						url: '/perfume/restockAlert'
@@ -607,7 +607,7 @@
 					}).done(function(result) {
 						if (result == 1) {
 							$('#rAlertStatus').val(1);
-							alertModal('재입고 알림 신청 오나료!')
+							alertModal('재입고 알림이 신청되었습니다.')
 						} else {
 							// 재입고 알림 신청 실패
 							alert(result);
@@ -624,12 +624,13 @@
 		$('#copy').click(function() {
 			window.navigator.clipboard.writeText(url).then(() => {
 				// 복사가 완료되면 호출된다.
-				alertModal('상품 링크가 복사되었습니다!');
+				alertModal('상품 링크가 복사되었습니다.');
 			});
 		});
 
 		// 공유하기 - 페북, 트위터
 		$('#facebook').click(function() {
+			// window.open("http://www.facebook.com/sharer/sharer.php?s=100&href='.$short_url.'&u=" + url +"&p=");
 			window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
 		});
 		$('#twitter').click(function() {
@@ -667,7 +668,7 @@
 			let perfumeNo = '${perfume.perfumeNo}';
 			let memberId = '${sessionScope.member.memberId }';
 			if (memberId == '') {
-				alert('로그인부터 하시길!')
+				goLogin();
 			} else {
 				if($('#wishStatus').val() == 0) {
 					// 찜을 안 누른 상태라면 찜
@@ -771,7 +772,7 @@
 		// 디테일 - 장바구니 (모달 띄우는 버튼)
 		cart = function() {
 			if('${perfume.perfumeQuantity }' == 0) {
-				alert('품절된 상품입니다!');
+				alert('품절된 상품입니다.');
 			} else {
 				if('${member.memberNo }' == '') {
 					goLogin();
@@ -802,7 +803,7 @@
 							$("#modal-bg").css("display", "block");
 							$("body").css("overflow", "hidden");
 						} else {
-							let result = confirm('이미 장바구니에 추가된 상품입니다!\n장바구니로 이동하시겠습니까?');
+							let result = confirm('이미 장바구니에 추가된 상품입니다.\n장바구니로 이동하시겠습니까?');
 							if (result) {
 								location.href = '/cart/list';
 							} 
@@ -874,7 +875,7 @@
 				success: function (result) {
 					$("#reload2" + perfumeNo).load(location.href + " #reload2" + perfumeNo);
 					modalClose();
-					alertModal('장바구니에 추가되었습니다!');
+					alertModal('장바구니에 추가되었습니다.');
 				},
 				error: function () {
 					alert("서버 처리 실패");
@@ -919,7 +920,7 @@
                         location.href = "/qnaboard/qnaDetail/"+qnaNo;
                     } else {
                         // return false;
-                        alert("비밀번호가 일치하지 않습니다");
+                        alert("비밀번호가 일치하지 않습니다.");
                     }
                 }
             });

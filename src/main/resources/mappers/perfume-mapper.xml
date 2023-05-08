@@ -59,11 +59,19 @@
 	<!-- 향수 목록 조회 / 페이징 + 필터링 + STATUS1 -->
 	<select id="selectAvailablePerfumes" resultMap="perfumeResultMap">
 		SELECT p.* 
-			, COUNT(r.REVIEW_NO) 	AS REVIEW_CNT
-			, COUNT(o.ORDER_NO) 	AS ORDER_CNT
+			<if test="perfumeSort != null and perfumeSort !='' and perfumeSort eq 'review'">
+				, COUNT(r.REVIEW_NO) 	AS REVIEW_CNT
+			</if>
+			<if test="perfumeSort != null and perfumeSort !='' and perfumeSort eq 'hot'">
+				, COUNT(o.ORDER_NO) 	AS ORDER_CNT
+			</if>
 		FROM PERFUME_TBL p
-			LEFT JOIN REVIEW_TBL r ON p.PERFUME_NO = r.PERFUME_NO
-			LEFT JOIN ORDER_DETAIL_TBL o ON p.PERFUME_NO = o.PERFUME_NO
+			<if test="perfumeSort != null and perfumeSort !='' and perfumeSort eq 'review'">
+				LEFT JOIN REVIEW_TBL r ON p.PERFUME_NO = r.PERFUME_NO
+			</if>
+			<if test="perfumeSort != null and perfumeSort !='' and perfumeSort eq 'hot'">
+				LEFT JOIN ORDER_DETAIL_TBL o ON p.PERFUME_NO = o.PERFUME_NO
+			</if>
 		WHERE p.PERFUME_STATUS = 1
 		AND p.PERFUME_PRICE &gt;= #{startPerfumePrice }
 		<if test="endPerfumePrice != 600000">
