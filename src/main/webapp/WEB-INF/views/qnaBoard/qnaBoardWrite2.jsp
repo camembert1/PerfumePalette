@@ -28,16 +28,30 @@
 
 			<div class="container">
 				<h1>문의 작성</h1>
-				<form action="/qnaboard/write/${perfumeNo }" method="post" onsubmit="return chkPw();">
-					<input type="hidden" name="perfumeNo" value="${perfumeNo }"> <input type="hidden" name="id" value="${id }" id="id"> <select name="qnaType" id="qnaType" onchange="changeFn()" class="select">
+				<form action="/qnaboard/write/${perfume.perfumeNo }" method="post" onsubmit="return chkPw();">
+					<div id="perfumeInfo">
+						<div id="imgBox">
+							<img src="../../../resources/img/perfumeFileUploads/${perfume.pFilerename }" alt="image">
+						</div>
+						<div id="infoBox">
+							<div>${perfume.perfumeBrand }</div>
+							<div>${perfume.perfumeName }</div>
+							<div>${perfume.perfumeVolume }ml</div>
+							<div>
+								<fmt:formatNumber value="${perfume.perfumePrice }" pattern="#,##0" />
+								원
+							</div>
+						</div>
+					</div>
+					<br> <input type="hidden" name="perfumeNo" value="${perfume.perfumeNo }"> <input type="hidden" name="id" value="${id }" id="id"> <select name="qnaType" id="qnaType" onchange="changeFn()" class="select">
 						<option value="1">상품문의</option>
 						<option value="2">배송문의</option>
 						<option value="3">교환/환불</option>
 						<option value="4">기타문의</option>
-					</select> <input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요" required oninvalid="showAlert()">
+					</select> <input class="radius title" name="qnaSubject" type="text" placeholder="제목을 입력해 주세요" required oninvalid="showAlert('제목을 입력해주세요')">
 					<!-- 썸머노트 api -->
 					<div id="editorApi">
-						<textarea id="summernote" name="qnaContents" required oninvalid="showAlert()"></textarea>
+						<textarea id="summernote" name="qnaContents" required oninvalid="showAlert('내용을 입력해주세요')"></textarea>
 					</div>
 					<div id="footer">
 						<div id="left">
@@ -45,8 +59,7 @@
 								<label for="publicPost">공개글</label> <input type="radio" name="postType" id="publicPost" checked> <label for="privatePost">비밀글</label> <input type="radio" name="postType" id="privatePost" value="비밀글">
 							</div>
 							<div id="hiddendiv" style="display: none">
-								<label for="passwordInput" class="password-label">비밀번호 : </label>
-								<input class="radius" type="password" name="qnaPassword" id="passwordInput" placeholder="숫자만 입력가능합니다." oninput="chkPw()">
+								<label for="passwordInput" class="password-label">비밀번호 : </label> <input class="radius" type="password" name="qnaPassword" id="passwordInput" placeholder="숫자만 입력가능합니다." oninput="chkPw()">
 							</div>
 						</div>
 						<div id="right">
@@ -60,8 +73,8 @@
 
 
 	<script>
-		function showAlert() {
-			alert("내용을 입력해주세요");
+		function showAlert(msg) {
+			alert(msg);
 		}
 	
 	

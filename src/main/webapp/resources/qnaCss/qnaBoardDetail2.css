@@ -101,7 +101,7 @@ p {
 
 main img {
 	height: auto;
-	max-height: 500px;
+	max-width: 100%;
 	overflow: hidden;
 }
 
@@ -291,4 +291,38 @@ main #repInput {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+main #perfumeInfo {
+	height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+main #perfumeInfo #imgBox {
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+}
+
+main #perfumeInfo #imgBox img {
+	height: 225px;
+	width: 225px;
+}
+
+main #perfumeInfo #infoBox {
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+main #textarea img {
+  max-width: 100%;
 }

@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.member.Member;
+import com.kh.perfumePalette.perfume.PerfumeService;
 
 @Controller
 @RequestMapping("/qnaboard")
@@ -36,6 +37,9 @@ public class QnaBoardController {
 
 	@Autowired
 	private QnaBoardService qbService;
+
+	@Autowired
+	private PerfumeService pService;
 
 	@Autowired
 	@Qualifier("qnafileUtil")
@@ -56,6 +60,7 @@ public class QnaBoardController {
 
 			} else {
 				mv.addObject("id", UUID.randomUUID());
+				mv.addObject("perfume", pService.selectOneByPerfumeNo(perfumeNo));
 				mv.setViewName("qnaBoard/qnaBoardWrite2");
 			}
 		} catch (Exception e) {
@@ -144,6 +149,7 @@ public class QnaBoardController {
 		try {
 			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
 			mv.addObject("qnaNo", qnaNo);
+			mv.addObject("perfume", pService.selectOneByPerfumeNo(qnaboard.getPerfumeNo()));
 			mv.addObject("qnaboard", qnaboard).setViewName("qnaBoard/qnaBoardDetail2");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,6 +168,7 @@ public class QnaBoardController {
 			if (qnaboard != null) {
 				mv.addObject("qnaNo", qnaNo);
 				mv.addObject("qnaboard", qnaboard);
+				mv.addObject("perfume", pService.selectOneByPerfumeNo(qnaboard.getPerfumeNo()));
 				mv.setViewName("qnaBoard/qnaBoardModify2");
 			} else {
 				mv.addObject("msg", "데이터 조회에 실패하였습니다.");
@@ -272,6 +279,25 @@ public class QnaBoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 삭제
+	@GetMapping("/remove/{qnaNo}/{perfumeNo}")
+	public ModelAndView qnaRemove2(@PathVariable("qnaNo") int qnaNo, @PathVariable("perfumeNo") int perfumeNo, ModelAndView mv) {
+		try {
+			int result = qbService.deleteQnaBoard(qnaNo);
+			if (result > 0) {
+				mv.setViewName("redirect:/perfume/detail/"+perfumeNo);
+			} else {
+				mv.addObject("msg", "질문이 삭제되지 않았습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", "질문이 삭제되지 않았습니다.");
 			mv.setViewName("common/error");
 		}
 		return mv;
