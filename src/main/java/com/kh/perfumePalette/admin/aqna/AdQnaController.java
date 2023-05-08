@@ -21,7 +21,6 @@ import com.kh.perfumePalette.Alert;
 import com.kh.perfumePalette.PageInfo;
 import com.kh.perfumePalette.Search;
 import com.kh.perfumePalette.member.Member;
-import com.kh.perfumePalette.qnaBoard.QnaBoard;
 
 @Controller
 @RequestMapping("/admin/qna")
@@ -69,7 +68,7 @@ public class AdQnaController {
 			} else {
 				int totalCount = qService.getListCount();
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-				List<QnaBoard> qList = qService.selectAllQna(pi);
+				List<AdQnaBoard> qList = qService.selectAllQna(pi);
 				mv.addObject("paging", pi).addObject("qList", qList).setViewName("admin/qna/list");
 			}
 		} catch (Exception e) {
@@ -93,7 +92,7 @@ public class AdQnaController {
 			} else {
 				int totalCount = qService.getListCount(search);
 				PageInfo pi = new PageInfo(currentPage, totalCount, 10);
-				List<QnaBoard> searchList = qService.selectListByKeyword(pi, search);
+				List<AdQnaBoard> searchList = qService.selectListByKeyword(pi, search);
 				if(!searchList.isEmpty()) {
 					model.addAttribute("paging", pi);
 					model.addAttribute("search", search);

@@ -55,6 +55,8 @@
 	                <tr>
 	                	<th id="one"><input type="checkbox" class="allCheck"></th>
 	                    <th id="two">구분</th>
+	                    <th id="two_one">이미지</th>
+	                    <th id="two_two">[브랜드]상품명</th>
 	                    <th id="three">제목</th>
 	                    <th id="four">작성자</th>
 	                    <th id="five">작성일</th>
@@ -70,6 +72,22 @@
 	                            <c:if test="${qnaboard.qnaType == 2 }">배송문의</c:if>
 	                            <c:if test="${qnaboard.qnaType == 3 }">교환/환불</c:if>
 	                            <c:if test="${qnaboard.qnaType == 4 }">기타문의</c:if>
+	                        </td>
+	                         <td>
+	                        	<c:if test="${qnaboard.perfumeNo eq 0 }">
+	                        		<img src="../../../../resources/img/common/noImage.png">
+	                        	</c:if>
+	                        	<c:if test="${qnaboard.perfumeNo != 0 }">
+	                        		<img src="../../../../resources/img/perfumeFileUploads/${qnaboard.pFilerename}" alt="">
+	                        	</c:if>
+	                        </td>
+	                        <td class="tdOver">
+	                        	<c:if test="${qnaboard.perfumeNo == 0 }">
+	                        		X
+	                        	</c:if>
+	                        	<c:if test="${qnaboard.perfumeNo != 0 }">
+	                        		<a href="/perfume/detail/${qnaboard.perfumeNo}">[${qnaboard.perfumeBrand }] ${qnaboard.perfumeName }</a>
+                        		</c:if>
 	                        </td>
                             <td class="tdOver">
                             	<a href="/qnaboard/detail?qnaNo=${qnaboard.qnaNo}">
@@ -93,11 +111,11 @@
                 </tbody>
                 <tfoot>
                 	<tr>
-               			<td colspan="5"></td>
+               			<td colspan="7"></td>
 						<td><button type="button" class="del">삭제하기</button></td>
 					</tr>
 	                <tr>
-						<td colspan="6" class="line">
+						<td colspan="8" class="line">
 					        <div id="paging">
 							<c:if test="${paging.totalCount ne null }">
 								<c:if test="${paging.currentPage != 1}">
@@ -137,6 +155,7 @@
 			</div>
 		</div>
 	</main>
+	<jsp:include page="../../common/footer.jsp" />
 	<script>
 		// 전체 선택 박스
 		var allCheck = document.querySelector(".allCheck");

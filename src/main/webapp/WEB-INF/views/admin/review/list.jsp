@@ -94,7 +94,7 @@
 								<img src="../../../../resources/img/perfumeFileUploads/${review.pFilerename}" alt="">
 							</td>
 							<td class="onclick tdOver">
-							<a href="/perfume/detail/${review.perfumeNo}">[${review.perfumeBrand }] ${review.perfumeName }</a>
+								<a href="/perfume/detail/${review.perfumeNo}">[${review.perfumeBrand }] ${review.perfumeName }</a>
 							</td>
 <!-- 							<td class="onclick tdOver"> -->
 <%-- 	            				<a href="/review/reviewDetail/${review.reviewNo}"> --%>
