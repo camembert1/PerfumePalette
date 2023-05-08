@@ -207,7 +207,8 @@
 				          tableBody.append(tr);
 				
 				          tr = $("<tr>");
-				          rContent = $("<td colspan='3'>").text(data[i].replyContents);
+				          rContent = $("<td colspan='3'>").html(data[i].replyContents.replace(/\n/g, "<br>"));
+
 				          btnArea = $("<td>");
 				
 				          // memberNo가 2인 경우에만 수정 및 삭제 버튼을 보여줌
@@ -265,10 +266,13 @@
 				
 				// 댓글 수정 ajax
 				function modifyReply(obj, replyContents, replyNo) {
-				  let trModify = $("<tr>");
-				  trModify.append("<td colspan='3'><input class='contentsinput' type='text' id='modifyContent' size='50' value='" + replyContents + "'></td>");
-				  trModify.append("<td><button class='modifybtn' type='button' onclick='modifyReplyContents(" + replyNo + ");'>수정완료</button></td>");
-				  $(obj).closest('tr').after(trModify);
+					 // 현재 댓글 아래에 있는 수정 폼 삭제
+					  $(obj).closest('tr').next().remove();
+
+					  let trModify = $("<tr>");
+					  trModify.append("<td colspan='3'><textarea class='contentsinput' id='modifyContent' rows='2' cols='50'>" + replyContents + "</textarea></td>");
+					  trModify.append("<td><button class='modifybtn' type='button' onclick='modifyReplyContents(" + replyNo + ");'>수정완료</button></td>");
+					  $(obj).closest('tr').after(trModify);
 				}
 
 				function modifyReplyContents(replyNo) {
