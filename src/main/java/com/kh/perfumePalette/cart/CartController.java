@@ -27,7 +27,7 @@ public class CartController {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public String addWish(String memberId, int cartQuantity, int perfumeNo) {
+	public String addCart(String memberId, int cartQuantity, int perfumeNo) {
 		try {
 			Cart cart = new Cart();
 			cart.setMemberId(memberId);
@@ -47,7 +47,7 @@ public class CartController {
 
 	@PostMapping("/remove")
 	@ResponseBody
-	public String removeWish(int cartNo) {
+	public String removeCart(int cartNo) {
 		try {
 			int result = cService.removeCart(cartNo);
 			if (result > 0) {
