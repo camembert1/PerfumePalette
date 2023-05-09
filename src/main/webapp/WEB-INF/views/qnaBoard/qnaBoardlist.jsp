@@ -66,7 +66,7 @@
 										</c:choose> --%>
 										<c:choose>
 											<c:when test="${not empty qnaboard.qnaPassword and member.memberNo != '2'}">
-												<td onclick='lock(this, "${qnaboard.qnaNo }")'>
+												<td onclick='lock(this, "${qnaboard.perfumeNo }", ${qnaboard.qnaNo })'>
 													<c:if test="${qnaboard.perfumeNo ne 0}">* </c:if>
 													${qnaboard.qnaSubject}<i class="fa-solid fa-lock"
 														style="margin-left: 5px;"></i>
@@ -188,7 +188,7 @@
 				}
 
 
-				function lock(target, pNum) {
+				function lock(target, pNum, qNum) {
 					// 모든 hiddenTr을 안보이게 설정
 					$("#perfumeNo").val();
 					$(".hiddenTr").hide();
@@ -196,7 +196,7 @@
 					$(target).parent().next(".hiddenTr").toggle();
 
 					/* 꼭 필요 */
-					$("#perfumeNo" + pNum).val(pNum); // perfumeNo 값 할당
+					$("#perfumeNo" + qNum).val(pNum); // perfumeNo 값 할당
 					/* 꼭 필요 */
 				}
 				
@@ -233,10 +233,12 @@
 						},
 						success: function (response) {
 							if (response === "1") {
-								if (perfumeNumber == 0 || perfumeNumber == '') {
-									// 비밀번호가 맞을 경우 페이지 이동
+								// 비밀번호가 맞을 경우 페이지 이동
+								if (perfumeNumber == 0 || perfumeNumber == "") {
+									/* 민우 페이지 */
 									window.location.href = "/qnaboard/detail?qnaNo=" + qnaNo;
 								} else {
+									/* 내 페이지 */
 									/* 반드시 필요 */
 									location.href = "/qnaboard/qnaDetail/" + qnaNo;
 									/* 반드시 필요 */
