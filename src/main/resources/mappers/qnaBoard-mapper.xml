@@ -170,11 +170,4 @@
 		WHERE Q.PERFUME_NO = #{perfumeNO}
 	</select>
 
-
-
-
-
-
-
-
 </mapper>

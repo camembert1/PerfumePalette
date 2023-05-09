@@ -37,7 +37,10 @@ public class QnaBoardController {
 
 	@Autowired
 	private QnaBoardService qbService;
-	
+
+	@Autowired
+	private PerfumeService pService;
+
 	@Autowired
 	@Qualifier("qnafileUtil")
 	private QnaFileUtil qnafileUtil;
@@ -54,9 +57,10 @@ public class QnaBoardController {
 				Alert alert = new Alert("/member/login", "로그인이 필요한 서비스입니다.");
 				mv.addObject("alert", alert).addObject("perfumeNo", perfumeNo);
 				mv.setViewName("common/alert");
-				
+
 			} else {
 				mv.addObject("id", UUID.randomUUID());
+				mv.addObject("perfume", pService.selectOneByPerfumeNo(perfumeNo));
 				mv.setViewName("qnaBoard/qnaBoardWrite2");
 			}
 		} catch (Exception e) {
@@ -91,7 +95,7 @@ public class QnaBoardController {
 				}
 			}
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "qnaFileUploads\\";
+			String savePath = wasRoot + File.separator + "qnaFileUploads" + File.separator;
 			File diretory = new File(savePath + id);
 			File folder = new File(savePath + code);
 			if (!folder.exists()) {
@@ -108,7 +112,7 @@ public class QnaBoardController {
 						for (String fileName : fileList) {
 							if (("../../../resources/img/qnaFileUploads/" + id + "/" + files[i].getName())
 									.equals(fileName)) {
-								files[i].renameTo(new File(savePath + code + "\\" + files[i].getName()));
+								files[i].renameTo(new File(savePath + code + File.separator + files[i].getName()));
 							}
 						}
 						if (files[i].delete()) {
@@ -141,15 +145,159 @@ public class QnaBoardController {
 
 	// 문의 게시판 Detail
 	@GetMapping("/qnaDetail/{qnaNo}")
-	public ModelAndView qnaDetailView2(@PathVariable("qnaNo") Integer qnaNo,
-			HttpSession session, ModelAndView mv) {
+	public ModelAndView qnaDetailView2(@PathVariable("qnaNo") Integer qnaNo, HttpSession session, ModelAndView mv) {
 		try {
 			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
 			mv.addObject("qnaNo", qnaNo);
+			mv.addObject("perfume", pService.selectOneByPerfumeNo(qnaboard.getPerfumeNo()));
 			mv.addObject("qnaboard", qnaboard).setViewName("qnaBoard/qnaBoardDetail2");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 수정 후 -> Shop
+	@GetMapping("/modify2/{qnaNo}")
+	public ModelAndView boardModifyView2(@PathVariable("qnaNo") Integer qnaNo, HttpSession session, ModelAndView mv) {
+		try {
+			QnaBoard qnaboard = qbService.QnaBoardDetail(qnaNo);
+			mv.addObject("id", UUID.randomUUID());
+			if (qnaboard != null) {
+				mv.addObject("qnaNo", qnaNo);
+				mv.addObject("qnaboard", qnaboard);
+				mv.addObject("perfume", pService.selectOneByPerfumeNo(qnaboard.getPerfumeNo()));
+				mv.setViewName("qnaBoard/qnaBoardModify2");
+			} else {
+				mv.addObject("msg", "데이터 조회에 실패하였습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 Detail 수정 Logic
+	@RequestMapping(value = "/modify2", method = RequestMethod.POST)
+	public ModelAndView boardModify2(@ModelAttribute QnaBoard qnaboard, HttpServletRequest request,
+			@RequestParam("id") String id, ModelAndView mv) {
+		try {
+			String code = qnaboard.getqFilename();
+			String content = qnaboard.getQnaContents();
+			qnaboard.setQnaContents(content.replaceAll(id, "" + code));
+			int result = qbService.updateqnaBoard(qnaboard);
+			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
+			String savePath = wasRoot + File.separator + "qnaFileUploads" + File.separator;
+			File diretory = new File(savePath + id);
+			File folder = new File(savePath + code);
+			if (!diretory.exists()) {
+				diretory.mkdirs();
+			}
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			if (result > 0) {
+				if (folder.exists()) { // 파일존재여부확인
+					if (folder.isDirectory()) { // 파일이 디렉토리인지 확인
+						String[] sList = content.split("\"");
+						List<String> fileList = new ArrayList<String>();
+						for (String aa : sList) {
+							if (aa.startsWith(".")) {
+								fileList.add(aa);
+							}
+						}
+						File[] files = folder.listFiles();
+						int[] valid = new int[files.length];
+						for (int i = 0; i < files.length; i++) {
+							for (String fileName : fileList) {
+								if (("../../../resources/img/qnaFileUploads/" + code + "/" + files[i].getName())
+										.equals(fileName)) {
+									valid[i] = 1;
+								}
+							}
+						}
+						for (int i = 0; i < valid.length; i++) {
+							if (valid[i] != 1) {
+								if (files[i].delete()) {
+
+								} else {
+
+								}
+							}
+						}
+					}
+				} else {
+					// 임시 폴더가 없을 시
+				}
+			}
+			String[] sList = content.split("\"");
+			List<String> fileList = new ArrayList<String>();
+			for (String aa : sList) {
+				if (aa.startsWith(".")) {
+					fileList.add(aa);
+				}
+			}
+
+			if (diretory.exists()) { // 파일존재여부확인
+				if (diretory.isDirectory()) { // 파일이 디렉토리인지 확인
+					File[] files = diretory.listFiles();
+					for (int i = 0; i < files.length; i++) {
+						for (String fileName : fileList) {
+							if (("../../../resources/img/qnaFileUploads/" + id + "/" + files[i].getName())
+									.equals(fileName)) {
+								files[i].renameTo(new File(savePath + code + File.separator + files[i].getName()));
+							}
+						}
+						if (files[i].delete()) {
+							// 폴더 안 파일 삭제 성공시
+						} else {
+							// 삭제 실패시
+						}
+					}
+				}
+				if (diretory.delete()) {
+					// 폴더 삭제시
+				} else {
+					// 폴더 삭제 실패시
+				}
+			} else {
+				// 임시 폴더가 없을 시
+			}
+			if (result > 0) {
+//				mv.addObject("qnaNo", qnaboard.getQnaNo());
+//				mv.addObject("qnaboard", qnaboard);
+				mv.setViewName("redirect:/qnaboard/qnaDetail/" + qnaboard.getQnaNo());
+			} else {
+				mv.addObject("msg", "게시판 수정이 완료되었습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+
+	// 문의 게시판 삭제
+	@GetMapping("/remove/{qnaNo}/{perfumeNo}")
+	public ModelAndView qnaRemove2(@PathVariable("qnaNo") int qnaNo, @PathVariable("perfumeNo") int perfumeNo, ModelAndView mv) {
+		try {
+			int result = qbService.deleteQnaBoard(qnaNo);
+			if (result > 0) {
+				mv.setViewName("redirect:/perfume/detail/"+perfumeNo);
+			} else {
+				mv.addObject("msg", "질문이 삭제되지 않았습니다.");
+				mv.setViewName("common/error");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", "질문이 삭제되지 않았습니다.");
 			mv.setViewName("common/error");
 		}
 		return mv;
@@ -195,7 +343,7 @@ public class QnaBoardController {
 				}
 			}
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "qnaFileUploads\\";
+			String savePath = wasRoot + File.separator + "qnaFileUploads" + File.separator;
 			File diretory = new File(savePath + id);
 			File folder = new File(savePath + code);
 			if (!folder.exists()) {
@@ -212,7 +360,7 @@ public class QnaBoardController {
 						for (String fileName : fileList) {
 							if (("../../../resources/img/qnaFileUploads/" + id + "/" + files[i].getName())
 									.equals(fileName)) {
-								files[i].renameTo(new File(savePath + code + "\\" + files[i].getName()));
+								files[i].renameTo(new File(savePath + code + File.separator + files[i].getName()));
 							}
 						}
 						if (files[i].delete()) {
@@ -250,7 +398,7 @@ public class QnaBoardController {
 			HttpServletRequest request) {
 		JsonObject jsonObject = new JsonObject();
 		String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-		String savePath = wasRoot + "\\" + "qnaFileUploads\\" + id;
+		String savePath = wasRoot + File.separator + "qnaFileUploads" + File.separator + id;
 		// 폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 		File folder = new File(savePath);
 		if (!folder.exists()) {
@@ -262,7 +410,7 @@ public class QnaBoardController {
 			/* SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); */
 			String FileName = UUID.randomUUID() + "."
 					+ originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-			String filePath = savePath + "\\" + FileName;
+			String filePath = savePath + File.separator + FileName;
 			File file = new File(filePath);
 			multipartFile.transferTo(file);
 			filePath = "../../../resources/img/qnaFileUploads/" + id + "/" + FileName;
@@ -439,7 +587,7 @@ public class QnaBoardController {
 			qnaboard.setQnaContents(content.replaceAll(id, "" + code));
 			int result = qbService.updateqnaBoard(qnaboard);
 			String wasRoot = request.getSession().getServletContext().getRealPath("resources/img");
-			String savePath = wasRoot + "\\" + "qnaFileUploads\\";
+			String savePath = wasRoot + File.separator + "qnaFileUploads" + File.separator;
 			File diretory = new File(savePath + id);
 			File folder = new File(savePath + code);
 			if (!diretory.exists()) {
@@ -497,7 +645,7 @@ public class QnaBoardController {
 						for (String fileName : fileList) {
 							if (("../../../resources/img/qnaFileUploads/" + id + "/" + files[i].getName())
 									.equals(fileName)) {
-								files[i].renameTo(new File(savePath + code + "\\" + files[i].getName()));
+								files[i].renameTo(new File(savePath + code + File.separator + files[i].getName()));
 							}
 						}
 						if (files[i].delete()) {
@@ -529,17 +677,6 @@ public class QnaBoardController {
 			mv.setViewName("common/error");
 		}
 		return mv;
-	}
-
-	// 수정, 삭제시 기존 파일 삭제
-	private void deleteFile(String getrFilename, HttpServletRequest request) throws Exception {
-		String root = request.getSession().getServletContext().getRealPath("resources/img");
-		String delPath = root + "\\" + "qnaFileUploads";
-		String delFilePath = delPath + "\\" + getrFilename;
-		File delFile = new File(delFilePath);
-		if (delFile.exists()) {
-			delFile.delete();
-		}
 	}
 
 	// 문의 게시판 삭제

@@ -45,8 +45,8 @@ main>div[id=forCenter] {
 }
 
 .table {
-    width: 1200px;
-    border-top: 1px solid darkgray;
+    width: 1320px;
+    /* border-top: 1px solid darkgray; */
     text-align: center;
     display: block;
     margin: 0 auto;
@@ -60,17 +60,16 @@ main>div[id=forCenter] {
 }
 .submit-btn {
     background-color: #222222;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    padding: 7px 15px;
-    /* margin-left: 382px; */
-    margin: 0px auto 20px auto;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	font-size: 15pt;
+	padding: 10px;
     float : right;
 }
 
-#submit{
+.hidden-password button {
 	background-color: #222222;
     color: white;
     border: none;
@@ -135,8 +134,3 @@ a:visited { color: black; text-decoration: none;}
 	margin-left : 10px;
 	margin-right : 10px;
 }
-/* .now {
-    background-color: rgba(200, 194, 194, 0.901);
-    padding: 7px 17px;
-    border-radius: 100%;
-} */
