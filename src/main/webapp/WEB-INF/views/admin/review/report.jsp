@@ -70,7 +70,7 @@
 								${review.reportContent }
 							</td>
 							<td class="tdOver">
-								<a href="/admin/member/search?searchCondition=All&searchValue=${reivew.memberNickName }">
+								<a href="/admin/member/search?searchCondition=All&searchValue=${review.memberNickName }">
 									${review.memberNickName }
 								</a>
 							</td>
