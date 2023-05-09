@@ -75,7 +75,8 @@
 	                        </td>
 	                        <td>
 	                        	<c:if test="${qnaboard.perfumeNo eq 0 }">
-	                        		<img src="../../../../resources/img/common/noImage.png">
+	                        		𝑷𝒆𝒓𝒇𝒖𝒎𝒆 𝑷𝒂𝒍𝒆𝒕𝒕𝒆
+<!-- 	                        		<img src="../../../../resources/img/common/noImage.png"> -->
 	                        	</c:if>
 	                        	<c:if test="${qnaboard.perfumeNo != 0 }">
 	                        		<img src="../../../../resources/img/perfumeFileUploads/${qnaboard.pFilerename}" alt="">
