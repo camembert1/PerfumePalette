@@ -155,7 +155,7 @@
 		OUTER JOIN MEMBER_TBL M ON Q.MEMBER_NO =
 		M.MEMBER_NO
 		WHERE Q.PERFUME_NO
-		= #{perfumeNO}
+		= #{perfumeNo}
 		ORDER BY Q.QNA_DATE DESC
 	</select>
 
@@ -167,7 +167,7 @@
 		LEFT OUTER JOIN Q_REPLY_TBL R ON Q.QNA_NO =
 		R.REP_QNA_NO
 		LEFT OUTER JOIN MEMBER_TBL M ON Q.MEMBER_NO = M.MEMBER_NO
-		WHERE Q.PERFUME_NO = #{perfumeNO}
+		WHERE Q.PERFUME_NO = #{perfumeNo}
 	</select>
 
 </mapper>
