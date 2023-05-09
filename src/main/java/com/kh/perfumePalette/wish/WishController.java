@@ -23,26 +23,6 @@ public class WishController {
 	@Autowired
 	private WishService wService;
 
-	@GetMapping("/temp")
-	public ModelAndView goProduct(HttpSession session, ModelAndView mv, HttpServletRequest req) {
-		try {
-			Member member = (Member) session.getAttribute("member");
-			List<Wish> perfumeList = null;
-			if (member == null || member.getMemberId() == null) {
-				perfumeList = wService.selectPerfumeList();
-				mv.addObject("perfumeList2", perfumeList);
-			} else {
-				perfumeList = wService.selectPerfumeListLogin(member.getMemberId());
-				mv.addObject("perfumeList", perfumeList);
-			}
-			mv.setViewName("wish/product");
-		} catch (Exception e) {
-			e.printStackTrace(); // 콘솔창에 에러 출력
-			mv.addObject("msg", e.getMessage()).setViewName("common/error");
-		}
-		return mv;
-	}
-
 	@GetMapping("/list")
 	public ModelAndView list(HttpSession session, ModelAndView mv, HttpServletRequest req) {
 		try {
