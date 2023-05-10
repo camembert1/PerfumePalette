@@ -128,10 +128,10 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 
 # 📹 실행화면
 ## 1. 메인화면
+![메인](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/dd2a18de-f001-4b75-8e0f-f84aac2bca49)
+![메인2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/192d32b9-49d5-4777-9cc0-99d0bd169d6a)
+![메인3](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/e2e801b9-2e59-41c8-a918-d7c7b5f9ce6b)
 
-![메인](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/ec3966d0-ea3f-4db1-adc1-6acfb5a43346)
-![메인2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1d474d27-110e-4126-a8a2-ed1cb58c6ad9)
-![메인3](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/85079ba0-7635-4aa1-b5ff-13003e8b8ccd)
 
 ## 2. MBTI
 ![mbti](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/271208a7-c6d7-431e-a28a-f9a818d3690c)
