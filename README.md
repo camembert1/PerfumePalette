@@ -128,6 +128,7 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 
 # 📹 실행화면
 ## 1. 메인화면
+
 ![메인](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/ec3966d0-ea3f-4db1-adc1-6acfb5a43346)
 ![메인2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1d474d27-110e-4126-a8a2-ed1cb58c6ad9)
 ![메인3](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/85079ba0-7635-4aa1-b5ff-13003e8b8ccd)
@@ -145,8 +146,8 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/79fd0ff6-0751-46d5-8af1-a97418df8c11)
 
 ## 4. 상품 구매
-! [상품 주문](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/94f9852a-5693-4326-b36b-1028b27a5338)
-! [image](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/3d0cd7fa-d0ef-42c1-9cda-f6a2b8fc435a)
+![상품 주문](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/94f9852a-5693-4326-b36b-1028b27a5338)
+![image](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/3d0cd7fa-d0ef-42c1-9cda-f6a2b8fc435a)
 
 ## 5. 찜 & 장바구니
 ![찜 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/48788482-37dc-4509-92c9-75a43a7d53be)
