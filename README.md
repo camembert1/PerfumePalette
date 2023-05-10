@@ -3,10 +3,11 @@
 
 # 목차
 * [프로젝트 소개](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
-* 개발 기간
-* 팀원 소개
-* 개발 환경
-* 기술 스택
+* [개발 기간](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%EA%B0%9C%EB%B0%9C-%EA%B8%B0%EA%B0%84)
+* [멤버 구성](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%EB%A9%A4%EB%B2%84-%EA%B5%AC%EC%84%B1)
+* [개발 환경](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD)
+* [기술 스택](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
+* [주요 기능 및 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EB%B0%8F-%EC%83%81%EC%84%B8)
   * 회원관리
   * MBTI
   * 상품 SHOP
@@ -17,7 +18,7 @@
   * 문의 게시판
   * 후기 게시판
   * 마이페이지(일반회원, 관리자)
-* 실행화면
+* [실행화면](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4)
 
 # 💝 프로젝트 소개
 Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이 높아지고 있는 추세에 맞추어 성향과 취향을 고려한 
