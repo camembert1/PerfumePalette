@@ -1,5 +1,5 @@
 # PerfumePalette
-<img src="https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032753/75c45af7-5699-4e8b-91a4-6c79fe774fe4">
+6남매 - 파이널프로젝트
 
 # 목차
 * 프로젝트 소개
@@ -149,7 +149,7 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ![장바구니 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d6c52874-5647-4647-a279-4e174971548e)
 
 ## 6. 알림
-![알림](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b45e4846-7cca-42de-918c-e13dfa98d0e3)
+![알림](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/a9d9c175-a89f-43d1-b466-6d83ee94a707)
 
 ## 7. 채팅
 ![1ㄷ1채팅](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f64885be-1def-49f9-bbc1-d89370b27e85)
@@ -166,11 +166,24 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ![리뷰 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d0e27430-dd5e-4084-a1a9-0ae0dde0a458)
 ![리뷰 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1a1ecb1f-2861-47b4-9b58-8cdca5b24ac4)
 
-## 10. 마이페이지
-### 10.1 회원
+## 10. 마이페이지 회원
+### 10.1 정보_수정
+![마이페이지 회원 정보_수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/5844bfd9-25f8-4c3f-bb39-733559a0634b)
+
+### 10.2 주문내역 조회
+![주문조회](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/9dc20288-5c4d-4c92-997f-ffa36b835686)
+
+### 10.3 작성 문의
+![작성 문의 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/0c914044-5a5d-4808-8400-69b2ff473afd)
+
+### 10.4 작성 후기
+![작성 후기 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/bbc98c7b-86d3-4cb9-ad74-1373ec47fd8c)
+
+### 10.5 작성 댓글
+![작성 댓글](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/36d1ee3d-04e1-4239-8c1f-acadbb057358)
 
 
-### 10.2 관리자
+## 11 관리자
 
 
 
