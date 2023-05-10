@@ -209,7 +209,7 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ### 11.5-1 후기 관리
 ![후기 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c645cc33-4d78-48fb-b632-0aa0f787ba80)
 
-### 11.5-2 신고 리
+### 11.5-2 신고 관리
 ![신고 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b85cabab-b4e1-44b4-85d3-8f0579c295b4)
 
 
