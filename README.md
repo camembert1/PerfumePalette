@@ -30,8 +30,8 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ```
 
 # 👪 멤버 구성
-![팀원 1](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/bcc99fa4-a2e4-483e-b1ed-e5cf14e58805)
-![팀원 2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/eceb2fed-1525-48cc-9547-2575c0e5dfb7)
+![팀원 1](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c7894feb-452a-4964-9203-13985fe66f2e)
+![팀원 2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/96acb106-5743-4ce2-a8c3-a1986e00e272)
 
 # 💻 개발 환경
 <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=for-the-badge&logo=Apache Maven&logoColor=white"> <img src="https://img.shields.io/badge/MyBatis-black?style=for-the-badge&logo=Apache MyBatis&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
@@ -132,98 +132,88 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ![메인2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/192d32b9-49d5-4777-9cc0-99d0bd169d6a)
 ![메인3](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/e2e801b9-2e59-41c8-a918-d7c7b5f9ce6b)
 
-
 ## 2. MBTI
-![mbti](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/271208a7-c6d7-431e-a28a-f9a818d3690c)
-![MBTI2 1](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/6eb9146b-f589-4465-a383-ba5cb8d5bd13)
+![mbti](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c79c1dd4-0d8f-47ef-834a-deefbdf90d53)
+![MBTI2 1](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/934f5ca3-21c0-43cd-abff-83329bd05929)
 
 ## 3. 상품 SHOP
-![상품 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/901d7233-a2e1-4f3d-b081-df0767926398)
-![비교함](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/ca5607a0-156f-49ff-a392-bf8186e05aff)
-![상품 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/9e40778d-cd75-4c74-a1d4-150cd9d78e76)
-![상품 상세_후기](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/44640c4e-cd80-4578-b8fc-f65c7d35937b)
-![상품 상세_문의](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f7de7d2a-2a3a-4bda-b3f9-ff6c1c8cba5e)
-![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/79fd0ff6-0751-46d5-8af1-a97418df8c11)
+![상품 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/af387d5c-cf7b-4c3a-a9ef-8e558a7f8eeb)
+![비교함](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/88eb7f27-bf65-4a6e-8240-f157e7d8a8e7)
+![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/e8e65cba-dabb-4e9d-a30a-b9aed888c63f)
+![상품 상세_후기](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/3b711ec7-41a2-4a45-bb12-4c3ac435b1f6)
+![상품 상세_문의](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/eb665046-8a42-4336-b9e7-543696e87626)
+![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/7ed08af8-25fa-49ef-bb9e-d9ff9a348160)
 
 ## 4. 상품 구매
-![상품 주문](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/94f9852a-5693-4326-b36b-1028b27a5338)
-![image](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/3d0cd7fa-d0ef-42c1-9cda-f6a2b8fc435a)
+![상품 주문](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d6ed928a-d120-4123-822c-0cbc130fdaac)
+![스크린샷 2023-05-10 025615](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/8dffb1b2-9483-4255-9d61-3ed3db6a7218)
 
 ## 5. 찜 & 장바구니
-![찜 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/48788482-37dc-4509-92c9-75a43a7d53be)
-![장바구니 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d6c52874-5647-4647-a279-4e174971548e)
+![찜 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/4c011db0-a45b-414d-9a87-a95aeffda4bd)
+![장바구니 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/e5d94424-0d9f-475e-b9b9-ccdee4f8c7b7)
 
 ## 6. 알림
-![알림](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/a9d9c175-a89f-43d1-b466-6d83ee94a707)
+![알림](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b668d5ce-8c78-4436-b18d-ae309321b6ec)
 
 ## 7. 채팅
-![1ㄷ1채팅](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f64885be-1def-49f9-bbc1-d89370b27e85)
+![1ㄷ1채팅](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/39576e4a-2a8c-48d1-861c-ecff76ff22b0)
 
 ## 8. 문의 게시판
-![문의 작성](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/4c1726da-4684-47fe-a13d-5697a3be28c8)
-![문의 수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/5501d14a-21ca-4cfa-b1b1-1d3301470aee)
-![문의 게시판 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/8cec6339-6af6-45bb-a9a2-a5e4bcb67416)
-![문의 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/ccfb2f38-a8ce-4cd5-82de-f50d22d20e2c)
+![문의 작성](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1ddf3cc6-c660-4711-b2fe-71fb10003c7e)
+![문의 수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/5a16c40b-7d74-40bf-8685-068244cca7f6)
+![문의 게시판 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/cc812b73-2038-4a3a-86e7-a86047363f1e)
+![문의 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/67e3015f-9313-4a12-807d-3af9d39dd8a7)
 
 ## 9. 후기 게시판
-![리뷰 등록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/5a9e2e25-f7f1-4160-93a9-e350fa2bc02d)
-![리뷰 수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b273265c-ea8e-4dc3-986b-22dfcafaa45c)
-![리뷰 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d0e27430-dd5e-4084-a1a9-0ae0dde0a458)
-![리뷰 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1a1ecb1f-2861-47b4-9b58-8cdca5b24ac4)
+![리뷰 등록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/0ca9a028-2f9a-4ba6-8d21-af5ec79c4bd6)
+![리뷰 수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/2229bf20-9f06-4b08-b4d8-01430a16d18d)
+![리뷰 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/89ffcfda-e994-47d4-ba29-42ec005e92d2)
+![리뷰 상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f27c9cb8-77bd-4a30-827f-adb84789d5d5)
 
 ## 10. 마이페이지 회원
 ### 10.1 정보_수정
-![마이페이지 회원 정보_수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/5844bfd9-25f8-4c3f-bb39-733559a0634b)
+![마이페이지 회원 정보_수정](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/8eb0d6c7-8365-45f6-a7c8-37da8881f239)
 
 ### 10.2 주문내역 조회
-![주문조회](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/9dc20288-5c4d-4c92-997f-ffa36b835686)
+![주문조회](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/303e8b10-b27a-46d0-aac3-ed7a73fede41)
 
 ### 10.3 작성 문의
-![작성 문의 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/fe972e5c-e789-46a7-bba2-4db5456ffe86)
+![작성 문의 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/1da5ff44-ef9b-4743-a2c9-5e4290ce7052)
 
 ### 10.4 작성 후기
-![작성 후기 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/bbc98c7b-86d3-4cb9-ad74-1373ec47fd8c)
+![작성 후기 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/4cfc664f-1357-4d7d-90d0-5c667bde3a50)
 
 ### 10.5 작성 댓글
-![작성 댓글](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/36d1ee3d-04e1-4239-8c1f-acadbb057358)
+![작성 댓글](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/377b6be1-96f5-4d74-9758-2cc34518928d)
 
 ### 10.6 회원 탈퇴
-![회원탈퇴](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/31bf0630-4c89-4868-b816-ea159a51ac4b)
+![회원탈퇴](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/38683bc0-c90c-40a9-903f-a8bc6187a205)
 
 ## 11 관리자
 ### 11.1-1 판매상품 관리
-![상품 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c702674f-79a3-46ac-a972-5b02ebe7751c)
+![상품 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/76f64e85-4c91-4d56-ba80-33da463719d4)
 
 ### 11.1-2 찜 & 장바구니 회원 목록
-![찜 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/66339634-c93d-4bf1-903e-472cebf610c8)
-![장바구니 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/102026b7-8a7c-4a65-a5c2-ad26e1ee26a2)
+![찜 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/01032af4-cb88-48df-9041-99893301f3be)
+![장바구니 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/aabb93c3-aaa5-43a1-a2a2-22e9ad031e33)
 
 ### 11.2-1 주문내역 관리
-![주문내역관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/61a8d58f-5dfd-4748-b2e4-14a20227b41e)
+![주문내역관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b91833c4-fcf4-48ca-ac33-a66761248641)
 
 ### 11.2-2 주문내역 상세
-![주문내역상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f354004c-aa37-4275-87a7-4cd351d2b655)
+![주문내역상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/16b72aba-7a59-439a-b5e7-de9247875618)
 
 ### 11.3 회원 관리
-![회원관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/40e5f586-4a85-402c-8aa6-64588dd26892)
+![회원관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c7cf4edb-2610-459e-8a80-6d7a9e9a98ac)
 
 ### 11.4 문의 관리
-![문의관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/745b695d-f443-4d1e-bc4a-345f93cee477)
+![문의관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d5f0b299-d80d-4758-9c7c-0cabc02cff91)
 
 ### 11.5-1 후기 관리
-![후기 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c645cc33-4d78-48fb-b632-0aa0f787ba80)
+![후기 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/089f317f-9605-48aa-a74c-2cf35ce412b9)
 
 ### 11.5-2 신고 관리
-![신고 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b85cabab-b4e1-44b4-85d3-8f0579c295b4)
-
-
-
-
-
-
-
-
-
+![신고 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/207f7dcc-55ee-48d3-ba2b-5c649531a6db)
 
 
 
