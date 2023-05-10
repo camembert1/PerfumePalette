@@ -2,7 +2,7 @@
 <img src="https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032753/75c45af7-5699-4e8b-91a4-6c79fe774fe4">
 
 # 목차
-* 프로젝트 소개
+* [프로젝트 소개](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
 * 개발 기간
 * 팀원 소개
 * 개발 환경
