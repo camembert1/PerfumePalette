@@ -174,7 +174,7 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ![주문조회](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/9dc20288-5c4d-4c92-997f-ffa36b835686)
 
 ### 10.3 작성 문의
-![작성 문의 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/0c914044-5a5d-4808-8400-69b2ff473afd)
+![작성 문의 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/fe972e5c-e789-46a7-bba2-4db5456ffe86)
 
 ### 10.4 작성 후기
 ![작성 후기 회원](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/bbc98c7b-86d3-4cb9-ad74-1373ec47fd8c)
@@ -182,13 +182,34 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ### 10.5 작성 댓글
 ![작성 댓글](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/36d1ee3d-04e1-4239-8c1f-acadbb057358)
 
+### 10.6 회원 탈퇴
+![회원탈퇴](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/31bf0630-4c89-4868-b816-ea159a51ac4b)
 
 ## 11 관리자
+### 11.1-1 판매상품 관리
+![상품 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c702674f-79a3-46ac-a972-5b02ebe7751c)
 
+### 11.1-2 찜 & 장바구니 회원 목록
+![찜 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/66339634-c93d-4bf1-903e-472cebf610c8)
+![장바구니 회원 목록](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/102026b7-8a7c-4a65-a5c2-ad26e1ee26a2)
 
+### 11.2-1 주문내역 관리
+![주문내역관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/61a8d58f-5dfd-4748-b2e4-14a20227b41e)
 
+### 11.2-2 주문내역 상세
+![주문내역상세](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/f354004c-aa37-4275-87a7-4cd351d2b655)
 
+### 11.3 회원 관리
+![회원관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/40e5f586-4a85-402c-8aa6-64588dd26892)
 
+### 11.4 문의 관리
+![문의관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/745b695d-f443-4d1e-bc4a-345f93cee477)
+
+### 11.5-1 후기 관리
+![후기 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/c645cc33-4d78-48fb-b632-0aa0f787ba80)
+
+### 11.5-2 신고 리
+![신고 관리](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/b85cabab-b4e1-44b4-85d3-8f0579c295b4)
 
 
 
