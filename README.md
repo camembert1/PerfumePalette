@@ -1,5 +1,5 @@
 # PerfumePalette
-6남매 - 파이널프로젝트
+<img src="https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032753/75c45af7-5699-4e8b-91a4-6c79fe774fe4">
 
 # 목차
 * 프로젝트 소개
