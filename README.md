@@ -1,5 +1,5 @@
 # PerfumePalette
-<img src="https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032753/75c45af7-5699-4e8b-91a4-6c79fe774fe4">
+<img src="https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032753/2105b04a-9066-4fd9-adfc-6cb7bbcc257a">
 
 # 목차
 * [프로젝트 소개](https://github.com/2211SpringCloudWebApp/PerfumePalette#-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
