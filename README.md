@@ -24,17 +24,19 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 맞춤형 추천 시스템인 MBTI 향수 추천과 함께 사용자들이 향수를 보다 쉽게 이해하고 선택, 추천할 수 있도록 도움을 주는 사이트입니다.
 
 # 📆 개발 기간
+```
 2023.03.27 ~ 2023.05.09
+```
 
 # 👪 멤버 구성
 ![팀원 1](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/bcc99fa4-a2e4-483e-b1ed-e5cf14e58805)
 ![팀원 2](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/eceb2fed-1525-48cc-9547-2575c0e5dfb7)
 
 # 💻 개발 환경
-
+<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=for-the-badge&logo=Apache Maven&logoColor=white"> <img src="https://img.shields.io/badge/MyBatis-black?style=for-the-badge&logo=Apache MyBatis&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 # 🔧 기술 스택
-
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
 
 # 주요 기능 및 상세
 ## 1. 회원관리
