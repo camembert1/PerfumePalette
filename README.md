@@ -139,10 +139,8 @@ Perfume Palette는 요즘 MZ세대 사이에서 니치향수에 대한 관심이
 ## 3. 상품 SHOP
 ![상품 리스트](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/af387d5c-cf7b-4c3a-a9ef-8e558a7f8eeb)
 ![비교함](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/88eb7f27-bf65-4a6e-8240-f157e7d8a8e7)
-![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/e8e65cba-dabb-4e9d-a30a-b9aed888c63f)
 ![상품 상세_후기](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/3b711ec7-41a2-4a45-bb12-4c3ac435b1f6)
 ![상품 상세_문의](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/eb665046-8a42-4336-b9e7-543696e87626)
-![상품상세_sns](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/7ed08af8-25fa-49ef-bb9e-d9ff9a348160)
 
 ## 4. 상품 구매
 ![상품 주문](https://github.com/2211SpringCloudWebApp/PerfumePalette/assets/119032790/d6ed928a-d120-4123-822c-0cbc130fdaac)
