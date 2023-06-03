@@ -10,19 +10,16 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
-		<property name="driverClassName"
-			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<!-- 학원 공용 DB -->
-		<!-- <property name="url"
-			value="jdbc:oracle:thin:@sonof.iptime.org:8510:xe"></property> -->
-		<!-- 서버 폭발을 대비한 개인용 DB -->
-		<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
-		<property name="url"
-			value="jdbc:log4jdbc:oracle:thin:@sonof.iptime.org:8510:xe"></property>
-		<property name="username" value="NAMMAE"></property>
-		<property name="password" value="NAMMAE"></property>
+	      class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	      <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+	      <property name="driverClassName"
+	         value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+	      <!-- 학원 공용 DB -->
+	      <!-- <property name="url"       value="jdbc:log4jdbc:oracle:thin:@sonof.iptime.org:8510:xe"></property> -->
+	      <!-- 개인 DB -->
+	      <property name="url"       value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+	      <property name="username"    value="NAMMAE"></property>
+	      <property name="password"    value="NAMMAE"></property>
 	</bean>
 
 	<bean id="sqlSession"
